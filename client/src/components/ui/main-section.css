@@ -1,0 +1,36 @@
+.main__section {
+  margin-top: 100px;
+}
+
+.main__content h2 {
+  line-height: 55px;
+  font-size: 2.5rem;
+}
+
+.main__content h2 span {
+  background: linear-gradient(-45deg, #e250e5, #4b50e6, #e250e5, #4b50e6);
+  background-size: 100% 100%;
+  background-clip: text;
+  -webkit-text-stroke: 3px transparent;
+  -webkit-text-fill-color: #14141f;
+  margin-left: 7px !important;
+  display: inline-block;
+}
+
+.main__btns {
+  margin-top: 30px;
+}
+
+.join__btn {
+  border: none;
+  outline: none;
+  padding: 7px 25px !important;
+  border: 50px !important;
+  border: 1px solid #5142fc;
+  font-size: 0.9rem;
+}
+
+.join__btn a {
+  text-decoration: none;
+  color: #fff;
+}

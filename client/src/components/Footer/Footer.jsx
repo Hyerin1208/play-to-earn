@@ -78,9 +78,8 @@ const Footer = () => {
                 NFTs
               </h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                praesentium error modi voluptatem eveniet ea dolorum optio
-                aperiam delectus nihil repellat.
+                Players can participate in amazing races on the battlefield to
+                earn 프로젝트 작명소 Tokens.
               </p>
             </div>
           </Col>

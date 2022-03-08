@@ -1,7 +1,13 @@
 import React from "react";
+import { Container } from "reactstrap";
+import MainSection from "../ui/MainSection";
 
 const Home = () => {
-    return <div>Homessss</div>;
+  return (
+    <>
+      <MainSection />
+    </>
+  );
 };
 
 export default Home;
