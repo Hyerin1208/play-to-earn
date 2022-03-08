@@ -71,7 +71,7 @@ const Footer = () => {
             <div className="logo">
               <h2 className="d-flex gap-2 align-items-center">
                 <span>
-                  <i class="ri-bear-smile-line">
+                  <i className="ri-bear-smile-line">
                     {/* <img src={logo} alt="loading..." /> */}
                   </i>
                 </span>
@@ -124,27 +124,27 @@ const Footer = () => {
             <div className="social__links d-flex gap-3 align-items-center">
               <span>
                 <Link to="#">
-                  <i class="ri-github-fill"></i>
+                  <i className="ri-github-fill"></i>
                 </Link>
               </span>
               <span>
                 <Link to="#">
-                  <i class="ri-discord-fill"></i>
+                  <i className="ri-discord-fill"></i>
                 </Link>{" "}
               </span>
               <span>
                 <Link to="#">
-                  <i class="ri-instagram-line"></i>
+                  <i className="ri-instagram-line"></i>
                 </Link>{" "}
               </span>
               <span>
                 <Link to="#">
-                  <i class="ri-facebook-circle-fill"></i>
+                  <i className="ri-facebook-circle-fill"></i>
                 </Link>{" "}
               </span>
               <span>
                 <Link to="#">
-                  <i class="ri-kakao-talk-fill"></i>
+                  <i className="ri-kakao-talk-fill"></i>
                 </Link>
               </span>
             </div>
