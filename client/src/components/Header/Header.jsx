@@ -37,7 +37,7 @@ const Header = () => {
           <div className="logo">
             <h2 className="d-flex gap-2 align-items-center">
               <span>
-                <i class="ri-bear-smile-line">
+                <i className="ri-bear-smile-line">
                   {/* <img src={logo} alt="loading..." /> */}
                 </i>
               </span>
@@ -65,14 +65,14 @@ const Header = () => {
           <div className="nav__right d-flex align-items-center gap-5">
             <button className="btn d-flex gap-2 align-items-center">
               <span>
-                <i class="ri-wallet-line"></i>
+                <i className="ri-wallet-line"></i>
               </span>
               <Link to="/wallet">Connect Wallet</Link>
             </button>
 
-            <sapn className="mobile__menu">
-              <i class="ri-menu-line"></i>
-            </sapn>
+            <span className="mobile__menu">
+              <i className="ri-menu-line"></i>
+            </span>
           </div>
         </div>
       </Container>
