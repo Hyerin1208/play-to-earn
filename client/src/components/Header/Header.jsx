@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "./header.css";
 // 로고 만들어서 아래 넣을예정
 //import logo from "../../assets/images/loader.gif";
@@ -30,8 +30,26 @@ const NAV__LINKS = [
 ];
 
 const Header = () => {
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        headerRef.current.classList.add("header__shrink");
+      } else {
+        headerRef.current.classList.remove("header__shrink");
+      }
+    });
+    return () => {
+      window.removeEventListener("scroll");
+    };
+  }, []);
+
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <Container>
         <div className="navigation">
           <div className="logo">
