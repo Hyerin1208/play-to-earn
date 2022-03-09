@@ -3,6 +3,8 @@ import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./main-section.css";
 
+import mainImg from "../../assets/images/Medusa.png";
+
 const MainSection = () => {
   return (
     <section className="main__section">
@@ -21,9 +23,15 @@ const MainSection = () => {
               <div className="main__btns">
                 <button className="join__btn">
                   <i className="ri-registered-line"></i>
-                  <Link to="/market">회원가입</Link>
+                  <Link to="/market"> Join Us</Link>
                 </button>
               </div>
+            </div>
+          </Col>
+
+          <Col lg="6" md="6">
+            <div className="main__img">
+              <img src={mainImg} alt="" />
             </div>
           </Col>
         </Row>

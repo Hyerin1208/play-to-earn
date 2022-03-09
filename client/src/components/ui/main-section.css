@@ -19,7 +19,7 @@
 }
 
 .main__btns {
-  margin-top: 30px;
+  margin-top: 40px;
   display: flex;
   align-items: center;
 }
@@ -40,6 +40,7 @@
 .join__btn i {
   color: #fff;
   font-size: 1rem;
+  margin-right: 5px;
 }
 
 .join__btn a {
@@ -47,5 +48,16 @@
   color: #fff;
 }
 
-.join__btns {
+.join__btns a:hover {
+  color: #fff;
+}
+
+.main__img {
+  width: 500px;
+  margin-left: auto;
+}
+
+.main__img img {
+  width: 100;
+  border-radius: 7px;
 }
