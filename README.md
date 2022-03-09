@@ -1,1 +1,0 @@
-# play-to-earn
