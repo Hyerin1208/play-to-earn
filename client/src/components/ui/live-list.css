@@ -11,6 +11,7 @@
 .live__list__top span a {
   text-decoration: none;
   color: #fff;
+  border-bottom: 1px solid #5142fc;
 }
 
 .single__nft__card {
@@ -26,6 +27,7 @@
 
 .nft__img img {
   border-radius: 10px;
+  height: 270px;
 }
 
 .nft__img {
@@ -37,9 +39,17 @@
 }
 
 .nft__title {
+  margin-bottom: 15px;
+}
+
+.nft__title a {
   color: #fff;
   font-size: 1rem;
-  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+.nft__title a:hover {
+  color: #fff;
 }
 
 .creator__img {

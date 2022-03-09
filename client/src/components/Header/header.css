@@ -70,6 +70,7 @@
 
 .nav__right .btn span i {
   color: #fff;
+  margin-right: 8px;
 }
 
 .nav__right .btn a:hover {
