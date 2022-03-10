@@ -4,17 +4,24 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import { applyMiddleware, createStore } from "redux";
+import promiseMiddleware from "redux-promise";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./redux/reducers/index";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <Provider store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}>
+        <Router>
+            <App />
+        </Router>
+    </Provider>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
