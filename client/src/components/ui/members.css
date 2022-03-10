@@ -1,0 +1,21 @@
+.Member__section-title h3 {
+  color: #fff;
+}
+
+.member__img img {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 20px;
+}
+
+.single__member-card {
+  display: flex;
+  align-items: center;
+  gap: 3;
+  margin-left: 50px;
+}
+
+.member__content h6 {
+  font-size: 1.2rem;
+  color: #fff;
+}

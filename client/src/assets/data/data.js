@@ -7,6 +7,10 @@ import img04 from "../images/q4.png";
 
 import admin from "../images/avatar.png";
 
+import member1 from "../images/member.png";
+import member2 from "../images/member2.png";
+import member3 from "../images/member3.png";
+
 export const NFT__DATA = [
   {
     id: "1",
@@ -49,4 +53,34 @@ export const NFT__DATA = [
   },
 ];
 
-// export const SELLER__DATA = [{}];
+export const MEMBER__DATA = [
+  {
+    id: "01",
+    MemberName: "doredome",
+    MemberImg: member1,
+    part: "front-end Developer",
+    fbUrl: "#",
+    instaUrl: "#",
+    twitUrl: "#",
+  },
+
+  {
+    id: "02",
+    MemberName: "Mr-butter",
+    MemberImg: member2,
+    part: "Full-Stack Developer",
+    fbUrl: "#",
+    instaUrl: "#",
+    twitUrl: "#",
+  },
+
+  {
+    id: "03",
+    MemberName: "coolmarvel",
+    MemberImg: member3,
+    part: "QA(Quality Assurance) Developer",
+    fbUrl: "#",
+    instaUrl: "#",
+    twitUrl: "#",
+  },
+];
