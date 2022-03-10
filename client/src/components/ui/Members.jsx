@@ -2,7 +2,7 @@ import React from "react";
 import "./members.css";
 import { Container, Row, Col } from "reactstrap";
 
-import member from "../../assets/images/member.png";
+// import member from "../../assets/images/member.png";
 import { MEMBER__DATA } from "../../assets/data/data";
 
 const Members = () => {

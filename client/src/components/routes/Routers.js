@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Market from "../pages/Market";
@@ -13,19 +13,19 @@ import Wallet from "../pages/Wallet";
 import NftDetails from "../pages/NftDetails";
 
 const Routers = () => {
-    return (
-        <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/market" element={<Market />} />
-            <Route path="/create" element={<Create />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/edit-profile" element={<EditProfile />} />
-            <Route path="/seller-profile" element={<SellerProfile />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/market/:id" element={<NftDetails />} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route path="/market" element={<Market />} />
+      <Route path="/create" element={<Create />} />
+      <Route path="/game" element={<Game />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/edit-profile" element={<EditProfile />} />
+      <Route path="/seller-profile" element={<SellerProfile />} />
+      <Route path="/wallet" element={<Wallet />} />
+      <Route path="/market/:id" element={<NftDetails />} />
+    </Routes>
+  );
 };
 
 export default Routers;
