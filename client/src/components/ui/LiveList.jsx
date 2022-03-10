@@ -21,7 +21,7 @@ const LiveList = () => {
           </Col>
 
           {NFT__DATA.slice(0, 4).map((item, index) => (
-            <Col lg="3" key={index}>
+            <Col lg="3" md="4" sm="6" key={index} className="mb-4">
               <NftCard key={item.id} item={item} />
             </Col>
           ))}

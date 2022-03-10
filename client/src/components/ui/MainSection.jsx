@@ -26,8 +26,8 @@ const MainSection = () => {
                   <Link to="/market"> Join Us</Link>
                 </button>
                 <button className="join__btn">
-                  <i class="ri-gamepad-line"></i>
-                  <Link to="/market"> Play Game</Link>
+                  <i className="ri-gamepad-line"></i>
+                  <Link to="/game"> Play Game</Link>
                 </button>
               </div>
             </div>

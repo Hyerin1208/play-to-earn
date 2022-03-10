@@ -122,3 +122,9 @@
 .view__link a:hover {
   color: #fff;
 }
+
+@media only screen and (max-width: 576px) {
+  .live__list__top h3 {
+    margin-left: 20px;
+  }
+}
