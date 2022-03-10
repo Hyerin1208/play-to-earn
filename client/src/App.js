@@ -1,12 +1,10 @@
 import "./App.css";
 import Web3 from "web3";
-import CreateNameToken from "./contracts/CreateNameToken.json";
-import Bscsimpletoken from "./contracts/Bscsimpletoken.json";
 import { useEffect, useState } from "react";
 import Routers from "./components/routes/Routers";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadWeb3Account, loadWebContract } from "./redux/actions/index";
 
 function App() {
@@ -48,12 +46,20 @@ function App() {
         dispatch(loadWebContract(await getWeb3()));
     }, []);
 
+    useEffect(async () => {
+        const web3 = await getWeb3();
+        await loadWeb3Account(web3);
+        await loadWebContract(web3);
+    }, []);
+
     return (
-        <div>
+        <>
             <Header />
-            <Routers />
+            <div>
+                <Routers />
+            </div>
             <Footer />
-        </div>
+        </>
     );
 }
 
