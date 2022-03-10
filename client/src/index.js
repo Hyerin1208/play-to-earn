@@ -8,6 +8,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 
+// import polyfills
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+import './components/pages/TetrisGame/styles/index.scss';
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
