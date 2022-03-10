@@ -12,7 +12,7 @@ import "remixicon/fonts/remixicon.css";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import './components/pages/TetrisGame/styles/index.scss';
+import './components/pages/TetrisGame/styles/Tetris.scss';
 
 ReactDOM.render(
   <React.StrictMode>
