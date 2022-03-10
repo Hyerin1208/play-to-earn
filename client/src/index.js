@@ -14,6 +14,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
+// import polyfills
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+import "./components/pages/TetrisGame/styles/Tetris.scss";
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}>
