@@ -1,3 +1,42 @@
 .create__box {
   margin: 40px 0 30px 0;
 }
+
+.preview__item {
+  margin-bottom: 20px;
+  color: rgb(160, 160, 160);
+}
+
+.date__form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form__input input {
+  width: 100%;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+}
+
+.form__input {
+  margin-bottom: 15px;
+}
+
+.form__input label {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.form__input .upload {
+  padding: 100px 25px;
+}
+
+.form__input .upload__input {
+  padding: 50px 25px;
+}
