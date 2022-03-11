@@ -1,34 +1,26 @@
-import React, { useEffect } from "react";
-import "./Game.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
-import SnakeGame from "../pages/SnakeGame/SnakeGame";
+import React, { Fragment } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+import SnakeGames from "../pages/SnakeGame/SnakeGame";
+import TetrisGames from "../pages/TetrisGame/Tetris.js";
 
 function Game() {
-  // useEffect(() => {
-  //   // Create script
-  //   let script = document.createElement("script");
-  //   script.src = `${process.env.PUBLIC_URL}/game.js`;
-  //   script.async = true;
-  //   document.body.appendChild(script);
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   };
-  // }, []);
-  // 아 라우트 너무 어렵다... 일단 게임이나 찾아서 올려야겠다....
-
-  return (
-    <div>
-      <Link to="./SnakeGame/SnakeGame/SankeGame">
-        <button> 이동하기 </button>
-      </Link>
-    </div>
-  );
+    return (
+        <>
+            <h1>게임모음집</h1>
+            <ul>
+                <li>
+                    <Link to="SnakeGames">스네이크</Link>
+                </li>
+                <li>
+                    <Link to="TetrisGames">테트리스</Link>
+                </li>
+            </ul>
+            <Routes>
+                <Route path="SnakeGames" element={<SnakeGames />} />
+                <Route path="TetrisGames" element={<TetrisGames />} />
+            </Routes>
+        </>
+    );
 }
 
 export default Game;
