@@ -1,0 +1,118 @@
+/* $primary: #00ffc4;
+$body-bg: #0c0d13;
+$border-color: #1d1d1d;
+
+@import '~bootstrap/scss/bootstrap';
+@import '~animate.css/animate.min.css';
+
+@font-face {
+	font-family: 'Retro Gaming';
+	src: url('../assets/fonts/retro_gaming.ttf');
+} */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Retro Gaming", sans-serif;
+  color: #fff;
+  text-align: center;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+				  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.canvas__container {
+  position: relative;
+  border: 1px solid #1d1d1d;
+  width: 360px;
+  height: 720px;
+  overflow: hidden;
+  /* margin-top: 100px; */
+}
+
+.ui__group {
+  margin-left: 16px;
+  position: relative;
+  width: 185px;
+  margin-top: 100px;
+}
+
+.ui__label {
+  padding: 16px;
+  border: 1px solid #1d1d1d;
+  border-radius: 4px;
+  font-size: 24px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.dropdown__cover {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.dropdown-menu {
+  min-width: unset;
+}
+
+.canvas__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.customize__color-preview {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.customize__level-item {
+  width: 32px;
+  height: 32px;
+}
+
+.no-pointer {
+  pointer-events: none;
+}
+
+.vignette {
+  box-shadow: inset 0 0 64px 64px #0c0d13;
+}
+
+.bg-overlay {
+  background: rgba(12, 13, 19, 0.8);
+}
+
+.game__toast {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}

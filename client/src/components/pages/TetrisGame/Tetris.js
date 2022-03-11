@@ -6,7 +6,7 @@ import { renderStartBackground } from "./js/Render";
 import { Game } from "./js/Game.js";
 
 import Settings from "./Settings";
-import "./styles/Tetris.scss";
+import "./styles/Tetris.css";
 
 let sirtet;
 

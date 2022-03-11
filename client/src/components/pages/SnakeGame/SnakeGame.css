@@ -1,7 +1,7 @@
 #GameBoard {
 	position: relative;
 	margin: auto;
-	margin-top: 100px;
+	/* margin-top: 100px; */
 	border-style: solid;
 }
 
