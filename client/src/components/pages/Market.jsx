@@ -18,7 +18,7 @@ const Market = () => {
 
   return (
     <>
-      <CommonSection title={"MarketPlacae"} />
+      <CommonSection title={"Market Place"} />
 
       <section>
         <Container>
