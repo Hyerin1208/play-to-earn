@@ -1,23 +1,25 @@
-import React, { useEffect } from "react";
-import "./Game.css";
+import React, { Fragment } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+import SnakeGames from "../pages/SnakeGame/SnakeGame";
+import TetrisGames from "../pages/TetrisGame/Tetris.js";
 
 function Game() {
-    useEffect(() => {
-        // Create script
-        let script = document.createElement("script");
-        script.src = `${process.env.PUBLIC_URL}/game.js`;
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
-
     return (
-        <div>
-            <div className="score">0</div>
-            <div className="stage"></div>
-        </div>
+        <>
+            <h1>게임모음집</h1>
+            <ul>
+                <li>
+                    <Link to="SnakeGames">스네이크</Link>
+                </li>
+                <li>
+                    <Link to="TetrisGames">테트리스</Link>
+                </li>
+            </ul>
+            <Routes>
+                <Route path="SnakeGames" element={<SnakeGames />} />
+                <Route path="TetrisGames" element={<TetrisGames />} />
+            </Routes>
+        </>
     );
 }
 

@@ -1,47 +1,67 @@
-/* @import url("http://fonts.googlepis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background: #14141f !important;
-  font-family: "Roboto", sans-serif;
+    background: #14141f !important;
+    font-family: "Roboto", sans-serif;
 }
 
 h1,
 h2 {
-  color: #fff;
-  font-weight: 500;
-  font-size: 2rem;
+    color: #fff;
+    font-weight: 500;
+    font-size: 2rem;
 }
 
 p {
-  font-weight: 400;
-  font-size: 1rem;
-  color: #fff;
-  opacity: 85%;
-  line-height: 35px;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #fff;
+    opacity: 85%;
+    line-height: 35px;
+}
+
+div {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #fff;
 }
 
 a {
-  text-decoration: none;
-  color: unset;
+    text-decoration: none;
+    color: unset;
 }
 
 a:hover {
-  color: unset;
+    color: unset;
 }
 
 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 section,
 footer {
-  padding: 60px 0px;
+    padding: 60px 0px;
+}
+
+/* =============== custom scroll-bar ================== */
+
+/* 스크롤바 전체 영역 */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #343444;
+}
+
+/*  스크롤  */
+::-webkit-scrollbar-thumb {
+  border-radius: 2em;
+  background: linear-gradient(-45deg, #e250e5, #4b50e6, #e250e5, #4b50e6);
 }

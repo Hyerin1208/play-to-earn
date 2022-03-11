@@ -69,7 +69,7 @@ const Footer = () => {
         <Row>
           <Col lg="3" md="6" sm="6">
             <div className="logo">
-              <h2 className="d-flex gap-2 align-items-center">
+              <h2>
                 <span>
                   <i className="ri-bear-smile-line">
                     {/* <img src={logo} alt="loading..." /> */}
@@ -78,9 +78,8 @@ const Footer = () => {
                 NFTs
               </h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-                praesentium error modi voluptatem eveniet ea dolorum optio
-                aperiam delectus nihil repellat.
+                Players can participate in amazing races on the battlefield to
+                earn 작명소Tokens.
               </p>
             </div>
           </Col>
@@ -121,7 +120,7 @@ const Footer = () => {
           <Col lg="3" md="6" sm="6">
             <h5>Newsletter</h5>
             <input type="text" className="newsletter" placeholder="Email" />
-            <div className="social__links d-flex gap-3 align-items-center">
+            <div className="social__links">
               <span>
                 <Link to="#">
                   <i className="ri-github-fill"></i>
