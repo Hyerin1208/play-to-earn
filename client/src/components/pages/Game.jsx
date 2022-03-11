@@ -1,34 +1,32 @@
 import React, { useEffect } from "react";
 import "./Game.css";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
+import SnakeGame from "../pages/SnakeGame/SnakeGame";
 
 function Game() {
-  useEffect(() => {
-    // Create script
-    let script = document.createElement("script");
-    script.src = `${process.env.PUBLIC_URL}/game.js`;
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Create script
+  //   let script = document.createElement("script");
+  //   script.src = `${process.env.PUBLIC_URL}/game.js`;
+  //   script.async = true;
+  //   document.body.appendChild(script);
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // }, []);
+  // 아 라우트 너무 어렵다... 일단 게임이나 찾아서 올려야겠다....
 
   return (
-    <div id="container">
-      <div id="game"></div>
-      <div id="score">0</div>
-      <div id="instructions">
-        Click (or press the spacebar) to place the block
-      </div>
-      <div class="game-over">
-        <h2>Game Over</h2>
-        <p>You did great, you're the best.</p>
-        <p>Click or spacebar to start again</p>
-      </div>
-      <div class="game-ready">
-        <div id="start-button">Start</div>
-        <div></div>
-      </div>
+    <div>
+      <Link to="./SnakeGame/SnakeGame/SankeGame">
+        <button> 이동하기 </button>
+      </Link>
     </div>
   );
 }
