@@ -11,8 +11,6 @@ import EditProfile from "../pages/EditProfile";
 import Wallet from "../pages/Wallet";
 import NftDetails from "../pages/NftDetails";
 import Game from "../pages/Game";
-import SnakeGames from "../pages/SnakeGame/SnakeGame";
-import TetrisGames from "../pages/TetrisGame/Tetris.js";
 
 const Routers = () => {
     return (
