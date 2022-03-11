@@ -1,3 +1,9 @@
+.logo h2 {
+  display: flex;
+  gap: 2;
+  align-items: center;
+}
+
 .footer h5 {
   font-size: 1.1rem;
   color: #fff;
@@ -5,6 +11,7 @@
 
 .footer {
   padding-bottom: 30px;
+  background: #000;
 }
 
 .list__item {
@@ -46,13 +53,21 @@
   opacity: 85%;
 }
 
+.social__links {
+  display: flex;
+  gap: 2;
+  align-items: center;
+  margin-top: 10px;
+}
+
 .social__links span a {
   text-decoration: none;
   color: #fff;
   opacity: 85%;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 400;
   transition: 0.3s;
+  margin-right: 10px;
 }
 
 .social__links span a:hover {
