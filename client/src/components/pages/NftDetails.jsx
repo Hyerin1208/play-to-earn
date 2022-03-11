@@ -19,11 +19,11 @@ const NftDetails = () => {
   return (
     <>
       <CommonSection title={singleNft.title} />
-      <section>
+      <div className="detail__box">
         <Container>
           <Row>
             <Col lg="6" md="6" sm="6">
-              <img src={singleNft.imgUrl} alt="" className="single__ nft-img" />
+              <img src={singleNft.imgUrl} alt="" className="single__nft-img" />
             </Col>
 
             <Col lg="6" md="6" sm="6">
@@ -69,8 +69,7 @@ const NftDetails = () => {
             </Col>
           </Row>
         </Container>
-      </section>
-
+      </div>
       <LiveList />
     </>
   );

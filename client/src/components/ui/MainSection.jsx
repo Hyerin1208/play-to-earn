@@ -7,7 +7,7 @@ import mainImg from "../../assets/images/Medusa.png";
 
 const MainSection = () => {
   return (
-    <section className="main__section">
+    <div className="main__section">
       <Container>
         <Row>
           <Col lg="6" md="6">
@@ -40,7 +40,7 @@ const MainSection = () => {
           </Col>
         </Row>
       </Container>
-    </section>
+    </div>
   );
 };
 

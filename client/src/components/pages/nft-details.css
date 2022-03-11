@@ -1,3 +1,11 @@
+.market__box {
+  margin: 50px 0 30px 0;
+}
+
+.detail__box {
+  margin: 50px 0 120px 0;
+}
+
 .single__ nft-img {
   width: 100%;
   border-radius: 8px;
@@ -60,9 +68,9 @@
 }
 
 .creator__img {
-  width: 40px;
+  width: 20px;
   height: 40px;
-  margin-right: 20px;
+  margin-right: 40px;
   margin-top: 12px;
 }
 
@@ -131,4 +139,51 @@
 
 .singleNft-btn a:hover {
   color: #5142fc;
+}
+
+@media only screen and (max-width: 1024px) {
+  .single__nft-img {
+    width: 100%;
+  }
+  .single__nft__content {
+    margin-left: 30px;
+  }
+
+  .single__nft__icon {
+    margin-left: 30px;
+  }
+
+  .single__nft__content h2 {
+    font-size: 1.3rem;
+  }
+
+  .single__nft__content p {
+    font-size: 0.8rem;
+    line-height: 28px;
+  }
+
+  .nft__creator {
+    width: 90%;
+    margin-left: 35px;
+  }
+
+  .creator__img {
+    width: 55px;
+    margin-bottom: 10px;
+  }
+
+  .my-3 {
+    margin-left: 30px;
+  }
+
+  .singleNft-btn a {
+    margin-left: 30px;
+    font-size: 0.7rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .single__nft-top h2 {
+    margin-top: 15px;
+  }
 }
