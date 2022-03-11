@@ -1,6 +1,6 @@
 import "./App.css";
 import Web3 from "web3";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Routers from "./components/routes/Routers";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -55,9 +55,7 @@ function App() {
     return (
         <>
             <Header />
-            <div>
-                <Routers />
-            </div>
+            <Routers />
             <Footer />
         </>
     );

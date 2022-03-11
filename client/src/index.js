@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { applyMiddleware, createStore } from "redux";
 import promiseMiddleware from "redux-promise";
 import { Provider } from "react-redux";
@@ -20,9 +20,9 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}>
-        <Router>
+        <BrowserRouter>
             <App />
-        </Router>
+        </BrowserRouter>
     </Provider>,
     document.getElementById("root")
 );
