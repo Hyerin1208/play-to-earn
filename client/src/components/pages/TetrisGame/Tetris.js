@@ -256,11 +256,11 @@ const Tetris = () => {
                     </button>
                 </div>
             </div>
-            <div className="w-100 text-left d-inline-block p-3">
+            {/* <div className="w-100 text-left d-inline-block p-3">
                 <a className="text-dark" href="https://github.com/greeneman42/sirtet" target="_">
                     Github
                 </a>
-            </div>
+            </div> */}
         </>
     );
 };
