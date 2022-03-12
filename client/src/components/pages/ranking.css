@@ -8,6 +8,8 @@
   box-sizing: content-box;
   position: relative;
   outline: none;
+  margin-left: 25%;
+  margin-top: 2.5%;
 }
 
 .bloc-tabs {
@@ -24,18 +26,19 @@
   box-sizing: content-box;
   position: relative;
   outline: none;
+  color: rgb(255, 255, 255);
 }
 
-.Ranking__containers:not(:last-child) {
+.tabs:not(:last-child) {
   border-right: 1px solid rgba(0, 0, 0, 0.274);
 }
 
-.block-tabs {
-  background: black;
+.active-tabs {
+  background: #5142fc;
   border-bottom: 1px solid transparent;
 }
 
-.block-tabs::before {
+.bloc-tabs::before {
   content: "";
   display: block;
   position: absolute;
@@ -44,28 +47,38 @@
   transform: translateX(-50%);
   width: calc(100% + 2px);
   height: 5px;
-  background: rgb(88, 147, 241);
+  background: #e250e5;
 }
 
-.content__tabs {
+button {
+  border: none;
+}
+
+.content-tabs {
   flex-grow: 1;
 }
 
-.content__active-content h2 {
+.content {
+  background: #14141f;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.content h2 {
   padding: 0px 0 5px 0px;
 }
-.content__active-content hr {
+.content hr {
   width: 100px;
   height: 2px;
   background: #222;
   margin-bottom: 5px;
 }
-
-.ranking__box {
+.content p {
   width: 100%;
   height: 100%;
 }
-
-.content__active-content {
+.active-content {
   display: block;
 }
