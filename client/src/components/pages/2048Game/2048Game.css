@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
 
 @media screen and (orientation:portrait) {
-    #root {
+    /* #root {
         width: 74vw;
         height: 100vw;
-    }
+    } */
     .number-table {
         border-spacing: 2vw;
     }
@@ -49,10 +49,10 @@
     }
 }
 @media screen and (orientation:landscape) {
-    #root {
+    /* #root {
         width: 74vh;
         height: 100vh;
-    }
+    } */
     .number-table {
         border-spacing: 2vh;
     }
@@ -98,7 +98,7 @@
 }
 
 
-html, body {
+/* html, body {
     overscroll-behavior-y: contain;
     background-color: rgb(249, 247, 235);
     position: fixed;
@@ -108,7 +108,7 @@ html, body {
     right: 0;
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: bold;
-}
+} */
 
 #root {
     margin-left: auto;
