@@ -1,0 +1,71 @@
+.Ranking__container {
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: #343444;
+  cursor: pointer;
+  border-bottom: 1px solid #343444;
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+
+.bloc-tabs {
+  display: flex;
+}
+
+.tabs {
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: rgba(128, 128, 128, 0.075);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+
+.Ranking__containers:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.block-tabs {
+  background: black;
+  border-bottom: 1px solid transparent;
+}
+
+.block-tabs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  background: rgb(88, 147, 241);
+}
+
+.content__tabs {
+  flex-grow: 1;
+}
+
+.content__active-content h2 {
+  padding: 0px 0 5px 0px;
+}
+.content__active-content hr {
+  width: 100px;
+  height: 2px;
+  background: #222;
+  margin-bottom: 5px;
+}
+
+.ranking__box {
+  width: 100%;
+  height: 100%;
+}
+
+.content__active-content {
+  display: block;
+}
