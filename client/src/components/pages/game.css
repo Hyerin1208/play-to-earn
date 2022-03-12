@@ -1,0 +1,9 @@
+.game__infoBox button {
+  display: flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  background-color: #14141f7c;
+  color: white;
+}
