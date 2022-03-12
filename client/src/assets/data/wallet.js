@@ -15,8 +15,8 @@ export const WALLET__DATA = [
   },
   {
     id: "2",
-    title: "WalletConnect",
-    icon: wallet2,
+    title: "MathWallet",
+    icon: wallet7,
   },
   {
     id: "3",
@@ -25,7 +25,7 @@ export const WALLET__DATA = [
   },
   {
     id: "4",
-    title: "Binance Chain Wallet",
+    title: "BinanceChain Wallet",
     icon: wallet4,
   },
   {
@@ -40,12 +40,12 @@ export const WALLET__DATA = [
   },
   {
     id: "7",
-    title: "MathWallet",
-    icon: wallet7,
+    title: "Huobi Wallet",
+    icon: wallet8,
   },
   {
     id: "8",
-    title: "Huobi Wallet",
-    icon: wallet8,
+    title: "WalletConnect",
+    icon: wallet2,
   },
 ];
