@@ -24,8 +24,8 @@ const WalletModal = ({ setShowModal }) => {
               {WALLET__DATA.map((item) => (
                 <Col
                   lg="3"
-                  md="2"
-                  sm="3"
+                  md="5"
+                  sm="5"
                   className="wallet__layout"
                   key={item.id}
                 >
@@ -34,7 +34,7 @@ const WalletModal = ({ setShowModal }) => {
                       className="wallet__img"
                       src={item.icon}
                       alt=""
-                      width="50px"
+                      width="45px"
                     />
 
                     <div className="wallet___name">

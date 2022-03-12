@@ -62,3 +62,73 @@
 .wallet___name p {
   align-content: center;
 }
+
+@media only screen and (max-width: 768px) {
+  .wallet__modal {
+    position: relative;
+    top: 100%;
+    left: 100%;
+    width: 500px;
+    height: 400px;
+    transform: translate(-50%, -50%);
+    background: #14141f !important;
+    border-radius: 5px;
+    padding: 30px;
+    z-index: 111111 !important;
+  }
+
+  .wallet__container {
+    display: flex;
+    width: 400px;
+    height: 380px;
+    margin: 40px 20px;
+  }
+
+  .wallet__layout {
+    width: 300px;
+    height: 100px;
+    align-items: center;
+  }
+
+  .single__wallet__box {
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+  }
+
+  .wallet__img img {
+    align-content: center;
+    margin-left: 24px;
+  }
+
+  .single__wallet__box img {
+    width: 36px;
+  }
+
+  .single__wallet__box p {
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .wallet__modal {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    background: #14141f !important;
+    border-radius: 5px;
+    padding: 30px;
+    z-index: 555555 !important;
+  }
+
+  .single__wallet__box img {
+    width: 30px;
+  }
+
+  .single__wallet__box p {
+    font-size: 0.7rem;
+  }
+}

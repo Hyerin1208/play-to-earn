@@ -9,6 +9,7 @@
 .wallet__content {
   width: 50%;
   margin: auto;
+  display: flex;
 }
 
 .wallet__item {
@@ -19,7 +20,7 @@
   margin-top: 30px;
   margin-bottom: 30px;
   cursor: pointer;
-  height: 300px;
+  height: 320px;
 }
 
 .wallet__item span {

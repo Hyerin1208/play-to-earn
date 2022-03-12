@@ -9,7 +9,7 @@ const wallet__data = [
   {
     id: 1,
     title: "MetaMask",
-    desc: "Metamask is one of the most popular cryptocurrency wallets. If you need to swap currencies to buy an NFT, Metamask has a built-in swap feature. You can also limit how much you pay in gas fees, though there's the risk of a transaction failing. If you need to use a different blockchain, Metamask offers support for alternative platforms.",
+    desc: "Metamask is one of the most popular cryptocurrency wallets. If you need to swap currencies to buy an NFT, Metamask has a built-in swap feature. You can also limit how much you pay in gas fees. If you need to use a different blockchain, Metamask offers support for alternative platforms.",
     icon: "ri-money-cny-circle-line",
   },
   {
@@ -21,13 +21,13 @@ const wallet__data = [
   {
     id: 3,
     title: "Trust Wallet",
-    desc: "Trust Wallet is a popular mobile-only wallet owned by Binance. While it supports multiple blockchains, including Ethereum, its association with Binance means that it's heavily biased toward smart chain tokens. That said, if you're interested in NFTs on the Binance smart chain, Trust Wallet may be the best option for you since it's already set up for BEP tokens.",
+    desc: "Trust Wallet is a popular mobile-only wallet owned by Binance. While it supports multiple blockchains, including Ethereum, its association with Binance means that it's heavily biased toward smart chain tokens.",
     icon: "ri-coin-line",
   },
   {
     id: 4,
     title: "Coinbase Wallet",
-    desc: "Many people know Coinbase (NASDAQ:COIN) for its cryptocurrency exchange. It also offers a non-custodial wallet suitable for holding NFTs and other tokens. Unlike holding cryptocurrency on Coinbase's exchange, holding assets in the Coinbase Wallet gives the user full control over their crypto.",
+    desc: "Many people know Coinbase for its cryptocurrency exchange. It also offers a non-custodial wallet suitable for holding NFTs and other tokens. Unlike holding cryptocurrency on Coinbase's exchange, holding assets in the Coinbase Wallet gives the user full control over their crypto.",
     icon: "ri-money-dollar-circle-line",
   },
 ];
