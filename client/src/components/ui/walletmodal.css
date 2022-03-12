@@ -12,7 +12,7 @@
   position: relative;
   top: 50%;
   left: 50%;
-  width: 800px;
+  width: 850px;
   height: 500px;
   transform: translate(-50%, -50%);
   background: #14141f !important;
@@ -37,9 +37,9 @@
 
 .wallet__container {
   display: flex;
-  width: 500px;
+  width: 800px;
   height: 400px;
-  margin: 50px 20px;
+  margin: 40px 20px;
 }
 
 .wallet__layout {
@@ -49,8 +49,8 @@
 }
 
 .single__wallet__box {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   cursor: pointer;
 }
 

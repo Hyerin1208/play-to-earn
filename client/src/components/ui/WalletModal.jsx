@@ -11,7 +11,7 @@ const WalletModal = ({ setShowModal }) => {
   return (
     <div className="modal__wrapper">
       <div className="wallet__modal">
-        <Col lg="12" className="mb-4">
+        <Col lg="12" className="mb-3">
           <span className="close__modal">
             <i
               className="ri-close-line"
