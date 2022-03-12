@@ -74,7 +74,7 @@ const Create = () => {
                     <textarea
                       name=""
                       id=""
-                      rows="10"
+                      rows="7"
                       placeholder="Enter Description"
                       className="w-100"
                     ></textarea>
