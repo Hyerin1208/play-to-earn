@@ -1,5 +1,5 @@
 .content-wrapper {
-  margin-top: 100px;
+  margin: 100px 0 100px 0;
 }
 
 .drop__title {
@@ -29,6 +29,7 @@
 
 .timer-box {
   background-color: #5142fc;
+  border-radius: 10px;
 }
 
 .timer-box__count {
