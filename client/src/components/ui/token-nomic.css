@@ -1,0 +1,12 @@
+.chart__container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.chart__heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
