@@ -2,7 +2,8 @@ import React, { Fragment } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import SnakeGames from "../pages/SnakeGame/SnakeGame";
 import TetrisGames from "../pages/TetrisGame/Tetris.js";
-import PuzzleGames from "../pages/2048Game/2048Game"
+import PuzzleGames from "../pages/2048Game/2048Game";
+import MineGames from "../pages/MineGame/MineGame";
 import "./Game.css";
 
 function Game() {
@@ -19,11 +20,15 @@ function Game() {
         <li>
           <Link to="PuzzleGames">2048</Link>
         </li>
+        <li>
+          <Link to="MineGames">지뢰찾기</Link>
+        </li>
       </ul>
       <Routes>
         <Route path="SnakeGames" element={<SnakeGames />} />
         <Route path="TetrisGames" element={<TetrisGames />} />
         <Route path="PuzzleGames" element={<PuzzleGames />} />
+        <Route path="MineGames" element={<MineGames />} />
       </Routes>
     </div>
   );

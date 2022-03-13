@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './css/Game.css';
 import Board from './js/Board';
 import Status from './js/Status';
-import DifficultyLevel from './jsDifficultyLevel';
+import DifficultyLevel from './js/DifficultyLevel';
 
 const EMOJI_OK = '🙂';
 const EMOJI_GAME_OVER = '💀';
