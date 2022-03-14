@@ -1,0 +1,12 @@
+.Game {
+    text-align: center;
+    user-select: none;
+}
+.Game .wrapper {
+    padding: 2vmin;
+    background-color: #ccc;
+    margin-bottom: 2vmin;
+}
+.Game .bestScore {
+    margin: 2vmin 0;
+}
