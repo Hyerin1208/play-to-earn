@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./nft-card.css";
 
+import Modal from "./Modal";
+
 const NftCard = (props) => {
   const { title, id, currentBid, creatorImg, imgUrl, creator } = props.item;
+
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="single__nft__card">
       <div className="nft__img">
@@ -35,10 +40,12 @@ const NftCard = (props) => {
         </div>
 
         <div className="bid__box">
-          <button className="bid__btn">
+          <button className="bid__btn" onClick={() => setShowModal(true)}>
             <i className="ri-shopping-bag-line"></i>
             Place Bid
           </button>
+
+          {showModal && <Modal setShowModal={setShowModal} />}
 
           <span className="view__link">
             <Link to="#">View More</Link>

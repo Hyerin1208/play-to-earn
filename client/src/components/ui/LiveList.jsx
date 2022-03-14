@@ -8,7 +8,7 @@ import { NFT__DATA } from "../../assets/data/data.js";
 
 const LiveList = () => {
   return (
-    <section>
+    <div className="live__box">
       <Container>
         <Row>
           <Col lg="12" className="mb-5">
@@ -27,7 +27,7 @@ const LiveList = () => {
           ))}
         </Row>
       </Container>
-    </section>
+    </div>
   );
 };
 
