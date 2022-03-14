@@ -155,7 +155,7 @@ const Tetris = () => {
             <div className={overlayClass} style={overlayStyle}>
                 {!showSettings ? (
                     <>
-                        <h1 className="display-3">Sirtet</h1>
+                        <h1 className="display-3">Tetris</h1>
                         <button className="btn btn-primary mb-3" onClick={startGameHandler}>
                             Play
                         </button>
