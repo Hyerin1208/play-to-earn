@@ -5,7 +5,7 @@ import SnakeGames from "../pages/SnakeGame/SnakeGame";
 import TetrisGames from "../pages/TetrisGame/Tetris.js";
 import PuzzleGames from "../pages/2048Game/2048Game";
 import MineGames from "../pages/MineGame/MineGame";
-import "./game.css";
+import "./Game.css";
 import CommonSection from "../ui/CommonSection";
 import Ranking from "./Ranking";
 import Compensation from "./Compensation";
