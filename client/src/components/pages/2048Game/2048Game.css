@@ -1,102 +1,115 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700");
 
-@media screen and (orientation:portrait) {
-    /* #root {
+@media screen and (orientation: portrait) {
+  /* #root {
         width: 74vw;
         height: 100vw;
     } */
-    .number-table {
-        border-spacing: 2vw;
-    }
-    .number-row {
-        height: 16vw;
-    }
-    .number-cell {
-        width: 16vw;
-    }
-    .score-board {
-        width: 16vw;
-        height: 12vw;
-        margin: 2vw;
-    }
-    .score-info {
-        font-size: 3vw;
-    }
-    .score-value {
-        font-size: 4vw;
-    }
-    .num-2, .num-4, .num-8 {
-        font-size: 10vw;
-    }
-    .num-16, .num-32, .num-64 {
-        font-size: 8vw;
-    }
-    .num-128, .num-256, .num-512 {
-        font-size: 6vw;
-    }
-    .num-1024, .num-2048 {
-        font-size: 4vw;
-    }
-    .dead {
-        font-size: 10vw;
-        width: 74vw;
-        height: 74vw;
-        top: 16vw;
-    }
-    #restart > button > img {
-        width: 10vw;
-        height: 10vw;
-    }
+  .number-table {
+    border-spacing: 2vw;
+  }
+  .number-row {
+    height: 16vw;
+  }
+  .number-cell {
+    width: 16vw;
+  }
+  .score-board {
+    width: 16vw;
+    height: 12vw;
+    margin: 2vw;
+  }
+  .score-info {
+    font-size: 3vw;
+  }
+  .score-value {
+    font-size: 4vw;
+  }
+  .num-2,
+  .num-4,
+  .num-8 {
+    font-size: 10vw;
+  }
+  .num-16,
+  .num-32,
+  .num-64 {
+    font-size: 8vw;
+  }
+  .num-128,
+  .num-256,
+  .num-512 {
+    font-size: 6vw;
+  }
+  .num-1024,
+  .num-2048 {
+    font-size: 4vw;
+  }
+  .dead {
+    font-size: 10vw;
+    width: 74vw;
+    height: 74vw;
+    top: 16vw;
+  }
+  #restart > button > img {
+    width: 10vw;
+    height: 10vw;
+  }
 }
-@media screen and (orientation:landscape) {
-    /* #root {
+@media screen and (orientation: landscape) {
+  /* #root {
         width: 74vh;
         height: 100vh;
     } */
-    .number-table {
-        border-spacing: 2vh;
-    }
-    .number-row {
-        height: 16vh;
-    }
-    .number-cell {
-        width: 16vh;
-    }
-    .score-board {
-        width: 16vh;
-        height: 12vh;
-        margin: 2vh;
-    }
-    .score-info {
-        font-size: 3vh;
-    }
-    .score-value {
-        font-size: 4vh;
-    }
-    .num-2, .num-4, .num-8 {
-        font-size: 10vh;
-    }
-    .num-16, .num-32, .num-64 {
-        font-size: 8vh;
-    }
-    .num-128, .num-256, .num-512 {
-        font-size: 6vh;
-    }
-    .num-1024, .num-2048 {
-        font-size: 4vh;
-    }
-    .dead {
-        font-size: 10vh;
-        width: 74vh;
-        height: 74vh;
-        top: 16vh;
-    }
-    #restart > button > img {
-        width: 10vh;
-        height: 10vh;
-    }
+  .number-table {
+    border-spacing: 2vh;
+  }
+  .number-row {
+    height: 16vh;
+  }
+  .number-cell {
+    width: 16vh;
+  }
+  .score-board {
+    width: 16vh;
+    height: 12vh;
+    margin: 2vh;
+  }
+  .score-info {
+    font-size: 3vh;
+  }
+  .score-value {
+    font-size: 4vh;
+  }
+  .num-2,
+  .num-4,
+  .num-8 {
+    font-size: 10vh;
+  }
+  .num-16,
+  .num-32,
+  .num-64 {
+    font-size: 8vh;
+  }
+  .num-128,
+  .num-256,
+  .num-512 {
+    font-size: 6vh;
+  }
+  .num-1024,
+  .num-2048 {
+    font-size: 4vh;
+  }
+  .dead {
+    font-size: 10vh;
+    width: 74vh;
+    height: 74vh;
+    top: 16vh;
+  }
+  #restart > button > img {
+    width: 10vh;
+    height: 10vh;
+  }
 }
-
 
 /* html, body {
     overscroll-behavior-y: contain;
@@ -111,220 +124,223 @@
 } */
 
 #root {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .number-table {
-    display: table;
-    background-color: rgb(173, 157, 143);
-    width: 100%;
-    height: 100%;
-    border-collapse: separate;
-    border-radius: 2%;
+  display: table;
+  background-color: rgb(173, 157, 143);
+  /* width: 100%;
+    height: 100%; */
+  border-collapse: separate;
+  border-radius: 2%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .number-row {
-    display: table-row;
-    width: 100%;
+  display: table-row;
+  width: 100%;
 }
 
 .number-cell {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    border-radius: 10%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 10%;
 }
 
-
 .num-null {
-    background-color: rgb(193, 180, 164);
+  background-color: rgb(193, 180, 164);
 }
 
 .num-2 {
-    color: rgb(100, 91, 82);
-    background-color: rgb(233, 221, 209);
+  color: rgb(100, 91, 82);
+  background-color: rgb(233, 221, 209);
 }
 
 .num-4 {
-    color: rgb(100, 91, 82);
-    background-color: rgb(232, 217, 189);
+  color: rgb(100, 91, 82);
+  background-color: rgb(232, 217, 189);
 }
 
 .num-8 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(237, 161, 102);
+  color: rgb(248, 244, 238);
+  background-color: rgb(237, 161, 102);
 }
 
 .num-16 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(240, 129, 80);
+  color: rgb(248, 244, 238);
+  background-color: rgb(240, 129, 80);
 }
 
 .num-32 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(241, 101, 77);
+  color: rgb(248, 244, 238);
+  background-color: rgb(241, 101, 77);
 }
 
 .num-64 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(241, 71, 45);
+  color: rgb(248, 244, 238);
+  background-color: rgb(241, 71, 45);
 }
 
 .num-128 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(232, 198, 95);
+  color: rgb(248, 244, 238);
+  background-color: rgb(232, 198, 95);
 }
 
 .num-256 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(231, 194, 80);
+  color: rgb(248, 244, 238);
+  background-color: rgb(231, 194, 80);
 }
 
 .num-512 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(232, 191, 64);
+  color: rgb(248, 244, 238);
+  background-color: rgb(232, 191, 64);
 }
 
 .num-1024 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(231, 187, 49);
+  color: rgb(248, 244, 238);
+  background-color: rgb(231, 187, 49);
 }
 
 .num-2048 {
-    color: rgb(248, 244, 238);
-    background-color: rgb(232, 183, 36);
+  color: rgb(248, 244, 238);
+  background-color: rgb(232, 183, 36);
 }
 
 .num-new {
-    animation: new 0.3s ease-out normal;
+  animation: new 0.3s ease-out normal;
 }
 
 @-webkit-keyframes new {
-    0% {
-        transform: scale(0.2);
-    }
-    80% {
-        transform: scale(1);
-    }
-    90% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(0.2);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .num-merged {
-    animation: merged 0.3s ease-out normal;
+  animation: merged 0.3s ease-out normal;
 }
 
 @-webkit-keyframes merged {
-    0% {
-        transform: scale(0.9);
-    }
+  0% {
+    transform: scale(0.9);
+  }
 
-    25% {
-        transform: scale(1);
-    }
+  25% {
+    transform: scale(1);
+  }
 
-    60% {
-        transform: scale(1.05);
-    }
+  60% {
+    transform: scale(1.05);
+  }
 
-    100% {
-        transform: scale(1);
-    }
-
+  100% {
+    transform: scale(1);
+  }
 }
 
 .score-board {
-    display: table;
-    text-align: center;
-    background-color: rgb(173, 157, 143);
-    border-radius: 10%;
+  display: table;
+  text-align: center;
+  background-color: rgb(173, 157, 143);
+  border-radius: 10%;
 }
 
 .score-info {
-    display: table-row;
-    width: 100%;
-    height: 40%;
-    color: rgb(233, 221, 209);
+  display: table-row;
+  width: 100%;
+  height: 40%;
+  color: rgb(233, 221, 209);
 }
 
 .score-value {
-    display: table-row;
-    width: 100%;
-    height: 60%;
-    line-height: 100%;
-    color: rgb(255, 255, 255);
+  display: table-row;
+  width: 100%;
+  height: 60%;
+  line-height: 100%;
+  color: rgb(255, 255, 255);
 }
 
-.score-info > div, .score-value > div {
-    display: table-cell;
-    vertical-align: middle;
+.score-info > div,
+.score-value > div {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .alive {
-    display: none;
+  display: none;
 }
 
 .dead {
-    display: table;
-    position: absolute;
-    text-align: center;
-    background-color: rgba(231, 194, 80, 0.4);
-    border-radius: 2%;
-    animation: dead-appear 0.3s ease-out normal;
+  display: table;
+  /* position: relative; */
+  text-align: center;
+  background-color: rgba(231, 194, 80, 0.4);
+  border-radius: 2%;
+  animation: dead-appear 0.3s ease-out normal;
 }
 
-#game-over > div, #restart > button {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-#game-over {
-    color: rgb(80, 80, 80);
-}
-
-#game-over, #restart {
-    display: table-row;
-    width: 100%;
+#game-over > div,
+#restart > button {
+  display: table-cell;
+  vertical-align: middle;
+  position: relative;
 }
 
 #game-over {
-    height: 60%;
+  color: rgb(80, 80, 80);
+}
+
+#game-over,
+#restart {
+  display: table-row;
+  width: 100%;
+}
+
+#game-over {
+  height: 60%;
 }
 
 #restart {
-    height: 40%;
+  height: 40%;
 }
 
 #restart > button {
-    background-color: transparent;
-    border: none;
-
+  background-color: transparent;
+  border: none;
 }
 
 @-webkit-keyframes dead-appear {
-    0% {
-        transform: scale(0.2);
-    }
-    80% {
-        transform: scale(1);
-    }
-    90% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(0.2);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #score-group {
-    display: table-row;
+  display: table-row;
 }
 
 #score-group > div {
-    display: table-cell;
+  display: table-cell;
 }
