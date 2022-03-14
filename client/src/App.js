@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { loadWeb3Account, loadWebContract } from "./redux/actions/index";
 
 function App() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
     useEffect(async () => {
         dispatch(loadWeb3Account());

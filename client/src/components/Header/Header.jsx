@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
 // 로고 만들어서 아래 넣을예정
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
 
 import { NavLink, Link } from "react-router-dom";
+
+import WalletModal from "../ui/WalletModal";
 
 const NAV__LINKS = [
     {
@@ -38,18 +40,23 @@ const Header = () => {
 
     const menuRef = useRef(null);
 
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add("header__shrink");
-            } else {
-                headerRef.current.classList.remove("header__shrink");
-            }
-        });
-        return () => {
-            window.removeEventListener("scroll");
-        };
-    }, []);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        headerRef.current.classList.add("header__shrink");
+      } else {
+        headerRef.current.classList.remove("header__shrink");
+      }
+    });
+    return () => {
+      window.removeEventListener("scroll");
+    };
+  }, []);
 
     const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
@@ -78,22 +85,26 @@ const Header = () => {
                         </ul>
                     </div>
 
-                    <div className="nav__right">
-                        <button className="btn">
-                            <span>
-                                <i className="ri-wallet-line"></i>
-                            </span>
-                            <Link to="/wallet">Connect Wallet</Link>
-                        </button>
+          <div className="nav__right">
+            <button className="btn" onClick={() => setShowWalletModal(true)}>
+              <span>
+                <i className="ri-wallet-line"></i>
+              </span>
+              <Link to="/wallet">Connect Wallet</Link>
+            </button>
 
-                        <span className="mobile__menu">
-                            <i className="ri-menu-line" onClick={toggleMenu}></i>
-                        </span>
-                    </div>
-                </div>
-            </Container>
-        </header>
-    );
+            {showWalletModal && (
+              <WalletModal setShowModal={setShowWalletModal} />
+            )}
+
+            <span className="mobile__menu">
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
+            </span>
+          </div>
+        </div>
+      </Container>
+    </header>
+  );
 };
 
 export default Header;

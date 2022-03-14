@@ -34,31 +34,29 @@ const TUTORIAL__DATA = [
 
 const Tutorial = () => {
   return (
-    <section>
-      <Container>
-        <Row>
-          <Col lg="12" className="mb-4">
-            <h3 className="step__title">Battle. Collect. Earn.</h3>
-          </Col>
+    <Container>
+      <Row>
+        <Col lg="12" className="mb-4">
+          <h3 className="step__title">Battle. Collect. Earn.</h3>
+        </Col>
 
-          {TUTORIAL__DATA.map((item, index) => (
-            <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-              <div className="single__step__item">
-                <span>
-                  <i className={item.icon}></i>
-                </span>
-                <div className="step__item__content">
-                  <h5>
-                    <Link to="/wallet">{item.title}</Link>
-                  </h5>
-                  <p className="mb-0">{item.desc}</p>
-                </div>
+        {TUTORIAL__DATA.map((item, index) => (
+          <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+            <div className="single__step__item">
+              <span>
+                <i className={item.icon}></i>
+              </span>
+              <div className="step__item__content">
+                <h5>
+                  <Link to="/wallet">{item.title}</Link>
+                </h5>
+                <p className="mb-0">{item.desc}</p>
               </div>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </section>
+            </div>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 
