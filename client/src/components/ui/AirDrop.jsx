@@ -7,13 +7,11 @@ const AirDrop = () => {
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
   const [timerSeconds, setTimerSeconds] = useState("00");
+  const [isStop, setIsStop] = useState();
 
-  let interval = useRef();
-
-  const startTimer = () => {
-    const countdownDate = new Date("apr 15, 2022 00:00:00").getTime();
-
-    interval = setInterval(() => {
+  useEffect(() => {
+    let interval = setInterval(() => {
+      const countdownDate = new Date("apr 15, 2022 00:00:00").getTime();
       const now = new Date().getTime();
       const distance = countdownDate - now;
 
@@ -24,26 +22,20 @@ const AirDrop = () => {
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (distance < 0) {
-        // stop our timer
-        clearInterval(interval.current);
-      } else {
+      if (!isStop) {
         // update timer
         setTimerDays(days);
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
+      } else {
+        clearInterval(interval);
       }
     }, 1000);
-  };
-
-  // componentDidMount
-  useEffect(() => {
-    startTimer();
     return () => {
-      clearInterval(interval.current);
+      setIsStop(true);
     };
-  });
+  }, []);
 
   return (
     <>
