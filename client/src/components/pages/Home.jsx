@@ -7,14 +7,14 @@ import Members from "../ui/Members";
 import Tutorial from "../ui/Tutorial";
 
 const Home = () => {
-  return (
-    <>
-      <MainSection />
-      <LiveList />
-      <Tutorial />
-      <Members />
-    </>
-  );
+    return (
+        <>
+            <MainSection />
+            <LiveList />
+            <Tutorial />
+            <Members />
+        </>
+    );
 };
 
 export default Home;
