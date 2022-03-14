@@ -1,0 +1,59 @@
+.my__page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.mypage__container {
+  height: 500px;
+  width: 500px;
+  border-radius: 10px;
+  background-color: rgb(80, 33, 124);
+}
+
+.my__heading {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.img-holder {
+  margin: auto;
+  width: 150px;
+  height: 150px;
+  border: 3px solid rgba(0, 0, 0, 0.377);
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+#input[type="file"] {
+  display: none;
+}
+
+.label {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.image-upload {
+  margin: auto;
+  width: 200px;
+  height: 30px;
+  background-color: #1f1829;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.label i {
+  padding: 5px;
+}

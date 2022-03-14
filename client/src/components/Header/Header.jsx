@@ -88,6 +88,14 @@ const Header = () => {
             </ul>
           </div>
 
+          <div>
+            <span>
+              <Link to="/mypage">
+                <i className="ri-user-3-line"></i>
+              </Link>
+            </span>
+          </div>
+
           <div className="nav__right">
             <button className="btn" onClick={() => setShowWalletModal(true)}>
               <span>
