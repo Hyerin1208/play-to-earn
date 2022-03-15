@@ -63,6 +63,10 @@
   align-content: center;
 }
 
+.connect__btn {
+  background-color: #14141f;
+}
+
 @media only screen and (max-width: 768px) {
   .wallet__modal {
     position: relative;
