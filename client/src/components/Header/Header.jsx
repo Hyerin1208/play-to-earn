@@ -4,11 +4,9 @@ import "./header.css";
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import WalletModal from "../ui/WalletModal";
-import { useDispatch, useSelector } from "react-redux";
-import { getWeb3 } from "../../redux/actions/index";
 
 const NAV__LINKS = [
   {
@@ -38,43 +36,29 @@ const NAV__LINKS = [
 ];
 
 const Header = () => {
-    const dispatch = useDispatch();
     const headerRef = useRef(null);
+
     const menuRef = useRef(null);
 
-    const [showWalletModal, setShowWalletModal] = useState(false);
-    const account = useSelector((state) => state.AppState.account);
+  const [showWalletModal, setShowWalletModal] = useState(false);
 
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add("header__shrink");
-            } else {
-                headerRef.current.classList.remove("header__shrink");
-            }
-        });
-        return () => {
-            window.removeEventListener("scroll");
-        };
-    }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        headerRef.current.classList.add("header__shrink");
+      } else {
+        headerRef.current.classList.remove("header__shrink");
+      }
+    });
+    return () => {
+      window.removeEventListener("scroll");
+    };
+  }, []);
 
   const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
-
-    const checkwallet = () => {
-        return (
-            <div className="nav__right">
-                <button className="btn" onClick={() => dispatch(getWeb3())}>
-                    <span>
-                        <i className="ri-wallet-line"></i>
-                    </span>
-                    Connect Wallet
-                </button>
-                <span className="mobile__menu">
-                    <i className="ri-menu-line" onClick={toggleMenu}></i>
-                </span>
-            </div>
-        );
-    };
 
     return (
         <header className="header" ref={headerRef}>
@@ -100,25 +84,27 @@ const Header = () => {
                             ))}
                         </ul>
                     </div>
-                    {account === null ? checkwallet() : <div>{account}</div>}
-                    {/* <div className="nav__right">
-                        <button className="btn" onClick={() => setShowWalletModal(true)}>
-                            <span>
-                                <i className="ri-wallet-line"></i>
-                            </span>
-                            Connect Wallet
-                        </button>
 
-                        {showWalletModal && <WalletModal setShowModal={setShowWalletModal} />}
+          <div className="nav__right">
+            <button className="btn" onClick={() => setShowWalletModal(true)}>
+              <span>
+                <i className="ri-wallet-line"></i>
+              </span>
+              <Link to="/wallet">Connect Wallet</Link>
+            </button>
 
-                        <span className="mobile__menu">
-                            <i className="ri-menu-line" onClick={toggleMenu}></i>
-                        </span>
-                    </div> */}
-                </div>
-            </Container>
-        </header>
-    );
+            {showWalletModal && (
+              <WalletModal setShowModal={setShowWalletModal} />
+            )}
+
+            <span className="mobile__menu">
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
+            </span>
+          </div>
+        </div>
+      </Container>
+    </header>
+  );
 };
 
 export default Header;

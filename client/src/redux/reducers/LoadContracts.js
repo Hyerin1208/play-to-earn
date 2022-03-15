@@ -1,20 +1,16 @@
-import { APP_STATE } from "../actions";
+import { LOAD_CONTRACTS } from "../actions";
 
 const initialState = {
-    accounts: null,
-    account: null,
-    CreateNFTContract: null,
+    CreateNameTokenContract: null,
     BscsimpletokenContract: null,
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case APP_STATE:
+        case LOAD_CONTRACTS:
             return {
                 ...initialState,
-                accounts: action.payload.accounts,
-                account: action.payload.accounts[0],
-                CreateNFTContract: action.payload.CreateNFTContract,
+                CreateNameTokenContract: action.payload.CreateNameTokenContract,
                 BscsimpletokenContract: action.payload.BscsimpletokenContract,
             };
         default:
