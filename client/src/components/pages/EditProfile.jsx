@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, Row } from "reactstrap";
-import { updateProfile } from "../../redux/actions/user";
-import ErrorMessage from "../ErrorMessage";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
@@ -99,9 +97,9 @@ const EditProfile = () => {
                 ></Form.Control>
               </Form.Group>
             </Form>
-            {picMessage && (
+            {/* {picMessage && (
               <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-            )}
+            )} */}
             <Form.Group constrolId="pic">
               <Form.Label>Change Profile Picture</Form.Label>
               <Form.File
