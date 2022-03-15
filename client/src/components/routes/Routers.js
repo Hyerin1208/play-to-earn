@@ -12,8 +12,7 @@ import Wallet from "../pages/Wallet";
 import NftDetails from "../pages/NftDetails";
 import Game from "../pages/Game";
 import Ranking from "../pages/Ranking";
-import SnakeGames from "../pages/SnakeGame/SnakeGame";
-import TetrisGames from "../pages/TetrisGame/Tetris.js";
+import Test from "../pages/Test";
 
 const Routers = () => {
   return (
@@ -29,6 +28,7 @@ const Routers = () => {
         <Route path="/market/:id" element={<NftDetails />} />
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Fragment>
   );

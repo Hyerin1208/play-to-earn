@@ -1,0 +1,12 @@
+.Board {
+    display: inline-grid;
+    grid-gap: 0;
+    column-gap: 0;
+    margin: 0 auto;
+    border: 1vmin solid #ddd;
+    overflow: auto;
+    max-width: 100%;
+}
+.Board.disabled {
+    pointer-events: none;
+}
