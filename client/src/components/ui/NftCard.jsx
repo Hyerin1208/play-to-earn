@@ -49,7 +49,7 @@ const NftCard = (props) => {
           {showModal && <Modal setShowModal={setShowModal} />}
 
           <span className="view__link">
-            <Link to="/market/${}">View More</Link>
+            <Link to={`/market/${id}`}>View More</Link>
           </span>
         </div>
       </div>

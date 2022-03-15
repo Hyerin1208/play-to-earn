@@ -1,0 +1,46 @@
+import React from "react";
+
+import "./my-nfts.css";
+
+const MyNfts = ({ setShowModal }) => {
+  return (
+    <div className="modal__wrapper">
+      <div className="single__modal">
+        <span className="close__modal">
+          <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
+        </span>
+        <h6 className="text-center text-light">My NFTs</h6>
+        <p className="text-center text-light">
+          You must bid at least <span className="money">5.45 ETH</span>
+        </p>
+
+        <div className="input__item mb-4">
+          <input type="number" placeholder="00 : 00 ETH" />
+        </div>
+
+        <div className="input__item mb-3">
+          <h6>Enter Quantity, 7 available</h6>
+          <input type="number" placeholder="Enter quantity" />
+        </div>
+
+        <div className="must__bid">
+          <p>You must bid at least</p>
+          <span className="money">5.89 ETH</span>
+        </div>
+
+        <div className="must__bid">
+          <p>Service Fee</p>
+          <span className="money">0.89 ETH</span>
+        </div>
+
+        <div className="must__bid">
+          <p>Total Bid Amount</p>
+          <span className="money">5.89 ETH</span>
+        </div>
+        <button className="place__bid-btn">Place a bid</button>
+      </div>
+    </div>
+  );
+};
+
+export default MyNfts;

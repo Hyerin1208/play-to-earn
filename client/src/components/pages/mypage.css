@@ -2,14 +2,14 @@
   height: 100%;
   display: flex;
   align-items: center;
-  margin: 50px 30px 100px 150px;
+  margin: 50px 30px 40px 150px;
 }
 
 .mypage__container {
   width: 500px;
   height: 320px;
   border-radius: 10px;
-  background-color: rgb(80, 33, 124);
+  background-color: rgba(80, 33, 124, 0.432);
   padding: 0 10px 20px 10px;
 }
 
@@ -66,7 +66,7 @@
   align-items: center;
   left: 32%;
   transform: translate(-50%, -50%);
-  margin: 45px 20px 0 10px;
+  margin: 14% 20px 0 10px;
   cursor: pointer;
 }
 
@@ -83,6 +83,11 @@
   padding: 5px;
 }
 
+.mynft__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
 .ranking_content {
   width: 140px;
   border: 1.4px solid #5142fc;
@@ -90,6 +95,11 @@
   text-align: center;
   margin: 0px 50px 50px 50px;
   padding: 5px;
+}
+
+.myRanking__btn {
+  background-color: #14141f85;
+  color: white;
 }
 
 .edit_content {
@@ -101,6 +111,11 @@
   padding: 5px;
 }
 
+.editProfile__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
 .gogame_content {
   width: 140px;
   border: 1.4px solid #5142fc;
@@ -109,3 +124,17 @@
   margin: 0px 50px 50px 50px;
   padding: 5px;
 }
+
+.gogame_content a {
+  font-style: none;
+  color: white;
+  text-decoration: none;
+}
+
+/* .mypage__infobox {
+  width: 1000px;
+  height: 320px;
+  margin-left: 15%;
+  border-radius: 10px;
+  background-color: rgba(80, 33, 124, 0.308);
+} */
