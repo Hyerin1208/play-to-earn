@@ -7,12 +7,12 @@ import { MEMBER__DATA } from "../../assets/data/data";
 
 const Members = () => {
   return (
-    <section>
+    <div className="member__box">
       <Container>
         <Row>
           <Col lg="12" className="mb-5">
             <div className="Member__section-title">
-              <h3>OUR TEAM</h3>
+              <h3> OUR TEAM</h3>
             </div>
           </Col>
 
@@ -32,7 +32,7 @@ const Members = () => {
           ))}
         </Row>
       </Container>
-    </section>
+    </div>
   );
 };
 

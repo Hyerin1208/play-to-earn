@@ -60,15 +60,15 @@ export function AudioPlayer() {
 	};
 
 	// load the sound effects into the buffer map
-	Object.keys(AUDIO_EFFECTS_KEYS).forEach((key) => {
-		this._loadSource(AUDIO_EFFECTS[key].default)
-			.then((buffer) => {
-				this._bufferMap[key] = buffer;
-			})
-			.catch((error) => {
-				logError('Error loading sound effect source.', error);
-			});
-	});
+	// Object.keys(AUDIO_EFFECTS_KEYS).forEach((key) => {
+	// 	this._loadSource(AUDIO_EFFECTS[key].default)
+	// 		.then((buffer) => {
+	// 			this._bufferMap[key] = buffer;
+	// 		})
+	// 		.catch((error) => {
+	// 			logError('Error loading sound effect source.', error);
+	// 		});
+	// });
 
 	this._playSource = (buffer, node, rate) => {
 		const source = this._context.createBufferSource();
@@ -113,10 +113,10 @@ export function AudioPlayer() {
 						source: this._playSource(buffer, this._musicNode, 1)
 					});
 				})
-				.catch((error) => {
-					logError('Error loading music source.', error);
-					rej();
-				});
+				// .catch((error) => {
+				// 	logError('Error loading music source.', error);
+				// 	rej();
+				// });
 		});
 	};
 

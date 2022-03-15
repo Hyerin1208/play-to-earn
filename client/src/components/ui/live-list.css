@@ -1,3 +1,7 @@
+.live__box {
+  margin: 50px 50px;
+}
+
 .live__list__top {
   display: flex;
   align-items: center;

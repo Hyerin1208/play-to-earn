@@ -6,7 +6,7 @@ import { renderStartBackground } from "./js/Render";
 import { Game } from "./js/Game.js";
 
 import Settings from "./Settings";
-import "./styles/Tetris.scss";
+import "./styles/Tetris.css";
 
 let sirtet;
 
@@ -155,7 +155,7 @@ const Tetris = () => {
             <div className={overlayClass} style={overlayStyle}>
                 {!showSettings ? (
                     <>
-                        <h1 className="display-3">Sirtet</h1>
+                        <h1 className="display-3">Tetris</h1>
                         <button className="btn btn-primary mb-3" onClick={startGameHandler}>
                             Play
                         </button>
@@ -256,11 +256,11 @@ const Tetris = () => {
                     </button>
                 </div>
             </div>
-            <div className="w-100 text-left d-inline-block p-3">
+            {/* <div className="w-100 text-left d-inline-block p-3">
                 <a className="text-dark" href="https://github.com/greeneman42/sirtet" target="_">
                     Github
                 </a>
-            </div>
+            </div> */}
         </>
     );
 };

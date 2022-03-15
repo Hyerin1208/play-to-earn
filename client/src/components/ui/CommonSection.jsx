@@ -5,11 +5,11 @@ import { Container } from "reactstrap";
 
 const CommonSection = ({ title }) => {
   return (
-    <section className="common__section">
+    <div className="common__section">
       <Container className="common__container">
         <h2>{title}</h2>
       </Container>
-    </section>
+    </div>
   );
 };
 

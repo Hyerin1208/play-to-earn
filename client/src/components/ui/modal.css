@@ -70,14 +70,14 @@
   margin-top: 15px;
 }
 
-.closs__modal {
+.close__modal {
   position: absolute;
-  top: -2px;
+  top: 10px;
   right: -2px;
   z-index: 666666;
 }
 
-.closs__modal i {
+.close__modal i {
   padding: 5px;
   background: #5142fc;
   color: #fff;
