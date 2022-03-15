@@ -11,10 +11,6 @@
   border-radius: 10px;
   background-color: rgba(80, 33, 124, 0.432);
   padding: 0 10px 20px 10px;
-  position: relative;
-  border-radius: 2px solid transparent;
-  background-clip: border-box;
-  cursor: pointer;
 }
 
 .my__heading {
@@ -28,17 +24,14 @@
   width: 150px;
   height: 150px;
   border: 3px solid rgba(0, 0, 0, 0.377);
-  border-radius: 50%;
+  border-radius: 5px;
   margin-top: 1.4rem;
-  display: flex;
 }
 
 .img {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 50%;
-  display: flex;
 }
 
 #input[type="file"] {
@@ -50,7 +43,6 @@
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  color: white;
 }
 
 .image-upload {
@@ -80,10 +72,6 @@
 
 .my__nft i {
   margin-right: 10px;
-}
-
-.my__nft span:hover {
-  color: salmon;
 }
 
 .nft_content {

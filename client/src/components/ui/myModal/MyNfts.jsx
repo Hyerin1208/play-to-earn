@@ -1,50 +1,43 @@
 import React from "react";
-import { Col, Container, Row } from "reactstrap";
-import NftCard from "../NftCard";
 
 import "./my-nfts.css";
 
-import img from "../../../assets/images/img.jpg";
-
-const item = [
-  {
-    id: "1",
-    title: "Guard",
-    imgUrl: img,
-  },
-  {
-    id: "2",
-    title: "Guard",
-    imgUrl: img,
-  },
-  {
-    id: "3",
-    title: "Guard",
-    imgUrl: img,
-  },
-];
-
 const MyNfts = ({ setShowModal }) => {
   return (
-    <div className="nft_wrapper">
-      <div className="single_modal">
-        <span className="close_modal">
+    <div className="modal__wrapper">
+      <div className="single__modal">
+        <span className="close__modal">
           <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
         </span>
         <h6 className="text-center text-light">My NFTs</h6>
-        <p className="text-center text-light">Buy. Sell. Collect.</p>
+        <p className="text-center text-light">
+          You must bid at least <span className="money">5.45 ETH</span>
+        </p>
 
-        <div className="box__myNft mb-4">
-          <div className="mynft__list">
-            <Container>
-              <Row>
-                <Col lg="6" md="4" sm="2">
-                  <NftCard item={item} />
-                </Col>
-              </Row>
-            </Container>
-          </div>
+        <div className="input__item mb-4">
+          <input type="number" placeholder="00 : 00 ETH" />
         </div>
+
+        <div className="input__item mb-3">
+          <h6>Enter Quantity, 7 available</h6>
+          <input type="number" placeholder="Enter quantity" />
+        </div>
+
+        <div className="must__bid">
+          <p>You must bid at least</p>
+          <span className="money">5.89 ETH</span>
+        </div>
+
+        <div className="must__bid">
+          <p>Service Fee</p>
+          <span className="money">0.89 ETH</span>
+        </div>
+
+        <div className="must__bid">
+          <p>Total Bid Amount</p>
+          <span className="money">5.89 ETH</span>
+        </div>
+        <button className="place__bid-btn">Place a bid</button>
       </div>
     </div>
   );
