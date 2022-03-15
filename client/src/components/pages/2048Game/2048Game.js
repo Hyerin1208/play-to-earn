@@ -54,10 +54,6 @@ class Puzzle extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
   onKeyPressed(e) {
     let legalKey = false;
     let grid = this.state.grid;
@@ -144,6 +140,10 @@ class Puzzle extends Component {
         />
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 }
 
