@@ -28,7 +28,7 @@ const MyPage = () => {
       <CommonSection title="Contact" />
       <div className="my__page">
         <div className="mypage__container">
-          <h1 className="my__heading">Change your NFT</h1>
+          <h2 className="my__heading">Change your NFT</h2>
           <div className="img-holder">
             <img src={userBackImage} alt="" id="img" className="img" />
           </div>
@@ -59,9 +59,11 @@ const MyPage = () => {
                   </span>
                   <span className="nft__title">My NFTs</span>
                 </button>
-                {MyNftModal && <MyNfts setShowModal={setMyNftModal} />}
               </div>
             </Col>
+
+            {MyNftModal && <MyNfts setShowModal={setMyNftModal} />}
+
             <Col xs="8">
               <div className="ranking_content">
                 <button
