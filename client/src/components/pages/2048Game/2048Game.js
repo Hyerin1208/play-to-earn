@@ -6,9 +6,10 @@ import Score from "./Score";
 import Hover from "./Hover";
 
 class Puzzle extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
-    this._isMounted = true;
+
     this.state = {
       grid: new Grid(),
       best: 0,
@@ -34,8 +35,6 @@ class Puzzle extends Component {
 
   // 컴포넌트가 생성되고 render 호출 후, 최초 한번
   componentDidMount() {
-    this._isMounted = true;
-
     let events = {
       keydown: this.onKeyPressed,
       touchstart: this.onTouchStart,
@@ -47,8 +46,11 @@ class Puzzle extends Component {
       gesturestart: this.onGestureStart,
     };
 
+    this._isMounted = true;
+
     for (let e in events) {
       document.addEventListener(e, events[e].bind(this));
+      break;
     }
   }
 
