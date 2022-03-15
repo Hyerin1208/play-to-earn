@@ -2,13 +2,15 @@
   height: 100%;
   display: flex;
   align-items: center;
+  margin: 50px 30px 100px 150px;
 }
 
 .mypage__container {
-  height: 500px;
   width: 500px;
+  height: 320px;
   border-radius: 10px;
   background-color: rgb(80, 33, 124);
+  padding: 0 10px 20px 10px;
 }
 
 .my__heading {
@@ -23,7 +25,7 @@
   height: 150px;
   border: 3px solid rgba(0, 0, 0, 0.377);
   border-radius: 5px;
-  margin-top: 1rem;
+  margin-top: 1.4rem;
 }
 
 .img {
@@ -55,5 +57,55 @@
 }
 
 .label i {
+  padding: 5px;
+}
+
+.my__nft {
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  margin: 45px 20px 0 10px;
+  cursor: pointer;
+}
+
+.my__nft i {
+  margin-right: 10px;
+}
+
+.nft_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 10px 50px;
+  padding: 5px;
+}
+
+.ranking_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 50px 50px;
+  padding: 5px;
+}
+
+.edit_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 10px 50px;
+  padding: 5px;
+}
+
+.gogame_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 50px 50px;
   padding: 5px;
 }
