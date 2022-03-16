@@ -18,17 +18,23 @@ function Game() {
       <CommonSection title="GAME'S FEATURES" />
       <Container>
         <Row>
-          <Col>
+          <Col xs="6">
             <div className="game__infoBox">
               <button className="ranking__btn">
-                <Link to="/ranking">랭킹 확인</Link>
+                <Link to="/ranking">
+                  <i className="ri-trophy-line"></i>
+                  Ranking
+                </Link>
               </button>
-
+            </div>
+          </Col>
+          <Col xs="6">
+            <div className="game__infoBox">
               <button
-                className="Compensation__btn"
+                className="compensation__btn"
                 onClick={() => setShowModal(true)}
               >
-                랭킹별 보상리스트
+                <span>Weekly Reward</span>
               </button>
 
               {showModal && <Compensation setShowModal={setShowModal} />}
