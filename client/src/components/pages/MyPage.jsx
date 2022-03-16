@@ -25,7 +25,7 @@ const MyPage = () => {
 
   return (
     <>
-      <CommonSection title="Contact" />
+      <CommonSection title="My Profile" />
       <div className="my__page">
         <div className="mypage__container">
           <h2 className="my__heading">Change your NFT</h2>

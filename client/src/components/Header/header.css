@@ -66,6 +66,7 @@
   padding: 7px 25px;
   border: 1px solid #5142fc;
   border-radius: 50px;
+  color: white;
 }
 
 .btn a {
@@ -82,6 +83,16 @@
 
 .nav__right .btn a:hover {
   color: #fff;
+}
+
+.nav__right .btn:hover {
+  display: flex;
+  gap: 2;
+  align-items: center;
+  padding: 7px 25px;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  color: #5142fc;
 }
 
 .mobile__menu {

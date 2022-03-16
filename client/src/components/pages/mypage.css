@@ -80,10 +80,11 @@
 
 .my__nft i {
   margin-right: 10px;
+  color: salmon;
 }
 
 .my__nft span:hover {
-  color: salmon;
+  color: #5142fc;
 }
 
 .nft_content {

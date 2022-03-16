@@ -12,14 +12,14 @@ const Contact = () => {
   const subjectRef = useRef("");
   const messageRef = useRef("");
 
-  const CreateNameTokenContract = useSelector(
-    (state) => state.LoadContracts.CreateNameTokenContract
-  );
-  const BscsimpletokenContract = useSelector(
-    (state) => state.LoadContracts.BscsimpletokenContract
-  );
-  console.log(CreateNameTokenContract);
-  console.log(BscsimpletokenContract);
+  // const CreateNameTokenContract = useSelector(
+  //   (state) => state.LoadContracts.CreateNameTokenContract
+  // );
+  // const BscsimpletokenContract = useSelector(
+  //   (state) => state.LoadContracts.BscsimpletokenContract
+  // );
+  // console.log(CreateNameTokenContract);
+  // console.log(BscsimpletokenContract);
 
   const handleSubmit = (e) => {
     e.preventDefault();

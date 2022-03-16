@@ -4,9 +4,11 @@ import "./header.css";
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
 
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import WalletModal from "../ui/WalletModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getWeb3 } from "../../redux/actions/index";
 
 const NAV__LINKS = [
   {
@@ -36,11 +38,12 @@ const NAV__LINKS = [
 ];
 
 const Header = () => {
-    const headerRef = useRef(null);
-
-    const menuRef = useRef(null);
+  const dispatch = useDispatch();
+  const headerRef = useRef(null);
+  const menuRef = useRef(null);
 
   const [showWalletModal, setShowWalletModal] = useState(false);
+  const account = useSelector((state) => state.AppState.account);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -60,47 +63,79 @@ const Header = () => {
 
   const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
+  const checkwallet = () => {
     return (
-        <header className="header" ref={headerRef}>
-            <Container>
-                <div className="navigation">
-                    <div className="logo">
-                        <h2>
-                            <span>
-                                <i className="ri-bear-smile-line">{/* <img src={logo} alt="loading..." /> */}</i>
-                            </span>
-                            NFTs
-                        </h2>
-                    </div>
+      <div className="nav__right">
+        <button className="btn" onClick={() => dispatch(getWeb3())}>
+          <span>
+            <i className="ri-wallet-line"></i>
+          </span>
+          Connect Wallet
+        </button>
+        <span className="mobile__menu">
+          <i className="ri-menu-line" onClick={toggleMenu}></i>
+        </span>
+      </div>
+    );
+  };
 
-                    <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
-                        <ul className="nav__list">
-                            {NAV__LINKS.map((item, index) => (
-                                <li className="nav__item" key={index}>
-                                    <NavLink to={item.url} className={(navClass) => (navClass.isActive ? "active" : "")}>
-                                        {item.display}
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-          <div className="nav__right">
-            <button className="btn" onClick={() => setShowWalletModal(true)}>
+  return (
+    <header className="header" ref={headerRef}>
+      <Container>
+        <div className="navigation">
+          <div className="logo">
+            <h2>
               <span>
-                <i className="ri-wallet-line"></i>
+                <i className="ri-bear-smile-line">
+                  {/* <img src={logo} alt="loading..." /> */}
+                </i>
               </span>
-              <Link to="/wallet">Connect Wallet</Link>
-            </button>
+              NFTs
+            </h2>
+          </div>
 
-            {showWalletModal && (
-              <WalletModal setShowModal={setShowWalletModal} />
-            )}
+          <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
+            <ul className="nav__list">
+              {NAV__LINKS.map((item, index) => (
+                <li className="nav__item" key={index}>
+                  <NavLink
+                    to={item.url}
+                    className={(navClass) =>
+                      navClass.isActive ? "active" : ""
+                    }
+                  >
+                    {item.display}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <span className="mobile__menu">
-              <i className="ri-menu-line" onClick={toggleMenu}></i>
+          <div>
+            <span>
+              <div className="mypage__user__icon">
+                <Link to="/mypage">
+                  <i className="ri-user-3-line"></i>
+                </Link>
+              </div>
             </span>
           </div>
+
+          {account === null ? checkwallet() : <div>{account}</div>}
+          {/* <div className="nav__right">
+                        <button className="btn" onClick={() => setShowWalletModal(true)}>
+                            <span>
+                                <i className="ri-wallet-line"></i>
+                            </span>
+                            Connect Wallet
+                        </button>
+
+                        {showWalletModal && <WalletModal setShowModal={setShowWalletModal} />}
+
+                        <span className="mobile__menu">
+                            <i className="ri-menu-line" onClick={toggleMenu}></i>
+                        </span>
+                    </div> */}
         </div>
       </Container>
     </header>

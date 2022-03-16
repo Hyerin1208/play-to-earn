@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-import LoadAccounts from "./LoadAccounts";
-import LoadContracts from "./LoadContracts";
+import AppState from "./AppState";
 
 const rootReducer = combineReducers({
-    LoadAccounts,
-    LoadContracts,
+    AppState,
 });
 
 export default rootReducer;

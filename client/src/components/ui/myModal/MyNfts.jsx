@@ -12,16 +12,6 @@ const item = [
     title: "Guard",
     imgUrl: img,
   },
-  {
-    id: "2",
-    title: "Guard",
-    imgUrl: img,
-  },
-  {
-    id: "3",
-    title: "Guard",
-    imgUrl: img,
-  },
 ];
 
 const MyNfts = ({ setShowModal }) => {
@@ -34,7 +24,7 @@ const MyNfts = ({ setShowModal }) => {
         <h6 className="text-center text-light">My NFTs</h6>
         <p className="text-center text-light">Buy. Sell. Collect.</p>
 
-        <div className="box__myNft mb-4">
+        <div className="box__myNft">
           <div className="mynft__list">
             <Container>
               <Row>
