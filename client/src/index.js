@@ -8,6 +8,7 @@ import { applyMiddleware, createStore } from "redux";
 import promiseMiddleware from "redux-promise";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 import rootReducer from "./redux/reducers/index";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -16,7 +17,7 @@ import "remixicon/fonts/remixicon.css";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}>

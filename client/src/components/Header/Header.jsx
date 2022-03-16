@@ -100,7 +100,7 @@ const Header = () => {
                             ))}
                         </ul>
                     </div>
-                    {account === null ? checkwallet() : <div>{account}</div>}
+                    {window.ethereum._metamask.isUnlocked() === false || window.ethereum.selectedAddress === null ? checkwallet() : <div>{account}</div>}
                     {/* <div className="nav__right">
                         <button className="btn" onClick={() => setShowWalletModal(true)}>
                             <span>
