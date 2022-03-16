@@ -6,6 +6,8 @@ import TetrisGame from "../../pages/TetrisGame/Tetris";
 import PuzzleGame from "../../pages/2048Game/2048Game";
 import MineGame from "../../pages/MineGame/MineGame";
 
+import "./game-card.css";
+
 const GameCard = (props) => {
   const { id, title, imgUrl, text } = props.item;
   console.log(props);
@@ -17,13 +19,14 @@ const GameCard = (props) => {
         </div>
 
         <div className="card__body">
-          <Col lg="3" md="4" sm="6">
+          <Col lg="12" md="3" sm="6">
             <div className="single__game__card">
               <h3 className="gameCard__title">{title}</h3>
-              <p className="gameCard__text text-secondary">{text}</p>
-              <a className="btn btn-outline-secondary">
+              <p className="gameCard__text">{text}</p>
+
+              <button className="gamecard__btn">
                 <Link to={id}>Go to this game</Link>
-              </a>
+              </button>
             </div>
           </Col>
         </div>
