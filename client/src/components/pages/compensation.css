@@ -49,6 +49,7 @@
   width: 95%;
   height: 320px;
   background: black;
+  padding: 10px;
 }
 
 .glow::before,
@@ -90,4 +91,22 @@
 
 .glow::after {
   filter: blur(30px);
+}
+
+.single__rewardBlank {
+  position: relative;
+  margin: 10% auto 0 auto;
+  width: 80%;
+  height: 50px;
+  border: 1.4px solid rgb(255, 0, 170);
+  background: rgb(20, 2, 49);
+  border-radius: 10px;
+}
+
+.single__rewardBlank i {
+  margin: 10px 20px 10px 15px;
+}
+
+.single__rewardBlank h3 {
+  margin: 10px 15px 10px 15px;
 }
