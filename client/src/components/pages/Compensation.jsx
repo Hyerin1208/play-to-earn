@@ -9,7 +9,24 @@ const Compensation = ({ setShowModal }) => {
         <span className="close__modal">
           <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
         </span>
-        <h3 className="text-center text-light">랭킹별 보상 리스트</h3>
+        <h2 className="text-center text-light">Weekly Bonus</h2>
+        <div className="reward__content glow">
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>1등
+            </h3>
+          </div>
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>2등
+            </h3>
+          </div>
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>3등
+            </h3>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import "./GameOver.css";
-import axios from 'axios';
+import axios from "axios";
 
 function GameOver(props) {
   const sendPoint = async () => {
@@ -10,6 +10,7 @@ function GameOver(props) {
       alert("점수 등록 완료");
     });
   };
+
   return (
     <div
       id="GameBoard"

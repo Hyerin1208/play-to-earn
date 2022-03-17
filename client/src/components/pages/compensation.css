@@ -15,7 +15,8 @@
   width: 500px;
   height: 500px;
   transform: translate(-50%, -50%);
-  background: #14141f !important;
+  /* background: #14141f !important; */
+  background: linear-gradient(0deg, #14141f, #28283a) !important;
   border-radius: 5px;
   padding: 30px;
   z-index: 555555 !important;
@@ -30,7 +31,7 @@
 
 .close__modal {
   position: absolute;
-  top: 2px;
+  top: -5px;
   right: -2px;
   z-index: 666666;
 }
@@ -40,4 +41,72 @@
   background: #5142fc;
   color: #fff;
   border-radius: 27%;
+}
+
+.reward__content {
+  position: relative;
+  margin: 10% auto 0;
+  width: 95%;
+  height: 320px;
+  background: black;
+  padding: 10px;
+}
+
+.glow::before,
+.glow::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(
+    45deg,
+    #fbc104,
+    #ff6600,
+    #00ff66,
+    #00ffff,
+    #ff00ff,
+    #ff0099,
+    #6e0dd0,
+    #ff3300,
+    #099fff
+  );
+  background-size: 400%;
+  width: calc(100% + 5px);
+  height: calc(100% + 5px);
+  z-index: -1;
+  animation: animate 20s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.glow::after {
+  filter: blur(30px);
+}
+
+.single__rewardBlank {
+  position: relative;
+  margin: 10% auto 0 auto;
+  width: 80%;
+  height: 50px;
+  border: 1.4px solid rgb(255, 0, 170);
+  background: rgb(20, 2, 49);
+  border-radius: 10px;
+}
+
+.single__rewardBlank i {
+  margin: 10px 20px 10px 15px;
+}
+
+.single__rewardBlank h3 {
+  margin: 10px 15px 10px 15px;
 }

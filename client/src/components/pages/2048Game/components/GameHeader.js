@@ -24,6 +24,7 @@ export const GameHeader = ({ score, handleReset, highScore, setPopup }) => {
    </div>
 
    <div className="buttons">
+    <p onClick={() => setPopup(true)}>How to play</p>
     <Button onClick={handleReset} />
    </div>
   </GameHeaderStyle>

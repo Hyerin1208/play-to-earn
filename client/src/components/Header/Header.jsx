@@ -4,7 +4,7 @@ import "./header.css";
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import WalletModal from "../ui/WalletModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -100,6 +100,17 @@ const Header = () => {
                             ))}
                         </ul>
                     </div>
+
+                    <div>
+                        <span>
+                            <div className="mypage__user__icon">
+                                <Link to="/mypage">
+                                    <i className="ri-user-3-line"></i>
+                                </Link>
+                            </div>
+                        </span>
+                    </div>
+
                     {account === null ? checkwallet() : <div>{account}</div>}
                     {/* <div className="nav__right">
                         <button className="btn" onClick={() => setShowWalletModal(true)}>

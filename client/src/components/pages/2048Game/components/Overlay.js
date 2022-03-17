@@ -1,4 +1,4 @@
-import { Button} from "./Button";
+import { Button } from "./Button";
 import { OverlayStyle } from "./styles/OverlayStyle";
 import axios from "axios";
 
@@ -19,7 +19,9 @@ export const Overlay = ({ handleReset, score }) => {
       </p>
       <Button onClick={handleReset} />
       <br />
-      <button type="submit" onClick={sendPoint}>점수 등록</button>
+      <button type="submit" onClick={sendPoint}>
+        점수 등록
+      </button>
     </OverlayStyle>
   );
 };
