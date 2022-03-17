@@ -28,6 +28,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.4.1",
     "regenerator-runtime": "^0.13.7",
     "remixicon": "^2.5.0",
     "styled-components": "^5.3.3",
