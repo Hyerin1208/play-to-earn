@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import axios from "axios";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -10,6 +11,9 @@ const Test = () => {
     const Account = useSelector((state) => state.AppState.account);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     const BscsimpletokenContract = useSelector((state) => state.AppState.BscsimpletokenContract);
+    const [NFTname, setNFTname] = useState("");
+    const [NFTdesc, setNFTdesc] = useState("");
+    const [NFTimage, setNFTimage] = useState("");
 
     console.log(CreateNFTContract);
     console.log(BscsimpletokenContract);
@@ -122,6 +126,23 @@ const Test = () => {
             }
         });
     }
+
+    //URI 확인
+    async function gettokenuri(tokenId) {
+        const tokenURI = await CreateNFTContract.methods.tokenURI(tokenId).call({ from: Account }, (error) => {
+            if (!error) {
+                console.log("send ok");
+            } else {
+                console.log(error);
+            }
+        });
+        await axios.get(tokenURI).then(async (data) => {
+            setNFTname(data.data.name);
+            setNFTdesc(data.data.description);
+            setNFTimage(data.data.image);
+        });
+        // const result = await axios.get(tokenURI).then((data) => data.data);
+    }
     return (
         <section>
             <h1>UPLOAD TEST</h1>
@@ -187,6 +208,22 @@ const Test = () => {
             >
                 sellnft
             </button>
+            <h1>gettokenuri</h1>
+            <p>
+                tokenID
+                <input type="number" id="URI_token_ID" />
+            </p>
+            <button
+                onClick={() => {
+                    const tokenID = document.querySelector("#URI_token_ID").value;
+                    gettokenuri(tokenID);
+                }}
+            >
+                gettokenuri
+            </button>
+            <div>{NFTname}</div>
+            <div>{NFTdesc}</div>
+            <img src={NFTimage} />
         </section>
     );
 };
