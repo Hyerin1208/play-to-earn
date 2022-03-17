@@ -3,9 +3,9 @@ import "./GameOver.css";
 import axios from "axios";
 
 function GameOver(props) {
-  const sendPoint = async () => {
+  const snakePoint = async () => {
     console.log(props.score);
-    await axios.post(`http://localhost:5000/sendPoint`).then((res) => {
+    await axios.post(`http://localhost:5000/snakePoint`).then((res) => {
       console.log(res.data);
       alert("점수 등록 완료");
     });
@@ -28,7 +28,7 @@ function GameOver(props) {
           {props.highScore}
         </div>
         <div id="PressSpaceText">Press Space to restart</div>
-        <div id="color" type="button" onClick={sendPoint}>
+        <div id="color" type="button" onClick={snakePoint}>
           점수 등록
         </div>
       </div>

@@ -7,6 +7,7 @@ import { Game } from "./js/Game.js";
 
 import Settings from "./Settings";
 import "./styles/Tetris.css";
+import axios from 'axios';
 
 let sirtet;
 
@@ -176,6 +177,14 @@ const Tetris = () => {
     }, [gameState, showSettings, backgroundImage, customization]);
 
     const gameOverOverlay = useMemo(() => {
+        const tetrisPoint = async () => {
+            console.log(gameStats.score);
+            await axios.post(`http://localhost:5000/tetrisPoint`).then((res) => {
+              console.log(res.data);
+              alert("점수 등록 완료");
+            });
+          };
+
         if (!gameState.over) return null;
 
         return (
@@ -183,7 +192,10 @@ const Tetris = () => {
                 <h1>Game over!</h1>
                 <br />
                 <button className="btn btn-primary btn-lg mb-3" onClick={startGameHandler}>
-                    Try again
+                    다시 도전
+                </button>
+                <button className="btn btn-primary btn-lg mb-3" onClick={tetrisPoint}>
+                    점수등록
                 </button>
                 <button className="btn btn-outline-light" onClick={resetGameHandler}>
                     Menu
