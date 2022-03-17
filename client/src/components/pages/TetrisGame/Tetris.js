@@ -8,9 +8,20 @@ import { Game } from "./js/Game.js";
 import Settings from "./Settings";
 import "./styles/Tetris.css";
 
+import axios from 'axios';
+
 let sirtet;
 
 const Tetris = () => {
+
+    // const sendPoint = async () => {
+    //     console.log(gameStats.score);
+    //     await axios.post(`http://localhost:5000/sendPoint`).then((res) => {
+    //       console.log(res.data);
+    //       alert("점수 등록 완료");
+    //     });
+    //   };
+
     const [customization, setCustomization] = useState({
         colors: 0,
         style: 0,
@@ -185,6 +196,9 @@ const Tetris = () => {
                 <button className="btn btn-primary btn-lg mb-3" onClick={startGameHandler}>
                     Try again
                 </button>
+                {/* <button className="btn btn-primary btn-lg mb-3" onClick={sendPoint}>
+                    점수 등록
+                </button> */}
                 <button className="btn btn-outline-light" onClick={resetGameHandler}>
                     Menu
                 </button>
