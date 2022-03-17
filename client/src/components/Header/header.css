@@ -66,6 +66,7 @@
   padding: 7px 25px;
   border: 1px solid #5142fc;
   border-radius: 50px;
+  color: white;
 }
 
 .btn a {
@@ -84,10 +85,30 @@
   color: #fff;
 }
 
+.nav__right .btn:hover {
+  display: flex;
+  gap: 2;
+  align-items: center;
+  padding: 7px 25px;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  color: #5142fc;
+}
+
 .mobile__menu {
   color: #fff;
   font-size: 1.3rem;
   display: none;
+}
+
+.mypage__user__icon a {
+  font-style: none;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.795);
+  font-size: 1.2rem;
+  border: 1.7px solid #4b50e6c4;
+  padding: 4px 7px;
+  border-radius: 30%;
 }
 
 @media only screen and (max-width: 1024px) {
