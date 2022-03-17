@@ -5,7 +5,7 @@ const initialState = {
     accounts: null,
     account: null,
     CreateNFTContract: null,
-    BscsimpletokenContract: null,
+    AmusementArcadeToken: null,
     errorMsg: "",
 };
 
@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
                 accounts: action.payload.accounts,
                 account: action.payload.accounts[0],
                 CreateNFTContract: action.payload.CreateNFTContract,
-                BscsimpletokenContract: action.payload.BscsimpletokenContract,
+                AmusementArcadeToken: action.payload.AmusementArcadeToken,
             };
         case CONNECTION_FAILED:
             return {

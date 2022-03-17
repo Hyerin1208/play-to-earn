@@ -1,5 +1,5 @@
 import CreateNFT from "../../contracts/CreateNFT.json";
-import Bscsimpletoken from "../../contracts/Bscsimpletoken.json";
+import AmusementArcadeToken from "../../contracts/AmusementArcadeToken.json";
 import Web3 from "web3";
 
 export const APP_STATE = "APP_STATE";
@@ -39,15 +39,15 @@ export function getWeb3() {
                 const accounts = await web3.eth.getAccounts();
                 const networkId = await web3.eth.net.getId();
                 const networkData_NFT = CreateNFT.networks[networkId];
-                const networkData_Token = Bscsimpletoken.networks[networkId];
+                const networkData_Token = AmusementArcadeToken.networks[networkId];
                 if (networkData_NFT && networkData_Token) {
                     const NFT_abi = CreateNFT.abi;
                     const NFT_address = networkData_NFT.address;
                     const CreateNFTContract = new web3.eth.Contract(NFT_abi, NFT_address);
-                    const Token_abi = Bscsimpletoken.abi;
+                    const Token_abi = AmusementArcadeToken.abi;
                     const Token_address = networkData_Token.address;
-                    const BscsimpletokenContract = new web3.eth.Contract(Token_abi, Token_address);
-                    dispatch(connectSuccess({ accounts: accounts, account: accounts[0], CreateNFTContract: CreateNFTContract, BscsimpletokenContract: BscsimpletokenContract }));
+                    const AmusementArcadeTokenContract = new web3.eth.Contract(Token_abi, Token_address);
+                    dispatch(connectSuccess({ accounts: accounts, account: accounts[0], CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract }));
 
                     window.ethereum.on("accountsChanged", (accounts) => {
                         dispatch(updateAccounts({ accounts: accounts, account: accounts[0] }));
