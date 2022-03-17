@@ -11,12 +11,21 @@ const Compensation = ({ setShowModal }) => {
         </span>
         <h2 className="text-center text-light">Weekly Bonus</h2>
         <div className="reward__content glow">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus ex id saepe voluptatem, quam dolorem itaque illum
-            omnis ut corrupti, porro minus. Qui repellendus corrupti inventore
-            provident, consectetur eveniet labore.
-          </p>
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>1등
+            </h3>
+          </div>
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>2등
+            </h3>
+          </div>
+          <div className="single__rewardBlank">
+            <h3>
+              <i className="ri-vip-diamond-fill"></i>3등
+            </h3>
+          </div>
         </div>
       </div>
     </div>
