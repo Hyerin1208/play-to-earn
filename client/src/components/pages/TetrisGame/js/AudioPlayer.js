@@ -55,7 +55,7 @@ export function AudioPlayer() {
 					.then(res)
 					.catch(rej);
 			};
-			request.send();
+			// request.send();
 		});
 	};
 

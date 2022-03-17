@@ -3,9 +3,14 @@ import { useEffect } from "react";
 import Routers from "./components/routes/Routers";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import { useDispatch } from "react-redux";
+import { getWeb3 } from "./redux/actions/index";
 
 function App() {
-    useEffect(async () => {}, []);
+    // const dispatch = useDispatch();
+    useEffect(async () => {
+        // dispatch(getWeb3());
+    }, []);
 
     return (
         <>

@@ -1,0 +1,153 @@
+.my__page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 50px 30px 40px 150px;
+}
+
+.mypage__container {
+  width: 500px;
+  height: 320px;
+  border-radius: 10px;
+  background-color: rgba(80, 33, 124, 0.432);
+  padding: 0 10px 20px 10px;
+  position: relative;
+  border-radius: 2px solid transparent;
+  background-clip: border-box;
+  cursor: pointer;
+}
+
+.my__heading {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.img-holder {
+  margin: auto;
+  width: 150px;
+  height: 150px;
+  border: 3px solid rgba(0, 0, 0, 0.377);
+  border-radius: 50%;
+  margin-top: 1.4rem;
+  display: flex;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: flex;
+}
+
+#input[type="file"] {
+  display: none;
+}
+
+.label {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.image-upload {
+  margin: auto;
+  width: 200px;
+  height: 30px;
+  background-color: #1f1829;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.label i {
+  padding: 5px;
+}
+
+.my__nft {
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  margin: 14% 20px 0 10px;
+  cursor: pointer;
+}
+
+.my__nft i {
+  margin-right: 10px;
+  color: salmon;
+}
+
+.my__nft span:hover {
+  color: #5142fc;
+}
+
+.nft_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 10px 50px;
+  padding: 5px;
+}
+
+.mynft__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.ranking_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 50px 50px;
+  padding: 5px;
+}
+
+.myRanking__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.edit_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 10px 50px;
+  padding: 5px;
+}
+
+.editProfile__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.gogame_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 50px 50px;
+  padding: 5px;
+}
+
+.gogame_content a {
+  font-style: none;
+  color: white;
+  text-decoration: none;
+}
+
+/* .mypage__infobox {
+  width: 1000px;
+  height: 320px;
+  margin-left: 15%;
+  border-radius: 10px;
+  background-color: rgba(80, 33, 124, 0.308);
+} */
