@@ -10,13 +10,13 @@ const Test = () => {
     const [formInput, updateFormInput] = useState({ price: "", name: "", description: "" });
     const Account = useSelector((state) => state.AppState.account);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
-    const BscsimpletokenContract = useSelector((state) => state.AppState.BscsimpletokenContract);
+    const AmusementArcadeTokenContract = useSelector((state) => state.AppState.AmusementArcadeTokenContract);
     const [NFTname, setNFTname] = useState("");
     const [NFTdesc, setNFTdesc] = useState("");
     const [NFTimage, setNFTimage] = useState("");
 
     console.log(CreateNFTContract);
-    console.log(BscsimpletokenContract);
+    console.log(AmusementArcadeTokenContract);
 
     useEffect(async () => {}, []);
 
