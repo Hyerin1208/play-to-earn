@@ -7,6 +7,7 @@ const { sequelize } = require("./models");
 
 var mainRouter = require("./routes/main");
 var userRouter = require("./routes/user");
+var snakeRouter = require("./routes/snake");
 
 var app = express();
 
@@ -26,5 +27,6 @@ sequelize
 
 app.use("/main", mainRouter);
 app.use("/user", userRouter);
+app.use("/snake", snakeRouter);
 
 module.exports = app;
