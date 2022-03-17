@@ -9,6 +9,10 @@ import Compensation from "./Compensation";
 import GameCard from "../ui/gamePreview/GameCard";
 
 import { GAMECARD__DATA } from "../../assets/data/gamecard";
+import SnakeGame from "../pages/SnakeGame/SnakeGame";
+import TetrisGame from "../pages/TetrisGame/Tetris";
+import PuzzleGame from "../pages/2048Game/2048Game";
+import MineGame from "../pages/MineGame/MineGame";
 
 function Game() {
   const [showModal, setShowModal] = useState(false);
@@ -54,6 +58,12 @@ function Game() {
             </Col>
           ))}
         </Row>
+        <Routes>
+          <Route path="1" element={<SnakeGame />} />
+          <Route path="2" element={<TetrisGame />} />
+          <Route path="3" element={<PuzzleGame />} />
+          <Route path="4" element={<MineGame />} />
+        </Routes>
       </Container>
     </Fragment>
   );

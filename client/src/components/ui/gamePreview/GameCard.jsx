@@ -1,10 +1,10 @@
 import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { Col } from "reactstrap";
-import SnakeGame from "../../pages/SnakeGame/SnakeGame";
-import TetrisGame from "../../pages/TetrisGame/Tetris";
-import PuzzleGame from "../../pages/2048Game/2048Game";
-import MineGame from "../../pages/MineGame/MineGame";
+// import SnakeGame from "../../pages/SnakeGame/SnakeGame";
+// import TetrisGame from "../../pages/TetrisGame/Tetris";
+// import PuzzleGame from "../../pages/2048Game/2048Game";
+// import MineGame from "../../pages/MineGame/MineGame";
 
 import "./game-card.css";
 
@@ -26,16 +26,11 @@ const GameCard = (props) => {
 
               <button className="gamecard__btn">
                 <Link to={id}>Go to this game</Link>
+                {/* <Link onClick={() => Navigate("id")}>Go to this game</Link> */}
               </button>
             </div>
           </Col>
         </div>
-        <Routes>
-          <Route path="1" element={<SnakeGame />} />
-          <Route path="2" element={<TetrisGame />} />
-          <Route path="3" element={<PuzzleGame />} />
-          <Route path="4" element={<MineGame />} />
-        </Routes>
       </div>
     </>
   );
