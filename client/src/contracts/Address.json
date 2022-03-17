@@ -7923,7 +7923,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
+<<<<<<< HEAD
   "updatedAt": "2022-03-16T05:52:27.917Z",
+=======
+  "updatedAt": "2022-03-15T05:13:29.558Z",
+>>>>>>> coolmarvel
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "kind": "dev",

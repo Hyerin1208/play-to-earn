@@ -938,7 +938,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
+<<<<<<< HEAD
   "updatedAt": "2022-03-16T05:52:27.906Z",
+=======
+  "updatedAt": "2022-03-15T05:13:29.555Z",
+>>>>>>> coolmarvel
   "devdoc": {
     "details": "See https://eips.ethereum.org/EIPS/eip-721",
     "kind": "dev",

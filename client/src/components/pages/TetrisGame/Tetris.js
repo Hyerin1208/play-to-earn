@@ -40,7 +40,10 @@ const Tetris = () => {
     const [countdownText, setCountdownText] = useState("");
     const [showSettings, setShowSettings] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
+        setLoading(true);
         canvasRef.current.width = CANVAS_WIDTH;
         canvasRef.current.height = CANVAS_HEIGHT;
         const ctx = canvasRef.current.getContext("2d");
@@ -57,6 +60,8 @@ const Tetris = () => {
 
         // add game event listener
         window.addEventListener("blur", sirtet.pauseGame, false);
+
+        setLoading(false);
 
         return () => {
             window.removeEventListener("blur", sirtet.pauseGame, false);

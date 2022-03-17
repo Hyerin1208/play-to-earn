@@ -5113,7 +5113,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
+<<<<<<< HEAD
   "updatedAt": "2022-03-16T05:52:27.940Z",
+=======
+  "updatedAt": "2022-03-15T05:13:29.566Z",
+>>>>>>> coolmarvel
   "devdoc": {
     "details": "String operations.",
     "kind": "dev",
