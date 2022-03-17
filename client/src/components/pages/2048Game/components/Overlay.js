@@ -14,7 +14,7 @@ export const Overlay = ({ handleReset, score }) => {
   
   const sendPoint = async () => {
     console.log(score);
-    await API.post(`http://localhost:5000/api/sendPoint`).then((res) => {
+    await API.post(`http://localhost:5000/sendPoint`).then((res) => {
       res.send(JSON.stringify(score));
       console.log(res.data);
       alert("점수 등록 완료");
