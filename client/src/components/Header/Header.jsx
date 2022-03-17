@@ -11,118 +11,108 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWeb3 } from "../../redux/actions/index";
 
 const NAV__LINKS = [
-  {
-    display: "Home",
-    url: "/",
-  },
-  {
-    display: "Market",
-    url: "/market",
-  },
-  {
-    display: "Create",
-    url: "/create",
-  },
-  {
-    display: "Game",
-    url: "/game",
-  },
-  {
-    display: "Contact",
-    url: "/contact",
-  },
-  {
-    display: "TestField",
-    url: "/test",
-  },
+    {
+        display: "Home",
+        url: "/",
+    },
+    {
+        display: "Market",
+        url: "/market",
+    },
+    {
+        display: "Create",
+        url: "/create",
+    },
+    {
+        display: "Game",
+        url: "/game",
+    },
+    {
+        display: "Contact",
+        url: "/contact",
+    },
+    {
+        display: "TestField",
+        url: "/test",
+    },
 ];
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const headerRef = useRef(null);
-  const menuRef = useRef(null);
+    const dispatch = useDispatch();
+    const headerRef = useRef(null);
+    const menuRef = useRef(null);
 
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const account = useSelector((state) => state.AppState.account);
+    const [showWalletModal, setShowWalletModal] = useState(false);
+    const account = useSelector((state) => state.AppState.account);
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        headerRef.current.classList.add("header__shrink");
-      } else {
-        headerRef.current.classList.remove("header__shrink");
-      }
-    });
-    return () => {
-      window.removeEventListener("scroll");
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                headerRef.current.classList.add("header__shrink");
+            } else {
+                headerRef.current.classList.remove("header__shrink");
+            }
+        });
+        return () => {
+            window.removeEventListener("scroll");
+        };
+    }, []);
+
+    const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
+
+    const checkwallet = () => {
+        return (
+            <div className="nav__right">
+                <button className="btn" onClick={() => dispatch(getWeb3())}>
+                    <span>
+                        <i className="ri-wallet-line"></i>
+                    </span>
+                    Connect Wallet
+                </button>
+                <span className="mobile__menu">
+                    <i className="ri-menu-line" onClick={toggleMenu}></i>
+                </span>
+            </div>
+        );
     };
-  }, []);
 
-  const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
-
-  const checkwallet = () => {
     return (
-      <div className="nav__right">
-        <button className="btn" onClick={() => dispatch(getWeb3())}>
-          <span>
-            <i className="ri-wallet-line"></i>
-          </span>
-          Connect Wallet
-        </button>
-        <span className="mobile__menu">
-          <i className="ri-menu-line" onClick={toggleMenu}></i>
-        </span>
-      </div>
-    );
-  };
+        <header className="header" ref={headerRef}>
+            <Container>
+                <div className="navigation">
+                    <div className="logo">
+                        <h2>
+                            <span>
+                                <i className="ri-bear-smile-line">{/* <img src={logo} alt="loading..." /> */}</i>
+                            </span>
+                            NFTs
+                        </h2>
+                    </div>
 
-  return (
-    <header className="header" ref={headerRef}>
-      <Container>
-        <div className="navigation">
-          <div className="logo">
-            <h2>
-              <span>
-                <i className="ri-bear-smile-line">
-                  {/* <img src={logo} alt="loading..." /> */}
-                </i>
-              </span>
-              NFTs
-            </h2>
-          </div>
+                    <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
+                        <ul className="nav__list">
+                            {NAV__LINKS.map((item, index) => (
+                                <li className="nav__item" key={index}>
+                                    <NavLink to={item.url} className={(navClass) => (navClass.isActive ? "active" : "")}>
+                                        {item.display}
+                                    </NavLink>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-          <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
-            <ul className="nav__list">
-              {NAV__LINKS.map((item, index) => (
-                <li className="nav__item" key={index}>
-                  <NavLink
-                    to={item.url}
-                    className={(navClass) =>
-                      navClass.isActive ? "active" : ""
-                    }
-                  >
-                    {item.display}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    <div>
+                        <span>
+                            <div className="mypage__user__icon">
+                                <Link to="/mypage">
+                                    <i className="ri-user-3-line"></i>
+                                </Link>
+                            </div>
+                        </span>
+                    </div>
 
-          <div>
-            <span>
-              <div className="mypage__user__icon">
-                <Link to="/mypage">
-                  <i className="ri-user-3-line"></i>
-                </Link>
-              </div>
-            </span>
-          </div>
-
-          {account === null ? checkwallet() : <div>{account}</div>}
-          {/* <div className="nav__right">
+                    {account === null ? checkwallet() : <div>{account}</div>}
+                    {/* <div className="nav__right">
                         <button className="btn" onClick={() => setShowWalletModal(true)}>
                             <span>
                                 <i className="ri-wallet-line"></i>
@@ -136,10 +126,10 @@ const Header = () => {
                             <i className="ri-menu-line" onClick={toggleMenu}></i>
                         </span>
                     </div> */}
-        </div>
-      </Container>
-    </header>
-  );
+                </div>
+            </Container>
+        </header>
+    );
 };
 
 export default Header;
