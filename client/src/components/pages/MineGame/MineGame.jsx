@@ -10,10 +10,10 @@ const EMOJI_GAME_OVER = "💀";
 const EMOJI_WIN = "😎";
 
 class Game extends Component {
-  minePoint = async () => {
+  sendPoint = async () => {
     const bestTime = this.state.bestTimes[this.getBestTimeKey()] || null;
     console.log(bestTime);
-    await axios.post(`http://localhost:5000/minePoint`).then((res) => {
+    await axios.post(`http://localhost:5000/mine`, { bestTime }).then((res) => {
       console.log(res.data);
       alert("점수 등록 완료");
     });
@@ -332,7 +332,7 @@ class Game extends Component {
         />
         <div className="bestScore">
           {this.getBestTimeText()}&nbsp;
-          <button type="submit" onClick={this.minePoint}>
+          <button type="submit" onClick={this.sendPoint}>
             점수 등록
           </button>
         </div>

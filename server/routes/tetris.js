@@ -1,12 +1,12 @@
 var express = require("express");
 var router = express.Router();
-const { Puzzle } = require("../models");
+const { Tetris } = require("../models");
 
 router.post("/", async (req, res, next) => {
   const { point } = req.body;
 
   try {
-    Puzzle.create({
+    Tetris.create({
       point: point,
     });
     return res.json({ message: "ok" });

@@ -6,11 +6,6 @@ module.exports = class Snake extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                // address: {
-                //     type: Sequelize.STRING(200),
-                //     allowNull: true,
-                //     unique: true, // unique: true - 고유하게
-                // },
                 point: {
                     type: Sequelize.INTEGER(100),
                     allowNull: false,

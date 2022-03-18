@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 
 /* 사용자 정보 DB */
-module.exports = class Puzzle extends Sequelize.Model {
+module.exports = class Mine extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
@@ -15,8 +15,8 @@ module.exports = class Puzzle extends Sequelize.Model {
                 sequelize,
                 timestamps: true,
                 underscored: false,
-                modelName: "Puzzle",
-                tableName: "puzzles",
+                modelName: "Mine",
+                tableName: "mines",
                 paranoid: true,
                 charset: "utf8",
                 collate: "utf8_general_ci",

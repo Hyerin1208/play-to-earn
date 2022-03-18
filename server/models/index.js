@@ -6,6 +6,8 @@ const config = require("../config/config")[env];
 const User = require("./user");
 const Snake = require("./snake");
 const Puzzle = require("./2048");
+const Mine = require("./mine");
+const Tetris = require("./tetris");
 
 const db = {};
 
@@ -17,13 +19,19 @@ db.Sequelize = Sequelize;
 db.User = User;
 db.Snake = Snake;
 db.Puzzle = Puzzle;
+db.Mine = Mine;
+db.Tetris = Tetris;
 
 User.init(sequelize);
 Snake.init(sequelize);
 Puzzle.init(sequelize);
+Mine.init(sequelize);
+Tetris.init(sequelize);
 
 User.associate(db);
 Snake.associate(db);
 Puzzle.associate(db);
+Mine.associate(db);
+Tetris.associate(db);
 
 module.exports = db;
