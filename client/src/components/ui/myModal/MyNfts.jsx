@@ -38,6 +38,7 @@ const MyNfts = ({ setShowModal }) => {
           <div className="mynft__list">
             <Container>
               <Row>
+                <NftCard />
                 {/* <Col lg="6" md="4" sm="2">
                   <NftCard item={item} />
                 </Col> */}

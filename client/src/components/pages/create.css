@@ -51,7 +51,6 @@
 .create__btn {
   /* display: flex; */
   height: 75px;
-  gap: 2;
   align-items: center;
   padding: 7px 25px;
   border: 1px solid #000000;
@@ -85,6 +84,10 @@
 
 .create__btn span:hover {
   color: #353535;
+}
+
+.create__input {
+  margin-top: 20px;
 }
 
 @media only screen and (max-width: 576px) {

@@ -12,7 +12,7 @@ import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
 import img from "../../assets/images/img.jpg";
 import admin from "../../assets/images/avatar.png";
-import defaultImg from "../../assets/images/user_bg.png";
+import defaultImg from "../../assets/images/defaultImg.gif";
 
 const item = {
   id: "1",
@@ -30,8 +30,8 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 const Create = () => {
   const [fileUrl, setFileUrl] = useState(defaultImg);
   const [formInput, updateFormInput] = useState({
-    price: "noname",
-    name: "00.00",
+    price: "00.00",
+    name: "noname",
     description: "desc",
   });
   const Account = useSelector((state) => state.AppState.account);
@@ -111,39 +111,6 @@ const Create = () => {
           console.log(error);
         }
       });
-  }
-
-  //URI 확인
-  async function gettokenuri(tokenId) {
-    const tokenURI = await CreateNFTContract.methods
-      .tokenURI(tokenId)
-      .call({ from: Account }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-    await axios.get(tokenURI).then(async (data) => {
-      setNFTname(data.data.name);
-      setNFTdesc(data.data.description);
-      setNFTimage(data.data.image);
-    });
-    // const result = await axios.get(tokenURI).then((data) => data.data);
-  }
-
-  //오너 nft 판매 리스트
-  async function ownerselllists() {
-    const lists = await CreateNFTContract.methods
-      .OwnerSelllists()
-      .call({ from: Account }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-    console.log(await lists);
   }
 
   return (
