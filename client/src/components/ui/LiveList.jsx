@@ -7,6 +7,33 @@ import NftCard from "./NftCard";
 import { NFT__DATA } from "../../assets/data/data.js";
 
 const LiveList = () => {
+  //오너 nft 판매 리스트
+  async function ownerselllists() {
+    const lists = await CreateNFTContract.methods
+      .OwnerSelllists()
+      .call({ from: Account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    console.log(await lists);
+  }
+
+  //유저 nft 판매 리스트
+  async function userselllists() {
+    const lists = await CreateNFTContract.methods
+      .UserSelllists()
+      .call({ from: Account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    console.log(await lists);
+  }
   return (
     <div className="live__box">
       <Container>

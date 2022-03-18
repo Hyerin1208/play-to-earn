@@ -1,20 +1,30 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
 import NftCard from "../NftCard";
 
 import "./my-nfts.css";
 
-import img from "../../../assets/images/img.jpg";
-
-const item = [
-  {
-    id: "1",
-    title: "Guard",
-    imgUrl: img,
-  },
-];
-
 const MyNfts = ({ setShowModal }) => {
+  const Account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+
+  //내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: Account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    console.log(await lists);
+  }
+
   return (
     <div className="nft_wrapper">
       <div className="single_modal">
@@ -28,9 +38,10 @@ const MyNfts = ({ setShowModal }) => {
           <div className="mynft__list">
             <Container>
               <Row>
-                <Col lg="6" md="4" sm="2">
+                {/* <Col lg="6" md="4" sm="2">
                   <NftCard item={item} />
-                </Col>
+                </Col> */}
+                <div className="mynft__container">{}</div>
               </Row>
             </Container>
           </div>

@@ -48,6 +48,45 @@
   cursor: pointer;
 }
 
+.create__btn {
+  /* display: flex; */
+  height: 75px;
+  gap: 2;
+  align-items: center;
+  padding: 7px 25px;
+  border: 1px solid #000000;
+  border-radius: 50px;
+  background: #5142fc;
+}
+
+.create__btn a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  display: inline-block;
+  font-weight: 500;
+  margin: 10px;
+}
+
+.create__btn span {
+  color: #fff;
+  margin-right: 8px;
+}
+
+.create__btn:hover {
+  /* display: flex; */
+  gap: 2;
+  align-items: center;
+  padding: 7px 25px;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  background-color: #5242fc42;
+}
+
+.create__btn span:hover {
+  color: #353535;
+}
+
 @media only screen and (max-width: 576px) {
   .create__input {
     margin-top: 15px;
