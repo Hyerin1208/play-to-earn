@@ -3,17 +3,23 @@ var router = express.Router();
 const { Snake } = require("../models");
 
 router.get("/snakePoint", async (req, res, next) => {
+  //샘플코드
+  const { score } = req.body;
   try {
-    //샘플코드
-    res.header("Access-Control-Allow-Origin", "*");
-    const { point } = req.body;
-    const result = await point.request();
-    console.log(point);
-    res.send(JSON.stringify(result));
-    // Snake.create({ point: point });
-  } catch (err) {
-    res.status(500);
-    res.send(err.message);
+    const findSnake = await Snake.findOne({ where: { point } });
+
+    if (findSnake) {
+      return res.json({ message: "fff" });
+    }
+
+    Snake.create({
+      point: score,
+    });
+
+    return res.json({ message: "ddd" });
+  } catch (error) {
+    console.error(error);
+    return next(error);
   }
 });
 

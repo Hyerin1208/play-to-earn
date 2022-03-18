@@ -9,7 +9,7 @@ var debug = require("debug")("server:server");
 var http = require("http");
 var cors = require("cors");
 const { createProxyMiddleware } = require('http-proxy-middleware');
-app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
+app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true, router: 'http://localhost:5000' }));
 
 
 /**
