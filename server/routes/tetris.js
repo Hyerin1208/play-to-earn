@@ -3,11 +3,11 @@ var router = express.Router();
 const { Tetris } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { point } = req.body;
+  const { data } = req.body;
 
   try {
     Tetris.create({
-      point: point,
+      point: data,
     });
     return res.json({ message: "ok" });
   } catch (error) {

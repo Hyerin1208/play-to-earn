@@ -5,8 +5,8 @@ import axios from "axios";
 function GameOver(props) {
   const sendPoint = async () => {
     console.log(props.score);
-    const score = props.score;
-    await axios.post(`http://localhost:5000/snake`, { score }).then((res) => {
+    const point = props.score;
+    await axios.post(`http://localhost:5000/snake`, { point }).then((res) => {
       console.log(res.data);
       alert("점수 등록 완료");
     });

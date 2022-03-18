@@ -3,11 +3,11 @@ var router = express.Router();
 const { Puzzle } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { point } = req.body;
+  const { score } = req.body;
 
   try {
     Puzzle.create({
-      point: point,
+      point: score,
     });
     return res.json({ message: "ok" });
   } catch (error) {

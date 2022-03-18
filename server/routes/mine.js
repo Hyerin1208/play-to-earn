@@ -3,11 +3,11 @@ var router = express.Router();
 const { Mine } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { point } = req.body;
+  const { bestTime } = req.body;
 
   try {
     Mine.create({
-      point: point,
+      point: bestTime,
     });
     return res.json({ message: "ok" });
   } catch (error) {
