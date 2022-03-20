@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Card } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./live-list.css";
 
@@ -7,29 +7,27 @@ import axios from "axios";
 
 import NftCard from "./NftCard";
 import { useSelector } from "react-redux";
-import { fileURLToPath } from "url";
 
 const LiveList = (props) => {
-  const [nftListArr, setnftListArr] = useState({
-    price: "",
-    name: "",
-    description: "",
-  });
   const [nftListBox, setnftListBox] = useState([]);
   const nftArray = [...nftListBox].reverse();
+  const [loadingState, setLoadingState] = useState("not-loaded");
 
+  const [fileUrl, setFileUrl] = useState("");
   const [NFTimage, setNFTimage] = useState("");
   const [NFTname, setNFTname] = useState("");
   const [NFTdesc, setNFTdesc] = useState("");
   const [NFTprice, setNFTprice] = useState("");
   const [form, setForm] = useState({
-    fileUrl: "",
+    fileUrl: fileUrl,
     formInput: {
       price: "",
       name: "",
       description: "",
     },
   });
+
+  //console.log("+++++++++++");
 
   useEffect(() => {
     ownerselllists();
@@ -51,8 +49,25 @@ const LiveList = (props) => {
           console.log(error);
         }
       });
+
+    // const items = await Promise.all(
+    //   lists.map(async (i) => {
+    //     const tokenURI = await CreateNFTContract.methods.tokenURI(i.tokenId);
+    //     const meta = await axios.get(tokenURI);
+    //     const price = parseInt(i.price.toString(), "ether");
+    //     let item = {
+    //       price,
+    //       tokenId: i.tokenId.toNumber(),
+    //       image: meta.lists.image,
+    //       name: meta.lists.name,
+    //       description: meta.lists.description,
+    //     };
+    //     return item;
+    //   })
+    // );
     console.log(await lists);
     setnftListBox(await lists);
+    setLoadingState("loaded");
   }
 
   //URI 확인
@@ -80,6 +95,7 @@ const LiveList = (props) => {
       });
     });
     // const result = await axios.get(tokenURI).then((data) => data.data);
+    // console.log(result);
   }
 
   //유저 nft 판매 리스트
@@ -95,6 +111,9 @@ const LiveList = (props) => {
   //     });
   //   console.log(await lists);
   // }
+
+  if (loadingState === "loaede" && !nftArray.length)
+    return <h1 className="px-20 py-10 text-3xl">No items in market place</h1>;
   return (
     <div className="live__box">
       <Container>
@@ -107,11 +126,23 @@ const LiveList = (props) => {
               </span>
             </div>
           </Col>
-          <button onClick={() => ownerselllists()}>owner sell lists</button>
-
-          {nftListBox.slice(0, 4).map((item, index) => (
+          <button onClick={() => ownerselllists()}>
+            owner sell lists
+            {/* <button
+            onClick={() => {
+              const CardImage = document.querySelector("").value;
+              const CardTitle = document.querySelector("").value;
+              const CardPrice = document.querySelector("").value;
+              const CardDesc = document.querySelector("").value;
+            }}
+          > */}
+            owner sell lists
+          </button>
+          {nftArray.slice(0, 4).map((item, index) => (
             <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-              <NftCard item={form} />
+              <NftCard item={form}>
+                <Card.Img varient="top" src={item.image} />
+              </NftCard>
             </Col>
           ))}
         </Row>

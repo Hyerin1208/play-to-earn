@@ -10,19 +10,9 @@ import "./create.css";
 /* 아래는 임시데이터와 img + 카드구조 & css */
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
-import img from "../../assets/images/img.jpg";
-import admin from "../../assets/images/avatar.png";
+
 import defaultImg from "../../assets/images/defaultImg.gif";
 
-const item = {
-  id: "1",
-  title: "Guard",
-  desc: "원숭이",
-  imgUrl: img,
-  creator: "ALTAVA Group",
-  creatorImg: admin,
-  currentBid: 5.89,
-};
 /////////////////////////////////////////////////////////////////////
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
@@ -38,12 +28,6 @@ const Create = () => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-
-  const [NFTimage, setNFTimage] = useState("");
-
-  const [NFTname, setNFTname] = useState("");
-  const [NFTdesc, setNFTdesc] = useState("");
-  const [NFTprice, setNFTprice] = useState("");
 
   // useEffect(async () => {}, []);
 

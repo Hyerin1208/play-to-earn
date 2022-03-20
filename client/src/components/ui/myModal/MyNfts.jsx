@@ -1,29 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import NftCard from "../NftCard";
 
 import "./my-nfts.css";
 
-const MyNfts = ({ setShowModal }) => {
-  const Account = useSelector((state) => state.AppState.account);
-  const CreateNFTContract = useSelector(
-    (state) => state.AppState.CreateNFTContract
-  );
+import { NFT__DATA } from "../../../assets/data/data";
 
-  //내 nft 리스트
-  async function mynftlists() {
-    const lists = await CreateNFTContract.methods
-      .MyNFTlists()
-      .call({ from: Account }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-    console.log(await lists);
-  }
+const MyNfts = ({ setShowModal }) => {
+  const [seletedImg, setSelectedImg] = useState(NFT__DATA[0]);
+
+  // const handleSeleted = () => {
+  //   setSelectedImg((prevImage) => [...prevImage]);
+  // };
+
+  useEffect(() => {
+    console.log("update");
+  }, [seletedImg]);
 
   return (
     <div className="nft_wrapper">
@@ -36,13 +28,25 @@ const MyNfts = ({ setShowModal }) => {
 
         <div className="box__myNft">
           <div className="mynft__list">
-            <Container>
+            <Container className="images__box">
               <Row>
-                <NftCard />
-                {/* <Col lg="6" md="4" sm="2">
-                  <NftCard item={item} />
-                </Col> */}
-                <div className="mynft__container">{}</div>
+                {/* <Col lg="6" md="4" sm="2"> */}
+                {/* <NftCard item={item} /> */}
+                {/* </Col> */}
+                <img src={seletedImg} alt="Selected" className="selected" />
+                <div className="img__Container">
+                  {NFT__DATA.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img.imgUrl}
+                      alt="nfts"
+                      onClick={() => setSelectedImg(img)}
+                      style={{
+                        border: seletedImg === img ? "4px solid purple" : "",
+                      }}
+                    />
+                  ))}
+                </div>
               </Row>
             </Container>
           </div>
