@@ -1,6 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
 
+import ScrollToTop from "react-scroll-to-top";
+
 import MainSection from "../ui/MainSection";
 import LiveList from "../ui/LiveList";
 import Members from "../ui/Members";
@@ -12,6 +14,7 @@ import NewsLetter from "../ui/NewsLetter";
 const Home = () => {
   return (
     <>
+      <ScrollToTop smooth top="20" />
       <MainSection />
       <AirDrop />
       <LiveList />

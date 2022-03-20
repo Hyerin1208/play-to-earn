@@ -17,7 +17,6 @@
 
 .my__nft i {
   margin-right: 10px;
-  color: salmon;
 }
 
 .my__nft span:hover {
@@ -116,7 +115,7 @@
 }
 
 .upper__container .pfp__container img {
-  border: 2px solid tomato;
+  border: 2px solid #4938ff;
 }
 
 .lower__container {
@@ -140,7 +139,7 @@ h4 {
 }
 
 .lower__container h4 {
-  color: tomato;
+  color: #4938ff;
   font-weight: 760;
   font-size: 1.2rem;
 }
@@ -153,10 +152,10 @@ h4 {
 
 .pfp__button {
   margin: 1rem;
-  color: tomato;
+  color: #4938ff;
   font: bold;
   background-color: white;
-  border: 2px solid tomato;
+  border: 2px solid #4938ff;
   border-radius: 5px;
   padding: 0.6rem;
   border-radius: 6px;
