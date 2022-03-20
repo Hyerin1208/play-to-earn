@@ -16,4 +16,9 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  const { bestTime } = req.body;
+  res.sendFile(bestTime);
+});
+
 module.exports = router;

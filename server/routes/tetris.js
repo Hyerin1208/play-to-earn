@@ -16,4 +16,9 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  const { data } = req.body;
+  res.sendFile(data);
+});
+
 module.exports = router;
