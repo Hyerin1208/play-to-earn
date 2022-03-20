@@ -5,7 +5,7 @@ import axios from "axios";
 export const Overlay = ({ handleReset, score }) => {
   const sendPoint = async () => {
     console.log(score);
-    await axios.post(`http://localhost:5000/2048`,  {score} ).then((res) => {
+    await axios.post(`http://localhost:5000/2048`, { score }).then((res) => {
       console.log(res.data);
       // res.send(JSON.stringify(data));
       alert("점수 등록 완료");

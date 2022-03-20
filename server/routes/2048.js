@@ -16,4 +16,9 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  const { score } = req.body;
+  res.sendFile(score);
+});
+
 module.exports = router;
