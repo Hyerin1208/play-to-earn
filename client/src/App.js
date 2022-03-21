@@ -7,9 +7,9 @@ import { useDispatch } from "react-redux";
 import { getWeb3 } from "./redux/actions/index";
 
 function App() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     useEffect(async () => {
-        // dispatch(getWeb3());
+        dispatch(getWeb3());
     }, []);
 
     return (
