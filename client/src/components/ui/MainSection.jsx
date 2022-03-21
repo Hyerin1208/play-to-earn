@@ -108,7 +108,7 @@ const MainSection = () => {
                 className="hero"
                 whileHover={{ scale: 0.7 }}
                 drag={true}
-                dragConstraints={{ left: 0, right: 250, top: 0, bottom: 0 }}
+                dragConstraints={{ left: 0, right: 0, top: 50, bottom: 500 }}
                 initial={{ opacity: 0, y: -100 }}
                 animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
               />
