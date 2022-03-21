@@ -17,7 +17,7 @@ const LiveList = (props) => {
   const [NFTimage, setNFTimage] = useState("");
   const [NFTname, setNFTname] = useState("");
   const [NFTdesc, setNFTdesc] = useState("");
-  const [NFTprice, setNFTprice] = useState("");
+  // const [NFTprice, setNFTprice] = useState("");
   const [form, setForm] = useState({
     fileUrl: fileUrl,
     formInput: {
