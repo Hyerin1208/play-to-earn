@@ -22329,12 +22329,21 @@
     "5777": {
       "events": {},
       "links": {},
+<<<<<<< HEAD
       "address": "0x1C26CEED18aDEdb652eE18F2720615F1fB73B07e",
       "transactionHash": "0xbaf8f941c93539f6d93decbe78958351268f69362e419625590b5a6573961222"
     }
   },
   "schemaVersion": "3.4.5",
   "updatedAt": "2022-03-21T01:51:37.974Z",
+=======
+      "address": "0x3dBa6012060FcD84A19aA55CAf959Ef5Bf2652E2",
+      "transactionHash": "0xebf24f523c7ae079389f21505bd058a1e05884c905cb968f371b46730d05621f"
+    }
+  },
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-17T02:51:04.774Z",
+>>>>>>> coolmarvel
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

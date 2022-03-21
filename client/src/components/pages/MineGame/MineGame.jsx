@@ -1,27 +1,39 @@
-import React, {Component} from 'react';
-import './css/Game.css';
-import Board from './js/Board';
-import Status from './js/Status';
-import DifficultyLevel from './js/DifficultyLevel';
+import React, { Component } from "react";
+import "./css/Game.css";
+import Board from "./js/Board";
+import Status from "./js/Status";
+import DifficultyLevel from "./js/DifficultyLevel";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
-const EMOJI_OK = '🙂';
-const EMOJI_GAME_OVER = '💀';
-const EMOJI_WIN = '😎';
+const EMOJI_OK = "🙂";
+const EMOJI_GAME_OVER = "💀";
+const EMOJI_WIN = "😎";
 
 class Game extends Component {
+  // sendPoint = async () => {
+  //   const bestTime = this.state.bestTimes[this.getBestTimeKey()] || null;
+  //   console.log(bestTime);
+  //   await axios
+  //     .post(`http://localhost:5000/mine`, { bestTime })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       alert("점수 등록 완료");
+  //     });
+  // };
+
   static randomInRange(minimum, maximum) {
     return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
   }
 
   static isMine(squares, row, column) {
-    return squares[row][column] === 'M';
+    return squares[row][column] === "M";
   }
 
   static generateArray(height, width, value) {
-    return Array.from(
-      {length: height},
-      () => Array.from({length: width}, () => value)
-    )
+    return Array.from({ length: height }, () =>
+      Array.from({ length: width }, () => value)
+    );
   }
 
   static vibrate(pattern) {
@@ -29,26 +41,28 @@ class Game extends Component {
   }
 
   static getSolution(game, solution, symbol) {
-    return game.map(
-      (row, rowKey) => row.map(
-        (square, squareKey) =>
-          Game.isMine(solution, rowKey, squareKey) ? symbol : solution[rowKey][squareKey]
+    return game.map((row, rowKey) =>
+      row.map((square, squareKey) =>
+        Game.isMine(solution, rowKey, squareKey)
+          ? symbol
+          : solution[rowKey][squareKey]
       )
     );
   }
 
   static thereAreRemainingMoves(squares, maximumMines) {
-    return squares.flat().filter(
-      sq => (sq === null || sq === 'F')
-    ).length > maximumMines;
+    return (
+      squares.flat().filter((sq) => sq === null || sq === "F").length >
+      maximumMines
+    );
   }
 
   static leftPad(number) {
     if (number < 0) {
-      return '-' + Math.abs(number).toString().padStart(2, '0');
+      return "-" + Math.abs(number).toString().padStart(2, "0");
     }
 
-    return number.toString().padStart(3, '0');
+    return number.toString().padStart(3, "0");
   }
 
   constructor(props) {
@@ -75,7 +89,8 @@ class Game extends Component {
       buttonStatus: EMOJI_OK,
       time: 0,
       start: 0,
-      bestTimes: JSON.parse(localStorage.getItem('minesweeper:bestTimes')) || {},
+      bestTimes:
+        JSON.parse(localStorage.getItem("minesweeper:bestTimes")) || {},
     };
   }
 
@@ -90,8 +105,14 @@ class Game extends Component {
     let solution;
 
     if (!this.state.solution) {
-      solution = this.generateGame(this.state.height, this.state.width, row, column, this.state.maximumMines);
-      this.setState({gameStarted: true, solution: solution});
+      solution = this.generateGame(
+        this.state.height,
+        this.state.width,
+        row,
+        column,
+        this.state.maximumMines
+      );
+      this.setState({ gameStarted: true, solution: solution });
     } else {
       solution = this.state.solution.slice();
     }
@@ -112,16 +133,15 @@ class Game extends Component {
     this.checkStart();
 
     let value = game[row][column];
-    if (this.state.gameFinished
-      || (value !== null && value !== 'F')) {
+    if (this.state.gameFinished || (value !== null && value !== "F")) {
       return;
     }
 
-    game[row][column] = value ? null : 'F';
+    game[row][column] = value ? null : "F";
     const minesLeft = this.state.minesLeft + (game[row][column] ? -1 : 1);
     Game.vibrate(200);
 
-    this.setState({game, minesLeft});
+    this.setState({ game, minesLeft });
   }
 
   reveal(game, solution, row, column) {
@@ -152,38 +172,39 @@ class Game extends Component {
       return this.setGameOver(game, solution, row, column);
     }
 
-    const gameFinished = !Game.thereAreRemainingMoves(game, this.state.maximumMines);
+    const gameFinished = !Game.thereAreRemainingMoves(
+      game,
+      this.state.maximumMines
+    );
     const buttonStatus = gameFinished ? EMOJI_WIN : this.state.buttonStatus;
     let minesLeft = this.state.minesLeft;
 
     if (gameFinished) {
       this.stopTimer();
-      game = Game.getSolution(game, solution, 'F');
+      game = Game.getSolution(game, solution, "F");
       minesLeft = 0;
       Game.vibrate([300, 40, 300, 40, 300, 40, 300]);
       this.updateBestTime(this.state.time || 1);
     }
 
-    this.setState({game, gameFinished, buttonStatus, minesLeft});
+    this.setState({ game, gameFinished, buttonStatus, minesLeft });
   }
 
   setGameOver(game, solution, row, column) {
     this.stopTimer();
 
-    game = game.map(
-      (row, rowKey) => row.map(
-        (square, squareKey) => {
-          const isMine = Game.isMine(solution, rowKey, squareKey);
-          if (square === 'F') {
-            return isMine ? square : 'W';
-          }
-
-          return isMine ? 'M' : square;
+    game = game.map((row, rowKey) =>
+      row.map((square, squareKey) => {
+        const isMine = Game.isMine(solution, rowKey, squareKey);
+        if (square === "F") {
+          return isMine ? square : "W";
         }
-      )
+
+        return isMine ? "M" : square;
+      })
     );
     Game.vibrate(800);
-    game[row][column] = 'C'; // differ clicked mine that led to game over
+    game[row][column] = "C"; // differ clicked mine that led to game over
 
     this.setState({
       game,
@@ -202,8 +223,11 @@ class Game extends Component {
       row = Game.randomInRange(0, height - 1);
       column = Game.randomInRange(0, width - 1);
 
-      if (!Game.isMine(game, row, column) && !(currentRow === row && currentColumn === column)) {
-        game[row][column] = 'M';
+      if (
+        !Game.isMine(game, row, column) &&
+        !(currentRow === row && currentColumn === column)
+      ) {
+        game[row][column] = "M";
         this.incrementMinesNearby(game, row - 1, column);
         this.incrementMinesNearby(game, row + 1, column);
         this.incrementMinesNearby(game, row, column - 1);
@@ -226,8 +250,12 @@ class Game extends Component {
   }
 
   inRange(row, column) {
-    return row >= 0 && row < this.state.height
-      && column >= 0 && column < this.state.width;
+    return (
+      row >= 0 &&
+      row < this.state.height &&
+      column >= 0 &&
+      column < this.state.width
+    );
   }
 
   startTimer() {
@@ -239,9 +267,13 @@ class Game extends Component {
     if (this.timer) {
       this.stopTimer();
     }
-    this.timer = setInterval(() => this.setState({
-      time: Math.floor((Date.now() - this.state.start) / 1000) + 1,
-    }), 1);
+    this.timer = setInterval(
+      () =>
+        this.setState({
+          time: Math.floor((Date.now() - this.state.start) / 1000) + 1,
+        }),
+      1
+    );
   }
 
   stopTimer() {
@@ -253,14 +285,14 @@ class Game extends Component {
     const bestTime = bestTimes[this.getBestTimeKey()] || null;
     if (bestTime === null || newTime < bestTime) {
       bestTimes[this.getBestTimeKey()] = newTime;
-      localStorage.setItem('minesweeper:bestTimes', JSON.stringify(bestTimes));
-      this.setState({bestTimes});
+      localStorage.setItem("minesweeper:bestTimes", JSON.stringify(bestTimes));
+      this.setState({ bestTimes });
     }
   }
 
   getBestTimeText() {
     const bestTime = this.state.bestTimes[this.getBestTimeKey()] || null;
-    return bestTime !== null ? 'Best time: ' + Game.leftPad(bestTime) : '';
+    return bestTime !== null ? "Best time: " + Game.leftPad(bestTime) : "";
   }
 
   getBestTimeKey() {
@@ -268,9 +300,11 @@ class Game extends Component {
   }
 
   isGame(height, width, maximumMines) {
-    return this.state.height === height
-      && this.state.width === width
-      && this.state.maximumMines === maximumMines;
+    return (
+      this.state.height === height &&
+      this.state.width === width &&
+      this.state.maximumMines === maximumMines
+    );
   }
 
   render() {
@@ -281,17 +315,30 @@ class Game extends Component {
             buttonStatus={this.state.buttonStatus}
             minesLeft={Game.leftPad(this.state.minesLeft)}
             time={Game.leftPad(this.state.time)}
-            onClick={() => this.restart(this.state.height, this.state.width, this.state.maximumMines)}
+            onClick={() =>
+              this.restart(
+                this.state.height,
+                this.state.width,
+                this.state.maximumMines
+              )
+            }
           />
         </div>
         <Board
           onClick={(row, column) => this.handleClick(row, column)}
-          onRightClick={(event, row, column) => this.handleRightClick(event, row, column)}
+          onRightClick={(event, row, column) =>
+            this.handleRightClick(event, row, column)
+          }
           game={this.state.game}
           gameFinished={this.state.gameFinished}
           width={this.state.width}
         />
-        <div className="bestScore">{this.getBestTimeText()}</div>
+        <div className="bestScore">
+          {this.getBestTimeText()}&nbsp;
+          {/* <button type="submit" onClick={this.sendPoint}>
+            점수 등록
+          </button> */}
+        </div>
         <div className="difficulty">
           <DifficultyLevel
             isSelected={this.isGame(9, 9, 10)}

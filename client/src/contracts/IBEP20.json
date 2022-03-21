@@ -15609,7 +15609,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
+<<<<<<< HEAD
   "updatedAt": "2022-03-21T01:51:11.583Z",
+=======
+  "updatedAt": "2022-03-17T02:50:39.472Z",
+>>>>>>> coolmarvel
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {
