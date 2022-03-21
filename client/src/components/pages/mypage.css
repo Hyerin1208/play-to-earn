@@ -5,69 +5,6 @@
   margin: 50px 30px 40px 150px;
 }
 
-.mypage__container {
-  width: 500px;
-  height: 320px;
-  border-radius: 10px;
-  background-color: rgba(80, 33, 124, 0.432);
-  padding: 0 10px 20px 10px;
-  position: relative;
-  border-radius: 2px solid transparent;
-  background-clip: border-box;
-  cursor: pointer;
-}
-
-.my__heading {
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: bold;
-}
-
-.img-holder {
-  margin: auto;
-  width: 150px;
-  height: 150px;
-  border: 3px solid rgba(0, 0, 0, 0.377);
-  border-radius: 50%;
-  margin-top: 1.4rem;
-  display: flex;
-}
-
-.img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-  display: flex;
-}
-
-#input[type="file"] {
-  display: none;
-}
-
-.label {
-  width: 100%;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  color: white;
-}
-
-.image-upload {
-  margin: auto;
-  width: 200px;
-  height: 30px;
-  background-color: #1f1829;
-  color: white;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.label i {
-  padding: 5px;
-}
-
 .my__nft {
   position: relative;
   display: flex;
@@ -80,7 +17,6 @@
 
 .my__nft i {
   margin-right: 10px;
-  color: salmon;
 }
 
 .my__nft span:hover {
@@ -151,3 +87,85 @@
   border-radius: 10px;
   background-color: rgba(80, 33, 124, 0.308);
 } */
+
+/* //////////////유저 프로필///////////// */
+.card__profile {
+  width: 400px;
+  height: 450px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 10px 1px #4938ff;
+  margin-bottom: 59px;
+}
+
+.upper__container {
+  height: 120px;
+  background: linear-gradient(to left, #4938ff, #ff0291);
+  position: relative;
+}
+
+.upper__container .pfp__container img {
+  background: white;
+  width: 120px;
+  border-radius: 50%;
+  padding: 5px;
+  transform: translate(120px, 65px);
+  display: flex;
+  position: absolute;
+}
+
+.upper__container .pfp__container img {
+  border: 2px solid #4938ff;
+}
+
+.lower__container {
+  margin-top: 80px;
+  height: 100px;
+  background: white;
+  text-align: center;
+}
+
+.lower__container h3,
+h4 {
+  margin: 0;
+  padding: 0;
+  color: #1f1829;
+}
+
+.lower__container h3 {
+  color: #2f2d2e;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.lower__container h4 {
+  color: #4938ff;
+  font-weight: 760;
+  font-size: 1.2rem;
+}
+
+.lower__container p {
+  color: #1f1829;
+  color: #2f2d2e;
+  font-size: 1rem;
+}
+
+.pfp__button {
+  margin: 1rem;
+  color: #4938ff;
+  font: bold;
+  background-color: white;
+  border: 2px solid #4938ff;
+  border-radius: 5px;
+  padding: 0.6rem;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.pfp__button:hover {
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.2);
+  border: none;
+  color: white;
+}

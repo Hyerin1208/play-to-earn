@@ -13,6 +13,7 @@ import NftDetails from "../pages/NftDetails";
 import Game from "../pages/Game";
 import Ranking from "../pages/Ranking";
 import Test from "../pages/Test";
+import Error from "../ui/Error404";
 
 const Routers = () => {
   return (
@@ -29,6 +30,8 @@ const Routers = () => {
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/test" element={<Test />} />
+        {/* <Route path="/error" element={<Error />} /> */}
+        <Route component={<Error />} />
       </Routes>
     </Fragment>
   );

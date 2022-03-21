@@ -2991,7 +2991,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
+<<<<<<< HEAD
   "updatedAt": "2022-03-17T10:17:38.832Z",
+=======
+  "updatedAt": "2022-03-17T06:34:51.639Z",
+>>>>>>> hyerin
   "devdoc": {
     "details": "Required interface of an ERC721 compliant contract.",
     "events": {
