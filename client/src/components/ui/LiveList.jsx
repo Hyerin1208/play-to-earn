@@ -31,7 +31,7 @@ const LiveList = (props) => {
 
   useEffect(() => {
     ownerselllists();
-  }, []);
+  }, [nftListBox]);
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -42,14 +42,60 @@ const LiveList = (props) => {
   async function ownerselllists() {
     const lists = await CreateNFTContract.methods
       .OwnerSelllists()
-      .call({ from: Account }, (error) => {
+      .call({ from: "0xC7E1F2dca144AEDA8ADF4f9093da9aAC18ce7436" }, (error) => {
         if (!error) {
           console.log("send ok");
         } else {
           console.log(error);
         }
       });
-
+    const result = await Promise.all(
+      lists.map(async (i) => {
+        const tokenURI = await CreateNFTContract.methods
+          .tokenURI(i.tokenId)
+          .call({ from: Account });
+        const meta = await axios.get(tokenURI).then((res) => res.data);
+        let item = {
+          fileUrl: await meta.image,
+          formInput: {
+            price: await meta.price,
+            name: await meta.name,
+            description: await meta.description,
+          },
+        };
+        return item;
+      })
+    );
+    // const result = await lists.map(async (i) => {
+    //     const tokenURI = await CreateNFTContract.methods.tokenURI(i.tokenId).call({ from: Account });
+    //     const meta = await axios.get(tokenURI).then((res) => res.data);
+    //     let item = {
+    //         fileUrl: await meta.image,
+    //         formInput: {
+    //             price: await meta.price,
+    //             name: await meta.name,
+    //             description: await meta.description,
+    //         },
+    //     };
+    //     return item;
+    // });
+    setnftListBox(result);
+    setLoadingState("loaded");
+    // const form = lists.map(async (i) => {
+    //   const tokenURI = await CreateNFTContract.methods.tokenURI(i.tokenId).call({from:Account});
+    //   const meta = await axios.get(tokenURI).then(res=>res.data);
+    //   console.log(meta);
+    //   const price = parseInt(i.price.toString(), "ether");
+    //   let item = {
+    //     fileUrl: fileUrl,
+    //     formInput: {
+    //         price: "",
+    //         name: "",
+    //         description: "",
+    //     },
+    // }
+    //   return (item)
+    // })
     // const items = await Promise.all(
     //   lists.map(async (i) => {
     //     const tokenURI = await CreateNFTContract.methods.tokenURI(i.tokenId);
@@ -65,9 +111,6 @@ const LiveList = (props) => {
     //     return item;
     //   })
     // );
-    console.log(await lists);
-    setnftListBox(await lists);
-    setLoadingState("loaded");
   }
 
   //URI 확인
@@ -126,7 +169,20 @@ const LiveList = (props) => {
               </span>
             </div>
           </Col>
-          <button onClick={() => ownerselllists()}>
+          <button
+            onClick={() => {
+              ownerselllists();
+              console.log(nftListBox);
+              // if (nftArray) {
+              //     nftArray.slice(0, 4).map(
+              //         (item, index) => console.log(JSON.parse(JSON.stringify(item)))
+              //         // <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+              //         //     <NftCard item={JSON.parse(JSON.stringify(await item))}></NftCard>
+              //         // </Col>
+              //     );
+              // }
+            }}
+          >
             owner sell lists
             {/* <button
             onClick={() => {
@@ -138,11 +194,9 @@ const LiveList = (props) => {
           > */}
             owner sell lists
           </button>
-          {nftArray.slice(0, 4).map((item, index) => (
+          {nftArray.slice(0, 4).map((items, index) => (
             <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-              <NftCard item={form}>
-                <Card.Img varient="top" src={item.image} />
-              </NftCard>
+              <NftCard item={items}></NftCard>
             </Col>
           ))}
         </Row>
