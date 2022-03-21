@@ -3,11 +3,12 @@ var router = express.Router();
 const { Mine } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { bestTime } = req.body;
+  const { bestTime, account } = req.body;
 
   try {
     Mine.create({
       point: bestTime,
+      address: account,
     });
     return res.json({ message: "ok" });
   } catch (error) {

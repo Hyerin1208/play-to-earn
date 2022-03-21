@@ -14,6 +14,7 @@ import { Game } from "./js/Game.js";
 import Settings from "./Settings";
 import "./styles/Tetris.css";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 let sirtet;
 
@@ -48,6 +49,8 @@ const Tetris = () => {
   const [showSettings, setShowSettings] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const account = useSelector((state) => state.AppState.account);
 
   useEffect(() => {
     setLoading(true);
@@ -203,8 +206,9 @@ const Tetris = () => {
     const sendPoint = async () => {
       const data = gameStats.score;
       console.log(gameStats.score);
+      console.log(account);
       await axios
-        .post(`http://localhost:5000/tetris`, { data })
+        .post(`http://localhost:5000/tetris`, { data, account })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");

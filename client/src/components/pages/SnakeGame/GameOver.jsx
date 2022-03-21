@@ -1,15 +1,20 @@
 import React from "react";
 import "./GameOver.css";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 function GameOver(props) {
+  const account = useSelector((state) => state.AppState.account);
   const sendPoint = async () => {
     console.log(props.score);
+    console.log(account);
     const point = props.score;
-    await axios.post(`http://localhost:5000/snake`, { point }).then((res) => {
-      console.log(res.data);
-      alert("점수 등록 완료");
-    });
+    await axios
+      .post(`http://localhost:5000/snake`, { point, account })
+      .then((res) => {
+        console.log(res.data);
+        alert("점수 등록 완료");
+      });
   };
 
   return (
