@@ -7921,7 +7921,11 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-17T05:07:00.230Z",
+<<<<<<< HEAD
+  "updatedAt": "2022-03-17T10:17:38.843Z",
+=======
+  "updatedAt": "2022-03-17T06:34:51.655Z",
+>>>>>>> hyerin
   "devdoc": {
     "details": "Collection of functions related to the address type",
     "kind": "dev",

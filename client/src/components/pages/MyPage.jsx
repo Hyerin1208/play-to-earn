@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import user__bg from "../../assets/images/user_bg.png";
 import CommonSection from "../ui/CommonSection";
 
 import MyNfts from "../ui/myModal/MyNfts";
@@ -9,43 +8,45 @@ import MyRanking from "../ui/myModal/MyRanking";
 import EditProfile from "../ui/myModal/EditProfile";
 
 import "./mypage.css";
+import pfpImg from "../../assets/images/avatar.png";
 
 const MyPage = () => {
-  const [userBackImage, setUserBackImage] = useState(user__bg);
+  const [nickname, setNicname] = useState("noname");
+  const [email, setEmail] = useState("no-email");
+  const [address, setAddress] = useState("address");
 
   const [MyNftModal, setMyNftModal] = useState(false);
   const [MyRankingModal, setMyRankingModal] = useState(false);
   const [EditProfileModal, setEditProfileModal] = useState(false);
 
-  const imageHandler = (e) => {
-    if (e.target.file[0]) {
-      setUserBackImage(e.target.file[0]);
-    }
-  };
-
   return (
     <>
       <CommonSection title="My Profile" />
+
       <div className="my__page">
-        <div className="mypage__container">
-          <h2 className="my__heading">Change your NFT</h2>
-          <div className="img-holder">
-            <img src={userBackImage} alt="" id="img" className="img" />
+        {/* 여기에는 프로필카드 들어갈 예정 */}
+        <div className="card__profile">
+          <div className="upper__container">
+            <div className="pfp__container">
+              <img src={pfpImg} alt="pfp" />
+            </div>
           </div>
-          <input
-            type="file"
-            name="image-upload"
-            id="input"
-            accept="image/*"
-            onChange={imageHandler}
-          />
-          <div className="label">
-            <label htmlFor="input" className="image-upload">
-              <i className="ri-image-add-fill"></i>
-              Choose your NFT
-            </label>
+          <div className="lower__container">
+            <h3>{nickname}</h3>
+            <h4>{email}</h4>
+            <p>{address}</p>
+            <button
+              className="pfp__button"
+              onClick={() => setEditProfileModal(true)}
+            >
+              Edit Profile
+            </button>
+            {EditProfileModal && (
+              <EditProfile setShowModal={setEditProfileModal} />
+            )}
           </div>
         </div>
+
         <div className="my__nft">
           <Row>
             <Col xs="4">
@@ -75,11 +76,13 @@ const MyPage = () => {
                   </span>
                   <span className="ranking__title">My Ranking</span>
                 </button>
+
                 {MyRankingModal && (
                   <MyRanking setShowModal={setMyRankingModal} />
                 )}
               </div>
             </Col>
+
             <Col xs="4">
               <div className="edit_content">
                 <button
@@ -90,12 +93,10 @@ const MyPage = () => {
                     <i className="ri-profile-line"></i>
                   </span>
                   <span className="profile__title">Edit Profile</span>
-                  {EditProfileModal && (
-                    <EditProfile setShowModal={setEditProfileModal} />
-                  )}
                 </button>
               </div>
             </Col>
+
             <Col xs="8">
               <div className="gogame_content">
                 <Link to="/game">
