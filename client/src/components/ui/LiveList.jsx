@@ -31,7 +31,7 @@ const LiveList = (props) => {
 
   useEffect(() => {
     ownerselllists();
-  }, [nftListBox]);
+  }, []);
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(

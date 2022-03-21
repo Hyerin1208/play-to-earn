@@ -47,7 +47,7 @@ const Market = () => {
 
   useEffect(() => {
     ownerselllists();
-  }, [nftListBox]);
+  }, []);
 
   //오너 nft 판매 리스트
   async function ownerselllists() {
