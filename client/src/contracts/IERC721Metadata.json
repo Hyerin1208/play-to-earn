@@ -936,11 +936,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-<<<<<<< HEAD
-  "updatedAt": "2022-03-17T10:17:38.839Z",
-=======
-  "updatedAt": "2022-03-17T06:34:51.649Z",
->>>>>>> hyerin
+  "updatedAt": "2022-03-17T02:50:39.425Z",
   "devdoc": {
     "details": "See https://eips.ethereum.org/EIPS/eip-721",
     "kind": "dev",

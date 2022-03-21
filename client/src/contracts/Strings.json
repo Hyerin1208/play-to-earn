@@ -5111,11 +5111,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-<<<<<<< HEAD
-  "updatedAt": "2022-03-17T10:17:38.851Z",
-=======
-  "updatedAt": "2022-03-17T06:34:51.664Z",
->>>>>>> hyerin
+  "updatedAt": "2022-03-17T02:50:39.443Z",
   "devdoc": {
     "details": "String operations.",
     "kind": "dev",
