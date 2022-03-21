@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
@@ -12,24 +12,26 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Market = () => {
+  const [nftListBox, setnftListBox] = useState([]);
+  const nftArray = [...nftListBox].reverse();
+  const [loadingState, setLoadingState] = useState("not-loaded");
+
   const [fileUrl, setFileUrl] = useState("");
-  const [formInput, updateFormInput] = useState({
-    price: "",
-    name: "",
-    description: "",
-  });
+  const [NFTimage, setNFTimage] = useState("");
+  const [NFTname, setNFTname] = useState("");
+  const [NFTdesc, setNFTdesc] = useState("");
+
+  const [data, setData] = useState(NFT__DATA);
+
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
-  const [NFTname, setNFTname] = useState("");
-  const [NFTdesc, setNFTdesc] = useState("");
-  const [NFTimage, setNFTimage] = useState("");
 
-  const [data, setData] = useState(NFT__DATA);
   const handleCategory = () => {};
 
   const handleItems = () => {};
@@ -43,6 +45,10 @@ const Market = () => {
     },
   });
 
+  useEffect(() => {
+    ownerselllists();
+  }, []);
+
   //오너 nft 판매 리스트
   async function ownerselllists() {
     const lists = await CreateNFTContract.methods
@@ -54,7 +60,25 @@ const Market = () => {
           console.log(error);
         }
       });
-    console.log(await lists);
+    const result = await Promise.all(
+      lists.map(async (i) => {
+        const tokenURI = await CreateNFTContract.methods
+          .tokenURI(i.tokenId)
+          .call({ from: Account });
+        const meta = await axios.get(tokenURI).then((res) => res.data);
+        let item = {
+          fileUrl: await meta.image,
+          formInput: {
+            price: await meta.price,
+            name: await meta.name,
+            description: await meta.description,
+          },
+        };
+        return item;
+      })
+    );
+    setnftListBox(result);
+    setLoadingState("loaded");
   }
 
   //nft 구매
@@ -98,6 +122,14 @@ const Market = () => {
       setNFTname(data.data.name);
       setNFTdesc(data.data.description);
       setNFTimage(data.data.image);
+      setForm({
+        fileUrl: data.data.image,
+        formInput: {
+          price: "",
+          name: data.data.name,
+          description: data.data.description,
+        },
+      });
     });
     // const result = await axios.get(tokenURI).then((data) => data.data);
   }
@@ -169,9 +201,20 @@ const Market = () => {
               </div>
             </Col>
 
-            <Col lg="3" md="4" sm="6" className="mb-4">
-              <NftCard item={form} />
-            </Col>
+            <button
+              onClick={() => {
+                ownerselllists();
+                console.log(nftListBox);
+              }}
+            >
+              show
+            </button>
+
+            {nftArray.slice(0, 12).map((items, index) => (
+              <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+                <NftCard item={items}></NftCard>
+              </Col>
+            ))}
           </Row>
         </Container>
       </div>

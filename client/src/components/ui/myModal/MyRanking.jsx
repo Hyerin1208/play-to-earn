@@ -5,7 +5,7 @@ import "./my-ranking.css";
 const myRanking = ({ setShowModal }) => {
   return (
     <div className="rank_wrapper">
-      <div className="single_modal">
+      <div className="Ranking_modal">
         <span className="close_modal">
           <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
         </span>

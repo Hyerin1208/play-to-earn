@@ -17,6 +17,8 @@ const MyNfts = ({ setShowModal }) => {
     console.log("update");
   }, [seletedImg]);
 
+  // console.log(seletedImg.imgUrl);
+
   return (
     <div className="nft_wrapper">
       <div className="single_modal">
@@ -33,7 +35,11 @@ const MyNfts = ({ setShowModal }) => {
                 {/* <Col lg="6" md="4" sm="2"> */}
                 {/* <NftCard item={item} /> */}
                 {/* </Col> */}
-                <img src={seletedImg} alt="Selected" className="selected" />
+                <img
+                  src={seletedImg.imgUrl}
+                  alt="Selected"
+                  className="selected"
+                />
                 <div className="img__Container">
                   {NFT__DATA.map((img, index) => (
                     <img
