@@ -15,10 +15,20 @@ export const Overlay = ({ handleReset, score }) => {
       .post(`http://localhost:5000/2048`, { score, account })
       .then((res) => {
         console.log(res.data);
-        // res.send(JSON.stringify(data));
         alert("점수 등록 완료");
       });
   };
+
+  // const updatePoint = async () => {
+  //   console.log(score);
+  //   console.log(account);
+  //   await axios
+  //     .put(`http://localhost:5000/2048`, { score, account })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       alert("점수 갱신 완료");
+  //     });
+  // };
 
   return (
     <OverlayStyle>
