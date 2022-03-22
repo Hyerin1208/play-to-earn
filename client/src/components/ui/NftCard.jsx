@@ -4,21 +4,18 @@ import { Link } from "react-router-dom";
 import "./nft-card.css";
 import Modal from "./Modal";
 import { Col, Row } from "reactstrap";
+import { useSelector } from "react-redux";
 
 const NftCard = (props) => {
-  const { id, creatorImg, creator } = props.item;
+  // const { id, creatorImg, creator } = props.item;
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(async () => {
-    // console.log(props.item);
-    // console.log(props.item.formInput.name);
-    // if (props.item) {
-    //   setchangeImg(props.item.fileUrl);
-    //   setchangeName(props.item.formInput.name);
-    //   setchangeDesc(props.item.formInput.description);
-    //   setchangePrice(props.item.formInput.price);
-    // }
-  }, [props.item]);
+  useEffect(async () => {}, [props.item]);
+
+  const Account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
 
   return (
     <div className="single__nft__card">
@@ -29,7 +26,10 @@ const NftCard = (props) => {
       <div className="nft__content">
         <Row>
           <h5 className="nft__title">
-            <Link to={`/market/${id}`}> {props.item.formInput.name}</Link>
+            <Link to={`/market/${props.item.formInput.id}`}>
+              {" "}
+              {props.item.formInput.name}
+            </Link>
           </h5>
 
           {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
@@ -66,7 +66,16 @@ const NftCard = (props) => {
         {showModal && <Modal setShowModal={setShowModal} />}
 
         <span className="view__link">
-          <Link to={`/market/${id}`}>View More</Link>
+          <button
+            onClick={async (e) => {
+              // let tokenid = e.target.getAttribute("id");
+              // await CreateNFTContract.methods.tokenURI(tokenid).call({
+              //   from: "0xC7E1F2dca144AEDA8ADF4f9093da9aAC18ce7436",
+              // });
+            }}
+          >
+            <Link to={`/market/${props.item.formInput.id}`}>View More</Link>
+          </button>
         </span>
       </div>
     </div>

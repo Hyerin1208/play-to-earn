@@ -15,9 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const NftDetails = (items) => {
-  const dispatch = useDispatch();
+  const params = useParams;
+  let card_id = params.card_id;
+
   const OwnerSellists = useSelector((state) => state.AppState.OwnerSellists);
-  const [loadcheck, setnftArray] = useState([]);
+  const [loadcheck, setLoadcheck] = useState("로딩중");
+  const [nftArray, setnftArray] = useState([]);
 
   useEffect(() => {
     if (OwnerSellists !== null) {
@@ -33,13 +36,10 @@ const NftDetails = (items) => {
   );
 
   // Router.js => path="/market/:id"
-  const { id } = useParams();
-  // const singleNft = NFT__DATA.find((item) => item.id === id);
-  const singleNft = CreateNFTContract.methods.send(
-    (item) => item.formInput.id === id
-  );
-
-  console.log(id);
+  // const { id } = useParams();
+  // const singleNft = CreateNFTContract.methods.send(
+  //   (item) => item.formInput.id === id
+  // );
 
   return (
     <>
