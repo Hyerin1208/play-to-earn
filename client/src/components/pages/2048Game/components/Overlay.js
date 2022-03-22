@@ -1,14 +1,36 @@
 import { Button } from "./Button";
 import { OverlayStyle } from "./styles/OverlayStyle";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+// import { getWeb3 } from "../../../../redux/actions/index";
 
 export const Overlay = ({ handleReset, score }) => {
- return (
-  <OverlayStyle>
-   <h1>Game Over!</h1>
-   <p>
-    Score: <span>{score}</span>
-   </p>
-   <Button onClick={handleReset} />
-  </OverlayStyle>
- );
+  // const dispatch = useDispatch();
+  const account = useSelector((state) => state.AppState.account);
+
+  const sendPoint = async () => {
+    console.log(score);
+    console.log(account);
+    await axios
+      .post(`http://localhost:5000/2048`, { score, account })
+      .then((res) => {
+        console.log(res.data);
+        // res.send(JSON.stringify(data));
+        alert("점수 등록 완료");
+      });
+  };
+
+  return (
+    <OverlayStyle>
+      <h1>Game Over!</h1>
+      <p>
+        Score: <span>{score}</span>
+      </p>
+      <Button onClick={handleReset} />
+      <br />
+      <button type="submit" onClick={sendPoint}>
+        점수 등록
+      </button>
+    </OverlayStyle>
+  );
 };

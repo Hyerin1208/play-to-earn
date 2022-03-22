@@ -12,8 +12,8 @@ module.exports = class User extends Sequelize.Model {
                     unique: true, // unique: true - 고유하게
                 },
                 nick: {
-                    type: Sequelize.STRING(15),
-                    allowNull: false,
+                    type: Sequelize.STRING(200),
+                    allowNull: true,
                 },
             },
             {
