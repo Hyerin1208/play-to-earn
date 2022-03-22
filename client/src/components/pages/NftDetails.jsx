@@ -15,8 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const NftDetails = (items) => {
-  const params = useParams;
-  let card_id = params.card_id;
+  // const { singleNft } = useParams();
+  // let card_id = singleNft.card_id;
+
+  const { card_id } = useParams();
 
   const OwnerSellists = useSelector((state) => state.AppState.OwnerSellists);
   const [loadcheck, setLoadcheck] = useState("로딩중");

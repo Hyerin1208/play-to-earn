@@ -5,10 +5,14 @@ import "./nft-card.css";
 import Modal from "./Modal";
 import { Col, Row } from "reactstrap";
 import { useSelector } from "react-redux";
+import NftDetails from "../pages/NftDetails";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 const NftCard = (props) => {
   // const { id, creatorImg, creator } = props.item;
   const [showModal, setShowModal] = useState(false);
+  const [items, setitems] = useState([]);
 
   useEffect(async () => {}, [props.item]);
 
@@ -78,6 +82,12 @@ const NftCard = (props) => {
           </button>
         </span>
       </div>
+
+      <Routes>
+        <Route path="/market/:card_id">
+          <NftDetails item={items} />
+        </Route>
+      </Routes>
     </div>
   );
 };
