@@ -17,9 +17,13 @@ export default function (state = initialState, action) {
             return {
                 ...initialState,
                 network: action.payload.network,
+                wallet: action.payload.wallet,
+                accounts: action.payload.accounts,
+                account: action.payload.account,
                 CreateNFTContract: action.payload.CreateNFTContract,
                 AmusementArcadeTokenContract: action.payload.AmusementArcadeTokenContract,
                 OwnerSelllists: action.payload.OwnerSelllists,
+                errorMsg: action.payload.errorMsg,
             };
         case CONNECTION_FAILED:
             return {
@@ -32,6 +36,11 @@ export default function (state = initialState, action) {
                 wallet: action.payload.wallet,
                 accounts: action.payload.accounts,
                 account: action.payload.account,
+            };
+        case UPDATE_LISTS:
+            return {
+                ...state,
+                OwnerSelllists: action.payload.OwnerSelllists,
             };
         default:
             return state;

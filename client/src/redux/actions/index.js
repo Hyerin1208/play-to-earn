@@ -10,28 +10,28 @@ export const UPDATE_LISTS = "UPDATE_LISTS";
 
 const rpcurl = process.env.REACT_APP_RPC_URL;
 
-const connectSuccess = (payload) => {
+export const connectSuccess = (payload) => {
     return {
         type: APP_STATE,
         payload: payload,
     };
 };
 
-const connectFailed = (payload) => {
+export const connectFailed = (payload) => {
     return {
         type: CONNECTION_FAILED,
         payload: payload,
     };
 };
 
-const updateAccounts = (payload) => {
+export const updateAccounts = (payload) => {
     return {
         type: UPDATE_ACCOUNT,
         payload: payload,
     };
 };
 
-const updateLists = (payload) => {
+export const updateLists = (payload) => {
     return {
         type: UPDATE_LISTS,
         payload: payload,
@@ -45,7 +45,6 @@ export function getWeb3() {
             await web3.eth.net
                 .isListening()
                 .then(async (res) => {
-                    console.log(res);
                     const networkId = await web3.eth.net.getId();
                     const networkData_NFT = CreateNFT.networks[networkId];
                     const networkData_Token = AmusementArcadeToken.networks[networkId];
@@ -82,7 +81,23 @@ export function getWeb3() {
                             })
                         );
 
-                        dispatch(connectSuccess({ network: res, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm }));
+                        if (window.ethereum) {
+                            if ((await window.ethereum._metamask.isUnlocked()) === true && (await window.ethereum.selectedAddress) !== null) {
+                                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                                const account = accounts[0];
+                                dispatch(connectSuccess({ network: res, wallet: true, accounts: accounts, account: accounts[0], CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
+
+                                window.ethereum.on("accountsChanged", (accounts) => {
+                                    dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
+                                });
+                            } else {
+                                dispatch(connectSuccess({ network: res, wallet: false, accounts: null, account: null, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
+                            }
+                        } else {
+                            dispatch(connectSuccess({ network: res, wallet: false, accounts: null, account: null, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
+                        }
+
+                        // dispatch(connectSuccess({ network: res, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm }));
                         // window.ethereum.on("accountsChanged", (accounts) => {
                         //     dispatch(updateAccounts({ accounts: accounts, account: accounts[0] }));
                         // });
@@ -104,7 +119,7 @@ export function getWeb3() {
 export function connectWallet() {
     return async (dispatch) => {
         if (window.ethereum) {
-            if ((await window.ethereum._metamask.isUnlocked()) === true && (await window.ethereum.selectedAddress) !== null) {
+            if ((await window.ethereum._metamask.isUnlocked()) === true || (await window.ethereum.selectedAddress) !== null) {
                 console.log("여기1");
                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
                 const account = accounts[0];
@@ -112,9 +127,6 @@ export function connectWallet() {
 
                 window.ethereum.on("accountsChanged", (accounts) => {
                     dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-                });
-                window.ethereum.on("disconnect", () => {
-                    console.log("다음에봐요~");
                 });
             } else {
                 console.log("여기2");

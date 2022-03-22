@@ -8,7 +8,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import WalletModal from "../ui/WalletModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getWeb3 } from "../../redux/actions/index";
+import { updateAccounts } from "../../redux/actions/index";
 
 const NAV__LINKS = [
     {
@@ -64,7 +64,7 @@ const Header = () => {
     const checkwallet = () => {
         return (
             <div className="nav__right">
-                <button className="btn" id="Connect_Wallet">
+                <button className="btn" id="Connect_Wallet" onClick={() => connectWallet()}>
                     <span>
                         <i className="ri-wallet-line"></i>
                     </span>
@@ -76,6 +76,18 @@ const Header = () => {
             </div>
         );
     };
+
+    async function connectWallet() {
+        if (window.ethereum) {
+            window.ethereum.enable();
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            const account = accounts[0];
+            dispatch(updateAccounts({ wallet: true, accounts: accounts, account: account }));
+            console.log("디스패치 실행됨?");
+        } else {
+            alert("메타마스크가 필요합니다.");
+        }
+    }
 
     return (
         <header className="header" ref={headerRef}>
