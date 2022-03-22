@@ -7,7 +7,6 @@ import NftCard from "./NftCard";
 import { useSelector, useDispatch } from "react-redux";
 
 const LiveList = () => {
-    const dispatch = useDispatch();
     const OwnerSelllists = useSelector((state) => state.AppState.OwnerSelllists);
     const [loadcheck, setLoadcheck] = useState("로딩중");
     const [nftArray, setnftArray] = useState([]);

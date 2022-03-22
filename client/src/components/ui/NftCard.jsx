@@ -6,34 +6,33 @@ import Modal from "./Modal";
 import { Col, Row } from "reactstrap";
 
 const NftCard = (props) => {
-  const { id, creatorImg, creator } = props.item;
-  const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    useEffect(async () => {
+        // console.log(props.item);
+        // console.log(props.item.formInput.name);
+        // if (props.item) {
+        //   setchangeImg(props.item.fileUrl);
+        //   setchangeName(props.item.formInput.name);
+        //   setchangeDesc(props.item.formInput.description);
+        //   setchangePrice(props.item.formInput.price);
+        // }
+    }, [props.item]);
 
-  useEffect(async () => {
-    // console.log(props.item);
-    // console.log(props.item.formInput.name);
-    // if (props.item) {
-    //   setchangeImg(props.item.fileUrl);
-    //   setchangeName(props.item.formInput.name);
-    //   setchangeDesc(props.item.formInput.description);
-    //   setchangePrice(props.item.formInput.price);
-    // }
-  }, [props.item]);
+    return (
+        <div>
+            <div className="single__nft__card">
+                <div className="nft__img">
+                    <img src={props.item.fileUrl} alt="" />
+                </div>
 
-  return (
-    <div className="single__nft__card">
-      <div className="nft__img">
-        <img src={props.item.fileUrl} alt="" />
-      </div>
+                <div className="nft__content">
+                    <Row>
+                        <h5 className="nft__title">
+                            <Link to={`/market`}> {props.item.formInput.name}</Link>
+                        </h5>
 
-      <div className="nft__content">
-        <Row>
-          <h5 className="nft__title">
-            <Link to={`/market/${id}`}> {props.item.formInput.name}</Link>
-          </h5>
-
-          {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
-          {/* <div className="creator__info-wrapper">
+                        {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
+                        {/* <div className="creator__info-wrapper">
           <div className="creator__img">
             <img src={creatorImg} alt="" />
           </div>
@@ -42,35 +41,36 @@ const NftCard = (props) => {
               <h6>Created By</h6>
               <p>{creator}</p>
             </div> */}
-          <Col>
-            <div className="bid__container">
-              <h6>Current Bid</h6>
-              {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
-              <p>{props.item.formInput.price} ETH</p>
+                        <Col>
+                            <div className="bid__container">
+                                <h6>Current Bid</h6>
+                                {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
+                                <p>{props.item.formInput.price} ETH</p>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div className="prevNft__desc">
+                                <p>{props.item.formInput.description}</p>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+
+                <div className="bid__box">
+                    <button className="bid__btn" onClick={() => setShowModal(true)}>
+                        <i className="ri-shopping-bag-line"></i>
+                        Place Bid
+                    </button>
+
+                    {showModal && <Modal setShowModal={setShowModal} />}
+
+                    <span className="view__link">
+                        <Link to={`/market/${props.item.formInput.tokenid}`}>View More</Link>
+                    </span>
+                </div>
             </div>
-          </Col>
-          <Col>
-            <div className="prevNft__desc">
-              <p>{props.item.formInput.description}</p>
-            </div>
-          </Col>
-        </Row>
-      </div>
-
-      <div className="bid__box">
-        <button className="bid__btn" onClick={() => setShowModal(true)}>
-          <i className="ri-shopping-bag-line"></i>
-          Place Bid
-        </button>
-
-        {showModal && <Modal setShowModal={setShowModal} />}
-
-        <span className="view__link">
-          <Link to={`/market/${id}`}>View More</Link>
-        </span>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default NftCard;
