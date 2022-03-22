@@ -11,6 +11,7 @@ import { Route } from "react-router-dom";
 
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
+
   useEffect(async () => {
     // console.log(props.item);
     // console.log(props.item.formInput.name);
@@ -32,7 +33,10 @@ const NftCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/market`}> {props.item.formInput.name}</Link>
+              <Link to={`/market/${props.item.formInput.tokenid}`}>
+                {" "}
+                {props.item.formInput.name}
+              </Link>
             </h5>
 
             {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
@@ -69,6 +73,7 @@ const NftCard = (props) => {
           {showModal && <Modal setShowModal={setShowModal} />}
 
           <span className="view__link">
+            {/* <Link to={`/market/${props.item.formInput.tokenid}`}> */}
             <Link to={`/market/${props.item.formInput.tokenid}`}>
               View More
             </Link>

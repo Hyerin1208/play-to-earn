@@ -217,7 +217,7 @@ const Market = ({ navigation }) => {
 
             {nftArray.slice(0, 12).map((items, index) => (
               <Col className="mb-4" lg="3" md="4" sm="6" key={index}>
-                <NftCard
+                {/* <NftCard
                   item={items}
                   id={items.formInput.tokenid}
                   onClick={async (e) => {
@@ -232,7 +232,8 @@ const Market = ({ navigation }) => {
                   //     tokenid: items.formInput.tokenid,
                   //   })
                   // }
-                ></NftCard>
+                ></NftCard> */}
+                <NftCard item={items}></NftCard>
               </Col>
             ))}
           </Row>
