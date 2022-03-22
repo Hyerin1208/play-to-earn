@@ -1746,21 +1746,12 @@
     "5777": {
       "events": {},
       "links": {},
-<<<<<<< HEAD
-      "address": "0x4b734D92cb655DFc08ae22Cd4A58FBE9D061486f",
-      "transactionHash": "0x370cd3c51504e35877301d9ca38fbd321a46266b9bbe98391f1304ac6f2f8626"
+      "address": "0x70A56d428e5096FE9E037FdBe65B3B3A93F19e09",
+      "transactionHash": "0xf488e8a0d8248fe3f9bd347a02a8fe175a090853bf0d88987164ef6d6a2f9fd0"
     }
   },
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-21T01:51:37.985Z",
-=======
-      "address": "0x8E691B574a860c2986B6Bc0f34956EE6ea516009",
-      "transactionHash": "0xdd8ecab83b050664a89695b7ad7885c287fb77c61e779eb5573454050a23d649"
-    }
-  },
-  "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-17T02:51:04.785Z",
->>>>>>> coolmarvel
+  "updatedAt": "2022-03-21T15:06:36.457Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

@@ -43,6 +43,7 @@ const Header = () => {
     const menuRef = useRef(null);
 
     const [showWalletModal, setShowWalletModal] = useState(false);
+    const wallet = useSelector((state) => state.AppState.wallet);
     const account = useSelector((state) => state.AppState.account);
 
     useEffect(() => {
@@ -63,7 +64,7 @@ const Header = () => {
     const checkwallet = () => {
         return (
             <div className="nav__right">
-                <button className="btn" onClick={() => dispatch(getWeb3())}>
+                <button className="btn" id="Connect_Wallet">
                     <span>
                         <i className="ri-wallet-line"></i>
                     </span>
@@ -111,7 +112,7 @@ const Header = () => {
                         </span>
                     </div>
 
-                    {account === null ? checkwallet() : <div>{account}</div>}
+                    {wallet === false ? checkwallet() : <div>{account}</div>}
                     {/* <div className="nav__right">
                         <button className="btn" onClick={() => setShowWalletModal(true)}>
                             <span>
