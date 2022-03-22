@@ -1,20 +1,18 @@
 import React from "react";
 import "../css/Status.css";
-import axios from "axios";
-// import { useDispatch, useSelector } from "react-redux";
 
 export default function Status(props) {
-  const sendPoint = async () => {
-    // const account = useSelector((state) => state.AppState.account);
-    // const account = this.state.AppState.account;
-    const bestTime = props.time;
-    console.log(bestTime);
-    // console.log(account);
-    await axios.post(`http://localhost:5000/mine`, { bestTime }).then((res) => {
-      console.log(res.data);
-      alert("점수 등록 완료");
-    });
-  };
+  // const sendPoint = async () => {
+  //   // const account = useSelector((state) => state.AppState.account);
+  //   // const account = this.state.AppState.account;
+  //   const bestTime = props.time;
+  //   console.log(bestTime);
+  //   console.log(account);
+  //   await axios.post(`http://localhost:5000/mine`, { bestTime }).then((res) => {
+  //     console.log(res.data);
+  //     alert("점수 등록 완료");
+  //   });
+  // };
   return (
     <div className="status">
       <div className="lcd minesLeft">{props.minesLeft}</div>
@@ -22,9 +20,9 @@ export default function Status(props) {
         {props.buttonStatus}
       </button>
       <div className="lcd timer">{props.time}</div>
-      <button type="submit" onClick={sendPoint}>
+      {/* <button type="submit" onClick={sendPoint}>
         점수 등록
-      </button>
+      </button> */}
     </div>
   );
 }

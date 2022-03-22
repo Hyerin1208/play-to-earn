@@ -35,7 +35,8 @@
     "remixicon": "^2.5.0",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4",
-    "web3": "^1.7.1"
+    "web3": "^1.7.1",
+    "immer": "8.0.4"
   },
   "scripts": {
     "start": "react-app-rewired start",

@@ -4,23 +4,22 @@ import Board from "./js/Board";
 import Status from "./js/Status";
 import DifficultyLevel from "./js/DifficultyLevel";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import * as actions from "../../../redux/actions";
 
 const EMOJI_OK = "🙂";
 const EMOJI_GAME_OVER = "💀";
 const EMOJI_WIN = "😎";
 
 class Game extends Component {
-  // sendPoint = async () => {
-  //   const bestTime = this.state.bestTimes[this.getBestTimeKey()] || null;
-  //   console.log(bestTime);
-  //   await axios
-  //     .post(`http://localhost:5000/mine`, { bestTime })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       alert("점수 등록 완료");
-  //     });
-  // };
+  sendPoint = async () => {
+    const bestTime = this.state.time;
+    console.log(bestTime);
+    await axios.post(`http://localhost:5000/mine`, { bestTime }).then((res) => {
+      console.log(res.data);
+      alert("점수 등록 완료");
+    });
+  };
 
   static randomInRange(minimum, maximum) {
     return Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
@@ -334,10 +333,11 @@ class Game extends Component {
           width={this.state.width}
         />
         <div className="bestScore">
-          {this.getBestTimeText()}&nbsp;
-          {/* <button type="submit" onClick={this.sendPoint}>
+          {/* {this.getBestTimeText()}&nbsp; */}
+          score :&nbsp;{this.state.time}&nbsp;
+          <button type="submit" onClick={this.sendPoint}>
             점수 등록
-          </button> */}
+          </button>
         </div>
         <div className="difficulty">
           <DifficultyLevel
