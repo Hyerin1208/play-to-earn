@@ -8,10 +8,23 @@ import { useSelector } from "react-redux";
 import NftDetails from "../pages/NftDetails";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [items, seitems] = useState([]);
 
+  let params = useParams();
+  const card_id = params.card_id;
+
+  useEffect(() => {
+    seitems(props.item);
+  }, [props.item]);
+
+  const Account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
   useEffect(async () => {
     // console.log(props.item);
     // console.log(props.item.formInput.name);
@@ -22,6 +35,14 @@ const NftCard = (props) => {
     //   setchangePrice(props.item.formInput.price);
     // }
   }, [props.item]);
+
+  // console.log(props.item.formInput);
+  // async function ttt() {
+  //   const rrr = await props;
+  //   return rrr;
+  // }
+
+  console.log(items);
 
   return (
     <div>
@@ -74,12 +95,15 @@ const NftCard = (props) => {
 
           <span className="view__link">
             {/* <Link to={`/market/${props.item.formInput.tokenid}`}> */}
-            <Link to={`/market/${props.item.formInput.tokenid}`}>
+            <Link to={`/detailes/${props.item.formInput.tokenid}`}>
               View More
             </Link>
           </span>
         </div>
       </div>
+      <Routes>
+        <Route path="detailes/*" element={<NftDetails item={items} />} />
+      </Routes>
     </div>
   );
 };
