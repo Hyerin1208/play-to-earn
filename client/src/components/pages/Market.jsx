@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
@@ -11,7 +12,7 @@ import { useSelector } from "react-redux";
 
 import axios from "axios";
 
-const Market = () => {
+const Market = ({ navigation }) => {
   const [nftListBox, setnftListBox] = useState([]);
   const nftArray = [...nftListBox].reverse();
   const [loadingState, setLoadingState] = useState("not-loaded");
@@ -39,6 +40,7 @@ const Market = () => {
   const [form, setForm] = useState({
     fileUrl: fileUrl,
     formInput: {
+      id: "",
       price: "",
       name: "",
       description: "",
@@ -69,6 +71,7 @@ const Market = () => {
         let item = {
           fileUrl: await meta.image,
           formInput: {
+            id: await i.tokenId,
             price: await meta.price,
             name: await meta.name,
             description: await meta.description,
@@ -77,6 +80,7 @@ const Market = () => {
         return item;
       })
     );
+    console.log(result);
     setnftListBox(result);
     setLoadingState("loaded");
   }
@@ -161,6 +165,8 @@ const Market = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <CommonSection title={"Market Place"} />
@@ -200,7 +206,6 @@ const Market = () => {
                 </div>
               </div>
             </Col>
-
             <button
               onClick={() => {
                 ownerselllists();
@@ -211,7 +216,23 @@ const Market = () => {
             </button>
 
             {nftArray.slice(0, 12).map((items, index) => (
-              <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+              <Col className="mb-4" lg="3" md="4" sm="6" key={index}>
+                {/* <NftCard
+                  item={items}
+                  id={items.formInput.tokenid}
+                  onClick={async (e) => {
+                    let tokenid = e.target.getAttribute("id");
+                    await CreateNFTContract.methods.tokenURI(tokenid).call({
+                      from: "0xC7E1F2dca144AEDA8ADF4f9093da9aAC18ce7436",
+                    });
+                  }}
+                  // onClick={() => navigate(`${items.formInput.tokenid}`)}
+                  // onPress={() =>
+                  //   navigation.navigate("Details", {
+                  //     tokenid: items.formInput.tokenid,
+                  //   })
+                  // }
+                ></NftCard> */}
                 <NftCard item={items}></NftCard>
               </Col>
             ))}
