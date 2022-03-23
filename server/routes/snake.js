@@ -34,8 +34,20 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.get("/", (req, res) => {
-  res.send("ddd");
+router.get("/", async (req, res) => {
+  const users = await Snake.findAll();
+  const result = []
+
+  for (const user of users) {
+    result.push({
+      address: user.address,
+      id: user.id,
+      nick: user.nick,
+      point: user.point,
+    });
+  }
+
+  res.json(result);
 });
 
 module.exports = router;

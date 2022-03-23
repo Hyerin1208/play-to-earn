@@ -3,41 +3,28 @@ import axios from "axios";
 
 import "./compensation.css";
 
-const Compensation = ({ setShowModal, match }) => {
-  const [point, setPoint] = useState("");
+const Compensation = ({ setShowModal }) => {
+  const [result, setResult] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+    console.log("ddd");
     axios
       .get(`http://localhost:5000/snake`)
       .then((response) => {
-        setPoint(response.data);
+        console.log(response);
+        console.log("ggg");
+        setResult(JSON.parse(response.data));
+        console.log("fff");
         console.log(response.data);
       })
       .catch((error) => {
         setError(error);
       });
+    setLoading(false);
   }, []);
-
-  // const id = match.params.id;
-  // console.log("id :: ", id);
-
-  // // 데이터를 호출해 오는 동안 대기할 수 있도록 async, await 사용
-  // useEffect(async () => {
-  //   try {
-  //     // `http://localhost:5000/snake` 라는 uri 로 DB를 불러온다.
-  //     const res = await axios.get(`http://localhost:5000/snake`, {
-  //       // param 으로 id 값을 넘겨준다.
-  //       params: {
-  //         id: id,
-  //       },
-  //     });
-  //     // 받아온 데이터를 useState 를 이용하여 선언한다.
-  //     setPoint(res.data[1].point);
-  //   } catch (e) {
-  //     console.error(e.message);
-  //   }
-  // }, []);
 
   return (
     <div className="modal__wrapper">
@@ -49,8 +36,7 @@ const Compensation = ({ setShowModal, match }) => {
         <div className="reward__content glow">
           <div className="single__rewardBlank">
             <h3>
-              <i className="ri-vip-diamond-fill"></i>1등 : &nbsp;
-              {point}
+              <i className="ri-vip-diamond-fill"></i>1등
             </h3>
           </div>
           <div className="single__rewardBlank">
