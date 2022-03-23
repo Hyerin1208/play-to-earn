@@ -18,12 +18,38 @@ const NftDetails = () => {
   );
   const [Loading, setLoading] = useState(true);
   const [calldata, setCalldata] = useState(null);
+
+  const [like, setLike] = useState(1);
+  const [view, setView] = useState(1);
+
+  const [likeActive, setLikeActive] = useState(false);
+  const [viewActive, setViewActive] = useState(false);
+
   let params = useParams();
   const card_id = params.card_id;
 
   useEffect(async () => {
     gettokenuri(card_id);
   }, [CreateNFTContract]);
+
+  function likeBtn() {
+    if (likeActive) {
+      setLikeActive(false);
+      setLike(like - 1);
+    } else {
+      setLikeActive(true);
+      setLike(like + 1);
+    }
+  }
+
+  function viewBtn() {
+    if (viewActive) {
+      setViewActive(false);
+    } else {
+      setViewActive(view + 1);
+      setView(view + 1);
+    }
+  }
 
   async function gettokenuri(tokenId) {
     const tokenURI = await CreateNFTContract.methods
@@ -46,9 +72,8 @@ const NftDetails = () => {
     if (Loading) {
       return (
         <div>
-          잠시만 기다려 주세요
           <ReactLoaing
-            type={"bars"}
+            type={"balls"}
             color={"purple"}
             height={667}
             width={375}
@@ -58,10 +83,10 @@ const NftDetails = () => {
     } else {
       return (
         <>
+          <CommonSection title={calldata.name} />
           <div className="detail__box">
-            <CommonSection title={calldata.name} />
             <Container>
-              <Row>
+              <Row className="row__box">
                 <Col lg="6" md="6" sm="6">
                   <img
                     src={calldata.image}
@@ -78,10 +103,15 @@ const NftDetails = () => {
                   <div className="single__nft__icon">
                     <div className="single__nft-seen">
                       <span>
-                        <i className="ri-eye-line"></i> 234
+                        <button className="nft-heart__btn" onClick={likeBtn}>
+                          <i className="ri-heart-line"></i> {like}
+                        </button>
                       </span>
+
                       <span>
-                        <i className="ri-heart-line"></i> 123
+                        <button className="nft-view__btn" onClick={viewBtn}>
+                          <i className="ri-eye-line"></i> {view}
+                        </button>
                       </span>
                     </div>
 
@@ -95,10 +125,12 @@ const NftDetails = () => {
                     </div>
                   </div>
                   <div className="singleNft_price">
-                    <p>{calldata.price}</p>
+                    <p>
+                      Price : <span>{calldata.price}</span> ETH
+                    </p>
                   </div>
 
-                  <p className="my-3">{calldata.description}</p>
+                  <p className="my-3">Description : {calldata.description}</p>
                   <button className="singleNft-btn">
                     <i className="ri-shopping-bag-line"></i>
                     <Link to="/wallet">Place a Bid</Link>

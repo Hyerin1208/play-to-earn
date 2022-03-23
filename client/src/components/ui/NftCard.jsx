@@ -54,7 +54,7 @@ const NftCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/market/${props.item.formInput.tokenid}`}>
+              <Link to={`/detailes/${props.item.formInput.tokenid}`}>
                 {" "}
                 {props.item.formInput.name}
               </Link>
