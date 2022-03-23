@@ -215,6 +215,18 @@ const Tetris = () => {
         });
     };
 
+    const updatePoint = async () => {
+      const data = gameStats.score;
+      console.log(gameStats.score);
+      console.log(account);
+      await axios
+        .put(`http://localhost:5000/tetris`, { data, account })
+        .then((res) => {
+          console.log(res.data);
+          alert("점수 갱신 완료");
+        });
+    };
+
     if (!gameState.over) return null;
 
     return (
@@ -228,7 +240,10 @@ const Tetris = () => {
           다시 도전
         </button>
         <button className="btn btn-primary btn-lg mb-3" onClick={sendPoint}>
-          점수등록
+          점수 등록
+        </button>
+        <button className="btn btn-primary btn-lg mb-3" onClick={updatePoint}>
+          점수 갱신
         </button>
         <button className="btn btn-outline-light" onClick={resetGameHandler}>
           Menu

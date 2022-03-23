@@ -44,6 +44,17 @@ function MineGame() {
       });
   };
 
+  const updatePoint = async () => {
+    console.log(runtime);
+    console.log(account);
+    await axios
+      .put(`http://localhost:5000/mine`, { runtime, account })
+      .then((res) => {
+        console.log(res.data);
+        alert("점수 갱신 완료");
+      });
+  };
+
   const handleRightClick = (e, i, j) => {
     e.preventDefault();
     if (gameState === GAMESTATE.WIN || gameState === GAMESTATE.LOSE) return;
@@ -162,6 +173,10 @@ function MineGame() {
           &nbsp;
           <button type="submit" onClick={sendPoint}>
             점수등록
+          </button>
+          &nbsp;
+          <button type="submit" onClick={updatePoint}>
+            점수갱신
           </button>
         </main>
       </div>

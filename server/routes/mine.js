@@ -17,6 +17,23 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.put("/", async (req, res, next) => {
+  const { runtime, account } = req.body;
+
+  try {
+    Mine.update(
+      {
+        point: runtime,
+      },
+      { where: { address: account } }
+    );
+    return res.json({ message: "sucess" });
+  } catch (err) {
+    console.error(err);
+    return next(error);
+  }
+});
+
 router.get("/", async (req, res, next) => {
   const { bestTime } = req.body;
   res.sendFile(bestTime);

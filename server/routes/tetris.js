@@ -17,6 +17,23 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.put("/", async (req, res, next) => {
+  const { data, account } = req.body;
+
+  try {
+    Tetris.update(
+      {
+        point: data,
+      },
+      { where: { address: account } }
+    );
+    return res.json({ message: "sucess" });
+  } catch (err) {
+    console.error(err);
+    return next(error);
+  }
+});
+
 router.get("/", async (req, res, next) => {
   const { data } = req.body;
   res.sendFile(data);
