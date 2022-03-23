@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import "./nft-card.css";
 import Modal from "./Modal";
 import { Col, Row } from "reactstrap";
 import { useSelector } from "react-redux";
-import NftDetails from "../pages/NftDetails";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(async () => {
-    // console.log(props.item);
-    // console.log(props.item.formInput.name);
-    // if (props.item) {
-    //   setchangeImg(props.item.fileUrl);
-    //   setchangeName(props.item.formInput.name);
-    //   setchangeDesc(props.item.formInput.description);
-    //   setchangePrice(props.item.formInput.price);
-    // }
-  }, [props.item]);
 
   return (
     <div>
@@ -74,7 +60,7 @@ const NftCard = (props) => {
 
           <span className="view__link">
             {/* <Link to={`/market/${props.item.formInput.tokenid}`}> */}
-            <Link to={`/market/${props.item.formInput.tokenid}`}>
+            <Link to={`/detail/${props.item.formInput.tokenid}`}>
               View More
             </Link>
           </span>
