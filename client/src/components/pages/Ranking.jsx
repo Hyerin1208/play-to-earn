@@ -71,8 +71,8 @@ const Ranking = () => {
                 여기에 종합랭킹 순위표만들기
                 <br />
                 <br />
-                <p>1st {result[0].address}</p>
-                <p>2nd {result[1].address}</p>
+                {/* <p>1st {result[0].address}</p>
+                <p>2nd {result[1].address}</p> */}
               </div>
             </Container>
           </div>
