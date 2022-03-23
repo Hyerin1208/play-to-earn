@@ -127,3 +127,11 @@
   font-weight: 400;
   border-radius: 20px;
 }
+
+.token__content h3 {
+  font-size: 1.4rem;
+}
+
+.token__content p {
+  font-size: 1rem;
+}

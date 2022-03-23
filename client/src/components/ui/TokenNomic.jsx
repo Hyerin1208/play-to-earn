@@ -20,7 +20,7 @@ const TokenNomic = () => {
               <span></span>
               <span></span>
               <div className="token__content">
-                <h4>NFT PLAY TO EARN GAME</h4>
+                <h3>NFT PLAY TO EARN GAME</h3>
                 <p>
                   You don't have to race to earn money if you don't want to, you
                   can also stake tokens and earn money while not participating
