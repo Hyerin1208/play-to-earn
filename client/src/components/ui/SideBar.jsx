@@ -6,7 +6,10 @@ const SideBar = () => {
   return (
     <>
       <div className="sidebar__btn">
-        <a href="#" className="github">
+        <a
+          href="https://github.com/NamingCenter/play-to-earn"
+          className="github"
+        >
           Github
           <i className="ri-github-fill" />
         </a>

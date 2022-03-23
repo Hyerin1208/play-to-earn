@@ -8,7 +8,7 @@ import MyRanking from "../ui/myModal/MyRanking";
 import EditProfile from "../ui/myModal/EditProfile";
 
 import "./mypage.css";
-import pfpImg from "../../assets/images/avatar.png";
+import pfpImg from "../../assets/images/img.jpg";
 
 const MyPage = () => {
   const [nickname, setNicname] = useState("noname");
@@ -28,7 +28,7 @@ const MyPage = () => {
         <div className="card__profile">
           <div className="upper__container">
             <div className="pfp__container">
-              <img src={pfpImg} alt="pfp" />
+              <img src={pfpImg} alt="pfp" style={{ position: "absolute" }} />
             </div>
           </div>
           <div className="lower__container">
@@ -46,10 +46,11 @@ const MyPage = () => {
             )}
           </div>
         </div>
-
+        {MyNftModal && <MyNfts setShowModal={setMyNftModal} />}
+        {MyRankingModal && <MyRanking setShowModal={setMyRankingModal} />}
         <div className="my__nft">
-          <Row>
-            <Col xs="4">
+          <Row className="mypage__btn">
+            <Col xs="12" className="mypage__li">
               <div className="nft_content">
                 <button
                   className="mynft__btn"
@@ -63,9 +64,7 @@ const MyPage = () => {
               </div>
             </Col>
 
-            {MyNftModal && <MyNfts setShowModal={setMyNftModal} />}
-
-            <Col xs="8">
+            <Col xs="12" className="mypage__li">
               <div className="ranking_content">
                 <button
                   className="myRanking__btn"
@@ -76,14 +75,21 @@ const MyPage = () => {
                   </span>
                   <span className="ranking__title">My Ranking</span>
                 </button>
-
-                {MyRankingModal && (
-                  <MyRanking setShowModal={setMyRankingModal} />
-                )}
               </div>
             </Col>
 
-            <Col xs="4">
+            <Col xs="12" className="mypage__li">
+              <div className="market_content">
+                <Link to="/market">
+                  <span className="market__icon">
+                    <i className="ri-store-2-line"></i>
+                  </span>
+                  <span className="ranking__title">NFT Market</span>
+                </Link>
+              </div>
+            </Col>
+
+            {/* <Col xs="4">
               <div className="edit_content">
                 <button
                   className="editProfile__btn"
@@ -95,9 +101,9 @@ const MyPage = () => {
                   <span className="profile__title">Edit Profile</span>
                 </button>
               </div>
-            </Col>
+            </Col> */}
 
-            <Col xs="8">
+            <Col xs="12" className="mypage__li">
               <div className="gogame_content">
                 <Link to="/game">
                   <span className="gogame__icon">

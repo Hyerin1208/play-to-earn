@@ -9,12 +9,12 @@
   display: flex;
 }
 
-.single_modal {
+.Ranking_modal {
   position: relative;
-  top: 20%;
-  left: 15%;
-  width: 870px;
-  height: 500px;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  max-height: 600px;
   transform: translate(-50%, -50%);
   background: rgb(28, 20, 37) !important;
   border-radius: 5px;

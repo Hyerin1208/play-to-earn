@@ -13,19 +13,19 @@ import NewsLetter from "../ui/NewsLetter";
 import SideBar from "../ui/SideBar";
 
 const Home = () => {
-  return (
-    <>
-      <ScrollToTop smooth top="20" />
-      <SideBar />
-      <MainSection />
-      <AirDrop />
-      <LiveList />
-      <TokenNomic />
-      <Tutorial />
-      <Members />
-      <NewsLetter />
-    </>
-  );
+    return (
+        <>
+            <ScrollToTop smooth top="20" />
+            <SideBar />
+            <MainSection />
+            <AirDrop />
+            <LiveList />
+            <TokenNomic />
+            <Tutorial />
+            <Members />
+            <NewsLetter />
+        </>
+    );
 };
 
 export default Home;

@@ -26,7 +26,7 @@ const Routers = () => {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/wallet" element={<Wallet />} />
-        <Route path="/market/:id" element={<NftDetails />} />
+        <Route path="/market/:card_id" element={<NftDetails />} />
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/test" element={<Test />} />

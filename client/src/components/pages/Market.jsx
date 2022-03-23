@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
@@ -11,25 +12,27 @@ import { useSelector } from "react-redux";
 
 import axios from "axios";
 
-const Market = () => {
+const Market = ({ navigation }) => {
+  const [nftListBox, setnftListBox] = useState([]);
+  const nftArray = [...nftListBox].reverse();
+  const [loadingState, setLoadingState] = useState("not-loaded");
+
   const [fileUrl, setFileUrl] = useState("");
-  const [formInput, updateFormInput] = useState({
-    price: "",
-    name: "",
-    description: "",
-  });
+  const [NFTimage, setNFTimage] = useState("");
+  const [NFTname, setNFTname] = useState("");
+  const [NFTdesc, setNFTdesc] = useState("");
+
+  const [data, setData] = useState(NFT__DATA);
+
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
-  const [NFTname, setNFTname] = useState("");
-  const [NFTdesc, setNFTdesc] = useState("");
-  const [NFTimage, setNFTimage] = useState("");
 
-  const [data, setData] = useState(NFT__DATA);
   const handleCategory = () => {};
 
   const handleItems = () => {};
@@ -37,11 +40,16 @@ const Market = () => {
   const [form, setForm] = useState({
     fileUrl: fileUrl,
     formInput: {
+      id: "",
       price: "",
       name: "",
       description: "",
     },
   });
+
+  useEffect(() => {
+    ownerselllists();
+  }, []);
 
   //오너 nft 판매 리스트
   async function ownerselllists() {
@@ -54,7 +62,27 @@ const Market = () => {
           console.log(error);
         }
       });
-    console.log(await lists);
+    const result = await Promise.all(
+      lists.map(async (i) => {
+        const tokenURI = await CreateNFTContract.methods
+          .tokenURI(i.tokenId)
+          .call({ from: Account });
+        const meta = await axios.get(tokenURI).then((res) => res.data);
+        let item = {
+          fileUrl: await meta.image,
+          formInput: {
+            id: await i.tokenId,
+            price: await meta.price,
+            name: await meta.name,
+            description: await meta.description,
+          },
+        };
+        return item;
+      })
+    );
+    console.log(result);
+    setnftListBox(result);
+    setLoadingState("loaded");
   }
 
   //nft 구매
@@ -98,6 +126,14 @@ const Market = () => {
       setNFTname(data.data.name);
       setNFTdesc(data.data.description);
       setNFTimage(data.data.image);
+      setForm({
+        fileUrl: data.data.image,
+        formInput: {
+          price: "",
+          name: data.data.name,
+          description: data.data.description,
+        },
+      });
     });
     // const result = await axios.get(tokenURI).then((data) => data.data);
   }
@@ -128,6 +164,8 @@ const Market = () => {
       setData(filterData);
     }
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -168,10 +206,36 @@ const Market = () => {
                 </div>
               </div>
             </Col>
+            <button
+              onClick={() => {
+                ownerselllists();
+                console.log(nftListBox);
+              }}
+            >
+              show
+            </button>
 
-            <Col lg="3" md="4" sm="6" className="mb-4">
-              <NftCard item={form} />
-            </Col>
+            {nftArray.slice(0, 12).map((items, index) => (
+              <Col className="mb-4" lg="3" md="4" sm="6" key={index}>
+                {/* <NftCard
+                  item={items}
+                  id={items.formInput.tokenid}
+                  onClick={async (e) => {
+                    let tokenid = e.target.getAttribute("id");
+                    await CreateNFTContract.methods.tokenURI(tokenid).call({
+                      from: "0xC7E1F2dca144AEDA8ADF4f9093da9aAC18ce7436",
+                    });
+                  }}
+                  // onClick={() => navigate(`${items.formInput.tokenid}`)}
+                  // onPress={() =>
+                  //   navigation.navigate("Details", {
+                  //     tokenid: items.formInput.tokenid,
+                  //   })
+                  // }
+                ></NftCard> */}
+                <NftCard item={items}></NftCard>
+              </Col>
+            ))}
           </Row>
         </Container>
       </div>
