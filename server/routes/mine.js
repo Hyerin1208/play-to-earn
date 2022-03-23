@@ -3,16 +3,33 @@ var router = express.Router();
 const { Mine } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { bestTime, account } = req.body;
+  const { runtime, account } = req.body;
 
   try {
     Mine.create({
-      point: bestTime,
+      point: runtime,
       address: account,
     });
     return res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
+    return next(error);
+  }
+});
+
+router.put("/", async (req, res, next) => {
+  const { runtime, account } = req.body;
+
+  try {
+    Mine.update(
+      {
+        point: runtime,
+      },
+      { where: { address: account } }
+    );
+    return res.json({ message: "sucess" });
+  } catch (err) {
+    console.error(err);
     return next(error);
   }
 });
