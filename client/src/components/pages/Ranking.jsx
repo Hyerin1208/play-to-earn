@@ -11,26 +11,56 @@ const Ranking = () => {
     setToggleState(index);
   };
 
-  const [result, setResult] = useState([]);
+  const [snake, setSnake] = useState([]);
+  const [puzzle, setPuzzle] = useState([]);
+  const [mine, setMine] = useState([]);
+  const [tetris, setTetris] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     console.log("ddd");
     axios
-      .get(`http://localhost:5000/snake`)
+      .get(`http://localhost:5000/snake/ttt`)
       .then((response) => {
         console.log(response);
-        console.log(response.data[0].address);
-        console.log(response.data[1].address);
-        setResult(response.data);
-        console.log("ggg");
+        setSnake(response.data);
       })
       .catch((error) => {
         setError(error);
       });
-    setLoading(false);
+
+    axios
+      .get(`http://localhost:5000/2048`)
+      .then((response) => {
+        console.log(response);
+        setPuzzle(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+
+    axios
+      .get(`http://localhost:5000/mine`)
+      .then((response) => {
+        console.log(response);
+        setMine(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+
+    axios
+      .get(`http://localhost:5000/tetris`)
+      .then((response) => {
+        console.log(response);
+        setTetris(response.data);
+        setTimeout(1000);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+      });
   }, []);
 
   return (
@@ -68,11 +98,44 @@ const Ranking = () => {
             <hr />
             <Container>
               <div className="ranking__box">
-                여기에 종합랭킹 순위표만들기
-                <br />
-                <br />
-                {/* <p>1st {result[0].address}</p>
-                <p>2nd {result[1].address}</p> */}
+                {loading ? (
+                  <strong> loading... </strong>
+                ) : (
+                  <div>
+                    <b>SnakeGame</b>
+                    <br />
+                    <p>1st : {snake[0]===undefined?"없음":snake[0].address}</p>
+                    <p>2nd : {snake[1]===undefined?"없음":snake[1].address}</p>
+                    <p>3rd : {snake[2]===undefined?"없음":snake[2].address}</p>
+                    <p>4rd : {snake[3]===undefined?"없음": snake[3].address}</p>
+                    <p>5rd : {snake[4]===undefined?"없음": snake[4].address}</p>
+                    <br />
+                    <b>TetrisGame</b>
+                    <br />
+                    <p>1st : {tetris[0]===undefined?"없음":tetris[0].address}</p>
+                    <p>2nd : {tetris[1]===undefined?"없음":tetris[1].address}</p>
+                    <p>3rd : {tetris[2]===undefined?"없음":tetris[2].address}</p>
+                    <p>4rd : {tetris[3]===undefined?"없음": tetris[3].address}</p>
+                    <p>5rd : {tetris[4]===undefined?"없음": tetris[4].address}</p>
+
+                    <br />
+                    <b>2048Game</b>
+                    <br />
+                    <p>1st : {puzzle[0]===undefined?"없음":puzzle[0].address}</p>
+                    <p>2nd : {puzzle[1]===undefined?"없음":puzzle[1].address}</p>
+                    <p>3rd : {puzzle[2]===undefined?"없음":puzzle[2].address}</p>
+                    <p>4rd : {puzzle[3]===undefined?"없음": puzzle[3].address}</p>
+                    <p>5rd : {puzzle[4]===undefined?"없음": puzzle[4].address}</p>
+                    <br />
+                    <b>MineSweepGame</b>
+                    <br />
+                    <p>1st : {mine[0]===undefined?"없음":mine[0].address}</p>
+                    <p>2nd : {mine[1]===undefined?"없음":mine[1].address}</p>
+                    <p>3rd : {mine[2]===undefined?"없음":mine[2].address}</p>
+                    <p>4rd : {mine[3]===undefined?"없음": mine[3].address}</p>
+                    <p>5rd : {mine[4]===undefined?"없음": mine[4].address}</p>
+                  </div>
+                )}
               </div>
             </Container>
           </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import "./GameOver.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function GameOver(props) {
   const account = useSelector((state) => state.AppState.account);
@@ -10,23 +10,18 @@ function GameOver(props) {
     console.log(props.score);
     console.log(account);
     const point = props.score;
+
     await axios
-      .post(`http://localhost:5000/snake`, { point, account })
+      .put(`http://localhost:5000/game/snake`, { point, account })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    await axios
+      .post(`http://localhost:5000/game/snake`, { point, account })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
-      });
-  };
-
-  const updatePoint = async () => {
-    console.log(props.score);
-    console.log(account);
-    const point = props.score;
-    await axios
-      .put(`http://localhost:5000/snake`, { point, account })
-      .then((res) => {
-        console.log(res.data);
-        alert("점수 갱신 완료");
       });
   };
 
@@ -49,9 +44,6 @@ function GameOver(props) {
         <div id="PressSpaceText">Press Space to restart</div>
         <div id="color" type="submit" onClick={sendPoint}>
           점수 등록
-        </div>
-        <div id="color" type="submit" onClick={updatePoint}>
-          점수 갱신
         </div>
       </div>
     </div>
