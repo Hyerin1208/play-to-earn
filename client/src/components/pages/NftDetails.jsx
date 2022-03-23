@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactLoaing from "react-loading";
 
 import CommonSection from "../ui/CommonSection";
 import { useParams } from "react-router-dom";
@@ -43,7 +44,17 @@ const NftDetails = () => {
 
   function testfunc(Loading) {
     if (Loading) {
-      return <div>대기중</div>;
+      return (
+        <div>
+          잠시만 기다려 주세요
+          <ReactLoaing
+            type={"bars"}
+            color={"purple"}
+            height={667}
+            width={375}
+          />
+        </div>
+      );
     } else {
       return (
         <>

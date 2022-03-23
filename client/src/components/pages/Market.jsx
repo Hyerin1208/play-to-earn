@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import ReactLoaing from "react-loading";
 
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
@@ -14,13 +15,13 @@ import axios from "axios";
 
 const Market = ({ navigation }) => {
   const OwnerSelllists = useSelector((state) => state.AppState.OwnerSelllists);
-  const [loadcheck, setLoadcheck] = useState("로딩중");
+  const [Loading, setLoading] = useState(true);
   const [nftArray, setnftArray] = useState([]);
   useEffect(() => {
     if (OwnerSelllists !== null) {
       console.log("실행");
       setnftArray([...OwnerSelllists].reverse());
-      setLoadcheck(null);
+      setLoading(null);
     }
   }, [OwnerSelllists]);
 
@@ -52,16 +53,23 @@ const Market = ({ navigation }) => {
   // };
 
   const navigate = useNavigate();
+  if (Loading) {
+    return (
+      <div>
+        잠시만 기다려 주세요
+        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <CommonSection title={"Market Place"} />
 
-  return (
-    <>
-      <CommonSection title={"Market Place"} />
-
-      <div className="market__box">
-        <Container>
-          <Row>
-            <Col lg="12" className="mb-5">
-              {/* <div className="market__product__filter">
+        <div className="market__box">
+          <Container>
+            <Row>
+              <Col lg="12" className="mb-5">
+                {/* <div className="market__product__filter">
                 <div className="filter__left">
                   <div className="all__category__filter">
                     <select onChange={handleCategory}>
@@ -91,8 +99,8 @@ const Market = ({ navigation }) => {
                   </select>
                 </div>
               </div>*/}
-            </Col>
-            {/* <button
+              </Col>
+              {/* <button
               onClick={() => {
                 ownerselllists();
                 console.log(nftListBox);
@@ -101,16 +109,17 @@ const Market = ({ navigation }) => {
               show
             </button> */}
 
-            {nftArray.map((items, index) => (
-              <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-                <NftCard item={items}></NftCard>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </div>
-    </>
-  );
+              {nftArray.map((items, index) => (
+                <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+                  <NftCard item={items}></NftCard>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+      </>
+    );
+  }
 };
 
 export default Market;
