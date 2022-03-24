@@ -19,7 +19,7 @@ const JoinUs = () => {
             <StepIndicator />
             <div className="join__output">
               <Routes>
-                <Route exact path="/" element={<FreeItem />}></Route>
+                <Route exact path="/step1" element={<FreeItem />}></Route>
                 <Route exact path="/step2" element={<BuyToken />}></Route>
                 <Route exact path="/step3" element={<CreateAccount />}></Route>
                 <Route exact path="/step4" element={<SetUp />}></Route>
