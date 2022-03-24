@@ -122,6 +122,7 @@ function MineGame() {
       open === gameAttr.width * gameAttr.height - gameAttr.mines
     ) {
       setGameState(GAMESTATE.WIN);
+      sendPoint();
       console.log("WIN!");
     }
   };
@@ -165,11 +166,6 @@ function MineGame() {
             handleRightClick={handleRightClick}
             gameState={gameState}
           />
-          <div>score:{runtime}</div>
-          &nbsp;
-          <button type="submit" onClick={sendPoint}>
-            점수등록
-          </button>
         </main>
       </div>
       <Setting show={showSet} handleSet={handleSet} />

@@ -71,14 +71,14 @@ router.post("/tetris", async (req, res, next) => {
 // SnakeGame
 router.get("/snake", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["address", "snakePoint"],
+    attributes: ["nick", "snakePoint"],
     order: [["snakePoint", "desc"]],
   });
   const snake = [];
 
   for (const user of users) {
     snake.push({
-      address: user.address,
+      nick: user.nick,
       snakePoint: user.snakePoint,
     });
   }
@@ -87,17 +87,17 @@ router.get("/snake", async (req, res) => {
 });
 
 // 2048Game
-router.get("/puzzle", async (req, res) => {
+router.get("/2048", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["address", "point"],
-    order: [["point", "desc"]],
+    attributes: ["nick", "puzzlePoint"],
+    order: [["puzzlePoint", "desc"]],
   });
   const puzzle = [];
 
   for (const user of users) {
     puzzle.push({
-      address: user.address,
-      point: user.point,
+      nick: user.nick,
+      puzzlePoint: user.puzzlePoint,
     });
   }
 
@@ -107,15 +107,15 @@ router.get("/puzzle", async (req, res) => {
 // MineGame
 router.get("/mine", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["address", "point"],
-    order: [["point", "asc"]],
+    attributes: ["nick", "minePoint"],
+    order: [["minePoint", "asc"]],
   });
   const mine = [];
 
   for (const user of users) {
     mine.push({
-      address: user.address,
-      point: user.point,
+      nick: user.nick,
+      minePoint: user.minePoint,
     });
   }
 
@@ -125,15 +125,15 @@ router.get("/mine", async (req, res) => {
 // TetrisGame
 router.get("/tetris", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["address", "point"],
-    order: [["point", "desc"]],
+    attributes: ["nick", "tetrisPoint"],
+    order: [["tetrisPoint", "desc"]],
   });
   const tetris = [];
 
   for (const user of users) {
     tetris.push({
-      address: user.address,
-      point: user.point,
+      nick: user.nick,
+      tetrisPoint: user.tetrisPoint,
     });
   }
 

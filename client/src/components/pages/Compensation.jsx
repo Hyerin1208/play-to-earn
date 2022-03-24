@@ -1,31 +1,21 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
+import React, { useEffect } from "react";
 import "./compensation.css";
 
 const Compensation = ({ setShowModal }) => {
-  const [result, setResult] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+  // document.body.style.overflow = "hidden";
   useEffect(() => {
-    setLoading(true);
-    console.log("ddd");
-    axios
-      .get(`http://localhost:5000/snake`)
-      .then((response) => {
-        console.log(response);
-        console.log("ggg");
-        setResult(JSON.parse(response.data));
-        console.log("fff");
-        console.log(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-    setLoading(false);
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
   }, []);
-
+  
   return (
     <div className="modal__wrapper">
       <div className="single__modal">

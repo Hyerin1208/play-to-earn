@@ -206,7 +206,6 @@ const Puzzle = () => {
           handleReset={handleReset}
         />
         <Guide />
-        {/* <Footer /> */}
       </div>
     </ThemeProvider>
   );
