@@ -205,25 +205,21 @@ const Tetris = () => {
   const gameOverOverlay = useMemo(() => {
     const sendPoint = async () => {
       const data = gameStats.score;
+
       console.log(gameStats.score);
       console.log(account);
+
       await axios
-        .post(`http://localhost:5000/tetris`, { data, account })
+        .put(`http://localhost:5000/game/tetris`, { data, account })
+        .then((res) => {
+          console.log(res.data);
+        });
+
+      await axios
+        .post(`http://localhost:5000/game/tetris`, { data, account })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");
-        });
-    };
-
-    const updatePoint = async () => {
-      const data = gameStats.score;
-      console.log(gameStats.score);
-      console.log(account);
-      await axios
-        .put(`http://localhost:5000/tetris`, { data, account })
-        .then((res) => {
-          console.log(res.data);
-          alert("점수 갱신 완료");
         });
     };
 
@@ -241,9 +237,6 @@ const Tetris = () => {
         </button>
         <button className="btn btn-primary btn-lg mb-3" onClick={sendPoint}>
           점수 등록
-        </button>
-        <button className="btn btn-primary btn-lg mb-3" onClick={updatePoint}>
-          점수 갱신
         </button>
         <button className="btn btn-outline-light" onClick={resetGameHandler}>
           Menu

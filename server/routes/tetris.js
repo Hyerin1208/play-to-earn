@@ -34,9 +34,21 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
-  const { data } = req.body;
-  res.sendFile(data);
+router.get("/", async (req, res) => {
+  const users = await Tetris.findAll({
+    attributes: ["address", "point"],
+    order: [["point", "desc"]],
+  });
+  const tetris = [];
+
+  for (const user of users) {
+    tetris.push({
+      address: user.address,
+      point: user.point,
+    });
+  }
+
+  res.json(tetris);
 });
 
 module.exports = router;

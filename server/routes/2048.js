@@ -34,9 +34,21 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
-  const { score, account } = req.body;
-  res.sendFile(score);
+router.get("/", async (req, res) => {
+  const users = await Puzzle.findAll({
+    attributes: ["address", "point"],
+    order: [["point", "desc"]],
+  });
+  const puzzle = [];
+
+  for (const user of users) {
+    puzzle.push({
+      address: user.address,
+      point: user.point,
+    });
+  }
+
+  res.json(puzzle);
 });
 
 module.exports = router;

@@ -34,8 +34,21 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.get("/", (req, res) => {
-  res.send("ddd");
+router.get("/ttt", async (req, res) => {
+  const users = await Snake.findAll({
+    attributes: ["address", "point"],
+    order: [["point", "desc"]],
+  });
+  const snake = [];
+
+  for (const user of users) {
+    snake.push({
+      address: user.address,
+      point: user.point,
+    });
+  }
+
+  res.json(snake);
 });
 
 module.exports = router;

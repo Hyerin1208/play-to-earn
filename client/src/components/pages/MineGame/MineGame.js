@@ -36,22 +36,18 @@ function MineGame() {
   const sendPoint = async () => {
     console.log(runtime);
     console.log(account);
+
     await axios
-      .post(`http://localhost:5000/mine`, { runtime, account })
+      .put(`http://localhost:5000/game/mine`, { runtime, account })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    await axios
+      .post(`http://localhost:5000/game/mine`, { runtime, account })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
-      });
-  };
-
-  const updatePoint = async () => {
-    console.log(runtime);
-    console.log(account);
-    await axios
-      .put(`http://localhost:5000/mine`, { runtime, account })
-      .then((res) => {
-        console.log(res.data);
-        alert("점수 갱신 완료");
       });
   };
 
@@ -173,10 +169,6 @@ function MineGame() {
           &nbsp;
           <button type="submit" onClick={sendPoint}>
             점수등록
-          </button>
-          &nbsp;
-          <button type="submit" onClick={updatePoint}>
-            점수갱신
           </button>
         </main>
       </div>

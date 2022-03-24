@@ -26,18 +26,18 @@ export const initBoard = (width, height, mineCount) => {
 
 export const getNextCellCode = (code) => {
 	switch (code) {
-		case CODES.NOTHING: //û����
-			return CODES.FLAG; //�Ҽ�ʱ����Ϊƽ�ز���
-		case CODES.MINE://����������
-			return CODES.MINE_FLAG; //�Ҽ�����Ϊ�����ϲ���״̬
-		case CODES.FLAG://ƽ�ز���
-			return CODES.QUESTION;//���ƽ���ʺ�
-		case CODES.MINE_FLAG://���ϲ���
-			return CODES.MINE_QUESTION;//��������ʺ�
-		case CODES.QUESTION://ƽ���ʺ�
-			return CODES.NOTHING;//�ָ��ɳ�ʼû���׵�״̬
-		case CODES.MINE_QUESTION://�����ʺ�
-			return CODES.MINE;//�ָ�Ϊ��������
+		case CODES.NOTHING:
+			return CODES.FLAG; 
+		case CODES.MINE:
+			return CODES.MINE_FLAG; 
+		case CODES.FLAG:
+			return CODES.QUESTION;
+		case CODES.MINE_FLAG:
+			return CODES.MINE_QUESTION;
+		case CODES.QUESTION:
+			return CODES.NOTHING;
+		case CODES.MINE_QUESTION:
+			return CODES.MINE;
 		default:
 			return code;
 	}
@@ -55,7 +55,6 @@ export const getFlagIncDec = (code) => {
 			return 0;
 	}
 };
-//��չ������Ϣ�����ʱ���ã�����Ŀǰ����״���͵���ĸ��ӣ�������״���Լ���չ�ĸ�������
 export const expandOpenedCell = (boardData, x, y) => {
 	let openedCellCount = 0;
 

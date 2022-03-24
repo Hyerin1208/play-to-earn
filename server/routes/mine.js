@@ -34,9 +34,21 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
-  const { bestTime } = req.body;
-  res.sendFile(bestTime);
+router.get("/", async (req, res) => {
+  const users = await Mine.findAll({
+    attributes: ["address", "point"],
+    order: [["point", "asc"]],
+  });
+  const mine = [];
+
+  for (const user of users) {
+    mine.push({
+      address: user.address,
+      point: user.point,
+    });
+  }
+
+  res.json(mine);
 });
 
 module.exports = router;
