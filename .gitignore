@@ -2,15 +2,14 @@
 
 # dependencies
 /node_modules
+/server/node_modules/
+/client/node_modules/
+/client/build/
+/client/src/contracts/*.json
+/client/src/*.env
+.secret
 /.pnp
 .pnp.js
-.secret
-
-# testing
-/coverage
-
-# production
-/build
 
 # misc
 .DS_Store
@@ -18,7 +17,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
-.secret
+package-lock.json
+*.env
+
+
 
 npm-debug.log*
 yarn-debug.log*
