@@ -8,10 +8,12 @@ const FreeCard = (props) => {
 
   const [bChecked, setChecked] = useState(false);
 
-  //   const checkHandler = ({ target }) => {
-  //     setChecked(!bChecked);
-  //     checkedItemHandler(issue.id, target.checked);
-  //   };
+  const checkHandler = ({ target }) => {
+    setChecked(!bChecked);
+    //checkedItemHandler(props.item.id, target.checked);
+  };
+
+  //console.log(props.item.id);
 
   return (
     <div className="free__nft__card">
@@ -19,9 +21,9 @@ const FreeCard = (props) => {
         <input
           type="checkbox"
           checked={bChecked}
-          //   onChange={(e) => checkHandler(e)}
+          onChange={(e) => checkHandler(e)}
         />
-        <div class="front__card">
+        <div className="front__card">
           <div className="free__nft__img">
             <img src={imgUrl} alt="" />
           </div>
@@ -30,7 +32,7 @@ const FreeCard = (props) => {
             <div className="free__nft__desc">
               <p>{desc}</p>
             </div>
-            <button class="pick__nft">Pick Me</button>
+            <button className="pick__nft">Pick Me</button>
           </div>
         </div>
       </label>

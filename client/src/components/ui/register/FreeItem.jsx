@@ -10,15 +10,31 @@ import FreeCard from "./FreeCard";
 const FreeItem = () => {
   const [checkedItems, setCheckedItems] = useState(new Set());
 
-  // const checkedItemHandler = (id, isChecked) => {
-  //   if (isChecked) {
-  //     checkedItems.add(id);
-  //     setCheckedItems(checkedItems);
-  //   } else if (!isChecked && checkedItems.has(id)) {
-  //     checkedItems.delete(id);
-  //     setCheckedItems(checkedItems);
-  //   }
-  // };
+  const [checkItems, setCheckItems] = useState([]);
+
+  const checkedItemHandler = (id, isChecked) => {
+    if (isChecked) {
+      checkedItems.add(id);
+      setCheckedItems(checkedItems);
+    } else if (!isChecked && checkedItems.has(id)) {
+      checkedItems.delete(id);
+      setCheckedItems(checkedItems);
+    }
+  };
+
+  // 체크박스 전체 단일 개체 선택
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+    } else {
+      // 체크 해제
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
+
+  const handleChange = (e) => {
+    setCheckItems([]);
+  };
 
   return (
     <div>
