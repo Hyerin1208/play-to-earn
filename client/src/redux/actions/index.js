@@ -80,27 +80,15 @@ export function getWeb3() {
                                 return item;
                             })
                         );
-
-                        if (window.ethereum) {
-                            if ((await window.ethereum._metamask.isUnlocked()) === true && (await window.ethereum.selectedAddress) !== null) {
-                                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                                const account = accounts[0];
-                                dispatch(connectSuccess({ network: res, wallet: true, accounts: accounts, account: accounts[0], CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
-
-                                window.ethereum.on("accountsChanged", (accounts) => {
-                                    dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-                                });
-                            } else {
-                                dispatch(connectSuccess({ network: res, wallet: false, accounts: null, account: null, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
-                            }
-                        } else {
-                            dispatch(connectSuccess({ network: res, wallet: false, accounts: null, account: null, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm, errorMsg: "" }));
-                        }
-
-                        // dispatch(connectSuccess({ network: res, CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, OwnerSelllists: listsForm }));
-                        // window.ethereum.on("accountsChanged", (accounts) => {
-                        //     dispatch(updateAccounts({ accounts: accounts, account: accounts[0] }));
-                        // });
+                        dispatch(
+                            connectSuccess({
+                                network: res,
+                                CreateNFTContract: CreateNFTContract,
+                                AmusementArcadeTokenContract: AmusementArcadeTokenContract,
+                                OwnerSelllists: listsForm,
+                                errorMsg: "",
+                            })
+                        );
                     } else {
                         dispatch(connectFailed("접속네트워크를 확인하세요"));
                     }
@@ -115,119 +103,3 @@ export function getWeb3() {
         }
     };
 }
-
-export function connectWallet() {
-    return async (dispatch) => {
-        if (window.ethereum) {
-            if ((await window.ethereum._metamask.isUnlocked()) === true || (await window.ethereum.selectedAddress) !== null) {
-                console.log("여기1");
-                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                const account = accounts[0];
-                dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-
-                window.ethereum.on("accountsChanged", (accounts) => {
-                    dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-                });
-            } else {
-                console.log("여기2");
-                dispatch(updateAccounts({ wallet: false, accounts: null, account: null }));
-                document.querySelector("#Connect_Wallet").addEventListener("click", async () => {
-                    window.ethereum.enable();
-                    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                    const account = accounts[0];
-                    dispatch(updateAccounts({ wallet: true, accounts: accounts, account: account }));
-                });
-            }
-        } else {
-            console.log("여기3");
-
-            dispatch(connectFailed("메타마스크 설치가 필요합니다."));
-            alert("메타마스크 설치가 필요합니다.");
-        }
-
-        // document.querySelector("#Connect_Wallet").addEventListener("click", async () => {
-        //     if (window.ethereum) {
-        //         console.log("여기1");
-        //         if (window.ethereum._metamask.isUnlocked() === false || window.ethereum.selectedAddress === null) {
-        //             // document.querySelector("#Connect_Wallet").addEventListener("click", async () => {
-        //             window.ethereum.enable();
-        //             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        //             const account = accounts[0];
-        //             // });
-        //         }
-        //         // } else {
-        //         //     console.log("여기2");
-        //         //     const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        //         //     const account = accounts[0];
-        //         //     dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-
-        //         //     window.ethereum.on("accountsChanged", (accounts) => {
-        //         //         dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-        //         //     });
-        //         // }
-        //     } else {
-        //         console.log("여기3");
-
-        //         dispatch(connectFailed("메타마스크 설치가 필요합니다."));
-        //         alert("메타마스크 설치가 필요합니다.");
-        //     }
-        // });
-    };
-}
-
-// export function checkWallet() {
-//     return async (dispatch) => {
-//         if (window.ethereum) {
-//             if ((await window.ethereum._metamask.isUnlocked()) === true && (await window.ethereum.selectedAddress) !== null) {
-//                 console.log("여기2");
-//                 const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-//                 const account = accounts[0];
-//                 dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-
-//                 window.ethereum.on("accountsChanged", (accounts) => {
-//                     dispatch(updateAccounts({ wallet: true, accounts: accounts, account: accounts[0] }));
-//                 });
-//             } else {
-//                 dispatch(updateAccounts({ wallet: false, accounts: null, account: null }));
-//             }
-//         }
-//     };
-// }
-
-// export function getWeb3() {
-//     return async (dispatch) => {
-//         if (window.ethereum) {
-//             if (window.ethereum._metamask.isUnlocked() === false || window.ethereum.selectedAddress === null) {
-//                 window.ethereum.enable();
-//             }
-//             const web3 = new Web3(window.ethereum);
-//             try {
-//                 await window.ethereum.enable();
-//                 const accounts = await web3.eth.getAccounts();
-//                 const networkId = await web3.eth.net.getId();
-//                 const networkData_NFT = CreateNFT.networks[networkId];
-//                 const networkData_Token = AmusementArcadeToken.networks[networkId];
-//                 if (networkData_NFT && networkData_Token) {
-//                     const NFT_abi = CreateNFT.abi;
-//                     const NFT_address = networkData_NFT.address;
-//                     const CreateNFTContract = new web3.eth.Contract(NFT_abi, NFT_address);
-//                     const Token_abi = AmusementArcadeToken.abi;
-//                     const Token_address = networkData_Token.address;
-//                     const AmusementArcadeTokenContract = new web3.eth.Contract(Token_abi, Token_address);
-//                     dispatch(connectSuccess({ accounts: accounts, account: accounts[0], CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract }));
-
-//                     window.ethereum.on("accountsChanged", (accounts) => {
-//                         dispatch(updateAccounts({ accounts: accounts, account: accounts[0] }));
-//                     });
-//                 } else {
-//                     dispatch(connectFailed("접속네트워크를 확인하세요"));
-//                 }
-//             } catch (error) {
-//                 console.log(error);
-//                 dispatch(connectFailed("에러 확인"));
-//             }
-//         } else {
-//             dispatch(connectFailed("메타마스크 필요"));
-//         }
-//     };
-// }

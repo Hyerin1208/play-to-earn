@@ -5,11 +5,9 @@ import "./header.css";
 import { Container } from "reactstrap";
 
 import { Link, NavLink } from "react-router-dom";
-
-import WalletModal from "../ui/WalletModal";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAccounts } from "../../redux/actions/index";
-
+import MetaMaskOnboarding from "@metamask/onboarding";
+import { updateAccounts, connectFailed } from "../../redux/actions/index";
 const NAV__LINKS = [
     {
         display: "Home",
@@ -44,7 +42,8 @@ const Header = () => {
 
     const [showWalletModal, setShowWalletModal] = useState(false);
     const wallet = useSelector((state) => state.AppState.wallet);
-    const account = useSelector((state) => state.AppState.account);
+    const [isDisabled, setDisabled] = useState(false);
+    const [account, setAccount] = useState("연결이 필요합니다.");
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -59,35 +58,112 @@ const Header = () => {
         };
     }, []);
 
+    useEffect(async () => {
+        if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+            if ((await window.ethereum._metamask.isUnlocked()) === true) {
+                console.log("메타있는데 안잠겼지롱~");
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                const account = accounts[0];
+                dispatch(
+                    updateAccounts({
+                        wallet: true,
+                        accounts: accounts,
+                        account: account,
+                    })
+                );
+                setAccount(account);
+                setDisabled(true);
+
+                await window.ethereum.on("accountsChanged", (accounts) => {
+                    console.log(accounts.length);
+                    if (accounts.length > 0) {
+                        dispatch(
+                            updateAccounts({
+                                wallet: true,
+                                accounts: accounts,
+                                account: accounts[0],
+                            })
+                        );
+                        setAccount(accounts[0]);
+                        setDisabled(true);
+                    } else {
+                        dispatch(
+                            updateAccounts({
+                                wallet: false,
+                                accounts: null,
+                                account: null,
+                            })
+                        );
+                        setAccount("연결이 필요합니다.");
+                        setDisabled(false);
+                    }
+                });
+            } else {
+                console.log("메타있는데 잠김");
+                dispatch(
+                    updateAccounts({
+                        wallet: false,
+                        accounts: null,
+                        account: null,
+                    })
+                );
+                setDisabled(false);
+            }
+        } else {
+            dispatch(
+                connectFailed({
+                    errorMsg: "메타마스크가 필요합니다.",
+                })
+            );
+        }
+        return () => {
+            window.ethereum.off("accountsChanged", () => {
+                dispatch(
+                    updateAccounts({
+                        wallet: false,
+                        accounts: null,
+                        account: null,
+                    })
+                );
+                setDisabled(false);
+            });
+        };
+    }, [account]);
+
     const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
-    const checkwallet = () => {
-        return (
-            <div className="nav__right">
-                <button className="btn" id="Connect_Wallet" onClick={() => connectWallet()}>
-                    <span>
-                        <i className="ri-wallet-line"></i>
-                    </span>
-                    Connect Wallet
-                </button>
-                <span className="mobile__menu">
-                    <i className="ri-menu-line" onClick={toggleMenu}></i>
-                </span>
-            </div>
-        );
-    };
-
-    async function connectWallet() {
-        if (window.ethereum) {
-            window.ethereum.enable();
-            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    async function checkWallet() {
+        if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+            const accounts = await window.ethereum.request({
+                method: "eth_requestAccounts",
+            });
             const account = accounts[0];
-            dispatch(updateAccounts({ wallet: true, accounts: accounts, account: account }));
-            console.log("디스패치 실행됨?");
+            dispatch(
+                updateAccounts({
+                    wallet: true,
+                    accounts: accounts,
+                    account: account,
+                })
+            );
+            setAccount(account);
+            setDisabled(true);
         } else {
-            alert("메타마스크가 필요합니다.");
+            alert("메타마스크 설치하세요");
         }
     }
+
+    const walletButton = () => {
+        return (
+            <button className="btn" onClick={() => checkWallet()}>
+                <span>
+                    <i className="ri-wallet-line"></i>
+                </span>
+                Connect Wallet
+            </button>
+        );
+    };
 
     return (
         <header className="header" ref={headerRef}>
@@ -114,31 +190,24 @@ const Header = () => {
                         </ul>
                     </div>
 
-                    <div>
-                        <span>
-                            <div className="mypage__user__icon">
-                                <Link to="/mypage">
-                                    <i className="ri-user-3-line"></i>
-                                </Link>
+                    <div className="nav__right">
+                        {isDisabled === false ? (
+                            walletButton()
+                        ) : (
+                            <div>
+                                <div className="mypage__user__icon">
+                                    <Link to="/mypage">
+                                        <i className="ri-user-3-line"></i>
+                                    </Link>
+                                </div>
+
+                                <div>{account}</div>
                             </div>
-                        </span>
-                    </div>
-
-                    {wallet === false ? checkwallet() : <div>{account}</div>}
-                    {/* <div className="nav__right">
-                        <button className="btn" onClick={() => setShowWalletModal(true)}>
-                            <span>
-                                <i className="ri-wallet-line"></i>
-                            </span>
-                            Connect Wallet
-                        </button>
-
-                        {showWalletModal && <WalletModal setShowModal={setShowWalletModal} />}
-
+                        )}
                         <span className="mobile__menu">
                             <i className="ri-menu-line" onClick={toggleMenu}></i>
                         </span>
-                    </div> */}
+                    </div>
                 </div>
             </Container>
         </header>
