@@ -16,24 +16,24 @@ import Test from "../pages/Test";
 import Error from "../ui/Error404";
 
 const Routers = () => {
-  return (
-    <Fragment>
-      <Routes>
-        <Route path="/*" element={<Home />} />
-        <Route path="/market" element={<Market />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/detail/:card_id" element={<NftDetails />} />
-        <Route path="/game/*" element={<Game />} />
-        <Route path="/ranking" element={<Ranking />} />
-        <Route path="/test" element={<Test />} />
-        <Route component={<Error />} />
-      </Routes>
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <Routes>
+                <Route path="/*" element={<Home />} />
+                <Route path="/market" element={<Market />} />
+                <Route path="/detailes/:card_id" element={<NftDetails />} />
+                <Route path="/create" element={<Create />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/edit-profile" element={<EditProfile />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/game/*" element={<Game />} />
+                <Route path="/ranking" element={<Ranking />} />
+                <Route path="/test" element={<Test />} />
+                <Route component={<Error />} />
+            </Routes>
+        </Fragment>
+    );
 };
 
 export default Routers;
