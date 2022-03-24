@@ -14,6 +14,7 @@ import Game from "../pages/Game";
 import Ranking from "../pages/Ranking";
 import Test from "../pages/Test";
 import Error from "../ui/Error404";
+import JoinUs from "../ui/register/JoinUs";
 
 const Routers = () => {
   return (
@@ -23,6 +24,7 @@ const Routers = () => {
         <Route path="/market" element={<Market />} />
         <Route path="/detailes/:card_id" element={<NftDetails />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/join/*" element={<JoinUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/mypage" element={<MyPage />} />

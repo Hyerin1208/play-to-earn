@@ -1,0 +1,20 @@
+/* Button Container Styles */
+
+.btn__container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn__container a {
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  color: white;
+  padding: 5px 10px;
+  margin-top: 50%;
+  margin-right: 5%;
+  color: rgb(255, 255, 255);
+}
