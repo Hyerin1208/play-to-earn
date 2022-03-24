@@ -3,43 +3,14 @@ import React, { useEffect, useState } from "react";
 import "./nft-card.css";
 import Modal from "./Modal";
 import { Col, Row } from "reactstrap";
-import { useSelector } from "react-redux";
 import NftDetails from "../pages/NftDetails";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { Routes, Route, Link, useParams } from "react-router-dom";
 
 const NftCard = (props) => {
     const [showModal, setShowModal] = useState(false);
-    const [items, seitems] = useState([]);
 
     let params = useParams();
     const card_id = params.card_id;
-
-    useEffect(() => {
-        seitems(props.item);
-    }, [props.item]);
-
-    const Account = useSelector((state) => state.AppState.account);
-    const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
-    useEffect(async () => {
-        // console.log(props.item);
-        // console.log(props.item.formInput.name);
-        // if (props.item) {
-        //   setchangeImg(props.item.fileUrl);
-        //   setchangeName(props.item.formInput.name);
-        //   setchangeDesc(props.item.formInput.description);
-        //   setchangePrice(props.item.formInput.price);
-        // }
-    }, [props.item]);
-
-    // console.log(props.item.formInput);
-    // async function ttt() {
-    //   const rrr = await props;
-    //   return rrr;
-    // }
-
-    console.log(items);
 
     return (
         <div>
@@ -88,13 +59,12 @@ const NftCard = (props) => {
                     {showModal && <Modal setShowModal={setShowModal} />}
 
                     <span className="view__link">
-                        {/* <Link to={`/market/${props.item.formInput.tokenid}`}> */}
                         <Link to={`/detailes/${props.item.formInput.tokenid}`}>View More</Link>
                     </span>
                 </div>
             </div>
             <Routes>
-                <Route path="detailes/*" element={<NftDetails item={items} />} />
+                <Route path="detailes/*" element={<NftDetails item={props.item} />} />
             </Routes>
         </div>
     );

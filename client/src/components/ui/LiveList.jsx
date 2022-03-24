@@ -12,10 +12,14 @@ const LiveList = () => {
     const [Loading, setLoading] = useState(true);
     const [nftArray, setnftArray] = useState([]);
     useEffect(() => {
-        if (OwnerSelllists !== null) {
-            console.log("실행");
-            setnftArray([...OwnerSelllists].reverse());
-            setLoading(null);
+        try {
+            if (OwnerSelllists !== null) {
+                console.log("실행");
+                setnftArray([...OwnerSelllists].reverse());
+                setLoading(null);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }, [OwnerSelllists]);
 
