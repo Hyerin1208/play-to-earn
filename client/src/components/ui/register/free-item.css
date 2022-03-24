@@ -1,0 +1,111 @@
+/* Button Container Styles */
+
+.btn__container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn__container a {
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid #5142fc;
+  border-radius: 50px;
+  color: white;
+  padding: 5px 10px;
+  /* margin-top: 50%; */
+  margin-right: 5%;
+  color: rgb(255, 255, 255);
+}
+
+/* free-nft styles */
+
+.free__nftLabel {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.free__nft__card {
+  max-width: 280px;
+  padding: 15px;
+  background: #343444;
+  border-radius: 10px;
+  min-height: 380px;
+  box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.free__nft__card .front__card,
+.free__nft__card .back__card {
+  /* position: absolute; */
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.free__nft__card .back__card {
+  transform: rotateX(180deg);
+  color: #000;
+  background: #fff;
+}
+
+label:hover .free__nft__card {
+  transform: rotateX(2deg);
+  box-shadow: 0 20px 20px rgba(50, 60, 60, 0.2);
+}
+
+:checked + .free__nft__card {
+  transform: rotateX(180deg);
+}
+
+label:hover :checked + .free__nft__card {
+  transform: rotateX(175deg);
+  box-shadow: 0 20px 20px rgba(255, 255, 255, 0.2);
+}
+
+.free__nft__card:hover {
+  box-shadow: 5px 10px 20px 0px rgba(255, 255, 255, 0.651) !important;
+}
+
+.free__nft__img img {
+  border-radius: 10px;
+  height: 150px;
+  align-items: center;
+  /* transition: ease all 0.3s; */
+}
+
+.free__nft__title {
+  padding: 10px 5px 4px 5px;
+  font-size: 1.2rem;
+  text-align: left !important;
+}
+
+.free__nft__desc p {
+  padding: 4px 5px 4px 5px;
+  font-size: 0.75rem;
+  text-align: left !important;
+}
+
+.pick__nft {
+  margin: 0.3rem;
+  color: #4938ff;
+  font: bold;
+  background-color: #343444;
+  border: 2px solid #4938ff;
+  border-radius: 5px;
+  padding: 0.3rem;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.pick__nft:hover {
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.2);
+  border: none;
+  color: white;
+}

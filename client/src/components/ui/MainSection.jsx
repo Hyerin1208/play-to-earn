@@ -48,7 +48,7 @@ const MainSection = () => {
                   className="join__btn"
                 >
                   <i className="ri-registered-line"></i>
-                  <Link to="/market"> Join Us</Link>
+                  <Link to="/join/step1"> Join Us</Link>
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
