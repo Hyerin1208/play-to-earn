@@ -10,10 +10,6 @@ const { sequelize } = require("./models");
 
 var mainRouter = require("./routes/main");
 var userRouter = require("./routes/user");
-var snakeRouter = require("./routes/snake");
-var puzzleRouter = require("./routes/2048");
-var mineRouter = require("./routes/mine");
-var tetrisRouter = require("./routes/tetris");
 var gameRouter = require("./routes/game");
 
 var app = express();
@@ -37,10 +33,6 @@ sequelize
 
 app.use("/main", mainRouter);
 app.use("/user", userRouter);
-app.use("/snake", snakeRouter);
-app.use("/2048", puzzleRouter);
-app.use("/mine", mineRouter);
-app.use("/tetris", tetrisRouter);
 app.use("/game", gameRouter);
 
 module.exports = app;

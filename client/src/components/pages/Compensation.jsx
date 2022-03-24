@@ -8,23 +8,23 @@ const Compensation = ({ setShowModal }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    console.log("ddd");
-    axios
-      .get(`http://localhost:5000/snake`)
-      .then((response) => {
-        console.log(response);
-        console.log("ggg");
-        setResult(JSON.parse(response.data));
-        console.log("fff");
-        console.log(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   console.log("ddd");
+  //   axios
+  //     .get(`http://localhost:5000/snake`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log("ggg");
+  //       setResult(JSON.parse(response.data));
+  //       console.log("fff");
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error);
+  //     });
+  //   setLoading(false);
+  // }, []);
 
   return (
     <div className="modal__wrapper">

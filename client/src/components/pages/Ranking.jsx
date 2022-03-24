@@ -21,7 +21,7 @@ const Ranking = () => {
   useEffect(() => {
     console.log("ddd");
     axios
-      .get(`http://localhost:5000/snake/ttt`)
+      .get(`http://localhost:5000/game/snake`)
       .then((response) => {
         console.log(response);
         setSnake(response.data);
@@ -31,7 +31,7 @@ const Ranking = () => {
       });
 
     axios
-      .get(`http://localhost:5000/2048`)
+      .get(`http://localhost:5000/game/2048`)
       .then((response) => {
         console.log(response);
         setPuzzle(response.data);
@@ -41,7 +41,7 @@ const Ranking = () => {
       });
 
     axios
-      .get(`http://localhost:5000/mine`)
+      .get(`http://localhost:5000/game/mine`)
       .then((response) => {
         console.log(response);
         setMine(response.data);
@@ -51,7 +51,7 @@ const Ranking = () => {
       });
 
     axios
-      .get(`http://localhost:5000/tetris`)
+      .get(`http://localhost:5000/game/tetris`)
       .then((response) => {
         console.log(response);
         setTetris(response.data);
@@ -104,36 +104,66 @@ const Ranking = () => {
                   <div>
                     <b>SnakeGame</b>
                     <br />
-                    <p>1st : {snake[0]===undefined?"없음":snake[0].address}</p>
-                    <p>2nd : {snake[1]===undefined?"없음":snake[1].address}</p>
-                    <p>3rd : {snake[2]===undefined?"없음":snake[2].address}</p>
-                    <p>4rd : {snake[3]===undefined?"없음": snake[3].address}</p>
-                    <p>5rd : {snake[4]===undefined?"없음": snake[4].address}</p>
+                    <p>
+                      1st : {snake[0] === undefined ? "없음" : snake[0].nick}
+                    </p>
+                    <p>
+                      2nd : {snake[1] === undefined ? "없음" : snake[1].nick}
+                    </p>
+                    <p>
+                      3rd : {snake[2] === undefined ? "없음" : snake[2].nick}
+                    </p>
+                    <p>
+                      4rd : {snake[3] === undefined ? "없음" : snake[3].nick}
+                    </p>
+                    <p>
+                      5rd : {snake[4] === undefined ? "없음" : snake[4].nick}
+                    </p>
                     <br />
                     <b>TetrisGame</b>
                     <br />
-                    <p>1st : {tetris[0]===undefined?"없음":tetris[0].address}</p>
-                    <p>2nd : {tetris[1]===undefined?"없음":tetris[1].address}</p>
-                    <p>3rd : {tetris[2]===undefined?"없음":tetris[2].address}</p>
-                    <p>4rd : {tetris[3]===undefined?"없음": tetris[3].address}</p>
-                    <p>5rd : {tetris[4]===undefined?"없음": tetris[4].address}</p>
+                    <p>
+                      1st : {tetris[0] === undefined ? "없음" : tetris[0].nick}
+                    </p>
+                    <p>
+                      2nd : {tetris[1] === undefined ? "없음" : tetris[1].nick}
+                    </p>
+                    <p>
+                      3rd : {tetris[2] === undefined ? "없음" : tetris[2].nick}
+                    </p>
+                    <p>
+                      4rd : {tetris[3] === undefined ? "없음" : tetris[3].nick}
+                    </p>
+                    <p>
+                      5rd : {tetris[4] === undefined ? "없음" : tetris[4].nick}
+                    </p>
 
                     <br />
                     <b>2048Game</b>
                     <br />
-                    <p>1st : {puzzle[0]===undefined?"없음":puzzle[0].address}</p>
-                    <p>2nd : {puzzle[1]===undefined?"없음":puzzle[1].address}</p>
-                    <p>3rd : {puzzle[2]===undefined?"없음":puzzle[2].address}</p>
-                    <p>4rd : {puzzle[3]===undefined?"없음": puzzle[3].address}</p>
-                    <p>5rd : {puzzle[4]===undefined?"없음": puzzle[4].address}</p>
+                    <p>
+                      1st : {puzzle[0] === undefined ? "없음" : puzzle[0].nick}
+                    </p>
+                    <p>
+                      2nd : {puzzle[1] === undefined ? "없음" : puzzle[1].nick}
+                    </p>
+                    <p>
+                      3rd : {puzzle[2] === undefined ? "없음" : puzzle[2].nick}
+                    </p>
+                    <p>
+                      4rd : {puzzle[3] === undefined ? "없음" : puzzle[3].nick}
+                    </p>
+                    <p>
+                      5rd : {puzzle[4] === undefined ? "없음" : puzzle[4].nick}
+                    </p>
                     <br />
                     <b>MineSweepGame</b>
                     <br />
-                    <p>1st : {mine[0]===undefined?"없음":mine[0].address}</p>
-                    <p>2nd : {mine[1]===undefined?"없음":mine[1].address}</p>
-                    <p>3rd : {mine[2]===undefined?"없음":mine[2].address}</p>
-                    <p>4rd : {mine[3]===undefined?"없음": mine[3].address}</p>
-                    <p>5rd : {mine[4]===undefined?"없음": mine[4].address}</p>
+                    <p>1st : {mine[0] === undefined ? "없음" : mine[0].nick}</p>
+                    <p>2nd : {mine[1] === undefined ? "없음" : mine[1].nick}</p>
+                    <p>3rd : {mine[2] === undefined ? "없음" : mine[2].nick}</p>
+                    <p>4rd : {mine[3] === undefined ? "없음" : mine[3].nick}</p>
+                    <p>5rd : {mine[4] === undefined ? "없음" : mine[4].nick}</p>
                   </div>
                 )}
               </div>
