@@ -10,6 +10,50 @@ $border-color: #1d1d1d;
 	src: url('../assets/fonts/retro_gaming.ttf');
 } */
 
+.tetris_modal__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #14141f7c;
+  z-index: 444444;
+}
+
+.tetris_single__modal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 800px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(0deg, #14141f, #28283a) !important;
+  border-radius: 5px;
+  padding: 30px;
+  z-index: 555555 !important;
+  cursor: pointer;
+}
+
+.tetris_single__modal h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.tetris_close__modal {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+  z-index: 666666;
+}
+
+.tetris_close__modal i {
+  padding: 5px;
+  background: #5142fc;
+  color: #fff;
+  border-radius: 27%;
+}
+
 * {
   box-sizing: border-box;
 }
