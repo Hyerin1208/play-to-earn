@@ -286,9 +286,9 @@ const Tetris = ({ setShowModal }) => {
 
   return (
     <>
-      <div className="tetris_modal__wrapper">
-        <div className="tetris_single__modal">
-          <span className="tetris_close__modal">
+      <div className="game_modal__wrapper">
+        <div className="game_single__modal">
+          <span className="game_close__modal">
             <i
               className="ri-close-line"
               onClick={() => setShowModal(false)}

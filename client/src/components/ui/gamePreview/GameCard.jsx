@@ -11,7 +11,7 @@ import "./game-card.css";
 const GameCard = (props) => {
   const { id, title, imgUrl, text } = props.item;
   const [showModal, setShowModal] = useState(false);
-  function test(showModal) {
+  function showGame(showModal) {
     if (showModal) {
       switch (id) {
         case "1":
@@ -24,11 +24,11 @@ const GameCard = (props) => {
           return <MineGame setShowModal={setShowModal}></MineGame>;
 
         default:
-          console.log("디폴트");
+          console.log("default");
           break;
       }
     } else {
-      console.log("아직안열림ㄴ");
+      console.log("아직 안열림");
     }
   }
   return (
@@ -48,11 +48,11 @@ const GameCard = (props) => {
                 className="gamecard__btn"
                 onClick={() => setShowModal(true)}
               >
-                gkgkgkgkggk
+                Go to this game
                 {/* <Link to={id}>Go to this game</Link> */}
                 {/* <Link onClick={() => Navigate("id")}>Go to this game</Link> */}
               </button>
-              {test(showModal)}
+              {showGame(showModal)}
             </div>
           </Col>
         </div>

@@ -15,7 +15,7 @@ import "./MineGame.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function MineGame() {
+function MineGame({ setShowModal }) {
   let [gameAttr, setGameAttr] = useState({
     width: MIN_WIDTH,
     height: MIN_HEIGHT,
@@ -148,27 +148,50 @@ function MineGame() {
     handleRestart();
   }, [gameAttr]);
 
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
     <>
-      <div className="box">
-        <main>
-          <InfoWrapper
-            mines={gameAttr.mines}
-            leftMines={gameAttr.mines - flagCount}
-            gameState={gameState}
-            handleRestart={handleRestart}
-            runtime={runtime}
-            handleShowSet={handleShowSet}
-          />
-          <Board
-            boardData={boardData}
-            handleLeftClick={handleLeftClick}
-            handleRightClick={handleRightClick}
-            gameState={gameState}
-          />
-        </main>
+      <div className="game_modal__wrapper">
+        <div className="game_single__modal">
+          <span className="game_close__modal">
+            <i
+              className="ri-close-line"
+              onClick={() => setShowModal(false)}
+            ></i>
+          </span>
+          <div className="box">
+            <main>
+              <InfoWrapper
+                mines={gameAttr.mines}
+                leftMines={gameAttr.mines - flagCount}
+                gameState={gameState}
+                handleRestart={handleRestart}
+                runtime={runtime}
+                handleShowSet={handleShowSet}
+              />
+              <Board
+                boardData={boardData}
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleRightClick}
+                gameState={gameState}
+              />
+            </main>
+          </div>
+          <Setting show={showSet} handleSet={handleSet} />
+        </div>
       </div>
-      <Setting show={showSet} handleSet={handleSet} />
     </>
   );
 }

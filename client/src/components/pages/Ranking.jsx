@@ -105,9 +105,17 @@ const Ranking = () => {
                     <b>SnakeGame</b>
                     <br />
                     <p>
-                      1st : {snake[0] === undefined ? "없음" : snake[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[0] === undefined ? "" : snake[0].snakePoint}
+                      1st :&nbsp;
+                      {snake[0] === undefined
+                        ? "없음"
+                        : snake[0].snakePoint === null
+                        ? "없음"
+                        : snake[0].nick}
+                      {snake[0] === undefined
+                        ? ""
+                        : snake[0].snakePoint === null
+                        ? ""
+                        : snake[0].snakePoint}
                     </p>
                     <p>
                       2nd : {snake[1] === undefined ? "없음" : snake[1].nick}
@@ -134,8 +142,12 @@ const Ranking = () => {
                     <br />
                     <p>
                       1st : {tetris[0] === undefined ? "없음" : tetris[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[0] === undefined ? "" : tetris[0].tetrisPoint}
+                      &nbsp;
+                      {tetris[0] === undefined
+                        ? ""
+                        : tetris[0].tetrisPoint === null
+                        ? ""
+                        : tetris[0].tetrisPoint}
                     </p>
                     <p>
                       2nd : {tetris[1] === undefined ? "없음" : tetris[1].nick}
