@@ -16,6 +16,7 @@ export const FREE__ITEMS = [
     creator: "Naming center",
     creatorImg: admin,
     currentBid: 5.89,
+    value: "Item_1",
   },
 
   {
@@ -26,6 +27,7 @@ export const FREE__ITEMS = [
     creator: "Naming center",
     creatorImg: admin,
     currentBid: 5.09,
+    value: "Item_2",
   },
 
   {
@@ -36,6 +38,7 @@ export const FREE__ITEMS = [
     creator: "Naming center",
     creatorImg: admin,
     currentBid: 6.89,
+    value: "Item_3",
   },
 
   {
@@ -46,5 +49,6 @@ export const FREE__ITEMS = [
     creator: "Naming center",
     creatorImg: admin,
     currentBid: 7.89,
+    value: "Item_4",
   },
 ];
