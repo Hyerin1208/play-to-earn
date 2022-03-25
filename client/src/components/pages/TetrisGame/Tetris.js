@@ -18,7 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 let sirtet;
 
-const Tetris = ({ setShowModal }) => {
+const Tetris = () => {
+  const [showTetris, setShowTetris] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [customization, setCustomization] = useState({
     colors: 0,
     style: 0,
@@ -286,13 +288,11 @@ const Tetris = ({ setShowModal }) => {
 
   return (
     <>
+      {showTetris}
       <div className="tetris_modal__wrapper">
         <div className="tetris_single__modal">
           <span className="tetris_close__modal">
-            <i
-              className="ri-close-line"
-              onClick={() => setShowModal(false)}
-            ></i>
+            <i className="ri-close-line" onClick={() => setShowModal(true)}></i>
           </span>
           <div className="d-flex justify-content-center no-select">
             <div className="canvas__container">
