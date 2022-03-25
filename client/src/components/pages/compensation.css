@@ -15,7 +15,6 @@
   width: 500px;
   height: 500px;
   transform: translate(-50%, -50%);
-  /* background: #14141f !important; */
   background: linear-gradient(0deg, #14141f, #28283a) !important;
   border-radius: 5px;
   padding: 30px;

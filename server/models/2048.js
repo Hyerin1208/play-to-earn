@@ -9,6 +9,7 @@ module.exports = class Puzzle extends Sequelize.Model {
         address: {
           type: Sequelize.STRING(200),
           allowNull: true,
+          unique: true
         },
         nick: {
           type: Sequelize.STRING(200),

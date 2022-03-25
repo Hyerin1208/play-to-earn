@@ -16,10 +16,10 @@ export const GameHeader = ({ score, handleReset, highScore, setPopup }) => {
       <p>Score</p>
       <h1>{score}</h1>
      </div>
-     <div className="score">
+     {/* <div className="score">
       <p>High Score</p>
       <h1>{highScore <= score ? score : highScore}</h1>
-     </div>
+     </div> */}
     </div>
    </div>
 

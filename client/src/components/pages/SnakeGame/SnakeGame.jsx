@@ -1,8 +1,6 @@
 import React from "react";
 import "./SnakeGame.css";
 import GameOver from "./GameOver.jsx";
-import { GAMECARD__DATA } from "../../../assets/data/gamecard";
-import { withRouter } from "react-router-dom";
 
 class SnakeGame extends React.Component {
   constructor(props) {

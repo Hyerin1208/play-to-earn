@@ -12,7 +12,8 @@ export const PopUpStyle = styled.div`
 
  .game-container {
   padding: 16px 28px;
-  background-color: #eaeaea;
+//   background-color: #eaeaea;
+  background-color: black;
   border-radius: 8px;
 
   display: flex;

@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const { Snake } = require("../models");
-const db = require("../config/config.json");
 
 router.post("/", async (req, res, next) => {
   const { point, account } = req.body;
@@ -18,22 +17,38 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// router.get("/", (req, res) => {
-//   // sql query 문
-//   const sql = "SELECT id FROM `snakes` WHERE `id` = ?";
-//   // 전달받은 parameter 값
-//   const params = req.query.id;
-//   db.query(sql, params, (err, data) => {
-//     if (!err) {
-//       res.send(data);
-//     } else {
-//       res.send(err);
-//     }
-//   });
-// });
+router.put("/", async (req, res, next) => {
+  const { point, account } = req.body;
 
-router.get("/", (req, res) => {
-  res.send("ddd");
+  try {
+    Snake.update(
+      {
+        point: point,
+      },
+      { where: { address: account } }
+    );
+    return res.json({ message: "sucess" });
+  } catch (err) {
+    console.error(err);
+    return next(error);
+  }
+});
+
+router.get("/ttt", async (req, res) => {
+  const users = await Snake.findAll({
+    attributes: ["address", "point"],
+    order: [["point", "desc"]],
+  });
+  const snake = [];
+
+  for (const user of users) {
+    snake.push({
+      address: user.address,
+      point: user.point,
+    });
+  }
+
+  res.json(snake);
 });
 
 module.exports = router;

@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 
 /* 사용자 정보 DB */
-module.exports = class Tetris extends Sequelize.Model {
+module.exports = class Game extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -15,17 +15,29 @@ module.exports = class Tetris extends Sequelize.Model {
           type: Sequelize.STRING(200),
           allowNull: true,
         },
-        point: {
+        snakePoint: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
+          allowNull: true,
+        },
+        puzzlePoint: {
+          type: Sequelize.INTEGER(100),
+          allowNull: true,
+        },
+        minePoint: {
+          type: Sequelize.INTEGER(100),
+          allowNull: true,
+        },
+        tetrisPoint: {
+          type: Sequelize.INTEGER(100),
+          allowNull: true,
         },
       },
       {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "Tetris",
-        tableName: "tetrises",
+        modelName: "Game",
+        tableName: "games",
         paranoid: true,
         charset: "utf8",
         collate: "utf8_general_ci",

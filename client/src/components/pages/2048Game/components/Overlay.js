@@ -1,21 +1,25 @@
-import { Button } from "./Button";
+import { Button, Sutton, Vutton } from "./Button";
 import { OverlayStyle } from "./styles/OverlayStyle";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-// import { getWeb3 } from "../../../../redux/actions/index";
+import { useSelector } from "react-redux";
 
 export const Overlay = ({ handleReset, score }) => {
-  // const dispatch = useDispatch();
   const account = useSelector((state) => state.AppState.account);
 
   const sendPoint = async () => {
     console.log(score);
     console.log(account);
+
     await axios
-      .post(`http://localhost:5000/2048`, { score, account })
+      .put(`http://localhost:5000/game/2048`, { score, account })
       .then((res) => {
         console.log(res.data);
-        // res.send(JSON.stringify(data));
+      });
+
+    await axios
+      .post(`http://localhost:5000/game/2048`, { score, account })
+      .then((res) => {
+        console.log(res.data);
         alert("점수 등록 완료");
       });
   };
@@ -28,9 +32,7 @@ export const Overlay = ({ handleReset, score }) => {
       </p>
       <Button onClick={handleReset} />
       <br />
-      <button type="submit" onClick={sendPoint}>
-        점수 등록
-      </button>
+      <Sutton onClick={sendPoint} />
     </OverlayStyle>
   );
 };

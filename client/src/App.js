@@ -8,9 +8,10 @@ import { getWeb3, connectWallet, checkWallet } from "./redux/actions/index";
 
 function App() {
     const dispatch = useDispatch();
-    useEffect(async () => {
+    useEffect(() => {
         dispatch(getWeb3());
     }, [dispatch]);
+
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     return (
         <>

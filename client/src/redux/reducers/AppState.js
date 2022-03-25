@@ -7,7 +7,7 @@ const initialState = {
     account: null,
     CreateNFTContract: null,
     AmusementArcadeTokenContract: null,
-    OwnerSelllists: null,
+    OwnerSelllists: [],
     errorMsg: "",
 };
 
@@ -15,11 +15,8 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case APP_STATE:
             return {
-                ...initialState,
+                ...state,
                 network: action.payload.network,
-                wallet: action.payload.wallet,
-                accounts: action.payload.accounts,
-                account: action.payload.account,
                 CreateNFTContract: action.payload.CreateNFTContract,
                 AmusementArcadeTokenContract: action.payload.AmusementArcadeTokenContract,
                 OwnerSelllists: action.payload.OwnerSelllists,
@@ -28,7 +25,7 @@ export default function (state = initialState, action) {
         case CONNECTION_FAILED:
             return {
                 ...initialState,
-                errorMsg: action.payload,
+                errorMsg: action.payload.errorMsg,
             };
         case UPDATE_ACCOUNT:
             return {
@@ -38,9 +35,11 @@ export default function (state = initialState, action) {
                 account: action.payload.account,
             };
         case UPDATE_LISTS:
+            console.log([...state.OwnerSelllists]);
+            console.log([...state.OwnerSelllists, action.payload.OwnerSelllists]);
             return {
                 ...state,
-                OwnerSelllists: action.payload.OwnerSelllists,
+                OwnerSelllists: [...state.OwnerSelllists, action.payload.OwnerSelllists],
             };
         default:
             return state;

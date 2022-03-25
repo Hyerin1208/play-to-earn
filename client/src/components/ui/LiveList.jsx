@@ -8,47 +8,51 @@ import NftCard from "./NftCard";
 import { useSelector, useDispatch } from "react-redux";
 
 const LiveList = () => {
-  const OwnerSelllists = useSelector((state) => state.AppState.OwnerSelllists);
-  const [Loading, setLoading] = useState(true);
-  const [nftArray, setnftArray] = useState([]);
-  useEffect(() => {
-    if (OwnerSelllists !== null) {
-      console.log("실행");
-      setnftArray([...OwnerSelllists].reverse());
-      setLoading(null);
-    }
-  }, [OwnerSelllists]);
+    const OwnerSelllists = useSelector((state) => state.AppState.OwnerSelllists);
+    const [Loading, setLoading] = useState(true);
+    const [nftArray, setnftArray] = useState([]);
+    useEffect(() => {
+        try {
+            if (OwnerSelllists !== null) {
+                console.log("실행");
+                setnftArray([...OwnerSelllists].reverse());
+                setLoading(null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [OwnerSelllists]);
 
-  if (Loading) {
-    return (
-      <div>
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
-      </div>
-    );
-  } else {
-    return (
-      <div className="live__box">
-        <Container>
-          <Row>
-            <Col lg="12" className="mb-5">
-              <div className="live__list__top">
-                <h3>Top collections over last 7 days</h3>
-                <span>
-                  <Link to="/market">Explor more</Link>
-                </span>
-              </div>
-            </Col>
-            {Loading}
-            {nftArray.slice(0, 4).map((items, index) => (
-              <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-                <NftCard item={items}></NftCard>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </div>
-    );
-  }
+    if (Loading) {
+        return (
+            <div>
+                <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+            </div>
+        );
+    } else {
+        return (
+            <div className="live__box">
+                <Container>
+                    <Row>
+                        <Col lg="12" className="mb-5">
+                            <div className="live__list__top">
+                                <h3>Top collections over last 7 days</h3>
+                                <span>
+                                    <Link to="/market">Explor more</Link>
+                                </span>
+                            </div>
+                        </Col>
+                        {Loading}
+                        {nftArray.slice(0, 4).map((items, index) => (
+                            <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+                                <NftCard item={items}></NftCard>
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>
+            </div>
+        );
+    }
 };
 
 export default LiveList;
