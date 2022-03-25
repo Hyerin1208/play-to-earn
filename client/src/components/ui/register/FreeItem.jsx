@@ -8,15 +8,15 @@ import "./free-item.css";
 import FreeCard from "./FreeCard";
 
 const FreeItem = () => {
-  const [checkedItems, setCheckedItems] = useState(new Set());
+  const [checkItem, setCheckItem] = useState(null);
 
-  // const checkedItemHandler = (id, isChecked) => {
-  //   if (isChecked) {
-  //     checkedItems.add(id);
-  //     setCheckedItems(checkedItems);
-  //   } else if (!isChecked && checkedItems.has(id)) {
-  //     checkedItems.delete(id);
-  //     setCheckedItems(checkedItems);
+  // // 체크박스 전체 단일 개체 선택
+  // const handleSingleCheck = (checked, id) => {
+  //   if (checked) {
+  //     setCheckItems([...checkItems, id]);
+  //   } else {
+  //     // 체크 해제
+  //     setCheckItems(checkItems.filter((el) => el !== id));
   //   }
   // };
 
@@ -33,7 +33,11 @@ const FreeItem = () => {
 
           {FREE__ITEMS.slice(0, 4).map((item, index) => (
             <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-              <FreeCard key={item.id} item={item} />
+              <FreeCard
+                key={item.id}
+                check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
+                item={item}
+              />
             </Col>
           ))}
         </Row>
