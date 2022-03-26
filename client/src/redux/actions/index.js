@@ -56,7 +56,7 @@ export function getWeb3() {
                         const Token_address = networkData_Token.address;
                         const AmusementArcadeTokenContract = new web3.eth.Contract(Token_abi, Token_address);
 
-                        const lists = await CreateNFTContract.methods.OwnerSelllists().call((error) => {
+                        const lists = await CreateNFTContract.methods.Selllists().call((error) => {
                             if (!error) {
                                 console.log("send ok");
                             } else {
@@ -85,7 +85,7 @@ export function getWeb3() {
                                 network: res,
                                 CreateNFTContract: CreateNFTContract,
                                 AmusementArcadeTokenContract: AmusementArcadeTokenContract,
-                                OwnerSelllists: listsForm,
+                                Selllists: listsForm,
                                 errorMsg: "",
                             })
                         );
