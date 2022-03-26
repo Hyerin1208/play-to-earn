@@ -1,0 +1,10 @@
+.welcome__form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome__form input {
+  height: 45px;
+}

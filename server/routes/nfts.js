@@ -6,10 +6,10 @@ router.post("/", async (req, res, next) => {
   const { userId, tokenId } = req.body;
 
   try {
-    const a = await Nfts.findOne({
+    const hate = await Nfts.findOne({
       where: { userId: userId, tokenId: tokenId },
     });
-    if (!a) {
+    if (!hate) {
       Nfts.create({
         userId: userId,
         tokenId: tokenId,

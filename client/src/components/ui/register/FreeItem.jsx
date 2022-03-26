@@ -10,16 +10,6 @@ import FreeCard from "./FreeCard";
 const FreeItem = () => {
   const [checkItem, setCheckItem] = useState(null);
 
-  // // 체크박스 전체 단일 개체 선택
-  // const handleSingleCheck = (checked, id) => {
-  //   if (checked) {
-  //     setCheckItems([...checkItems, id]);
-  //   } else {
-  //     // 체크 해제
-  //     setCheckItems(checkItems.filter((el) => el !== id));
-  //   }
-  // };
-
   return (
     <div>
       <Container>
