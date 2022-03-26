@@ -60,7 +60,7 @@ const Test = () => {
         console.log(typeof (await uploadToIPFS()));
         console.log(typeof price);
 
-        await CreateNFTContract.methods.CreateNFTItem(url, price).send({ from: Account, gas: 3000000 }, (error) => {
+        await CreateNFTContract.methods.CreateNFTinContract(url, price).send({ from: Account, gas: 3000000 }, (error) => {
             if (!error) {
                 console.log("send ok");
             } else {

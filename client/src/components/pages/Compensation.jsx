@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./compensation.css";
 
 const Compensation = ({ setShowModal }) => {
-  // document.body.style.overflow = "hidden";
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed; 
@@ -15,7 +14,7 @@ const Compensation = ({ setShowModal }) => {
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
-  
+
   return (
     <div className="modal__wrapper">
       <div className="single__modal">
