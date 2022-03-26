@@ -54,7 +54,7 @@ router.post("/mine", async (req, res, next) => {
 // TetrisGame
 router.post("/tetris", async (req, res, next) => {
   const { data, account } = req.body;
-
+  console.log(req.body);
   try {
     Game.create({
       tetrisPoint: data,

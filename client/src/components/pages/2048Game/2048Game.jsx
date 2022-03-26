@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { Footer } from "./components/Footer";
 import { GameContainer } from "./components/GameContainer";
 import { GameHeader } from "./components/GameHeader";
 import { Guide } from "./components/Guide";
@@ -9,7 +8,7 @@ import { GlobalComponents } from "./components/styles/GlobalComponents";
 import { darkTheme } from "./components/styles/Theme";
 import { gameInit, updateBlock } from "./utils";
 
-const Puzzle = () => {
+const Puzzle = ({ setShowModal }) => {
   // holds the data for game logic
   const [gameData, setGameData] = useState([]);
 
@@ -66,6 +65,12 @@ const Puzzle = () => {
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", handleTouchEnd);
 
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+
     setLoading(false);
 
     return () => {
@@ -73,6 +78,9 @@ const Puzzle = () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, [gameData, popup, userScore, endGame, startPos, swipedTo]);
 
@@ -190,22 +198,32 @@ const Puzzle = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <GlobalComponents />
-      <div className="App">
-        {popup && <Popup setPopup={setPopup} />}
-        <GameHeader
-          score={userScore}
-          highScore={highScore}
-          handleReset={handleReset}
-          setPopup={setPopup}
-        />
-        <GameContainer
-          gameData={gameData}
-          start={start}
-          score={userScore}
-          endGame={endGame}
-          handleReset={handleReset}
-        />
-        <Guide />
+      <div className="game_modal__wrapper">
+        <div className="game_single__modal">
+          <span className="game_close__modal">
+            <i
+              className="ri-close-line"
+              onClick={() => setShowModal(false)}
+            ></i>
+          </span>
+          <div className="App">
+            {popup && <Popup setPopup={setPopup} />}
+            <GameHeader
+              score={userScore}
+              highScore={highScore}
+              handleReset={handleReset}
+              setPopup={setPopup}
+            />
+            <GameContainer
+              gameData={gameData}
+              start={start}
+              score={userScore}
+              endGame={endGame}
+              handleReset={handleReset}
+            />
+            <Guide />
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   );

@@ -3,9 +3,11 @@ import { Col, Container } from "reactstrap";
 import CommonSection from "../ui/CommonSection";
 import "./ranking.css";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Ranking = () => {
   const [toggleState, setToggleState] = useState(1);
+  const account = useSelector((state) => state.AppState.account);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -105,114 +107,294 @@ const Ranking = () => {
                     <b>SnakeGame</b>
                     <br />
                     <p>
-                      1st : {snake[0] === undefined ? "없음" : snake[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[0] === undefined ? "" : snake[0].snakePoint}
+                      1등 :&nbsp;
+                      {snake[0] === undefined
+                        ? "없음"
+                        : snake[0].snakePoint === null
+                        ? "없음"
+                        : snake[0].nick}
+                      &nbsp;
+                      {snake[0] === undefined
+                        ? ""
+                        : snake[0].snakePoint === null
+                        ? ""
+                        : snake[0].snakePoint}
                     </p>
                     <p>
-                      2nd : {snake[1] === undefined ? "없음" : snake[1].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[1] === undefined ? "" : snake[1].snakePoint}
+                      2등 :&nbsp;
+                      {snake[1] === undefined
+                        ? "없음"
+                        : snake[1].snakePoint === null
+                        ? "없음"
+                        : snake[1].nick}
+                      &nbsp;
+                      {snake[1] === undefined
+                        ? ""
+                        : snake[1].snakePoint === null
+                        ? ""
+                        : snake[1].snakePoint}
                     </p>
                     <p>
-                      3rd : {snake[2] === undefined ? "없음" : snake[2].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[2] === undefined ? "" : snake[2].snakePoint}
+                      3등 :&nbsp;
+                      {snake[2] === undefined
+                        ? "없음"
+                        : snake[2].snakePoint === null
+                        ? "없음"
+                        : snake[2].nick}
+                      &nbsp;
+                      {snake[2] === undefined
+                        ? ""
+                        : snake[2].snakePoint === null
+                        ? ""
+                        : snake[2].snakePoint}
                     </p>
                     <p>
-                      4rd : {snake[3] === undefined ? "없음" : snake[3].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[3] === undefined ? "" : snake[3].snakePoint}
+                      4등 :&nbsp;
+                      {snake[3] === undefined
+                        ? "없음"
+                        : snake[3].snakePoint === null
+                        ? "없음"
+                        : snake[3].nick}
+                      &nbsp;
+                      {snake[3] === undefined
+                        ? ""
+                        : snake[3].snakePoint === null
+                        ? ""
+                        : snake[3].snakePoint}
                     </p>
                     <p>
-                      5rd : {snake[4] === undefined ? "없음" : snake[4].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {snake[4] === undefined ? "" : snake[4].snakePoint}
+                      5등 :&nbsp;
+                      {snake[4] === undefined
+                        ? "없음"
+                        : snake[4].snakePoint === null
+                        ? "없음"
+                        : snake[4].nick}
+                      &nbsp;
+                      {snake[4] === undefined
+                        ? ""
+                        : snake[4].snakePoint === null
+                        ? ""
+                        : snake[4].snakePoint}
                     </p>
                     <br />
                     <b>TetrisGame</b>
                     <br />
                     <p>
-                      1st : {tetris[0] === undefined ? "없음" : tetris[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[0] === undefined ? "" : tetris[0].tetrisPoint}
+                      1등 :&nbsp;
+                      {tetris[0] === undefined
+                        ? "없음"
+                        : tetris[0].tetrisPoint === null
+                        ? "없음"
+                        : tetris[0].nick}
+                      &nbsp;
+                      {tetris[0] === undefined
+                        ? ""
+                        : tetris[0].tetrisPoint === null
+                        ? ""
+                        : tetris[0].tetrisPoint}
                     </p>
                     <p>
-                      2nd : {tetris[1] === undefined ? "없음" : tetris[1].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[1] === undefined ? "" : tetris[1].tetrisPoint}
+                      2등 :&nbsp;
+                      {tetris[1] === undefined
+                        ? "없음"
+                        : tetris[1].tetrisPoint === null
+                        ? "없음"
+                        : tetris[1].nick}
+                      &nbsp;
+                      {tetris[1] === undefined
+                        ? ""
+                        : tetris[1].tetrisPoint === null
+                        ? ""
+                        : tetris[1].tetrisPoint}
                     </p>
                     <p>
-                      3rd : {tetris[2] === undefined ? "없음" : tetris[2].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[2] === undefined ? "" : tetris[2].tetrisPoint}
+                      3등 :&nbsp;
+                      {tetris[2] === undefined
+                        ? "없음"
+                        : tetris[2].tetrisPoint === null
+                        ? "없음"
+                        : tetris[2].nick}
+                      &nbsp;
+                      {tetris[2] === undefined
+                        ? ""
+                        : tetris[2].tetrisPoint === null
+                        ? ""
+                        : tetris[2].tetrisPoint}
                     </p>
                     <p>
-                      4rd : {tetris[3] === undefined ? "없음" : tetris[3].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[3] === undefined ? "" : tetris[3].tetrisPoint}
+                      4등 :&nbsp;
+                      {tetris[3] === undefined
+                        ? "없음"
+                        : tetris[3].tetrisPoint === null
+                        ? "없음"
+                        : tetris[3].nick}
+                      &nbsp;
+                      {tetris[3] === undefined
+                        ? ""
+                        : tetris[3].tetrisPoint === null
+                        ? ""
+                        : tetris[3].tetrisPoint}
                     </p>
                     <p>
-                      5rd : {tetris[4] === undefined ? "없음" : tetris[4].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {tetris[4] === undefined ? "" : tetris[4].tetrisPoint}
+                      5등 :&nbsp;
+                      {tetris[4] === undefined
+                        ? "없음"
+                        : tetris[4].tetrisPoint === null
+                        ? "없음"
+                        : tetris[4].nick}
+                      &nbsp;
+                      {tetris[4] === undefined
+                        ? ""
+                        : tetris[4].tetrisPoint === null
+                        ? ""
+                        : tetris[4].tetrisPoint}
                     </p>
 
                     <br />
                     <b>2048Game</b>
                     <br />
                     <p>
-                      1st : {puzzle[0] === undefined ? "없음" : puzzle[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {puzzle[0] === undefined ? "" : puzzle[0].puzzlePoint}
+                      1등 :&nbsp;
+                      {puzzle[0] === undefined
+                        ? "없음"
+                        : puzzle[0].puzzlePoint === null
+                        ? "없음"
+                        : puzzle[0].nick}
+                      &nbsp;
+                      {puzzle[0] === undefined
+                        ? ""
+                        : puzzle[0].puzzlePoint === null
+                        ? ""
+                        : puzzle[0].puzzlePoint}
                     </p>
                     <p>
-                      2nd : {puzzle[1] === undefined ? "없음" : puzzle[1].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {puzzle[1] === undefined ? "" : puzzle[1].puzzlePoint}
+                      2등 :&nbsp;
+                      {puzzle[1] === undefined
+                        ? "없음"
+                        : puzzle[1].puzzlePoint === null
+                        ? "없음"
+                        : puzzle[1].nick}
+                      &nbsp;
+                      {puzzle[1] === undefined
+                        ? ""
+                        : puzzle[1].puzzlePoint === null
+                        ? ""
+                        : puzzle[1].puzzlePoint}
                     </p>
                     <p>
-                      3rd : {puzzle[2] === undefined ? "없음" : puzzle[2].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {puzzle[2] === undefined ? "" : puzzle[2].puzzlePoint}
+                      3등 :&nbsp;
+                      {puzzle[2] === undefined
+                        ? "없음"
+                        : puzzle[2].puzzlePoint === null
+                        ? "없음"
+                        : puzzle[2].nick}
+                      &nbsp;
+                      {puzzle[2] === undefined
+                        ? ""
+                        : puzzle[2].puzzlePoint === null
+                        ? ""
+                        : puzzle[2].puzzlePoint}
                     </p>
                     <p>
-                      4rd : {puzzle[3] === undefined ? "없음" : puzzle[3].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {puzzle[3] === undefined ? "" : puzzle[3].puzzlePoint}
+                      4등 :&nbsp;
+                      {puzzle[3] === undefined
+                        ? "없음"
+                        : puzzle[3].puzzlePoint === null
+                        ? "없음"
+                        : puzzle[3].nick}
+                      &nbsp;
+                      {puzzle[3] === undefined
+                        ? ""
+                        : puzzle[3].puzzlePoint === null
+                        ? ""
+                        : puzzle[3].puzzlePoint}
                     </p>
                     <p>
-                      5rd : {puzzle[4] === undefined ? "없음" : puzzle[4].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {puzzle[4] === undefined ? "" : puzzle[4].puzzlePoint}
+                      5등 :&nbsp;
+                      {puzzle[4] === undefined
+                        ? "없음"
+                        : puzzle[4].puzzlePoint === null
+                        ? "없음"
+                        : puzzle[4].nick}
+                      &nbsp;
+                      {puzzle[4] === undefined
+                        ? ""
+                        : puzzle[4].puzzlePoint === null
+                        ? ""
+                        : puzzle[4].puzzlePoint}
                     </p>
                     <br />
                     <b>MineGame</b>
                     <br />
                     <p>
-                      1st : {mine[0] === undefined ? "없음" : mine[0].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {mine[0] === undefined ? "" : mine[0].minePoint}
+                      1등 :&nbsp;
+                      {mine[0] === undefined
+                        ? "없음"
+                        : mine[0].minePoint === null
+                        ? "없음"
+                        : mine[0].nick}
+                      &nbsp;
+                      {mine[0] === undefined
+                        ? ""
+                        : mine[0].minePoint === null
+                        ? ""
+                        : mine[0].minePoint}
                     </p>
                     <p>
-                      2nd : {mine[1] === undefined ? "없음" : mine[1].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {mine[1] === undefined ? "" : mine[1].minePoint}
+                      2등 :&nbsp;
+                      {mine[1] === undefined
+                        ? "없음"
+                        : mine[1].minePoint === null
+                        ? "없음"
+                        : mine[1].nick}
+                      &nbsp;
+                      {mine[1] === undefined
+                        ? ""
+                        : mine[1].minePoint === null
+                        ? ""
+                        : mine[1].minePoint}
                     </p>
                     <p>
-                      3rd : {mine[2] === undefined ? "없음" : mine[2].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {mine[2] === undefined ? "" : mine[2].minePoint}
+                      3등 :&nbsp;
+                      {mine[2] === undefined
+                        ? "없음"
+                        : mine[2].minePoint === null
+                        ? "없음"
+                        : mine[2].nick}
+                      &nbsp;
+                      {mine[2] === undefined
+                        ? ""
+                        : mine[2].minePoint === null
+                        ? ""
+                        : mine[2].minePoint}
                     </p>
                     <p>
-                      4rd : {mine[3] === undefined ? "없음" : mine[3].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {mine[3] === undefined ? "" : mine[3].minePoint}
+                      4등 :&nbsp;
+                      {mine[3] === undefined
+                        ? "없음"
+                        : mine[3].minePoint === null
+                        ? "없음"
+                        : mine[3].nick}
+                      &nbsp;
+                      {mine[3] === undefined
+                        ? ""
+                        : mine[3].minePoint === null
+                        ? ""
+                        : mine[3].minePoint}
                     </p>
                     <p>
-                      5rd : {mine[4] === undefined ? "없음" : mine[4].nick}
-                      &nbsp;&nbsp;&nbsp;
-                      {mine[4] === undefined ? "" : mine[4].minePoint}
+                      5등 :&nbsp;
+                      {mine[4] === undefined
+                        ? "없음"
+                        : mine[4].minePoint === null
+                        ? "없음"
+                        : mine[4].nick}
+                      &nbsp;
+                      {mine[4] === undefined
+                        ? ""
+                        : mine[4].minePoint === null
+                        ? ""
+                        : mine[4].minePoint}
                     </p>
                   </div>
                 )}
@@ -241,6 +423,22 @@ const Ranking = () => {
             <hr />
             <Container>
               <p>여기에 나의랭킹 페이지만들기</p>
+              <div>
+                <p>
+                  5등 :&nbsp;
+                  {snake[4] === undefined
+                    ? "없음"
+                    : snake[4].snakePoint === null
+                    ? "없음"
+                    : snake[4].nick}
+                  &nbsp;
+                  {snake[4] === undefined
+                    ? ""
+                    : snake[4].snakePoint === null
+                    ? ""
+                    : snake[4].snakePoint}
+                </p>
+              </div>
             </Container>
           </div>
         </div>

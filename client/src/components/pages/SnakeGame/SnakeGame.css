@@ -1,38 +1,32 @@
-#GameBoard {
-	position: relative;
-	margin: auto;
-	border-style: solid;
+#snake_board_container {
+  width: 100%;
+  height: 100%;
+  background: var(--floor-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-#GameBoard .Block {
-	position: absolute;
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#GameBoard #GameOver {
-	text-align: center;
-	height: 100%;
-	flex-direction: column;
-	display: flex;
-	justify-content: space-around;
+.snake_game {
+  --primary-color: #38a138;
+  --assent-color: #3fa83f;
+  --black: #000000;
+  --white: #ffffff;
+  --black-opaque: #00000055;
+  --snake-color: #ffa000;
+  --food-color: #f44335;
+  --floor-color: #f3e200;
+  --element-spacing: 10px;
+  --laptop-cell-size: 30px;
+  --mobile-cell-size: 20px;
 }
-
-#GameBoard #Score {
-	padding: 17px;
-	position: relative;
-	bottom: 20%;
-	text-align: center;
-	font-weight: bold;
-	color:#ca0000;
-}
-
-#GameBoard #GameOverText {
-	color: #ca0000;
-	font-weight: bold;
-	text-decoration-line: underline;
-}
-
-#GameBoard #PressSpaceText {
-	color: #2e7ecb;
-	font-weight: bold;
-}
-

@@ -46,24 +46,12 @@ function Game() {
           </Col>
         </Row>
         <Row>
-          {/* <Col lg="12" className="mb-5">
-          <div className="live__list__top">
-            <h3>Play Now</h3>
-          </div>
-        </Col> */}
-
           {GAMECARD__DATA.slice(0, 4).map((item, index) => (
             <Col lg="3" md="4" sm="6" key={index} className="mb-4">
               <GameCard key={item.id} item={item} />
             </Col>
           ))}
         </Row>
-        <Routes>
-          <Route path="1" element={<SnakeGame />} />
-          <Route path="2" element={<TetrisGame />} />
-          <Route path="3" element={<PuzzleGame />} />
-          <Route path="4" element={<MineGame />} />
-        </Routes>
       </Container>
     </Fragment>
   );
