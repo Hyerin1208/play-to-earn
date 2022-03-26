@@ -18,11 +18,12 @@ module.exports = class User extends Sequelize.Model {
         email: {
           type: Sequelize.STRING(40),
           allowNull: true,
-          unique: true,
+          // unique: true,
         },
-        defaultimg: {
+        tokenId: {
           type: Sequelize.STRING(200),
           allowNull: true,
+          // unique: true,
         },
       },
       {
@@ -39,7 +40,8 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Nfts, { foreignKey: "userId", sourceKey: "id" });
-    db.User.belongsToMany(db.Nfts, { through: "Likes", as: "Likers" }); // 좋아요
+    db.User.hasMany(db.Nfts, { foreignKey: "userId", sourceKey: "address" });
+    // db.User.belongsToMany(db.Nfts, { through: "Likes", as: "Likers" }); // 좋아요
+    // db.User.hasMany(db.Nfts, { foreignKey: "tokenId", sourceKey: "tokenId" });
   }
 };
