@@ -54,9 +54,9 @@
 }
 
 .nav__right {
-  display: flex;
+  display: block;
   align-items: center;
-  gap: 5;
+  /* gap: 5; */
 }
 
 .nav__right .btn {
@@ -78,7 +78,7 @@
 
 .nav__right .btn span i {
   color: #fff;
-  margin-right: 8px;
+  /* margin-right: 8px; */
 }
 
 .nav__right .btn a:hover {
@@ -87,7 +87,7 @@
 
 .nav__right .btn:hover {
   display: flex;
-  gap: 2;
+  /* gap: 2; */
   align-items: center;
   padding: 7px 25px;
   border: 1px solid #5142fc;
@@ -109,6 +109,7 @@
   border: 1.7px solid #4b50e6c4;
   padding: 4px 7px;
   border-radius: 30%;
+  margin: 10px;
 }
 
 @media only screen and (max-width: 1024px) {
