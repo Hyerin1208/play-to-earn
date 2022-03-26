@@ -9,7 +9,7 @@ module.exports = class Game extends Sequelize.Model {
         address: {
           type: Sequelize.STRING(200),
           allowNull: true,
-          unique: true
+          unique: true,
         },
         nick: {
           type: Sequelize.STRING(200),
@@ -31,6 +31,10 @@ module.exports = class Game extends Sequelize.Model {
           type: Sequelize.INTEGER(100),
           allowNull: true,
         },
+        // rank: {
+        //   type: Sequelize.INTEGER(100),
+        //   allowNull: true,
+        // },
       },
       {
         sequelize,
