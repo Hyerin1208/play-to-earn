@@ -11,6 +11,7 @@ router.post("/snake", async (req, res, next) => {
     Game.create({
       snakePoint: point,
       address: account,
+      // snakeRank: rank++,
     });
     return res.json({ message: "ok" });
   } catch (error) {
