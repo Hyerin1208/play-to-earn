@@ -33,6 +33,7 @@ const Create = () => {
 
     async function onChange(e) {
         const file = e.target.files[0];
+        console.log(file);
         try {
             const added = await client.add(file, {
                 progress: (prog) => console.log(`received: ${prog}`),
@@ -71,7 +72,7 @@ const Create = () => {
         const price = parseInt(formInput.price);
         console.log(Account);
         await CreateNFTContract.methods
-            .CreateNFTItem(url, price)
+            .CreateNFTinContract(url, price)
             .send({ from: Account, gas: 3000000 }, (error, data) => {
                 if (!error) {
                     console.log("send ok");
@@ -91,7 +92,7 @@ const Create = () => {
                 };
                 console.log(item);
 
-                dispatch(updateLists({ OwnerSelllists: item }));
+                dispatch(updateLists({ Selllists: item }));
             });
     }
 

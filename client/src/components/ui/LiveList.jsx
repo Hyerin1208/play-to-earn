@@ -8,20 +8,20 @@ import NftCard from "./NftCard";
 import { useSelector, useDispatch } from "react-redux";
 
 const LiveList = () => {
-    const OwnerSelllists = useSelector((state) => state.AppState.OwnerSelllists);
+    const Selllists = useSelector((state) => state.AppState.Selllists);
     const [Loading, setLoading] = useState(true);
     const [nftArray, setnftArray] = useState([]);
     useEffect(() => {
         try {
-            if (OwnerSelllists !== null) {
+            if (Selllists !== null) {
                 console.log("실행");
-                setnftArray([...OwnerSelllists].reverse());
+                setnftArray([...Selllists].reverse());
                 setLoading(null);
             }
         } catch (error) {
             console.log(error);
         }
-    }, [OwnerSelllists]);
+    }, [Selllists]);
 
     if (Loading) {
         return (
