@@ -1,0 +1,131 @@
+.slide__container {
+  width: 20%;
+  height: 100% !important;
+  border-radius: 2rem;
+  background-color: #340c4e91;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 24px;
+}
+
+.pfpside__box {
+  display: flex;
+  /* justify-content: center; */
+  margin-top: 50px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pfp__iamge {
+  width: 120px;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  position: absolute;
+  object-fit: contain;
+  position: relative;
+}
+
+.profile__name {
+  color: white;
+  position: absolute;
+  font: 1.5rem;
+  font-weight: 400;
+  margin: 7.8rem 0 0.5rem 0;
+}
+
+.myBset__ranking {
+  margin: 3.8rem 0 0 0;
+}
+
+.link__conatainer {
+  background-color: #180425b0;
+  height: 58%;
+  width: 100%;
+  border-radius: 2rem;
+}
+
+.nav__box {
+  width: 100%;
+}
+
+.nav__itemBox {
+  margin-top: 20px;
+  /* margin-left: 10px; */
+}
+
+.slide__button {
+  width: 140px;
+  background-color: #180425b0;
+  color: white;
+  margin: 1rem 1rem 0.2rem 3rem;
+  color: #4938ff;
+  font: bold;
+  padding: 0.4rem;
+  border: 1.5px solid #79797986;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.slide__button:hover {
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.15);
+  border: none;
+  color: white;
+}
+
+.contact__button {
+  width: 140px;
+  background-color: #180425b0;
+  color: white;
+  margin-left: 20%;
+  margin: 0 1rem 0.5rem 3rem;
+  color: #4938ff;
+  font: bold;
+  padding: 0.2rem;
+  border: 1.5px solid #79797986;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.nav__itemBox span {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  height: 24%;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+
+.nav__itemBox span i {
+  display: flex;
+  color: white;
+  cursor: pointer;
+}
+
+.nav__itemBox h5 {
+  width: 100px;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.nav__itemBox p {
+  margin-top: 10px;
+  margin-left: 22%;
+}
+
+.contacts__link {
+  color: white;
+  text-decoration: none;
+  width: 200px;
+}
+
+.slide__icon a {
+  font-style: none;
+  text-decoration: none;
+}

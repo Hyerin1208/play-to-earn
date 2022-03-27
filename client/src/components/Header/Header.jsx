@@ -201,22 +201,22 @@ const Header = () => {
           </div>
 
           <div className="nav__right">
-            {isDisabled === false ? (
-              walletButton()
-            ) : (
-              <div>
-                <div className="mypage__user__icon">
-                  <Link to="/mypage">
-                    <i className="ri-user-3-line"></i>
-                  </Link>
-                  {account}
-                </div>
-              </div>
-            )}
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
           </div>
+          {isDisabled === false ? (
+            walletButton()
+          ) : (
+            <div>
+              <div className="mypage__user__icon">
+                <Link to="/mypage">
+                  <i className="ri-user-3-line"></i>
+                </Link>
+                {account}
+              </div>
+            </div>
+          )}
         </div>
       </Container>
     </header>

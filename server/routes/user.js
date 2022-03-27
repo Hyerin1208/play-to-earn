@@ -38,20 +38,6 @@ router.post("/login", async (req, res) => {
   if (!userWithEmail) return res.json({ message: "Email does not match!" });
 
   res.json({ message: "Welcome Back!" });
-
-  // try {
-  //   const result = await User.findOne({
-  //     include: {
-  //       model: User,
-  //       attributes: ["nick", "email"],
-  //     },
-  //   });
-  //   // res.send(result);
-  //   res.status(201).json(req.body);
-  // } catch (error) {
-  //   console.error(error);
-  //   return next(error);
-  // }
 });
 
 module.exports = router;
