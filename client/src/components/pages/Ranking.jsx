@@ -424,8 +424,9 @@ const Ranking = () => {
             <Container>
               <p>여기에 나의랭킹 페이지만들기</p>
               <div>
-                {/* <p>
-                  {snake[5].snakeRank}등 :&nbsp;
+                <p>
+                  {/* {snake[5].snakeRank}등 :&nbsp; */}
+                  {/* 등수 앞을 어떤 함수를 써야할지 감이 안잡힌다. sequelize.literal을 써야된다는데 먹히지도 않고... */}
                   {snake[4] === undefined
                     ? "없음"
                     : snake[4].snakePoint === null
@@ -437,7 +438,7 @@ const Ranking = () => {
                     : snake[4].snakePoint === null
                     ? ""
                     : snake[4].snakePoint}
-                </p> */}
+                </p>
               </div>
             </Container>
           </div>
