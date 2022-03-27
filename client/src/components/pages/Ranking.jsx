@@ -424,8 +424,8 @@ const Ranking = () => {
             <Container>
               <p>여기에 나의랭킹 페이지만들기</p>
               <div>
-                <p>
-                  5등 :&nbsp;
+                {/* <p>
+                  {snake[5].snakeRank}등 :&nbsp;
                   {snake[4] === undefined
                     ? "없음"
                     : snake[4].snakePoint === null
@@ -437,7 +437,7 @@ const Ranking = () => {
                     : snake[4].snakePoint === null
                     ? ""
                     : snake[4].snakePoint}
-                </p>
+                </p> */}
               </div>
             </Container>
           </div>
