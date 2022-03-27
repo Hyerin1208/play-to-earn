@@ -50,15 +50,15 @@ const NftDetails = () => {
     gettokenuri(card_id);
   }, [CreateNFTContract]);
 
-  function likeBtn() {
-    if (likeActive) {
-      setLikeActive(false);
-      setLike(like - 1);
-    } else {
-      setLikeActive(true);
-      setLike(like + 1);
-    }
-  }
+  // function likeBtn() {
+  //   if (likeActive) {
+  //     setLikeActive(false);
+  //     setLike(like - 1);
+  //   } else {
+  //     setLikeActive(true);
+  //     setLike(like + 1);
+  //   }
+  // }
 
   function viewBtn() {
     if (viewActive) {

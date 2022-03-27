@@ -7,4 +7,30 @@
 
 .welcome__form input {
   height: 45px;
+  font-style: 20px;
+  padding-left: 10px;
+}
+
+.welcome__btn {
+  width: 200px;
+  height: 50px;
+  justify-content: center;
+  margin-left: 34%;
+}
+
+.show__btn {
+  width: 200px;
+  height: 50px;
+  justify-content: center;
+}
+
+.show__box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.welcome__btn:hover {
+  cursor: pointer;
 }
