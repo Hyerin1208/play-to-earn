@@ -8,8 +8,8 @@ module.exports = class User extends Sequelize.Model {
             {
                 address: {
                     type: Sequelize.STRING(200),
-                    allowNull: true,
-                    unique: true, // unique: true - 고유하게
+                    allowNull: false,
+                    unique: true,
                 },
                 nick: {
                     type: Sequelize.STRING(200),
@@ -18,21 +18,15 @@ module.exports = class User extends Sequelize.Model {
                 email: {
                     type: Sequelize.STRING(40),
                     allowNull: true,
-                    // unique: true,
-                },
-                tokenId: {
-                    type: Sequelize.STRING(200),
-                    allowNull: true,
-                    // unique: true,
                 },
             },
             {
                 sequelize,
-                timestamps: true,
+                timestamps: false,
                 underscored: false,
                 modelName: "User",
                 tableName: "users",
-                paranoid: true,
+                paranoid: false,
                 charset: "utf8",
                 collate: "utf8_general_ci",
             }
@@ -40,8 +34,8 @@ module.exports = class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasMany(db.Nfts, { foreignKey: "userId", sourceKey: "address" });
-        // db.User.belongsToMany(db.Nfts, { through: "Likes", as: "Likers" }); // 좋아요
-        // db.User.hasMany(db.Nfts, { foreignKey: "tokenId", sourceKey: "tokenId" });
+        // db.User.belongsToMany(db.Nfts, { through: "Likes" });
+        db.User.belongsToMany(db.Nfts, { through: "Likes", as: "Liked", foreignKey: "address", sourceKey: "address", targetKey: "tokenId" });
+        // db.User.belongsToMany(db.Nfts, { through: "Likes", as: "Liked", foreignKey: "address", sourceKey: "address", targetKey: "tokenId" });
     }
 };

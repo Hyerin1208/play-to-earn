@@ -8,45 +8,41 @@ import "./free-item.css";
 import FreeCard from "./FreeCard";
 
 const FreeItem = () => {
-  const [checkItem, setCheckItem] = useState(null);
+    const [checkItem, setCheckItem] = useState(null);
 
-  // // 체크박스 전체 단일 개체 선택
-  // const handleSingleCheck = (checked, id) => {
-  //   if (checked) {
-  //     setCheckItems([...checkItems, id]);
-  //   } else {
-  //     // 체크 해제
-  //     setCheckItems(checkItems.filter((el) => el !== id));
-  //   }
-  // };
+    // // 체크박스 전체 단일 개체 선택
+    // const handleSingleCheck = (checked, id) => {
+    //   if (checked) {
+    //     setCheckItems([...checkItems, id]);
+    //   } else {
+    //     // 체크 해제
+    //     setCheckItems(checkItems.filter((el) => el !== id));
+    //   }
+    // };
 
-  return (
-    <div>
-      <Container>
-        <Row>
-          <Col lg="12" className="mb-3">
-            <div className="free__list__top">
-              <h3>Free Nft Character</h3>
-              <h5>You must choose one of them</h5>
+    return (
+        <div>
+            <Container>
+                <Row>
+                    <Col lg="12" className="mb-3">
+                        <div className="free__list__top">
+                            <h3>Free Nft Character</h3>
+                            <h5>You must choose one of them</h5>
+                        </div>
+                    </Col>
+
+                    {FREE__ITEMS.slice(0, 4).map((item, index) => (
+                        <Col lg="3" md="4" sm="6" key={index} className="mb-4">
+                            <FreeCard key={item.id} check={{ checkItem: checkItem, setCheckItem: setCheckItem }} item={item} />
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+            <div className="btn__container">
+                <Link to="/join/step2">Next</Link>
             </div>
-          </Col>
-
-          {FREE__ITEMS.slice(0, 4).map((item, index) => (
-            <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-              <FreeCard
-                key={item.id}
-                check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
-                item={item}
-              />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-      <div className="btn__container">
-        <Link to="/join/step2">Next</Link>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default FreeItem;

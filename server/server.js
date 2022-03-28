@@ -24,13 +24,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("DB 연결성공");
-  })
-  .catch((err) => {
-    console.error(`DB 연결실패 - ${err}`);
-  });
+    .sync({ force: false })
+    .then(() => {
+        console.log("DB 연결성공");
+    })
+    .catch((err) => {
+        console.error(`DB 연결실패 - ${err}`);
+    });
 
 app.use("/main", mainRouter);
 app.use("/user", userRouter);
