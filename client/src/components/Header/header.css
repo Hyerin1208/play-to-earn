@@ -54,42 +54,49 @@
 }
 
 .nav__right {
-  display: block;
+  display: flex;
   align-items: center;
-  /* gap: 5; */
+  gap: 5;
+  width: 280px;
+  height: 50px;
 }
 
-.nav__right .btn {
+.nav__right .connect_btn {
   display: flex;
   gap: 2;
   align-items: center;
-  padding: 7px 25px;
+  padding: 0 10px 0 10px;
   border: 1px solid #5142fc;
   border-radius: 50px;
   color: white;
+  background-color: #14141f;
+  margin-top: 10px;
+  justify-content: center;
+  width: 180px;
+  height: 50px;
 }
 
-.btn a {
+.connect_btn a {
   color: #fff;
   text-decoration: none;
   font-size: 0.8rem;
   display: inline-block;
 }
 
-.nav__right .btn span i {
+.nav__right .connect_btn span i {
   color: #fff;
   margin-right: 6px;
 }
 
-.nav__right .btn a:hover {
+.nav__right .connect_btn a:hover {
   color: #fff;
 }
 
-.nav__right .btn:hover {
+.nav__right .connect_btn:hover {
   display: flex;
   /* gap: 2; */
   align-items: center;
-  padding: 7px 25px;
+  /* padding: 7px 5px; */
   border: 1px solid #5142fc;
   border-radius: 50px;
   color: #5142fc;
@@ -152,18 +159,18 @@
     margin-left: 24px;
   }
 
-  .btn {
+  .connect_btn {
     padding: 4px 25px !important;
     margin-right: 25px;
   }
 
-  .btn a {
+  .connect_btn a {
     font-size: 0.7rem !important;
   }
 }
 
 @media only screen and (max-width: 425px) {
-  .btn {
+  .connect_btn {
     margin-left: 50px;
   }
 

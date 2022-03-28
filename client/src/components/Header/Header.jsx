@@ -159,7 +159,7 @@ const Header = () => {
 
   const walletButton = () => {
     return (
-      <button className="btn" onClick={() => checkWallet()}>
+      <button className="connect_btn" onClick={() => checkWallet()}>
         <span>
           <i className="ri-wallet-line"></i>
         </span>
@@ -204,19 +204,20 @@ const Header = () => {
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
-          </div>
-          {isDisabled === false ? (
-            walletButton()
-          ) : (
-            <div>
-              <div className="mypage__user__icon">
-                <Link to="/mypage">
-                  <i className="ri-user-3-line"></i>
-                </Link>
-                {account}
+
+            {isDisabled === false ? (
+              walletButton()
+            ) : (
+              <div>
+                <div className="mypage__user__icon">
+                  <Link to="/mypage">
+                    <i className="ri-user-3-line"></i>
+                  </Link>
+                  {account}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </Container>
     </header>
