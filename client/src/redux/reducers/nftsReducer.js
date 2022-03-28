@@ -1,20 +1,21 @@
-import { ActionTypes } from "../contants/action-types";
+import { SET_NFTS, SELECTED_NFT } from "../actions";
 
 const initialState = {
-  nfts: [
-    {
-      name: "title",
-      description: "desc",
-      image: "imgUrl",
-    },
-  ],
+  name: null,
+  description: null,
+  image: null,
 };
 
-export const nftsReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ActionTypes.SET_NFTS:
-      return state;
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case SET_NFTS:
+      return {
+        ...initialState,
+        name: action.payload.name,
+        description: action.payload.description,
+        image: action.payload.image,
+      };
     default:
       return state;
   }
-};
+}

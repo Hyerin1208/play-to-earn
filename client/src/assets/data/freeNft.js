@@ -11,7 +11,7 @@ export const FREE__ITEMS = [
   {
     id: "1",
     title: "Naming center Item_1",
-    desc: "Enhance Yourself Through The Soft Power Of Cotton, Greatly Increase Your Defense.",
+    desc: "Enhance Yourself Through The Soft Power Of Cotton",
     imgUrl: freeItem1,
     creator: "Naming center",
     creatorImg: admin,
@@ -22,7 +22,7 @@ export const FREE__ITEMS = [
   {
     id: "2",
     title: "Naming center Item_2",
-    desc: "Perform An Mystical And Powerful Dance To Increase Your Attack And Speed.",
+    desc: "Perform An Mystical And Powerful Dance",
     imgUrl: freeItem2,
     creator: "Naming center",
     creatorImg: admin,
@@ -33,7 +33,7 @@ export const FREE__ITEMS = [
   {
     id: "3",
     title: "Naming center Item_3",
-    desc: "Fire A Fireball At Your Opponent With A Low Probability To Burn The Target.",
+    desc: "Fire A Fireball At Your Opponent",
     imgUrl: freeItem3,
     creator: "Naming center",
     creatorImg: admin,
@@ -44,7 +44,7 @@ export const FREE__ITEMS = [
   {
     id: "4",
     title: "Naming center Item_4",
-    desc: "Bash An Enemy Target Through Thunder'S Fist With Paralyzing The Target.",
+    desc: "Bash An Enemy Target Through Thunder'S Fist",
     imgUrl: freeItem4,
     creator: "Naming center",
     creatorImg: admin,

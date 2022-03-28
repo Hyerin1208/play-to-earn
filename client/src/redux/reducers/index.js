@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import AppState from "./AppState";
-import { nftsReducer } from "./nftsReducer";
+import NftsReducer from "./NftsReducer";
 
 const rootReducer = combineReducers({
   AppState,
-  allNfts: nftsReducer,
+  NftsReducer,
 });
 
 export default rootReducer;

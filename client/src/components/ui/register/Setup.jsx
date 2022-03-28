@@ -5,6 +5,7 @@ import { Col, Container, Row } from "reactstrap";
 import "./setup.css";
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Setup = () => {
   const [nick, setNick] = useState("");
@@ -29,6 +30,9 @@ const Setup = () => {
     });
   };
 
+  const SelectNFT = useSelector((state) => state.NftsReducer);
+
+  console.log(SelectNFT);
   return (
     <Fragment>
       <Container className="setup__container">

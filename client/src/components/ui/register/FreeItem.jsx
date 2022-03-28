@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
@@ -7,8 +8,40 @@ import { FREE__ITEMS } from "../../../assets/data/freeNft";
 import "./free-item.css";
 import FreeCard from "./FreeCard";
 
-const FreeItem = () => {
+import axios from "axios";
+
+const FreeItem = (props) => {
   const [checkItem, setCheckItem] = useState(null);
+
+  const nfts = useSelector((state) => state);
+  console.log(nfts);
+  const [nftArray, setnftArray] = useState([]);
+  const [Loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  // const fetchNfts = async () => {
+  //   const response = await axios
+  //     .get("http://localhost:5000/user")
+  //     .catch((err) => {
+  //       console.log("Err", err);
+  //     });
+  //   dispatch(response.data);
+  // };
+
+  // useEffect(() => {
+  //   try {
+  //     if (nfts !== null) {
+  //       console.log("실행");
+  //       setnftArray([...nfts].reverse());
+  //       setLoading(null);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
+
+  console.log("Nfts :", nfts);
 
   return (
     <div>
