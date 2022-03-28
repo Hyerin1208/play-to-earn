@@ -26,7 +26,7 @@ router.post("/register", async (req, res, next) => {
   // else res.json({ error: "Cannot register user at the moment!" });
 });
 
-router.post("/login", async (req, res) => {
+router.get("/login", async (req, res) => {
   const { email } = req.body;
 
   const userWithEmail = await User.findOne({ where: { email } }).catch(
