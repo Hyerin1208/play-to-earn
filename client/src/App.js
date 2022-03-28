@@ -11,8 +11,6 @@ function App() {
     useEffect(() => {
         dispatch(getWeb3());
     }, [dispatch]);
-
-    const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     return (
         <>
             <Header />
