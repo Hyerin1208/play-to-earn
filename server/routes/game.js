@@ -144,15 +144,19 @@ router.get("/tetris", async (req, res) => {
 // SnakeGame
 router.put("/snake", async (req, res, next) => {
   const { point, account } = req.body;
-  const rank = await Game.findAll({
-    attributes: ["snakeRank", "snakePoint"],
-    order: [["snakePoint", "desc"]],
-  });
+  // const ranks = await Game.findAll();
+  // ranks.sort((a, b) => (b.snakePoint) - (a.snakePoint));
+
+  // ranks.forEach((rank, index) => {
+  //   rank.snakeRank = index + 1;
+  //   rank.save();
+  // });
+
   try {
     Game.update(
       {
         snakePoint: point,
-        snakeRank: 1,
+        // snakeRank: ranks,
       },
       { where: { address: account } }
     );
