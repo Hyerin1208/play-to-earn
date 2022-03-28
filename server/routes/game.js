@@ -11,7 +11,6 @@ router.post("/snake", async (req, res, next) => {
     Game.create({
       snakePoint: point,
       address: account,
-      // snakeRank: rank++,
     });
     return res.json({ message: "ok" });
   } catch (error) {
@@ -145,15 +144,15 @@ router.get("/tetris", async (req, res) => {
 // SnakeGame
 router.put("/snake", async (req, res, next) => {
   const { point, account } = req.body;
-  // const rank = await Game.findAll({
-  //   attributes: ["account", "snakePoint"],
-  //   order: [["snakePoint", "desc"]],
-  // });
+  const rank = await Game.findAll({
+    attributes: ["snakeRank", "snakePoint"],
+    order: [["snakePoint", "desc"]],
+  });
   try {
     Game.update(
       {
         snakePoint: point,
-        // snakeRank: rank,
+        snakeRank: 1,
       },
       { where: { address: account } }
     );

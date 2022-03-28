@@ -14,6 +14,7 @@ module.exports = class Game extends Sequelize.Model {
         nick: {
           type: Sequelize.STRING(200),
           allowNull: true,
+          unique: true,
         },
         snakePoint: {
           type: Sequelize.INTEGER(100),
