@@ -12,13 +12,13 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .section__one {
   display: flex;
   justify-content: space-between;
-  height: 28%;
+  height: 30%;
   gap: 1rem;
   width: 100%;
 }

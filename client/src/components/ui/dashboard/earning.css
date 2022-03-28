@@ -15,7 +15,7 @@
 }
 
 .card__content {
-  margin: 0.5rem;
+  margin: 0.2rem;
 }
 
 .earning__chart {
@@ -38,6 +38,7 @@
   font-size: 1.4rem;
   font-weight: normal;
   background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 4px;
 }
 
 .token__mydesc {

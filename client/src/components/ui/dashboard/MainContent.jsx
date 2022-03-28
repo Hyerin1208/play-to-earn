@@ -3,6 +3,7 @@ import { Col, Container, Navbar } from "reactstrap";
 import Earnings from "./Earnings";
 
 import "./main-container.css";
+import MyLikes from "./MyLikes";
 import MyRanking from "./MyRanking";
 
 const MainContent = () => {
@@ -18,7 +19,9 @@ const MainContent = () => {
             <Col className="col__one2">
               <MyRanking />
             </Col>
-            <Col className="col__one3"></Col>
+            <Col className="col__one3">
+              <MyLikes />
+            </Col>
           </div>
           <div className="section__two">
             <Col className="col__two1"></Col>

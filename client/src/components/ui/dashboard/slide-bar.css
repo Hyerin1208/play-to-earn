@@ -1,12 +1,12 @@
 .slide__container {
-  width: 20%;
+  width: 25%;
   height: 100% !important;
   border-radius: 2rem;
   background-color: #340c4e91;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 2.7rem;
   margin-top: 24px;
 }
 
@@ -43,7 +43,7 @@
 
 .link__conatainer {
   background-color: #180425b0;
-  height: 58%;
+  height: 60%;
   width: 100%;
   border-radius: 2rem;
 }
@@ -54,14 +54,14 @@
 
 .nav__itemBox {
   margin-top: 20px;
-  /* margin-left: 10px; */
+  margin-right: 10px;
 }
 
 .slide__button {
   width: 140px;
   background-color: #180425b0;
   color: white;
-  margin: 1rem 1rem 0.2rem 3rem;
+  margin: 1rem 1rem 0.2rem 2rem;
   color: #4938ff;
   font: bold;
   padding: 0.4rem;
@@ -83,7 +83,7 @@
   background-color: #180425b0;
   color: white;
   margin-left: 20%;
-  margin: 0 1rem 0.5rem 3rem;
+  margin: 0 1rem 0.5rem 2rem;
   color: #4938ff;
   font: bold;
   padding: 0.2rem;
@@ -116,7 +116,7 @@
 
 .nav__itemBox p {
   margin-top: 10px;
-  margin-left: 22%;
+  margin-left: 17%;
 }
 
 .contacts__link {
