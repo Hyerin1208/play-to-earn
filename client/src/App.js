@@ -7,21 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWeb3, connectWallet, checkWallet } from "./redux/actions/index";
 
 function App() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getWeb3());
-    }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getWeb3());
+  }, [dispatch]);
 
-    const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
-    return (
-        <>
-            <Header />
-            <section>
-                <Routers />
-            </section>
-            <Footer />
-        </>
-    );
+  // const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
+  return (
+    <>
+      <Header />
+      <section>
+        <Routers />
+      </section>
+      <Footer />
+    </>
+  );
 }
 
 export default App;

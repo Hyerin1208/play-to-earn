@@ -18,7 +18,7 @@
 .section__one {
   display: flex;
   justify-content: space-between;
-  height: 27%;
+  height: 28%;
   gap: 1rem;
   width: 100%;
 }
