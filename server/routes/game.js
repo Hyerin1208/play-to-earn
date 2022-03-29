@@ -6,12 +6,21 @@ const { Game } = require("../models");
 // SnakeGame
 router.post("/snake", async (req, res, next) => {
   const { point, account } = req.body;
+  const findAddress = await Game.findOne({ where: { address: account } });
 
   try {
-    Game.create({
-      snakePoint: point,
+    if (!findAddress) {
+      return Game.create({
+        address: account,
+        snakePoint: point,
+      });
+    }
+
+    Game.update({
       address: account,
+      snakePoint: point,
     });
+
     return res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
