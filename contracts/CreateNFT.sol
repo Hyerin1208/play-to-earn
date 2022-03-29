@@ -36,18 +36,13 @@ mapping(uint => NFTItem) private idToNFTItem;
       emit NFTItemCreated(tokenId,msg.sender,price,sell);
     }
 
-    function setApprovalInContract() public {
-      require(msg.sender!=owner()||isApprovedForAll(owner(),msg.sender)!=true);
-        _setApprovalForAll(owner(), msg.sender, true);
-    }
-
     function CreateNFTinContract(string memory tokenURI, uint price) public{
-      require(msg.sender==owner()||isApprovedForAll(owner(),msg.sender)==true);
               _tokenIds.increment();
       uint tokenId = _tokenIds.current();
-      if(owner() == msg.sender){
+      if(owner() == msg.sender||isApprovedForAll(owner(),msg.sender)==true){
         CreateNFTItem(tokenId,tokenURI,price,true);
         } else {
+          _setApprovalForAll(owner(), msg.sender, true);
         CreateNFTItem(tokenId,tokenURI,price,false);
         }
       }
