@@ -218,11 +218,11 @@ const Tetris = ({ setShowModal }) => {
       console.log(gameStats.score);
       console.log(account);
 
-      await axios
-        .put(`http://localhost:5000/game/tetris`, { data, account })
-        .then((res) => {
-          console.log(res.data);
-        });
+      // await axios
+      //   .put(`http://localhost:5000/game/tetris`, { data, account })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   });
 
       await axios
         .post(`http://localhost:5000/game/tetris`, { data, account })

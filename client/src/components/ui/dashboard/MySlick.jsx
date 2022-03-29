@@ -91,15 +91,15 @@ const MySlick = () => {
     infinite: true,
     speed: 500,
     cssEase: "linear",
-
+    slidesToShow: 2,
     responsive: [
       {
         breakpoint: 768,
         settings: {
           infinite: true,
-          slidesToShow: 3,
+          // slidesToShow: 3,
           slidesToScroll: 4,
-          initialSlide: 0,
+          initialSlide: 3,
           dots: false,
           draggable: true, //드래그 가능 여부
           responsive: [
@@ -108,14 +108,14 @@ const MySlick = () => {
               breakpoint: 960, //화면 사이즈 960px일 때
               settings: {
                 //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-                slidesToShow: 3,
+                // slidesToShow: 3,
               },
             },
             {
               breakpoint: 768, //화면 사이즈 768px일 때
               settings: {
                 //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-                slidesToShow: 2,
+                // slidesToShow: 2,
               },
             },
           ],
@@ -129,7 +129,7 @@ const MySlick = () => {
   return (
     <div>
       <div className="slick-arrow">
-        <Slider {...settings} style={style}>
+        <Slider {...settings} style={{ width: 500 }}>
           {nftArray.map((items, index) => {
             return (
               // <motion.div key={index} className="my-items">
