@@ -65,6 +65,42 @@ const Ranking = () => {
       });
   }, []);
 
+  function isSnake(element) {
+    if (element.address === account) {
+      console.log(element);
+      return true;
+    }
+  }
+  const snakeRank = snake.findIndex(isSnake);
+  console.log(snakeRank);
+
+  function isTetris(element) {
+    if (element.address === account) {
+      console.log(element);
+      return true;
+    }
+  }
+  const tetrisRank = tetris.findIndex(isTetris);
+  console.log(tetrisRank);
+
+  function isPuzzle(element) {
+    if (element.address === account) {
+      console.log(element);
+      return true;
+    }
+  }
+  const puzzleRank = tetris.findIndex(isPuzzle);
+  console.log(puzzleRank);
+
+  function isMine(element) {
+    if (element.address === account) {
+      console.log(element);
+      return true;
+    }
+  }
+  const mineRank = tetris.findIndex(isMine);
+  console.log(mineRank);
+
   return (
     <>
       <CommonSection title="Ranking" />
@@ -424,21 +460,27 @@ const Ranking = () => {
             <Container>
               <p>여기에 나의랭킹 페이지만들기</p>
               <div>
-                <p>
-                  등외
-                  {/* 등수 앞을 어떤 함수를 써야할지 감이 안잡힌다. sequelize.literal을 써야된다는데 먹히지도 않고... */}
-                  {/* {snake[4] === undefined
-                    ? "없음"
-                    : snake[4].snakePoint === null
-                    ? "없음"
-                    : snake[4].nick}
-                  &nbsp;
-                  {snake[4] === undefined
-                    ? ""
-                    : snake[4].snakePoint === null
-                    ? ""
-                    : snake[4].snakePoint} */}
-                </p>
+                {loading ? (
+                  <strong> loading... </strong>
+                ) : (
+                  <p>
+                    <b>SnakeGame</b>
+                    <br />
+                    {snakeRank + 1}등 &nbsp;
+                    <br />
+                    <b>2048Game</b>
+                    <br />
+                    {puzzleRank + 1}등 &nbsp;
+                    <br />
+                    <b>TetrisGame</b>
+                    <br />
+                    {tetrisRank + 1}등 &nbsp;
+                    <br />
+                    <b>MineGame</b>
+                    <br />
+                    {mineRank + 1}등 &nbsp;
+                  </p>
+                )}
               </div>
             </Container>
           </div>

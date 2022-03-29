@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log("DB 연결성공");
   })

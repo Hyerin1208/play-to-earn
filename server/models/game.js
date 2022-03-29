@@ -18,28 +18,23 @@ module.exports = class Game extends Sequelize.Model {
         },
         snakePoint: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
         puzzlePoint: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
         minePoint: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
         tetrisPoint: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
         snakeRank: {
           type: Sequelize.INTEGER(100),
-          allowNull: false,
-          defaultValue: 0,
+          allowNull: true,
         },
       },
       {
