@@ -28,7 +28,12 @@ module.exports = class Nfts extends Sequelize.Model {
 
   static associate(db) {
     // db.Nfts.belongsTo(db.User, { foreignKey: "userId", targetKey: "address" });
-    // db.Nfts.belongsToMany(db.User, { through: "Likes" }); // 좋아요
+    db.Nfts.belongsToMany(db.User, {
+      through: "Likes",
+      as: "Liker",
+      foreignKey: "tokenId",
+      targetKey: "tokenId",
+    }); // 좋아요
     // db.Nfts.belongsTo(db.User, { foreignKey: "tokenId", targetKey: "tokenId" });
   }
 };
