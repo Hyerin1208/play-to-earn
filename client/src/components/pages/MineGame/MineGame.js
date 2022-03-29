@@ -38,12 +38,6 @@ function MineGame({ setShowModal }) {
     console.log(account);
 
     await axios
-      .put(`http://localhost:5000/game/mine`, { runtime, account })
-      .then((res) => {
-        console.log(res.data);
-      });
-
-    await axios
       .post(`http://localhost:5000/game/mine`, { runtime, account })
       .then((res) => {
         console.log(res.data);

@@ -32,10 +32,6 @@ module.exports = class Game extends Sequelize.Model {
           type: Sequelize.INTEGER(100),
           allowNull: true,
         },
-        snakeRank: {
-          type: Sequelize.INTEGER(100),
-          allowNull: true,
-        },
       },
       {
         sequelize,

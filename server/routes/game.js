@@ -6,22 +6,20 @@ const { Game } = require("../models");
 // SnakeGame
 router.post("/snake", async (req, res, next) => {
   const { point, account } = req.body;
-  const findAddress = await Game.findOne({ where: { address: account } });
 
   try {
+    const findAddress = await Game.findOne({ where: { address: account } });
+
     if (!findAddress) {
-      return Game.create({
+      Game.create({
         address: account,
         snakePoint: point,
       });
+    } else {
+      Game.update({ snakePoint: point }, { where: { address: account } });
     }
 
-    Game.update({
-      address: account,
-      snakePoint: point,
-    });
-
-    return res.json({ message: "ok" });
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -33,11 +31,18 @@ router.post("/2048", async (req, res, next) => {
   const { score, account } = req.body;
 
   try {
-    Game.create({
-      puzzlePoint: score,
-      address: account,
-    });
-    return res.json({ message: "ok" });
+    const findAddress = await Game.findOne({ where: { address: account } });
+
+    if (!findAddress) {
+      Game.create({
+        address: account,
+        puzzlePoint: score,
+      });
+    } else {
+      Game.update({ puzzlePoint: score }, { where: { address: account } });
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -49,11 +54,18 @@ router.post("/mine", async (req, res, next) => {
   const { runtime, account } = req.body;
 
   try {
-    Game.create({
-      minePoint: runtime,
-      address: account,
-    });
-    return res.json({ message: "ok" });
+    const findAddress = await Game.findOne({ where: { address: account } });
+
+    if (!findAddress) {
+      Game.create({
+        address: account,
+        minePoint: runtime,
+      });
+    } else {
+      Game.update({ minePoint: runtime }, { where: { address: account } });
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -63,13 +75,20 @@ router.post("/mine", async (req, res, next) => {
 // TetrisGame
 router.post("/tetris", async (req, res, next) => {
   const { data, account } = req.body;
-  console.log(req.body);
+
   try {
-    Game.create({
-      tetrisPoint: data,
-      address: account,
-    });
-    return res.json({ message: "ok" });
+    const findAddress = await Game.findOne({ where: { address: account } });
+
+    if (!findAddress) {
+      Game.create({
+        address: account,
+        tetrisPoint: data,
+      });
+    } else {
+      Game.update({ tetrisPoint: data }, { where: { address: account } });
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -151,79 +170,6 @@ router.get("/tetris", async (req, res) => {
   }
 
   res.json(tetris);
-});
-
-// router.put 모음
-// SnakeGame
-router.put("/snake", async (req, res, next) => {
-  const { point, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        snakePoint: point,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
-});
-
-// 2048Game
-router.put("/2048", async (req, res, next) => {
-  const { score, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        puzzlePoint: score,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
-});
-
-// MineGame
-router.put("/mine", async (req, res, next) => {
-  const { runtime, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        minePoint: runtime,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
-});
-
-// TetrisGame
-router.put("/tetris", async (req, res, next) => {
-  const { data, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        tetrisPoint: data,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
 });
 
 module.exports = router;

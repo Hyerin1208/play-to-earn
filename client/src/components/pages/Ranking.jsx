@@ -71,8 +71,17 @@ const Ranking = () => {
       return true;
     }
   }
-  const snakeRank = snake.findIndex(isSnake);
-  console.log(snakeRank);
+  const snakeIndex = snake.findIndex(isSnake);
+  console.log(snakeIndex);
+
+  function snakeRank(element) {
+    if (element.address === account) {
+      console.log(element);
+      return true;
+    }
+  }
+  const snakeR = snake.find(snakeRank);
+  console.log(snakeR);
 
   function isTetris(element) {
     if (element.address === account) {
@@ -466,8 +475,8 @@ const Ranking = () => {
                   <p>
                     <b>SnakeGame</b>
                     <br />
-                    {snakeRank.snakePoint === null ? "" : snakeRank + 1}
-                    등 &nbsp;
+                    {snakeR.snakePoint === null ? "없음" : snakeIndex + 1}
+                    &nbsp;
                     <br />
                     <b>2048Game</b>
                     <br />
