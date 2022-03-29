@@ -19,16 +19,16 @@ const Board = () => {
     const point = score;
 
     await axios
-      .put(`http://localhost:5000/game/snake`, { point, account })
-      .then((res) => {
-        console.log(res.data);
-      });
-
-    await axios
       .post(`http://localhost:5000/game/snake`, { point, account })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
+      });
+
+    await axios
+      .put(`http://localhost:5000/game/snake`, { point, account })
+      .then((res) => {
+        console.log(res.data);
       });
   };
 

@@ -71,7 +71,7 @@ router.post("/tetris", async (req, res, next) => {
 // SnakeGame
 router.get("/snake", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["nick", "snakePoint"],
+    attributes: ["nick", "snakePoint", "address"],
     order: [["snakePoint", "desc"]],
   });
   const snake = [];
@@ -79,6 +79,7 @@ router.get("/snake", async (req, res) => {
   for (const user of users) {
     snake.push({
       nick: user.nick,
+      address: user.address,
       snakePoint: user.snakePoint,
     });
   }
@@ -89,7 +90,7 @@ router.get("/snake", async (req, res) => {
 // 2048Game
 router.get("/2048", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["nick", "puzzlePoint"],
+    attributes: ["nick", "puzzlePoint", "address"],
     order: [["puzzlePoint", "desc"]],
   });
   const puzzle = [];
@@ -97,6 +98,7 @@ router.get("/2048", async (req, res) => {
   for (const user of users) {
     puzzle.push({
       nick: user.nick,
+      address: user.address,
       puzzlePoint: user.puzzlePoint,
     });
   }
@@ -107,7 +109,7 @@ router.get("/2048", async (req, res) => {
 // MineGame
 router.get("/mine", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["nick", "minePoint"],
+    attributes: ["nick", "minePoint", "address"],
     order: [["minePoint", "asc"]],
   });
   const mine = [];
@@ -115,6 +117,7 @@ router.get("/mine", async (req, res) => {
   for (const user of users) {
     mine.push({
       nick: user.nick,
+      address: user.address,
       minePoint: user.minePoint,
     });
   }
@@ -125,7 +128,7 @@ router.get("/mine", async (req, res) => {
 // TetrisGame
 router.get("/tetris", async (req, res) => {
   const users = await Game.findAll({
-    attributes: ["nick", "tetrisPoint"],
+    attributes: ["nick", "tetrisPoint", "address"],
     order: [["tetrisPoint", "desc"]],
   });
   const tetris = [];
@@ -133,6 +136,7 @@ router.get("/tetris", async (req, res) => {
   for (const user of users) {
     tetris.push({
       nick: user.nick,
+      address: user.address,
       tetrisPoint: user.tetrisPoint,
     });
   }

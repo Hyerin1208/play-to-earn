@@ -5,7 +5,6 @@ const config = require("../config/config")[env];
 
 const User = require("./user");
 const Game = require("./game");
-const Nfts = require("./nfts");
 
 const db = {};
 
@@ -24,14 +23,11 @@ db.Sequelize = Sequelize;
 
 db.User = User;
 db.Game = Game;
-db.Nfts = Nfts;
 
 User.init(sequelize);
 Game.init(sequelize);
-Nfts.init(sequelize);
 
 User.associate(db);
 Game.associate(db);
-Nfts.associate(db);
 
 module.exports = db;
