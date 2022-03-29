@@ -11,7 +11,7 @@ export const FREE__ITEMS = [
   {
     id: "1",
     title: "Naming center Item_1",
-    desc: "Enhance Yourself Through The Soft Power Of Cotton",
+    desc: "Honest",
     imgUrl: freeItem1,
     creator: "Naming center",
     creatorImg: admin,
@@ -22,7 +22,7 @@ export const FREE__ITEMS = [
   {
     id: "2",
     title: "Naming center Item_2",
-    desc: "Perform An Mystical And Powerful Dance",
+    desc: "Powerful Dance",
     imgUrl: freeItem2,
     creator: "Naming center",
     creatorImg: admin,
@@ -33,7 +33,7 @@ export const FREE__ITEMS = [
   {
     id: "3",
     title: "Naming center Item_3",
-    desc: "Fire A Fireball At Your Opponent",
+    desc: "Ambitious",
     imgUrl: freeItem3,
     creator: "Naming center",
     creatorImg: admin,
@@ -44,7 +44,7 @@ export const FREE__ITEMS = [
   {
     id: "4",
     title: "Naming center Item_4",
-    desc: "Bash An Enemy Target Through Thunder'S Fist",
+    desc: "Devoted",
     imgUrl: freeItem4,
     creator: "Naming center",
     creatorImg: admin,

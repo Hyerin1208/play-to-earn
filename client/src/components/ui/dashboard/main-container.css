@@ -1,3 +1,6 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
 .main__dash {
   width: 80%;
   background: linear-gradient(to bottom right, #343434 0% right, #e6e4ff 70%);
@@ -45,4 +48,35 @@
   flex-direction: column;
   height: 115%;
   width: 100%;
+}
+
+/* .my-items {
+  min-height: 30rem;
+  min-width: 30rem;
+  padding: 30px;
+} */
+
+/* .inner-carousel {
+  display: flex;
+  background-color: #e6e4ff;
+} */
+
+.slick-slider {
+  width: 300%;
+  /* background-color: #343434; */
+}
+/* .slick-slide {
+  object-fit: cover;
+  width: 100%;
+  height: 500px;
+} */
+.slick-dots {
+  bottom: 5px;
+}
+.slick-slider .slick-initialized {
+  width: 600px;
+}
+.slick-active button:before {
+  opacity: 0.75;
+  color: #343434;
 }

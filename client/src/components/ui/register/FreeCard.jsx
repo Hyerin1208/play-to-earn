@@ -88,7 +88,7 @@ const FreeCard = (props) => {
           </div>
           <div className="free__nft__content">
             <h5 className="free__nft__title">{title}</h5>
-            <div className="free__nft__desc"></div>
+            <div className="free__nft__desc">
               <p>{desc}</p>
             </div>
             <button className="pick__nft" onClick={btn}>

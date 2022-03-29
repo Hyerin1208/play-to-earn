@@ -10,8 +10,10 @@
   margin-top: 20px;
 }
 
-.BuyBNB__Btn {
-  margin-left: 20px;
+.BuyBNB__Btn a {
+  color: rgb(255, 230, 0);
+  font-style: none;
+  text-decoration: none;
 }
 
 .BinanceMeta2 {

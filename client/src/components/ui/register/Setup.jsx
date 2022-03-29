@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { Col, Container, Row } from "reactstrap";
@@ -6,12 +6,49 @@ import "./setup.css";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
+import FreeCard from "./FreeCard";
+import SelectCard from "./SelectCard";
 
 const Setup = () => {
   const [nick, setNick] = useState("");
   const [email, setEmail] = useState("");
+  const Account = useSelector((state) => state.AppState.account);
 
-  const [joinList, setJoinList] = useState([]);
+  const SelectNFT = useSelector((state) => state.NftsReducer);
+  console.log(SelectNFT);
+
+  console.log(SelectNFT.name);
+
+  const [form, setForm] = useState({
+    name: SelectNFT.name,
+    description: SelectNFT.description,
+    image: SelectNFT.image,
+  });
+
+  async function selectedNft() {
+    await SelectNFT.send({ from: Account, gas: 3000000 }, (error) => {
+      if (!error) {
+        console.log("send ok");
+      } else {
+        console.log(error);
+      }
+    }).then((res) => {
+      let item = {
+        name: SelectNFT.name,
+        description: SelectNFT.description,
+        image: SelectNFT.image,
+      };
+      console.log(item);
+    });
+  }
+
+  // useEffect(() => {
+  //   try {
+  //     setForm();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [form]);
 
   // const displayInfo = () => {
   //   console.log(nick + email);
@@ -30,9 +67,8 @@ const Setup = () => {
     });
   };
 
-  const SelectNFT = useSelector((state) => state.NftsReducer);
+  const [checkItem, setCheckItem] = useState(null);
 
-  console.log(SelectNFT);
   return (
     <Fragment>
       <Container className="setup__container">
@@ -56,9 +92,21 @@ const Setup = () => {
               <Card.Text>It's your CHOICS</Card.Text>
               <Card.Img variant="top" src="" className="select_char" />
               <div className="show__box">
-                <button className="show__btn" onClick={getJoinus}>
+                <button
+                  className="show__btn"
+                  onClick={getJoinus}
+                  style={{ width: "40px" }}
+                >
                   Show
                 </button>
+                <SelectCard
+                  check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
+                  item={{
+                    name: SelectNFT.name,
+                    description: SelectNFT.description,
+                    image: SelectNFT.image,
+                  }}
+                />
               </div>
             </Card.Body>
           </Card>
