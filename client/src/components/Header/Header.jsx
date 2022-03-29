@@ -159,7 +159,7 @@ const Header = () => {
 
   const walletButton = () => {
     return (
-      <button className="btn" onClick={() => checkWallet()}>
+      <button className="connect_btn" onClick={() => checkWallet()}>
         <span>
           <i className="ri-wallet-line"></i>
         </span>
@@ -201,6 +201,10 @@ const Header = () => {
           </div>
 
           <div className="nav__right">
+            <span className="mobile__menu">
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
+            </span>
+
             {isDisabled === false ? (
               walletButton()
             ) : (
@@ -213,9 +217,6 @@ const Header = () => {
                 </div>
               </div>
             )}
-            <span className="mobile__menu">
-              <i className="ri-menu-line" onClick={toggleMenu}></i>
-            </span>
           </div>
         </div>
       </Container>
