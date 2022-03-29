@@ -2,22 +2,30 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { Col, Container, Row } from "reactstrap";
+import { updateLists, setNfts } from "../../../redux/actions/index";
+import { create as ipfsHttpClient } from "ipfs-http-client";
 import "./setup.css";
 
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FreeCard from "./FreeCard";
 import SelectCard from "./SelectCard";
+
+const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Setup = () => {
   const [nick, setNick] = useState("");
   const [email, setEmail] = useState("");
-  const Account = useSelector((state) => state.AppState.account);
 
   const SelectNFT = useSelector((state) => state.NftsReducer);
   console.log(SelectNFT);
 
-  console.log(SelectNFT.name);
+  const Account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     name: SelectNFT.name,
