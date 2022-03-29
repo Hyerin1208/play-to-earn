@@ -2,27 +2,42 @@ var express = require("express");
 var router = express.Router();
 const { User } = require("../models");
 
-router.post("/", async (req, res, next) => {
-    //샘플코드
-    const { email, nick, password } = req.body;
-    try {
-        const findUser = await User.findOne({ where: { email } });
+router.post("/register", async (req, res, next) => {
+  // console.log(req.body);
+  const { nick, email } = req.body;
 
-        if (findUser) {
-            return res.json({ message: "이미 가입한 이메일 입니다." });
-        }
-
-        User.create({
-            nick: nick,
-            email: email,
-            password: password,
-        });
-
-        return res.json({ message: "가입이 완료되었습니다." });
-    } catch (error) {
-        console.error(error);
-        return next(error);
+  const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
+    (err) => {
+      console.log("Error: ", err);
     }
+  );
+
+  if (alreadyExistsUser) {
+    return res.json({ message: "User with email already exists!" });
+  }
+
+  const newUser = new User({ nick, email });
+  const savedUser = await newUser.save().catch((err) => {
+    console.log("Error: ", err);
+    res.json({ error: "Cannot register user at the moment!" });
+  });
+
+  if (savedUser) res.json({ message: "Thanks for registering" });
+  // else res.json({ error: "Cannot register user at the moment!" });
+});
+
+router.get("/login", async (req, res) => {
+  const { email } = req.body;
+
+  const userWithEmail = await User.findOne({ where: { email } }).catch(
+    (err) => {
+      console.log("Error :", err);
+    }
+  );
+
+  if (!userWithEmail) return res.json({ message: "Email does not match!" });
+
+  res.json({ message: "Welcome Back!" });
 });
 
 module.exports = router;

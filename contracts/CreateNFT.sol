@@ -9,7 +9,7 @@ contract CreateNFT is ERC721URIStorage,Ownable  {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("CreateNFT", "CNT") { 
+    constructor() ERC721("CreateNFT", "CNT") {
     }
 
 mapping(uint => NFTItem) private idToNFTItem;
@@ -28,29 +28,42 @@ mapping(uint => NFTItem) private idToNFTItem;
       bool sell
     );
 
-    function CreateNFTItem(string memory tokenURI, uint price) public onlyOwner {
-      _tokenIds.increment();
-      uint tokenId = _tokenIds.current();
+    function CreateNFTItem(uint tokenId, string memory tokenURI, uint price, bool sell) private {
       _safeMint(msg.sender, tokenId);
       _setTokenURI(tokenId, tokenURI);
-      idToNFTItem[tokenId]=NFTItem(tokenId,payable(msg.sender),price,true);
-      emit NFTItemCreated(tokenId,msg.sender,price,true);
+      idToNFTItem[tokenId]=NFTItem(tokenId,payable(msg.sender),price,sell);
+      _approve(msg.sender, tokenId);
+      emit NFTItemCreated(tokenId,msg.sender,price,sell);
     }
 
+    function CreateNFTinContract(string memory tokenURI, uint price) public{
+              _tokenIds.increment();
+      uint tokenId = _tokenIds.current();
+      if(owner() == msg.sender||isApprovedForAll(owner(),msg.sender)==true){
+        CreateNFTItem(tokenId,tokenURI,price,true);
+        } else {
+          _setApprovalForAll(owner(), msg.sender, true);
+        CreateNFTItem(tokenId,tokenURI,price,false);
+        }
+      }
+
     function getNFTItem(uint tokenId) public payable{
+        require(isApprovedForAll(owner(),msg.sender)== true);
+        require(getApproved(tokenId)!=msg.sender);
       uint price = idToNFTItem[tokenId].price;
       address owner = idToNFTItem[tokenId].owner;
       require(msg.value==price);
-      require(msg.sender!=owner);
       require(idToNFTItem[tokenId].sell==true);
-      idToNFTItem[tokenId].owner = payable(msg.sender);
       _transfer(owner, msg.sender, tokenId);
       payable(owner).transfer(msg.value);
+      _approve(msg.sender, tokenId);
+      idToNFTItem[tokenId].owner = payable(msg.sender);
       idToNFTItem[tokenId].sell=false;
     }
 
       function sellMyNFTItem(uint256 tokenId, uint256 price) public {
-      require(idToNFTItem[tokenId].owner == msg.sender, "Only item owner can perform this operation");
+          require(isApprovedForAll(owner(),msg.sender)== true);
+          require(getApproved(tokenId)==msg.sender);
       require(idToNFTItem[tokenId].sell == false);
       idToNFTItem[tokenId].price = price;
       idToNFTItem[tokenId].sell = true;
@@ -123,6 +136,33 @@ mapping(uint => NFTItem) private idToNFTItem;
         }
       }
       return items;
+    }
+
+    function Selllists() public view returns (NFTItem[] memory) {
+      uint totalItemCount = _tokenIds.current();
+      uint itemCount = 0;
+      uint currentIndex = 0;
+
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToNFTItem[i + 1].sell==true) {
+          itemCount += 1;
+        }
+      }
+
+      NFTItem[] memory items = new NFTItem[](itemCount);
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToNFTItem[i + 1].sell==true) {
+          uint currentId = i + 1;
+          NFTItem storage currentItem = idToNFTItem[currentId];
+          items[currentIndex] = currentItem;
+          currentIndex += 1;
+        }
+      }
+      return items;
+    }
+
+    function totalNFTs() public view returns (uint) {
+      return _tokenIds.current();
     }
 
 }

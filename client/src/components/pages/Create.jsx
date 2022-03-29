@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ import "./create.css";
 /* 아래는 임시데이터와 img + 카드구조 & css */
 import CommonSection from "../ui/CommonSection";
 import NftCard from "../ui/NftCard";
+import { updateLists } from "../../redux/actions/index";
 
 import defaultImg from "../../assets/images/defaultImg.gif";
 
@@ -26,11 +27,13 @@ const Create = () => {
     });
     const Account = useSelector((state) => state.AppState.account);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
+    const dispatch = useDispatch();
 
     // useEffect(async () => {}, []);
 
     async function onChange(e) {
         const file = e.target.files[0];
+        console.log(file);
         try {
             const added = await client.add(file, {
                 progress: (prog) => console.log(`received: ${prog}`),
@@ -67,27 +70,30 @@ const Create = () => {
         const url = await uploadToIPFS();
         /* next, create the item */
         const price = parseInt(formInput.price);
-        console.log(await CreateNFTContract);
-        console.log(typeof (await uploadToIPFS()));
-        console.log(typeof price);
+        console.log(Account);
+        await CreateNFTContract.methods
+            .CreateNFTinContract(url, price)
+            .send({ from: Account, gas: 3000000 }, (error, data) => {
+                if (!error) {
+                    console.log("send ok");
+                } else {
+                    console.log(error);
+                }
+            })
+            .then((res) => {
+                let item = {
+                    fileUrl: fileUrl,
+                    formInput: {
+                        tokenid: res.events.NFTItemCreated.returnValues.tokenId,
+                        price: formInput.price,
+                        name: formInput.name,
+                        description: formInput.description,
+                    },
+                };
+                console.log(item);
 
-        await CreateNFTContract.methods.CreateNFTItem(url, price).send({ from: Account, gas: 3000000 }, (error, data) => {
-            if (!error) {
-                console.log(data);
-                // console.log("send ok");
-                // const listsForm = {
-                //   fileUrl: await fileUrl,
-                //   formInput: {
-                //       tokenid: i.tokenId,
-                //       price: await meta.price,
-                //       name: await meta.name,
-                //       description: await meta.description,
-                //   },
-                // };
-            } else {
-                console.log(error);
-            }
-        });
+                dispatch(updateLists({ Selllists: item }));
+            });
     }
 
     //nft 판매

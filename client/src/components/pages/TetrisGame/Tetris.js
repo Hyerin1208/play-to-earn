@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 let sirtet;
 
-const Tetris = () => {
+const Tetris = ({ setShowModal }) => {
   const [customization, setCustomization] = useState({
     colors: 0,
     style: 0,
@@ -78,10 +78,19 @@ const Tetris = () => {
     // add game event listener
     window.addEventListener("blur", sirtet.pauseGame, false);
 
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+
     setLoading(false);
 
     return () => {
       window.removeEventListener("blur", sirtet.pauseGame, false);
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
 
@@ -205,25 +214,21 @@ const Tetris = () => {
   const gameOverOverlay = useMemo(() => {
     const sendPoint = async () => {
       const data = gameStats.score;
+
       console.log(gameStats.score);
       console.log(account);
+
+      // await axios
+      //   .put(`http://localhost:5000/game/tetris`, { data, account })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   });
+
       await axios
-        .post(`http://localhost:5000/tetris`, { data, account })
+        .post(`http://localhost:5000/game/tetris`, { data, account })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");
-        });
-    };
-
-    const updatePoint = async () => {
-      const data = gameStats.score;
-      console.log(gameStats.score);
-      console.log(account);
-      await axios
-        .put(`http://localhost:5000/tetris`, { data, account })
-        .then((res) => {
-          console.log(res.data);
-          alert("점수 갱신 완료");
         });
     };
 
@@ -241,9 +246,6 @@ const Tetris = () => {
         </button>
         <button className="btn btn-primary btn-lg mb-3" onClick={sendPoint}>
           점수 등록
-        </button>
-        <button className="btn btn-primary btn-lg mb-3" onClick={updatePoint}>
-          점수 갱신
         </button>
         <button className="btn btn-outline-light" onClick={resetGameHandler}>
           Menu
@@ -284,54 +286,62 @@ const Tetris = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center no-select">
-        <div className="canvas__container">
-          <canvas width="360" height="720" ref={canvasRef}></canvas>
-          {mainOverlay}
-          {gameOverOverlay}
-          {pauseOverlay}
-          {countdownOverlay}
-        </div>
-        <div className="ui__group ml-3">
-          <div className="border rounded mb-3 p-3">
-            <h3 className="m-0">
-              <u>Score</u>
-              <br />
-              {gameStats.score}
-            </h3>
-          </div>
-          <div className="border rounded mb-3 p-3">
-            <h3 className="m-0">
-              <u>Lines</u>
-              <br />
-              {gameStats.lines}
-            </h3>
-          </div>
-          <div className="border rounded mb-3 p-3">
-            <h3 className="m-0">
-              <u>Level</u>
-              <br />
-              {gameStats.level}
-            </h3>
-          </div>
-          <div className="border rounded mb-3 p-3">
-            <h3 className="m-0">
-              <u>Next</u>
-              <br />
-              <img src={gameStats.next ? gameStats.next.src : undefined} />
-            </h3>
-          </div>
+      <div className="game_modal__wrapper">
+        <div className="game_single__modal">
+          <span className="game_close__modal">
+            <i
+              className="ri-close-line"
+              onClick={() => setShowModal(false)}
+            ></i>
+          </span>
+          <div className="d-flex justify-content-center no-select">
+            <div className="canvas__container">
+              <canvas width="360" height="720" ref={canvasRef}></canvas>
+              {mainOverlay}
+              {gameOverOverlay}
+              {pauseOverlay}
+              {countdownOverlay}
+            </div>
+            <div className="ui__group ml-3">
+              <div className="border rounded mb-3 p-3">
+                <h3 className="m-0">
+                  <u>Score</u>
+                  <br />
+                  {gameStats.score}
+                </h3>
+              </div>
+              <div className="border rounded mb-3 p-3">
+                <h3 className="m-0">
+                  <u>Lines</u>
+                  <br />
+                  {gameStats.lines}
+                </h3>
+              </div>
+              <div className="border rounded mb-3 p-3">
+                <h3 className="m-0">
+                  <u>Level</u>
+                  <br />
+                  {gameStats.level}
+                </h3>
+              </div>
+              <div className="border rounded mb-3 p-3">
+                <h3 className="m-0">
+                  <u>Next</u>
+                  <br />
+                  <img src={gameStats.next ? gameStats.next.src : undefined} />
+                </h3>
+              </div>
 
-          <button className="btn btn-outline-dark btn-sm" onClick={muteHandler}>
-            {gameMuted ? "unmute" : "mute"}
-          </button>
+              <button
+                className="btn btn-outline-dark btn-sm"
+                onClick={muteHandler}
+              >
+                {gameMuted ? "unmute" : "mute"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      {/* <div className="w-100 text-left d-inline-block p-3">
-                <a className="text-dark" href="https://github.com/greeneman42/sirtet" target="_">
-                    Github
-                </a>
-            </div> */}
     </>
   );
 };

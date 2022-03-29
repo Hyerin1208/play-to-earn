@@ -17,15 +17,20 @@ import "remixicon/fonts/remixicon.css";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware(
+  promiseMiddleware,
+  thunk
+)(createStore);
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById("root")
+  <Provider
+    store={createStoreWithMiddleware(rootReducer, composeWithDevTools())}
+  >
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -15,7 +15,7 @@ import "./MineGame.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function MineGame() {
+function MineGame({ setShowModal }) {
   let [gameAttr, setGameAttr] = useState({
     width: MIN_WIDTH,
     height: MIN_HEIGHT,
@@ -36,22 +36,18 @@ function MineGame() {
   const sendPoint = async () => {
     console.log(runtime);
     console.log(account);
+
     await axios
-      .post(`http://localhost:5000/mine`, { runtime, account })
+      .put(`http://localhost:5000/game/mine`, { runtime, account })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    await axios
+      .post(`http://localhost:5000/game/mine`, { runtime, account })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
-      });
-  };
-
-  const updatePoint = async () => {
-    console.log(runtime);
-    console.log(account);
-    await axios
-      .put(`http://localhost:5000/mine`, { runtime, account })
-      .then((res) => {
-        console.log(res.data);
-        alert("점수 갱신 완료");
       });
   };
 
@@ -126,6 +122,7 @@ function MineGame() {
       open === gameAttr.width * gameAttr.height - gameAttr.mines
     ) {
       setGameState(GAMESTATE.WIN);
+      sendPoint();
       console.log("WIN!");
     }
   };
@@ -151,36 +148,50 @@ function MineGame() {
     handleRestart();
   }, [gameAttr]);
 
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
     <>
-      <div className="box">
-        <main>
-          <InfoWrapper
-            mines={gameAttr.mines}
-            leftMines={gameAttr.mines - flagCount}
-            gameState={gameState}
-            handleRestart={handleRestart}
-            runtime={runtime}
-            handleShowSet={handleShowSet}
-          />
-          <Board
-            boardData={boardData}
-            handleLeftClick={handleLeftClick}
-            handleRightClick={handleRightClick}
-            gameState={gameState}
-          />
-          <div>score:{runtime}</div>
-          &nbsp;
-          <button type="submit" onClick={sendPoint}>
-            점수등록
-          </button>
-          &nbsp;
-          <button type="submit" onClick={updatePoint}>
-            점수갱신
-          </button>
-        </main>
+      <div className="game_modal__wrapper">
+        <div className="game_single__modal">
+          <span className="game_close__modal">
+            <i
+              className="ri-close-line"
+              onClick={() => setShowModal(false)}
+            ></i>
+          </span>
+          <div className="box">
+            <main>
+              <InfoWrapper
+                mines={gameAttr.mines}
+                leftMines={gameAttr.mines - flagCount}
+                gameState={gameState}
+                handleRestart={handleRestart}
+                runtime={runtime}
+                handleShowSet={handleShowSet}
+              />
+              <Board
+                boardData={boardData}
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleRightClick}
+                gameState={gameState}
+              />
+            </main>
+          </div>
+          <Setting show={showSet} handleSet={handleSet} />
+        </div>
       </div>
-      <Setting show={showSet} handleSet={handleSet} />
     </>
   );
 }
