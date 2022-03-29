@@ -466,11 +466,13 @@ const Ranking = () => {
                   <p>
                     <b>SnakeGame</b>
                     <br />
-                    {snakeRank + 1}등 &nbsp;
+                    {snakeRank.snakePoint === null ? "" : snakeRank + 1}
+                    등 &nbsp;
                     <br />
                     <b>2048Game</b>
                     <br />
-                    {puzzleRank + 1}등 &nbsp;
+                    {puzzleRank.puzzlePoint === 632 ? "없음" : puzzleRank + 1}등
+                    &nbsp;
                     <br />
                     <b>TetrisGame</b>
                     <br />
