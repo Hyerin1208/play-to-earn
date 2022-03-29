@@ -13,6 +13,8 @@ const Ranking = () => {
     setToggleState(index);
   };
 
+  // 변수 뒤에 T => 배열의 인덱스
+  // 변수 뒤에 I => 받은 데이터의 배열
   const [snake, setSnake] = useState([]);
   const [snakeT, setSnakeT] = useState(null);
   const [snakeI, setSnakeI] = useState(null);
@@ -106,77 +108,6 @@ const Ranking = () => {
         setError(error);
       });
   }, []);
-  console.log(snakeI);
-  console.log(snakeT);
-
-  // myRanking 스네이크게임
-  // function isSnake(element) {
-  //   if (element.address === account) {
-  //     console.log(element);
-  //     return true;
-  //   }
-  // }
-  // const snakeIndex = snake.findIndex(isSnake);
-  // const snakeIndex = snake.findIndex((element) => {
-  //   if (element.address === account) {
-  //     console.log(element);
-  //     return true;
-  //   }
-  // });
-  // console.log(snakeIndex);
-
-  // function snakeRank(element) {
-  //   if (element.address === account && element.snakePoint !== null) {
-  //     console.log(element);
-  //     return true;
-  //   }
-  // }
-  // const snakeR = snake.find(snakeRank);
-
-  // myRanking 테트리스게임
-  // function isTetris(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const tetrisIndex = tetris.findIndex(isTetris);
-
-  // function tetrisRank(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const tetrisR = tetris.find(tetrisRank);
-
-  // myRanking 2048게임
-  // function isPuzzle(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const puzzleIndex = puzzle.findIndex(isPuzzle);
-
-  // function puzzleRank(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const puzzleR = puzzle.find(puzzleRank);
-
-  // myRanking 지뢰찾기게임
-  // function isMine(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const mineIndex = mine.findIndex(isMine);
-
-  // function mineRank(element) {
-  //   if (element.address === account) {
-  //     return true;
-  //   }
-  // }
-  // const mineR = mine.find(mineRank);
 
   return (
     <>
@@ -352,29 +283,19 @@ const Ranking = () => {
                   <p>
                     <b>SnakeGame</b>
                     <br />
-                    {snakeR.snakePoint === null
-                      ? "아직 점수 없음"
-                      : snakeIndex + 1 + "등"}
-                    &nbsp;
+                    {snakeT + 1}등
                     <br />
                     <b>2048Game</b>
                     <br />
-                    {puzzleR.puzzlePoint === null
-                      ? "아직 점수 없음"
-                      : puzzleIndex + 1 + "등"}
-                    &nbsp;
+                    {puzzleT + 1}등
                     <br />
                     <b>TetrisGame</b>
                     <br />
-                    {tetrisR.tetrisPoint === null
-                      ? "아직 점수 없음"
-                      : tetrisIndex + 1 + "등"}
+                    {tetrisT + 1}등
                     <br />
                     <b>MineGame</b>
                     <br />
-                    {mineR.minePoint === null
-                      ? "아직 점수 없음"
-                      : mineIndex + 1 + "등"}
+                    {mineT + 1}등
                   </p>
                 )}
               </div>
