@@ -18,11 +18,19 @@ const Ranking = () => {
   const [snakeI, setSnakeI] = useState(null);
 
   const [puzzle, setPuzzle] = useState([]);
+  const [puzzleT, setPuzzleT] = useState(null);
+  const [puzzleI, setPuzzleI] = useState(null);
+
   const [mine, setMine] = useState([]);
+  const [mineT, setMineT] = useState(null);
+  const [mineI, setMineI] = useState(null);
+
   const [tetris, setTetris] = useState([]);
+  const [tetrisT, setTetrisT] = useState(null);
+  const [tetrisI, setTetrisI] = useState(null);
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({});
 
   useEffect(() => {
     axios
@@ -47,7 +55,15 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/2048`)
       .then((response) => {
         console.log(response);
-        setPuzzle(response.data);
+        const data = response.data;
+        setPuzzle(data);
+        const puzzleIndex = data.findIndex((element) => {
+          if (element.address === account) {
+            setPuzzleI(element);
+            return true;
+          }
+        });
+        setPuzzleT(puzzleIndex);
       })
       .catch((error) => {
         setError(error);
@@ -57,7 +73,15 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/mine`)
       .then((response) => {
         console.log(response);
-        setMine(response.data);
+        const data = response.data;
+        setMine(data);
+        const mineIndex = data.findIndex((element) => {
+          if (element.address === account) {
+            setMineI(element);
+            return true;
+          }
+        });
+        setMineT(mineIndex);
       })
       .catch((error) => {
         setError(error);
@@ -67,7 +91,15 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/tetris`)
       .then((response) => {
         console.log(response);
-        setTetris(response.data);
+        const data = response.data;
+        setTetris(data);
+        const tetrisIndex = data.findIndex((element) => {
+          if (element.address === account) {
+            setTetrisI(element);
+            return true;
+          }
+        });
+        setTetrisT(tetrisIndex);
         setLoading(false);
       })
       .catch((error) => {
@@ -85,66 +117,66 @@ const Ranking = () => {
   //   }
   // }
   // const snakeIndex = snake.findIndex(isSnake);
-  const snakeIndex = snake.findIndex((element) => {
-    if (element.address === account) {
-      console.log(element);
-      return true;
-    }
-  });
-  console.log(snakeIndex);
+  // const snakeIndex = snake.findIndex((element) => {
+  //   if (element.address === account) {
+  //     console.log(element);
+  //     return true;
+  //   }
+  // });
+  // console.log(snakeIndex);
 
-  function snakeRank(element) {
-    if (element.address === account && element.snakePoint !== null) {
-      console.log(element);
-      return true;
-    }
-  }
-  const snakeR = snake.find(snakeRank);
+  // function snakeRank(element) {
+  //   if (element.address === account && element.snakePoint !== null) {
+  //     console.log(element);
+  //     return true;
+  //   }
+  // }
+  // const snakeR = snake.find(snakeRank);
 
   // myRanking 테트리스게임
-  function isTetris(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const tetrisIndex = tetris.findIndex(isTetris);
+  // function isTetris(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const tetrisIndex = tetris.findIndex(isTetris);
 
-  function tetrisRank(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const tetrisR = tetris.find(tetrisRank);
+  // function tetrisRank(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const tetrisR = tetris.find(tetrisRank);
 
   // myRanking 2048게임
-  function isPuzzle(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const puzzleIndex = puzzle.findIndex(isPuzzle);
+  // function isPuzzle(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const puzzleIndex = puzzle.findIndex(isPuzzle);
 
-  function puzzleRank(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const puzzleR = puzzle.find(puzzleRank);
+  // function puzzleRank(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const puzzleR = puzzle.find(puzzleRank);
 
   // myRanking 지뢰찾기게임
-  function isMine(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const mineIndex = mine.findIndex(isMine);
+  // function isMine(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const mineIndex = mine.findIndex(isMine);
 
-  function mineRank(element) {
-    if (element.address === account) {
-      return true;
-    }
-  }
-  const mineR = mine.find(mineRank);
+  // function mineRank(element) {
+  //   if (element.address === account) {
+  //     return true;
+  //   }
+  // }
+  // const mineR = mine.find(mineRank);
 
   return (
     <>
