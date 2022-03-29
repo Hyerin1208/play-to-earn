@@ -86,3 +86,28 @@ label:hover :checked + .select__nft__card {
   border: none;
   color: white;
 }
+
+.nick_box {
+  width: 100%;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.email_box {
+  width: 100%;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

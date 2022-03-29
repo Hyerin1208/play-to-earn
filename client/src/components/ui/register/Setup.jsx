@@ -83,7 +83,7 @@ const Setup = () => {
             border="light"
             style={{
               width: "30rem",
-              height: "22rem",
+              height: "30rem",
               backgroundColor: "black",
               marginBottom: "20px",
             }}
@@ -92,13 +92,6 @@ const Setup = () => {
               <Card.Text>It's your CHOICS</Card.Text>
               <Card.Img variant="top" src="" className="select_char" />
               <div className="show__box">
-                <button
-                  className="show__btn"
-                  onClick={getJoinus}
-                  style={{ width: "40px" }}
-                >
-                  Show
-                </button>
                 <SelectCard
                   check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
                   item={{
@@ -138,6 +131,13 @@ const Setup = () => {
                   />
                 </div>
                 <br />
+                <button
+                  className="show__btn"
+                  onClick={getJoinus}
+                  style={{ width: "40px" }}
+                >
+                  Show
+                </button>
                 <button className="welcome__btn" onClick={addSignUp}>
                   Let's Get Started
                 </button>

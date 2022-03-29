@@ -75,7 +75,7 @@ const SideBar = () => {
           >
             <span className="slide__icon">
               <Link to="/contact">
-                <i class="ri-contacts-book-line">
+                <i className="ri-contacts-book-line">
                   <h5>Contact Us</h5>
                 </i>
               </Link>
