@@ -6,9 +6,18 @@
 }
 
 .welcome__form input {
-  height: 45px;
   font-style: 20px;
   padding-left: 10px;
+  width: 100%;
+  height: 45px;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .welcome__btn {
@@ -16,6 +25,17 @@
   height: 50px;
   justify-content: center;
   margin-left: 34%;
+  margin: 1rem;
+  color: white;
+  font: bold;
+  background-color: #4938ff05;
+  border: 2px solid #4938ff;
+  border-radius: 5px;
+  padding: 0.6rem;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+  margin-left: 28%;
 }
 
 .show__btn {
@@ -33,4 +53,8 @@
 
 .welcome__btn:hover {
   cursor: pointer;
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.2);
+  border: none;
+  color: white;
 }

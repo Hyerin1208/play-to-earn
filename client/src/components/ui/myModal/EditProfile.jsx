@@ -15,7 +15,7 @@ const EditProfile = ({ setShowModal }) => {
   return (
     <div className="nft_wrapper">
       <div className="editpfp_modal">
-        <span className="close_modal">
+        <span className="closed_modal">
           <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
         </span>
         <div className="mypage__container">

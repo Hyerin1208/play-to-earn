@@ -29,44 +29,6 @@ const FreeCard = (props) => {
     );
 
     setCheckItem(props.item.id);
-    /*const data = JSON.stringify({
-      name: title,
-      description: desc,
-      image: imgUrl,
-    });;*/
-    // const added = await client.add(data);
-    // const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-
-    // console.log(url);
-
-    // const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    // console.log(url);
-    // alert("해당 NFT가 발급 되었습니다");
-    // setCheckItem(props.item.id);
-    // let price = 1000;
-    // await CreateNFTContract.methods
-    //   .CreateNFTinContract(url, price)
-    //   .send({ from: Account, gas: 3000000 }, (error) => {
-    //     if (!error) {
-    //       console.log("send ok");
-    //     } else {
-    //       console.log(error);
-    //     }
-    //   })
-    //   .then((res) => {
-    //     let item = {
-    //       fileUrl: imgUrl,
-    //       formInput: {
-    //         tokenid: res.events.NFTItemCreated.returnValues.tokenId,
-    //         price: price,
-    //         name: title,
-    //         description: desc,
-    //       },
-    //     };
-    //     console.log(item);
-
-    //     dispatch(updateLists({ Selllists: item }));
-    //   });
   }
 
   return (

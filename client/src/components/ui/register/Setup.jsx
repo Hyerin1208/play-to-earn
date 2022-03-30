@@ -14,13 +14,9 @@ import SelectCard from "./SelectCard";
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Setup = () => {
-  const [nick, setNick] = useState("");
-  const [email, setEmail] = useState("");
-
   const SelectNFT = useSelector((state) => state.NftsReducer);
-  console.log(SelectNFT);
 
-  const Account = useSelector((state) => state.AppState.account);
+  const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
@@ -31,51 +27,78 @@ const Setup = () => {
     name: SelectNFT.name,
     description: SelectNFT.description,
     image: SelectNFT.image,
+    nick: "Please enter your name using only letters.",
+    email: "Enter your E-mail address",
   });
+  console.log(form);
 
-  async function selectedNft() {
-    await SelectNFT.send({ from: Account, gas: 3000000 }, (error) => {
-      if (!error) {
-        console.log("send ok");
-      } else {
-        console.log(error);
-      }
-    }).then((res) => {
-      let item = {
-        name: SelectNFT.name,
-        description: SelectNFT.description,
-        image: SelectNFT.image,
-      };
-      console.log(item);
-    });
-  }
-
-  // useEffect(() => {
-  //   try {
-  //     setForm();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [form]);
+  useEffect(() => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   // const displayInfo = () => {
   //   console.log(nick + email);
   // };
   const addSignUp = async () => {
     await axios
-      .post("http://localhost:5000/user/register", { nick: nick, email: email })
+      .post("http://localhost:5000/user/register", {
+        address: account,
+        nick: form.nick,
+        email: form.email,
+      })
       .then(() => {
         console.log("success");
       });
   };
 
-  const getJoinus = async () => {
-    await axios.get("http://localhost:5000/user/login").then((response) => {
-      console.log(response);
-    });
-  };
-
   const [checkItem, setCheckItem] = useState(null);
+  console.log(checkItem);
+
+  async function lastBtn() {
+    let data = JSON.stringify({
+      name: SelectNFT.name,
+      description: SelectNFT.description,
+      image: SelectNFT.image,
+      nick: form.nick,
+      email: form.email,
+    });
+
+    console.log(form.email);
+    const added = await client.add(data);
+    console.log(added);
+    const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+    console.log(url);
+
+    // setForm(SelectNFT.id);
+
+    // console.log(SelectNFT.id);
+
+    let price = 1000;
+    await CreateNFTContract.methods
+      .CreateNFTinContract(url, price)
+      .send({ from: account, gas: 3000000 }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      })
+      .then((res) => {
+        let item = {
+          name: SelectNFT.name,
+          description: SelectNFT.description,
+          image: SelectNFT.image,
+          nick: form.nick,
+          email: form.email,
+        };
+        console.log(item);
+
+        dispatch(updateLists({ Selllists: item }));
+      });
+  }
 
   return (
     <Fragment>
@@ -84,14 +107,14 @@ const Setup = () => {
           <Col lg="12" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
-              <h5>Join Us</h5>
+              {/* <h5>Join Us</h5> */}
             </div>
           </Col>
           <Card
             border="light"
             style={{
               width: "30rem",
-              height: "30rem",
+              height: "32rem",
               backgroundColor: "black",
               marginBottom: "20px",
             }}
@@ -102,11 +125,7 @@ const Setup = () => {
               <div className="show__box">
                 <SelectCard
                   check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
-                  item={{
-                    name: SelectNFT.name,
-                    description: SelectNFT.description,
-                    image: SelectNFT.image,
-                  }}
+                  item={{ form }}
                 />
               </div>
             </Card.Body>
@@ -129,28 +148,42 @@ const Setup = () => {
                   <label>Create Cool Nickname : </label>
                   <input
                     type="text"
-                    onChange={(e) => setNick(e.target.value)}
+                    onChange={(e) => setForm({ ...form, nick: e.target.value })}
+                    placeholder="Please enter your name using only letters."
                   />
                   <br />
                   <label>E-mail : </label>
                   <input
                     type="email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                    placeholder="Enter your E-mail address"
                   />
                 </div>
                 <br />
-                <button
+
+                {/* <button
                   className="show__btn"
-                  onClick={getJoinus}
-                  style={{ width: "40px" }}
+                  onClick={() => addSignUp()}
+                  style={{ width: "120px" }}
                 >
-                  Show
-                </button>
-                <button className="welcome__btn" onClick={addSignUp}>
-                  Let's Get Started
-                </button>
+                  signup
+                </button> */}
               </Card.Body>
             </Card>
+            {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
+            <button
+              onClick={() => {
+                lastBtn();
+                addSignUp();
+                alert("해당 NFT가 발급 되었습니다");
+                window.location.href = "http://localhost:3000/";
+              }}
+              className="welcome__btn"
+            >
+              Let's Get Started
+            </button>
           </Col>
         </Row>
       </Container>

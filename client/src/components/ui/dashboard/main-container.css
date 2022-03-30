@@ -72,11 +72,62 @@
 } */
 .slick-dots {
   bottom: 5px;
+  border-color: violet;
+  color: violet;
 }
+
 .slick-slider .slick-initialized {
   width: 600px;
 }
+
 .slick-active button:before {
   opacity: 0.75;
   color: #343434;
+}
+
+.slick-slide {
+  margin: 0 15px;
+}
+
+.slick-list {
+  margin: 0 -26px;
+}
+
+/* .slick-dots li.slick-active button:before {
+  color: violet !important;
+}
+ */
+
+.slick-dots {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.slick-dots {
+  list-style-type: none;
+}
+
+.slick-dots li {
+  margin: 0 0.25rem;
+}
+
+.slick-dots li {
+  display: block;
+  width: 0.35rem;
+  height: 0.35rem;
+  padding: 0;
+
+  border: none;
+  border-radius: 100%;
+  background-color: #5242fc4d;
+
+  text-indent: -9999px;
+}
+
+.slick-dots li.slick-active button {
+  background-color: #5242fc;
+  border: none;
+  border-radius: 100%;
 }
