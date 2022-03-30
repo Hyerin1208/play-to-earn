@@ -28,14 +28,33 @@ router.post("/register", async (req, res, next) => {
 });
 
 // 회원정보 불러오기
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
+  const { address } = req.body;
+  const users = await User.findOne({ where: { address: address } });
+
+  // const login = [];
+  // for (const user of users) {
+  //   login.push({
+  //     nick: user.nick,
+  //     address: user.address,
+  //     email: user.email,
+  //   });
+  // }
+
+  // res.json(login);
+
   try {
-    const users = await User.findAll();
-    res.json(users);
+    if (users !== null && users === address) {
+      let data = {
+        nick: nick,
+        email: email,
+      };
+      return res.json(data);
+    }
     console.log(users);
   } catch (err) {
     console.log(err);
-    next(err);
+    return next(err);
   }
 
   // const userWithEmail = await User.findOne({ where: { email } }).catch(
@@ -49,7 +68,10 @@ router.get("/login", async (req, res) => {
 
 // 회원정보 수정
 router.post("/edit", async (req, res) => {
-  const { nick, email } = req.body;
+  console.log(req.body);
+
+  const { nick, email, address } = req.body;
+
   try {
     if (nick && email) {
       await User.update(
@@ -58,7 +80,7 @@ router.post("/edit", async (req, res) => {
           email,
         },
         {
-          where: { email: email },
+          where: { address: address },
         }
       );
     }

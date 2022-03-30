@@ -9,12 +9,12 @@ import axios from "axios";
 import "./slide-bar.css";
 import { useSelector } from "react-redux";
 
-const SideBar = (props) => {
+const SideBar = () => {
   const [nickname, setNicName] = useState("noname");
   const [email, setEmail] = useState("no-email");
   const [address, setAddress] = useState("address");
 
-  const Account = useSelector((state) => state.AppState.account);
+  const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
@@ -22,38 +22,38 @@ const SideBar = (props) => {
   const [EditProfileModal, setEditProfileModal] = useState(false);
 
   const getJoinus = async () => {
-    await axios.get("http://localhost:5000/user/login").then((response) => {
-      console.log(response);
-      setNicName(response.data[0].nick);
-      setEmail(response.data[0].email);
-      console.log(response.data[0].email);
-    });
+    await axios
+      .post("http://localhost:5000/user/login", {
+        address: account,
+      })
+      .then((response) => {
+        console.log(response);
+        setNicName(response.data[0].nick);
+        setEmail(response.data[0].email);
+        console.log(response.data[0].email);
+      });
   };
 
   const updateProfile = async () => {
-    await axios.post("http://localhost:5000/user/edit");
+    await axios.post("http://localhost:5000/user/edit").then();
   };
 
-  // const getPfp = (id) => {
-  //   const profile = this.state.Alldata.find((item) => item.id === id);
-  //   return profile;
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updatedProfile(nickname, email);
+  };
 
-  // const onEdit = (id) => {
-  //   const tempProfile = this.state.Alldata;
-  //   const index = tempProfile.indexOf(this.getPfp(id));
-  //   const selectProfile = tempProfile[index];
-  //   this.setState({
-  //     nick: selectProfile["nick"],
-  //     email: selectProfile["email"],
-  //   });
-  // };
-
-  const onSubmit = (id) => {
-    props.history.push({
-      pathname: "/edit" + id,
+  const onSubmit = async () => {
+    const nick = document.getElementById("nick__pfp").innerText;
+    const email = document.getElementById("email__pfp").innerText;
+    await axios.post("http://localhost:5000/user/edit", {
+      nick: nick,
+      email: email,
+      address: account,
     });
   };
+
+  const updatedProfile = { nickname, email };
 
   return (
     <div className="slide__container">
@@ -83,14 +83,14 @@ const SideBar = (props) => {
           // style={{ position: "absolute", width: "40px" }}
         /> */}
 
-        <div>{nickname}</div>
-        <div>{email}</div>
+        <div id="nick__pfp">{nickname}</div>
+        <div id="email__pfp">{email}</div>
 
         <input
           className="edit__name"
           placeholder="edit your name"
           type="text"
-          value="nickName"
+          value={nickname}
           onChange={(e) => {
             setNicName(e.target.value);
           }}
@@ -100,7 +100,7 @@ const SideBar = (props) => {
           className="edit__email"
           placeholder="edit your email"
           type="email"
-          value="email"
+          value={email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
