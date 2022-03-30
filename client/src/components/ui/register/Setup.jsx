@@ -16,7 +16,7 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 const Setup = () => {
   const SelectNFT = useSelector((state) => state.NftsReducer);
 
-  const Account = useSelector((state) => state.AppState.account);
+  const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
@@ -32,25 +32,6 @@ const Setup = () => {
   });
   console.log(form);
 
-  // async function selectedNft() {
-  //   await SelectNFT.send({ from: Account, gas: 3000000 }, (error) => {
-  //     if (!error) {
-  //       console.log("send ok");
-  //     } else {
-  //       console.log(error);
-  //     }
-  //   }).then((res) => {
-  //     let item = {
-  //       name: SelectNFT.name,
-  //       description: SelectNFT.description,
-  //       image: SelectNFT.image,
-  //       nick: "",
-  //       email: "",
-  //     };
-  //     console.log(item);
-  //   });
-  // }
-
   useEffect(() => {
     try {
     } catch (error) {
@@ -64,18 +45,13 @@ const Setup = () => {
   const addSignUp = async () => {
     await axios
       .post("http://localhost:5000/user/register", {
+        address: account,
         nick: form.nick,
         email: form.email,
       })
       .then(() => {
         console.log("success");
       });
-  };
-
-  const getJoinus = async () => {
-    await axios.get("http://localhost:5000/user/login").then((response) => {
-      console.log(response);
-    });
   };
 
   const [checkItem, setCheckItem] = useState(null);
@@ -103,7 +79,7 @@ const Setup = () => {
     let price = 1000;
     await CreateNFTContract.methods
       .CreateNFTinContract(url, price)
-      .send({ from: Account, gas: 3000000 }, (error) => {
+      .send({ from: account, gas: 3000000 }, (error) => {
         if (!error) {
           console.log("send ok");
         } else {
@@ -186,20 +162,14 @@ const Setup = () => {
                   />
                 </div>
                 <br />
-                <button
-                  className="show__btn"
-                  onClick={() => getJoinus()}
-                  style={{ width: "120px" }}
-                >
-                  Show
-                </button>
-                <button
+
+                {/* <button
                   className="show__btn"
                   onClick={() => addSignUp()}
                   style={{ width: "120px" }}
                 >
                   signup
-                </button>
+                </button> */}
               </Card.Body>
             </Card>
             {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
