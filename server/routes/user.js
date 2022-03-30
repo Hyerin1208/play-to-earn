@@ -30,40 +30,16 @@ router.post("/register", async (req, res, next) => {
 // 회원정보 불러오기
 router.post("/login", async (req, res, next) => {
   const { address } = req.body;
-  const users = await User.findOne({ where: { address: address } });
+  const users = await User.findOne({
+    where: { address: address },
+    attributes: ["nick", "email"],
+  });
 
-  // const login = [];
-  // for (const user of users) {
-  //   login.push({
-  //     nick: user.nick,
-  //     address: user.address,
-  //     email: user.email,
-  //   });
-  // }
+  console.log(users);
 
-  // res.json(login);
+  const login = { nick: users.nick, email: users.email };
 
-  try {
-    if (users !== null && users === address) {
-      let data = {
-        nick: nick,
-        email: email,
-      };
-      return res.json(data);
-    }
-    console.log(users);
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
-
-  // const userWithEmail = await User.findOne({ where: { email } }).catch(
-  //   (err) => {
-  //     console.log("Error :", err);
-  //   }
-  // );
-
-  // if (!findAddress) return res.json({ message: "Address does not match!" });
+  res.json(login);
 });
 
 // 회원정보 수정
