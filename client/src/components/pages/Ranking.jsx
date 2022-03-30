@@ -112,41 +112,44 @@ const Ranking = () => {
   return (
     <>
       <CommonSection title="Ranking" />
-      <div className="Ranking__container">
-        <div className="bloc-tabs">
-          <button
-            className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(1)}
-          >
-            종합랭킹
-          </button>
-          <button
-            className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(2)}
-          >
-            주간랭킹
-          </button>
-          <button
-            className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
-            onClick={() => toggleTab(3)}
-          >
-            MY랭킹
-          </button>
-        </div>
+      {loading ? (
+        <strong> loading... </strong>
+      ) : (
+        <div className="Ranking__container">
+          <div className="bloc-tabs">
+            <button
+              className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
+              onClick={() => toggleTab(1)}
+            >
+              종합랭킹
+            </button>
+            <button
+              className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+              onClick={() => toggleTab(2)}
+            >
+              주간랭킹
+            </button>
+            <button
+              className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
+              onClick={() => toggleTab(3)}
+            >
+              MY랭킹
+            </button>
+          </div>
 
-        <div className="content-tabs">
-          <div
-            className={
-              toggleState === 1 ? "content  active-content" : "content"
-            }
-          >
-            <h2>종합랭킹</h2>
-            <hr />
-            <Container>
-              <div className="ranking__box">
-                {loading ? (
+          <div className="content-tabs">
+            <div
+              className={
+                toggleState === 1 ? "content  active-content" : "content"
+              }
+            >
+              <h2>종합랭킹</h2>
+              <hr />
+              <Container>
+                <div className="ranking__box">
+                  {/* {loading ? (
                   <strong> loading... </strong>
-                ) : (
+                ) : ( */}
                   <div>
                     <b>SnakeGame</b>
                     <br />
@@ -250,59 +253,97 @@ const Ranking = () => {
                         );
                       })}
                   </div>
-                )}
-              </div>
-            </Container>
-          </div>
+                  {/* )} */}
+                </div>
+              </Container>
+            </div>
 
-          <div
-            className={
-              toggleState === 2 ? "content  active-content" : "content"
-            }
-          >
-            <h2>주간랭킹</h2>
-            <hr />
-            <Container>
-              <div className="ranking__box">여기에 주간랭킹 순위표만들기</div>
-            </Container>
-          </div>
+            <div
+              className={
+                toggleState === 2 ? "content  active-content" : "content"
+              }
+            >
+              <h2>주간랭킹</h2>
+              <hr />
+              <Container>
+                <div className="ranking__box">여기에 주간랭킹 순위표만들기</div>
+              </Container>
+            </div>
 
-          <div
-            className={
-              toggleState === 3 ? "content  active-content" : "content"
-            }
-          >
-            <h2>나의랭킹</h2>
-            <hr />
-            <Container>
-              <p>여기에 나의랭킹 페이지만들기</p>
-              <div>
-                {loading ? (
-                  <strong> loading... </strong>
-                ) : (
-                  <p>
+            <div
+              className={
+                toggleState === 3 ? "content  active-content" : "content"
+              }
+            >
+              <h2>나의랭킹</h2>
+              <hr />
+              <Container>
+                <div>
                     <b>SnakeGame</b>
                     <br />
-                    {snakeT + 1}등
+                    {snake
+                      .filter((v, i) => {
+                        return i < 1;
+                      })
+                      .map((v, i) => {
+                        return (
+                          <div key={i}>
+                            {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
+                          </div>
+                        );
+                      })}
                     <br />
                     <b>2048Game</b>
                     <br />
-                    {puzzleT + 1}등
+                    {puzzle
+                      .filter((v, i) => {
+                        return i < 1;
+                      })
+                      .map((v, i) => {
+                        return (
+                          <div key={i}>
+                            {v.puzzlePoint === null
+                              ? "없음"
+                              : puzzleT + 1 + "등"}
+                          </div>
+                        );
+                      })}
                     <br />
                     <b>TetrisGame</b>
                     <br />
-                    {tetrisT + 1}등
+                    {tetris
+                      .filter((v, i) => {
+                        return i < 1;
+                      })
+                      .map((v, i) => {
+                        return (
+                          <div key={i}>
+                            {v.tetrisPoint === null
+                              ? "없음"
+                              : tetrisT + 1 + "등"}
+                          </div>
+                        );
+                      })}
                     <br />
                     <b>MineGame</b>
                     <br />
-                    {mineT + 1}등
-                  </p>
-                )}
-              </div>
-            </Container>
+                    {mine
+                      .filter((v, i) => {
+                        return i < 1;
+                      })
+                      .map((v, i) => {
+                        return (
+                          <div key={i}>
+                            {v.minePoint === null ? "없음" : mineT + 1 + "등"}
+                          </div>
+                        );
+                      })}
+                </div>
+              </Container>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
