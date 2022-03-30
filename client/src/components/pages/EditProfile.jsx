@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Form, Row } from "reactstrap";
 
+/* 이 파일은 현재 우리 프로젝트에 미사용중 (삭제예정)*/
 const EditProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

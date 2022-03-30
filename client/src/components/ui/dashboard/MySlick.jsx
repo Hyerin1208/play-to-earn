@@ -97,9 +97,7 @@ const MySlick = () => {
     swipeToSlide: true,
     infinite: false,
   };
-  // const style = {
-  //   width: "300px",
-  // };
+
   return (
     <div>
       <div className="slick-arrow">

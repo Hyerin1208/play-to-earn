@@ -12,6 +12,36 @@
   font-size: 1.4rem;
 }
 
+.slick-list {
+  margin: 0 -26px;
+}
+
+.slick-track {
+  height: 430px;
+}
+
+.slick-track .single__nft__card {
+  width: 270px;
+  height: 420px;
+}
+
+.slick-track .single__nft__card {
+  height: 400px;
+}
+
+.slick-track .single__nft__card .nft__img img {
+  width: 190px;
+  height: 200px;
+  margin-left: 10%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.slick-track .single__nft__card .bid__box {
+  margin-top: -0.5rem;
+}
+
 @media only screen and (max-width: 1024px) {
   .nft__title {
     font-size: 0.9rem !important;

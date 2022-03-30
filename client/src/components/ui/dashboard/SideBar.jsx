@@ -17,13 +17,21 @@ const SideBar = ({ setShowModal }) => {
     <div className="slide__container">
       <div className="pfpside__box">
         <div className="profile__pic">
-          <button id="select__pfp" onClick={() => setShowModal(false)}>
+          <button id="select__pfp" onClick={() => setEditProfileModal(true)}>
             <label className="-label" for="file">
               <i className="ri-gallery-upload-line"></i>
               <span>Change Profile</span>
             </label>
-            <img src="" id="upload__pfp" onChange="loadFile(event)" />
+            <img
+              src=""
+              id="upload__pfp"
+              onChange="loadFile(event)"
+              alt="edit"
+            />
           </button>
+          {EditProfileModal && (
+            <EditProfile setShowModal={setEditProfileModal} />
+          )}
         </div>
         {/* <img
           className="pfp__iamge"
@@ -43,23 +51,15 @@ const SideBar = ({ setShowModal }) => {
       </div>
       <div className="link__conatainer">
         <div className="nav__itemBox">
-          <button
-            className="slide__button"
-            onClick={() => setEditProfileModal(true)}
-          >
+          <button className="slide__button">
             <span className="edit__icon">
               <i className="ri-edit-2-line">
                 <h5>Edit Profile</h5>
               </i>
             </span>
           </button>
-          {EditProfileModal && (
-            <EditProfile setShowModal={setEditProfileModal} />
-          )}
-          <button
-            className="slide__button"
-            onClick={() => setEditProfileModal(true)}
-          >
+
+          <button className="slide__button">
             <span className="slide__icon">
               <Link to="/market">
                 <i className="ri-store-2-line">
@@ -68,10 +68,7 @@ const SideBar = ({ setShowModal }) => {
               </Link>
             </span>
           </button>
-          <button
-            className="slide__button"
-            onClick={() => setEditProfileModal(true)}
-          >
+          <button className="slide__button">
             <span className="slide__icon">
               <Link to="/game">
                 <i className="ri-gamepad-line">
