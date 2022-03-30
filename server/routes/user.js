@@ -5,6 +5,7 @@ const { User } = require("../models");
 router.post("/register", async (req, res, next) => {
   // console.log(req.body);
   const { nick, email } = req.body;
+  // const findAddress = await User.findOne({ where: { address: account } });
 
   const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
     (err) => {

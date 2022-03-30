@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Nav, NavItem } from "reactstrap";
-
+import EditProfile from "../myModal/EditProfile";
 import pfpImg from "../../../assets/images/img.jpg";
 
 import "./slide-bar.css";
 
-const SideBar = () => {
+const SideBar = ({ setShowModal }) => {
   const [nickname, setNicname] = useState("noname");
   const [email, setEmail] = useState("no-email");
   const [address, setAddress] = useState("address");
@@ -16,12 +16,21 @@ const SideBar = () => {
   return (
     <div className="slide__container">
       <div className="pfpside__box">
-        <img
+        <div className="profile__pic">
+          <button id="select__pfp" onClick={() => setShowModal(false)}>
+            <label className="-label" for="file">
+              <i className="ri-gallery-upload-line"></i>
+              <span>Change Profile</span>
+            </label>
+            <img src="" id="upload__pfp" onChange="loadFile(event)" />
+          </button>
+        </div>
+        {/* <img
           className="pfp__iamge"
           src={pfpImg}
           alt="pfp"
           // style={{ position: "absolute", width: "40px" }}
-        />
+        /> */}
 
         <div className="profile__name">
           {nickname}
@@ -44,6 +53,9 @@ const SideBar = () => {
               </i>
             </span>
           </button>
+          {EditProfileModal && (
+            <EditProfile setShowModal={setEditProfileModal} />
+          )}
           <button
             className="slide__button"
             onClick={() => setEditProfileModal(true)}

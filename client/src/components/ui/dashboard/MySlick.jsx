@@ -88,8 +88,8 @@ const MySlick = () => {
 
   const settings = {
     draggable: true,
-    // accessibility: false,
-    // centerMode: true,
+    accessibility: true,
+    centerMode: false,
     variableWidth: true,
     slidesToShow: 1,
     arrows: true,
@@ -97,13 +97,13 @@ const MySlick = () => {
     swipeToSlide: true,
     infinite: false,
   };
-  const style = {
-    width: "300px",
-  };
+  // const style = {
+  //   width: "300px",
+  // };
   return (
     <div>
       <div className="slick-arrow">
-        <Slider {...settings} style={{ width: 500 }}>
+        <Slider {...settings} style={{ width: 900 }}>
           {nftArray.map((items, index) => {
             return (
               // <motion.div key={index} className="my-items">

@@ -53,7 +53,6 @@ const Setup = () => {
 
   useEffect(() => {
     try {
-      // lastBtn(form);
     } catch (error) {
       console.log(error);
     }
@@ -101,8 +100,6 @@ const Setup = () => {
 
     // console.log(SelectNFT.id);
 
-    alert("해당 NFT가 발급 되었습니다");
-
     let price = 1000;
     await CreateNFTContract.methods
       .CreateNFTinContract(url, price)
@@ -134,14 +131,14 @@ const Setup = () => {
           <Col lg="12" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
-              <h5>Join Us</h5>
+              {/* <h5>Join Us</h5> */}
             </div>
           </Col>
           <Card
             border="light"
             style={{
               width: "30rem",
-              height: "30rem",
+              height: "32rem",
               backgroundColor: "black",
               marginBottom: "20px",
             }}
@@ -192,22 +189,31 @@ const Setup = () => {
                 <button
                   className="show__btn"
                   onClick={() => getJoinus()}
-                  style={{ width: "40px" }}
+                  style={{ width: "120px" }}
                 >
                   Show
                 </button>
                 <button
-                  className="sign__btn"
+                  className="show__btn"
                   onClick={() => addSignUp()}
-                  style={{ width: "40px" }}
+                  style={{ width: "120px" }}
                 >
                   signup
                 </button>
-                <button onClick={() => lastBtn()} className="welcome__btn">
-                  Let's Get Started
-                </button>
               </Card.Body>
             </Card>
+            {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
+            <button
+              onClick={() => {
+                lastBtn();
+                addSignUp();
+                alert("해당 NFT가 발급 되었습니다");
+                window.location.href = "http://localhost:3000/";
+              }}
+              className="welcome__btn"
+            >
+              Let's Get Started
+            </button>
           </Col>
         </Row>
       </Container>
