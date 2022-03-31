@@ -80,7 +80,7 @@ const Create = () => {
                     console.log(error);
                 }
             })
-            .then((res) => {
+            .then(async (res) => {
                 let item = {
                     fileUrl: fileUrl,
                     formInput: {
@@ -91,8 +91,15 @@ const Create = () => {
                     },
                 };
                 console.log(item);
-
                 dispatch(updateLists({ Selllists: item }));
+                await axios.post(`http://localhost:5000/nfts`, { tokenId: res.events.NFTItemCreated.returnValues.tokenId }).then((res) => {
+                    console.log(res.data.message);
+                    if (res.data.message === "ok") {
+                        alert("NFT발급 성공");
+                    } else {
+                        alert("이미 발급된 번호입니다.");
+                    }
+                });
             });
     }
 
