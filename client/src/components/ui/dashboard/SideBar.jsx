@@ -103,41 +103,43 @@ const SideBar = () => {
             <div className="email__pfp" id="email__pfp">
               {email}
             </div>
-            <button
-              className="show__btn"
-              onClick={() => {
-                setVisible(!visible);
-              }}
-              style={{ width: "120px" }}
-            >
-              {visible ? "submit" : "Edit"}
-              {/* Edit */}
-            </button>
-            {visible && (
-              <>
-                <input
-                  className="edit__name"
-                  placeholder="edit your name"
-                  type="text"
-                  value={nickname}
-                  onChange={(e) => {
-                    setNicName(e.target.value);
-                  }}
-                />
-                <br />
-                <input
-                  className="edit__email"
-                  placeholder="edit your email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-                <button onClick={() => onSubmit()}>Submit</button>
-              </>
-            )}
           </div>
+
+          {visible && (
+            <>
+              <input
+                className="edit__name"
+                placeholder="edit your name"
+                type="text"
+                value={nickname}
+                onChange={(e) => {
+                  setNicName(e.target.value);
+                }}
+              />
+              <input
+                className="edit__email"
+                placeholder="edit your email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <button className="submit__btn" onClick={() => onSubmit()}>
+                Submit
+              </button>
+            </>
+          )}
+
+          <button
+            className="visible__btn"
+            onClick={() => {
+              setVisible(!visible);
+            }}
+          >
+            {visible ? "Exit" : "Edit"}
+            {/* Edit */}
+          </button>
 
           <div className="myBset__ranking" content="">
             My Ranking
