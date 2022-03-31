@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
@@ -15,6 +15,7 @@ const SideBar = () => {
   const [email, setEmail] = useState([]);
   // const [address, setAddress] = useState("address");
   const [Loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -44,14 +45,9 @@ const SideBar = () => {
     }
   }, [account]);
 
-  const updateProfile = async () => {
-    await axios.post("http://localhost:5000/user/edit").then();
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updatedProfile(nickname, email);
-  };
+  // const updateProfile = async () => {
+  //   await axios.post("http://localhost:5000/user/edit").then();
+  // };
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -76,23 +72,23 @@ const SideBar = () => {
     return (
       <div className="slide__container">
         <div className="pfpside__box">
-          {/* <div className="profile__pic">
-          <button id="select__pfp" onClick={() => setEditProfileModal(true)}>
-            <label className="-label">
-              <i className="ri-gallery-upload-line"></i>
-              <span>Change Profile</span>
-            </label>
-            <img
-              src=""
-              id="upload__pfp"
-              // onChange="loadFile(event)"
-              alt="edit"
-            />
-          </button>
-          {EditProfileModal && (
-            <EditProfile setShowModal={setEditProfileModal} />
-          )}
-        </div> */}
+          <div className="profile__pic">
+            <button id="select__pfp" onClick={() => setEditProfileModal(true)}>
+              <label className="-label">
+                <i className="ri-gallery-upload-line"></i>
+                <span>Change Profile</span>
+              </label>
+              <img
+                src=""
+                id="upload__pfp"
+                // onChange="loadFile(event)"
+                alt="edit"
+              />
+            </button>
+            {EditProfileModal && (
+              <EditProfile setShowModal={setEditProfileModal} />
+            )}
+          </div>
 
           {/* <img
           className="pfp__iamge"
@@ -100,75 +96,48 @@ const SideBar = () => {
           alt="pfp"
           // style={{ position: "absolute", width: "40px" }}
         /> */}
-
-          <div id="nick__pfp">{nickname}</div>
-          <div id="email__pfp">{email}</div>
-
-          <input
-            className="edit__name"
-            placeholder="edit your name"
-            type="text"
-            value={nickname}
-            onChange={(e) => {
-              setNicName(e.target.value);
-            }}
-          />
-          <br />
-          <input
-            className="edit__email"
-            placeholder="edit your email"
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <button onClick={() => onSubmit()}>Submit</button>
-
-          {/* {(value) => {
-          return (
-            <>
-              <div>{nickname}</div>
-              <div>{email}</div>
-              <button
-                className="edit__mytext"
-                onClick={() => {
-                  value.onEdit(value.id);
-                }}
-              >
-                {value.id ? "Save" : "Add"}
-                수정하기
-              </button>
-              <input
-                className="edit__name"
-                placeholder="edit your name"
-                type="text"
-                vlaue={value.nick}
-                onChange={(e) => {
-                  value.updateValue(e, "nickname");
-                }}
-              />
-              <br />
-              <input
-                className="edit__email"
-                placeholder="edit your email"
-                type="email"
-                vlaue={value.email}
-                onChange={(e) => {
-                  value.updateValue(e, "email");
-                }}
-              />
-              <buttom>수정완료</buttom>
-            </>
-          );
-        }} */}
-          {/* <button
-            className="show__btn"
-            onClick={() => getJoinus()}
-            style={{ width: "120px" }}
-          >
-            Get Data(test_btn)
-          </button> */}
+          <div className="mypfp__Container">
+            <div className="nick__pfp" id="nick__pfp">
+              {nickname}
+            </div>
+            <div className="email__pfp" id="email__pfp">
+              {email}
+            </div>
+            <button
+              className="show__btn"
+              onClick={() => {
+                setVisible(!visible);
+              }}
+              style={{ width: "120px" }}
+            >
+              {visible ? "submit" : "Edit"}
+              {/* Edit */}
+            </button>
+            {visible && (
+              <>
+                <input
+                  className="edit__name"
+                  placeholder="edit your name"
+                  type="text"
+                  value={nickname}
+                  onChange={(e) => {
+                    setNicName(e.target.value);
+                  }}
+                />
+                <br />
+                <input
+                  className="edit__email"
+                  placeholder="edit your email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                <button onClick={() => onSubmit()}>Submit</button>
+              </>
+            )}
+          </div>
 
           <div className="myBset__ranking" content="">
             My Ranking
