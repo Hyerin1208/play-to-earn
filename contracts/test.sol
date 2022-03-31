@@ -25,7 +25,7 @@ mapping(string=>mapping(uint=>mapping(uint=>address))) public gameRanker;
 
 mapping(uint => uint) public reward;
 
-mapping(uint => address) public changeRank;
+
 
 mapping(address=>bool) public tokenClaim;
 
@@ -61,72 +61,29 @@ function setRanker(string memory gameName, uint rank) public checkranker(gameNam
     reward[1] = 1000;
     reward[2] = 500;
     reward[3] = 200;
+    reward[4] = 0;
     address prevRanker = gameRanker[gameName][round][rank];
     if (prevRanker==address(0)){
         gameRanker[gameName][round][rank] = msg.sender;
-            approve(msg.sender, reward[rank],true);
+            ArcadeToken.increaseAllowance(msg.sender, reward[rank]);
             // ArcadeToken.approve(msg.sender, reward[rank]);
             tokenClaim[msg.sender] = true;
-    } else {
-        for(uint i = rank; i>3; i++){
-            changeRank[i]= gameRanker[gameName][round][i];
-        }
-        for(uint i = rank; i>3; i++){
-            if(i+1==4){
-                approve(changeRank[i],reward[3],false);
-                tokenClaim[changeRank[i]] = false;
-            } else {
-            gameRanker[gameName][round][i+1]=changeRank[i];
-            approve(changeRank[i], reward[i]-reward[i+1],false);
-            }
-        }
-                gameRanker[gameName][round][rank] = msg.sender;
-            approve(msg.sender, reward[rank],true);
+    } else if (prevRanker!=msg.sender) {
+for(uint i = 3; i<rank; i--){
+    address prevAddress = gameRanker[gameName][round][i];
+                if (i+1==4){
+                ArcadeToken.decreaseAllowance(prevAddress,reward[i]-reward[i+1]);
+                tokenClaim[prevAddress] = false;
+                } else {
+                ArcadeToken.decreaseAllowance(prevAddress,reward[i]-reward[i+1]);
+                    gameRanker[gameName][round][i+1]= prevAddress;
+                }
+}
+        gameRanker[gameName][round][rank] = msg.sender;
+            ArcadeToken.increaseAllowance(msg.sender, reward[rank]);
             // ArcadeToken.approve(msg.sender, reward[rank]);
             tokenClaim[msg.sender] = true;
-    }
-
-// for (uint i=rank; i>3; i++){
-// }
-
-//     address prevRanker = gameRanker[gameName][round][rank];
-//     if(rank==1){
-
-//     }
-//     uint prevRank = rank+1;
-    
-//      if(prevRank>3){
-// approve(preRanker, reward[rank],false);
-// tokenClaim[preRanker] = false;
-//         } else {
-
-//         }
-
-
-
-//     if (preRanker==address(0)){
-// gameRanker[gameName][round][rank] = msg.sender;
-//             approve(msg.sender, reward[rank],true);
-//             // ArcadeToken.approve(msg.sender, reward[rank]);
-//             tokenClaim[msg.sender] = true;
-//     } else {
-// // if(preRanker!=msg.sender){
-
-//         uint preRank = rank+1;
-//         if(preRank>3){
-            
-// approve(preRanker, reward[rank],false);
-// // ArcadeToken.approve(preRanker, 0);
-// tokenClaim[preRanker] = false;
-//         } else {
-//             gameRanker[gameName][round][preRank] = preRanker;
-//             approve(preRanker, reward[rank]-reward[preRank],false);
-//             // ArcadeToken.approve(preRanker, reward[preRank]);
-//         }
-// // }
-
-//     }
-
+}
 
 }
 

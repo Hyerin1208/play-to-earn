@@ -11,6 +11,7 @@ const { sequelize } = require("./models");
 var mainRouter = require("./routes/main");
 var userRouter = require("./routes/user");
 var gameRouter = require("./routes/game");
+var nftsRouter = require("./routes/nfts");
 
 var app = express();
 
@@ -23,16 +24,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("DB 연결성공");
-  })
-  .catch((err) => {
-    console.error(`DB 연결실패 - ${err}`);
-  });
+    .sync({ force: false })
+    .then(() => {
+        console.log("DB 연결성공");
+    })
+    .catch((err) => {
+        console.error(`DB 연결실패 - ${err}`);
+    });
 
 app.use("/main", mainRouter);
 app.use("/user", userRouter);
 app.use("/game", gameRouter);
+app.use("/nfts", nftsRouter);
 
 module.exports = app;
