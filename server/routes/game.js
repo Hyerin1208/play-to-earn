@@ -21,7 +21,10 @@ router.post("/snake", async (req, res, next) => {
         snakePoint: point,
       });
     } else {
-      Game.update({ snakePoint: point }, { where: { address: account } });
+      Game.update(
+        { snakePoint: point, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -49,7 +52,10 @@ router.post("/2048", async (req, res, next) => {
         puzzlePoint: score,
       });
     } else {
-      Game.update({ puzzlePoint: score }, { where: { address: account } });
+      Game.update(
+        { puzzlePoint: score, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -77,7 +83,10 @@ router.post("/mine", async (req, res, next) => {
         minePoint: runtime,
       });
     } else {
-      Game.update({ minePoint: runtime }, { where: { address: account } });
+      Game.update(
+        { minePoint: runtime, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -105,7 +114,10 @@ router.post("/tetris", async (req, res, next) => {
         tetrisPoint: data,
       });
     } else {
-      Game.update({ tetrisPoint: data }, { where: { address: account } });
+      Game.update(
+        { tetrisPoint: data, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });

@@ -115,7 +115,7 @@ const MyRanking = () => {
           <div className="myrank__text">
             <div className="rank__mybox">
               {/* {ranking} 위<span>In top 0.342%</span> */}
-              <div>slick 써서 밑에꺼 게임별로 넘기게 해주면 좋을 거 같다.</div>
+              {/* <div>slick 써서 밑에꺼 게임별로 넘기게 해주면 좋을 거 같다.</div>
               <div>
                 <b>SnakeGame</b>
                 <br />
@@ -172,7 +172,7 @@ const MyRanking = () => {
                       </div>
                     );
                   })}
-              </div>
+              </div> */}
             </div>
             <button className="get__token">Get My Token</button>
           </div>

@@ -121,19 +121,19 @@ const Ranking = () => {
               className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
               onClick={() => toggleTab(1)}
             >
-              종합랭킹
+              OVERALL RANKING
             </button>
             <button
               className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
               onClick={() => toggleTab(2)}
             >
-              주간랭킹
+              WEEKLY RANKING
             </button>
             <button
               className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
               onClick={() => toggleTab(3)}
             >
-              MY랭킹
+              MY RANKING
             </button>
           </div>
 
@@ -143,7 +143,7 @@ const Ranking = () => {
                 toggleState === 1 ? "content  active-content" : "content"
               }
             >
-              <h2>종합랭킹</h2>
+              <h2>OVERALL RANKING</h2>
               <hr />
               <Container>
                 <div className="ranking__box">
@@ -162,9 +162,9 @@ const Ranking = () => {
                           <p key={i}>
                             {i + 1}등 :&nbsp;
                             {v === undefined
-                              ? "없음"
+                              ? "None"
                               : v.snakePoint === null
-                              ? "없음"
+                              ? "None"
                               : v.nick}
                             &nbsp;
                             {v === undefined
@@ -188,9 +188,9 @@ const Ranking = () => {
                           <p key={i}>
                             {i + 1}등 :&nbsp;
                             {v === undefined
-                              ? "없음"
+                              ? "None"
                               : v.tetrisPoint === null
-                              ? "없음"
+                              ? "None"
                               : v.nick}
                             &nbsp;
                             {v === undefined
@@ -214,9 +214,9 @@ const Ranking = () => {
                           <p key={i}>
                             {i + 1}등 :&nbsp;
                             {v === undefined
-                              ? "없음"
+                              ? "None"
                               : v.puzzlePoint === null
-                              ? "없음"
+                              ? "None"
                               : v.nick}
                             &nbsp;
                             {v === undefined
@@ -239,9 +239,9 @@ const Ranking = () => {
                           <p key={i}>
                             {i + 1}등 :&nbsp;
                             {v === undefined
-                              ? "없음"
+                              ? "None"
                               : v.minePoint === null
-                              ? "없음"
+                              ? "None"
                               : v.nick}
                             &nbsp;
                             {v === undefined
@@ -263,7 +263,7 @@ const Ranking = () => {
                 toggleState === 2 ? "content  active-content" : "content"
               }
             >
-              <h2>주간랭킹</h2>
+              <h2>WEEKLY RANKING</h2>
               <hr />
               <Container>
                 <div className="ranking__box">여기에 주간랭킹 순위표만들기</div>
@@ -275,7 +275,7 @@ const Ranking = () => {
                 toggleState === 3 ? "content  active-content" : "content"
               }
             >
-              <h2>나의랭킹</h2>
+              <h2>MY RANKING</h2>
               <hr />
               <Container>
                 <div>
@@ -288,7 +288,7 @@ const Ranking = () => {
                       .map((v, i) => {
                         return (
                           <div key={i}>
-                            {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
+                            {v.snakePoint === null ? "None" : snakeT + 1 + "등"}
                           </div>
                         );
                       })}
@@ -303,7 +303,7 @@ const Ranking = () => {
                         return (
                           <div key={i}>
                             {v.puzzlePoint === null
-                              ? "없음"
+                              ? "None"
                               : puzzleT + 1 + "등"}
                           </div>
                         );
@@ -319,7 +319,7 @@ const Ranking = () => {
                         return (
                           <div key={i}>
                             {v.tetrisPoint === null
-                              ? "없음"
+                              ? "None"
                               : tetrisT + 1 + "등"}
                           </div>
                         );
@@ -334,7 +334,7 @@ const Ranking = () => {
                       .map((v, i) => {
                         return (
                           <div key={i}>
-                            {v.minePoint === null ? "없음" : mineT + 1 + "등"}
+                            {v.minePoint === null ? "None" : mineT + 1 + "등"}
                           </div>
                         );
                       })}

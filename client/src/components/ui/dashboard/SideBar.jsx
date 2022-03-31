@@ -22,6 +22,24 @@ const SideBar = () => {
     (state) => state.AppState.CreateNFTContract
   );
 
+  const [snake, setSnake] = useState([]);
+  const [snakeT, setSnakeT] = useState(null);
+  const [snakeI, setSnakeI] = useState(null);
+
+  const [puzzle, setPuzzle] = useState([]);
+  const [puzzleT, setPuzzleT] = useState(null);
+  const [puzzleI, setPuzzleI] = useState(null);
+
+  const [mine, setMine] = useState([]);
+  const [mineT, setMineT] = useState(null);
+  const [mineI, setMineI] = useState(null);
+
+  const [tetris, setTetris] = useState([]);
+  const [tetrisT, setTetrisT] = useState(null);
+  const [tetrisI, setTetrisI] = useState(null);
+
+  const [error, setError] = useState(null);
+
   const [EditProfileModal, setEditProfileModal] = useState(false);
 
   useEffect(() => {
@@ -39,6 +57,78 @@ const SideBar = () => {
         })
         .catch((err) => {
           console.log(err);
+        });
+
+      axios
+        .get(`http://localhost:5000/game/snake`)
+        .then((response) => {
+          console.log(response);
+          const data = response.data;
+          setSnake(data);
+          const snakeIndex = data.findIndex((element) => {
+            if (element.address === account) {
+              setSnakeI(element);
+              return true;
+            }
+          });
+          setSnakeT(snakeIndex);
+        })
+        .catch((error) => {
+          setError(error);
+        });
+
+      axios
+        .get(`http://localhost:5000/game/2048`)
+        .then((response) => {
+          console.log(response);
+          const data = response.data;
+          setPuzzle(data);
+          const puzzleIndex = data.findIndex((element) => {
+            if (element.address === account) {
+              setPuzzleI(element);
+              return true;
+            }
+          });
+          setPuzzleT(puzzleIndex);
+        })
+        .catch((error) => {
+          setError(error);
+        });
+
+      axios
+        .get(`http://localhost:5000/game/mine`)
+        .then((response) => {
+          console.log(response);
+          const data = response.data;
+          setMine(data);
+          const mineIndex = data.findIndex((element) => {
+            if (element.address === account) {
+              setMineI(element);
+              return true;
+            }
+          });
+          setMineT(mineIndex);
+        })
+        .catch((error) => {
+          setError(error);
+        });
+
+      axios
+        .get(`http://localhost:5000/game/tetris`)
+        .then((response) => {
+          console.log(response);
+          const data = response.data;
+          setTetris(data);
+          const tetrisIndex = data.findIndex((element) => {
+            if (element.address === account) {
+              setTetrisI(element);
+              return true;
+            }
+          });
+          setTetrisT(tetrisIndex);
+        })
+        .catch((error) => {
+          setError(error);
         });
 
       setLoading(null);
@@ -143,6 +233,63 @@ const SideBar = () => {
 
           <div className="myBset__ranking" content="">
             My Ranking
+            <div>
+              <b>SnakeGame</b>
+              <br />
+              {snake
+                .filter((v, i) => {
+                  return i < 1;
+                })
+                .map((v, i) => {
+                  return (
+                    <div key={i}>
+                      {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
+                    </div>
+                  );
+                })}
+              <br />
+              <b>2048Game</b>
+              <br />
+              {puzzle
+                .filter((v, i) => {
+                  return i < 1;
+                })
+                .map((v, i) => {
+                  return (
+                    <div key={i}>
+                      {v.puzzlePoint === null ? "없음" : puzzleT + 1 + "등"}
+                    </div>
+                  );
+                })}
+              <br />
+              <b>TetrisGame</b>
+              <br />
+              {tetris
+                .filter((v, i) => {
+                  return i < 1;
+                })
+                .map((v, i) => {
+                  return (
+                    <div key={i}>
+                      {v.tetrisPoint === null ? "없음" : tetrisT + 1 + "등"}
+                    </div>
+                  );
+                })}
+              <br />
+              <b>MineGame</b>
+              <br />
+              {mine
+                .filter((v, i) => {
+                  return i < 1;
+                })
+                .map((v, i) => {
+                  return (
+                    <div key={i}>
+                      {v.minePoint === null ? "없음" : mineT + 1 + "등"}
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
         <div className="link__conatainer">
