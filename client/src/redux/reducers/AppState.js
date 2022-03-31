@@ -7,6 +7,7 @@ const initialState = {
     account: null,
     CreateNFTContract: null,
     AmusementArcadeTokenContract: null,
+    TokenClaimContract: null,
     Selllists: [],
     errorMsg: "",
 };
@@ -19,6 +20,7 @@ export default function (state = initialState, action) {
                 network: action.payload.network,
                 CreateNFTContract: action.payload.CreateNFTContract,
                 AmusementArcadeTokenContract: action.payload.AmusementArcadeTokenContract,
+                TokenClaimContract: action.payload.TokenClaimContract,
                 Selllists: action.payload.Selllists,
                 errorMsg: action.payload.errorMsg,
             };
