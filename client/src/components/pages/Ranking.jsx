@@ -17,7 +17,7 @@ const Ranking = () => {
   const [tetrisAddress, setTetrisAddress] = useState([]);
   const [mineAddress, setMineAddress] = useState([]);
 
-  console.log(snakeAddress);
+  // console.log(snakeAddress);
   // console.log(puzzleAddress);
   // console.log(tetrisAddress);
   // console.log(mineAddress);
