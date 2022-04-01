@@ -63,7 +63,7 @@ router.post("/views", async (req, res, next) => {
       { views: nft.views + 1 },
       { where: { id: req.body.tokenId } }
     );
-    res.json({ view: nft.views });
+    res.json({ view: nft.views + 1 });
   } catch (error) {
     console.error(error);
     next(error);
