@@ -71,6 +71,7 @@ const Create = () => {
         /* next, create the item */
         const price = parseInt(formInput.price);
         console.log(Account);
+
         await CreateNFTContract.methods
             .CreateNFTinContract(url, price)
             .send({ from: Account, gas: 3000000 }, (error, data) => {
