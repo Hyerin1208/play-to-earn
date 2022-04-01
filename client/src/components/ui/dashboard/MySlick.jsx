@@ -40,40 +40,44 @@ const MySlick = () => {
   useEffect(() => {
     mynftlists();
     setLoading(null);
-  }, []);
+  }, [CreateNFTContract]);
 
   //내 nft 리스트
   async function mynftlists() {
-    const lists = await CreateNFTContract.methods
-      .MyNFTlists()
-      .call({ from: Account }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-    console.log(await lists);
+    if ((await CreateNFTContract) === null) {
+      setLoading(true);
+    } else {
+      const lists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: Account }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
+          }
+        });
+      console.log(await lists);
 
-    const result = await Promise.all(
-      lists.map(async (i) => {
-        const tokenURI = await CreateNFTContract.methods
-          .tokenURI(i.tokenId)
-          .call({ from: Account });
-        const meta = await axios.get(tokenURI).then((res) => res.data);
-        let item = {
-          fileUrl: await meta.image,
-          formInput: {
-            price: await meta.price,
-            name: await meta.name,
-            description: await meta.description,
-          },
-        };
-        return item;
-      })
-    );
+      const result = await Promise.all(
+        lists.map(async (i) => {
+          const tokenURI = await CreateNFTContract.methods
+            .tokenURI(i.tokenId)
+            .call({ from: Account });
+          const meta = await axios.get(tokenURI).then((res) => res.data);
+          let item = {
+            fileUrl: await meta.image,
+            formInput: {
+              price: await meta.price,
+              name: await meta.name,
+              description: await meta.description,
+            },
+          };
+          return item;
+        })
+      );
 
-    setnftArray(result);
+      setnftArray(result);
+    }
   }
 
   const settings = {
