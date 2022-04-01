@@ -64,6 +64,17 @@ const NftDetails = (props) => {
       });
   }, []);
 
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/nfts/views`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        console.log(res.data.view);
+        setView(res.data.view);
+      });
+  }, []);
+
   // function likeBtn() {
   //   if (likeActive) {
   //     setLikeActive(false);

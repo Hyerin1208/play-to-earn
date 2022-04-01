@@ -17,6 +17,7 @@ module.exports = class Nfts extends Sequelize.Model {
         views: {
           type: Sequelize.INTEGER,
           allowNull: false,
+          defaultValue: 0,
         },
         createdAt: {
           type: Sequelize.DATEONLY,
@@ -43,12 +44,12 @@ module.exports = class Nfts extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Nfts.hasMany(db.User, {
-      through: "views",
-      as: "viewer",
-      foreignKey: "address",
-      sourceKey: "tokenId",
-    });
+    // db.Nfts.belongsToMany(db.User, {
+    //   through: "views",
+    //   as: "viewer",
+    //   foreignKey: "address",
+    //   sourceKey: "tokenId",
+    // });
     db.Nfts.belongsToMany(db.User, {
       through: "Likes",
       as: "Liker",

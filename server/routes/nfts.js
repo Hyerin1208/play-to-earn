@@ -51,26 +51,22 @@ router.post("/like", async (req, res, next) => {
       );
       res.json({ message: "no" });
     }
+  }
+});
 
-    // const nft = await Nfts.findOne({
-    //   where: { tokenId: req.body.tokenId },
-    // });
-    // const user = await User.findOne({ where: { address: req.body.account } });
-
-    // await nft.addLiker(user);
-
-    // const nfts = await Nfts.findOne({
-    //   where: { tokenId: req.body.tokenId },
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ["id", "address"],
-    //       as: "Liker",
-    //     },
-    //   ],
-    // });
-
-    // res.json({ message: "ok" });
+router.post("/views", async (req, res, next) => {
+  try {
+    const nft = await Nfts.findOne({
+      where: { tokenId: req.body.tokenId },
+    });
+    await Nfts.update(
+      { views: nft.views + 1 },
+      { where: { id: req.body.tokenId } }
+    );
+    res.json({ view: nft.views });
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
 });
 
