@@ -31,21 +31,20 @@ const NftDetails = (props) => {
 
   // test
   const sendLike = async () => {
-    // const tokenId = 1;
-    // const userAdd = "ad1";
-    if (likeActive) {
-      setLikeActive(false);
-      setLike(like - 1);
-    } else {
-      setLikeActive(true);
-      setLike(like + 1);
-    }
     await axios
-      .post(`http://localhost:5000/nfts`, { id: card_id, account: account })
+      .post(`http://localhost:5000/nfts/like`, {
+        tokenId: card_id,
+        account: account,
+      })
       .then((res) => {
         console.log(res.data.message);
-        setLike(like + 1);
-        alert("좋아요 등록 완료");
+        if (res.data.message === "ok") {
+          setLike(like + 1);
+          alert("좋아요 등록 완료");
+        } else {
+          setLike(like - 1);
+          alert("좋아요 취소 ㅠㅠ");
+        }
       });
   };
 
@@ -55,21 +54,34 @@ const NftDetails = (props) => {
     gettokenuri(card_id);
   }, [CreateNFTContract]);
 
-  const viewCount = async () => {
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/nfts/countoflike`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        setLike(res.data.count);
+      });
+  }, []);
+
+  // function likeBtn() {
+  //   if (likeActive) {
+  //     setLikeActive(false);
+  //     setLike(like - 1);
+  //   } else {
+  //     setLikeActive(true);
+  //     setLike(like + 1);
+  //   }
+  // }
+
+  function viewBtn() {
     if (viewActive) {
       setViewActive(false);
     } else {
       setViewActive(view + 1);
       setView(view + 1);
     }
-
-    await axios
-      .get(`http://localhost:5000/nfts`, { id: card_id, account: account })
-      .then((res) => {
-        console.log(res.data.message);
-        alert("조회수 증가");
-      });
-  };
+  }
 
   async function gettokenuri(tokenId) {
     const tokenURI = await CreateNFTContract.methods
@@ -133,7 +145,7 @@ const NftDetails = (props) => {
                       </span>
 
                       <span>
-                        <button className="nft-view__btn" onClick={viewCount}>
+                        <button className="nft-view__btn" onClick={viewBtn}>
                           <i className="ri-eye-line"></i> {view}
                         </button>
                       </span>
