@@ -55,24 +55,21 @@ const NftDetails = (props) => {
     gettokenuri(card_id);
   }, [CreateNFTContract]);
 
-  // function likeBtn() {
-  //   if (likeActive) {
-  //     setLikeActive(false);
-  //     setLike(like - 1);
-  //   } else {
-  //     setLikeActive(true);
-  //     setLike(like + 1);
-  //   }
-  // }
-
-  function viewBtn() {
+  const viewCount = async () => {
     if (viewActive) {
       setViewActive(false);
     } else {
       setViewActive(view + 1);
       setView(view + 1);
     }
-  }
+
+    await axios
+      .get(`http://localhost:5000/nfts`, { id: card_id, account: account })
+      .then((res) => {
+        console.log(res.data.message);
+        alert("조회수 증가");
+      });
+  };
 
   async function gettokenuri(tokenId) {
     const tokenURI = await CreateNFTContract.methods
@@ -136,7 +133,7 @@ const NftDetails = (props) => {
                       </span>
 
                       <span>
-                        <button className="nft-view__btn" onClick={viewBtn}>
+                        <button className="nft-view__btn" onClick={viewCount}>
                           <i className="ri-eye-line"></i> {view}
                         </button>
                       </span>
