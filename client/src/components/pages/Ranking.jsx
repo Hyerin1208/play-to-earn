@@ -66,6 +66,7 @@ const Ranking = () => {
   // const timer = setInterval(function () {
   //   count++;
   // }, 30 * 60 * 1000);
+  // console.log(timer);
 
   useEffect(() => {
     axios
