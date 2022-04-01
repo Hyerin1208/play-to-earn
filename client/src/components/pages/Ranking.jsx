@@ -9,6 +9,34 @@ const Ranking = () => {
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
 
+  // Claim부분
+  const [balance, setBalance] = useState(0);
+  const [claim, setClaim] = useState(true);
+  const [snakeAddress, setSnakeAddress] = useState([]);
+  const [puzzleAddress, setPuzzleAddress] = useState([]);
+  const [tetrisAddress, setTetrisAddress] = useState([]);
+  const [mineAddress, setMineAddress] = useState([]);
+
+  console.log(snakeAddress);
+  console.log(puzzleAddress);
+  console.log(tetrisAddress);
+  console.log(mineAddress);
+
+  const sendReward = async () => {
+    await axios
+      .post(`http://localhost:5000/ranking`, {
+        tetrisAddress,
+        puzzleAddress,
+        snakeAddress,
+        mineAddress,
+        claim,
+      })
+      .then((res) => {
+        console.log(res.data);
+        alert("토큰 클레임 완료");
+      });
+  };
+
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -34,13 +62,30 @@ const Ranking = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // var count = 1;
+  // const timer = setInterval(function () {
+  //   count++;
+  // }, 30 * 60 * 1000);
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/game/snake`)
       .then((response) => {
-        console.log(response);
         const data = response.data;
         setSnake(data);
+
+        const snakeArray = data.map((data) => {
+          const form = {
+            weeks: 1,
+            games: "snakeGame",
+            rank: data.index,
+            address: data.address,
+            balance: 0,
+          };
+          return form;
+        });
+        setSnakeAddress(snakeArray);
+
         const snakeIndex = data.findIndex((element) => {
           if (element.address === account) {
             setSnakeI(element);
@@ -48,6 +93,7 @@ const Ranking = () => {
           }
         });
         setSnakeT(snakeIndex);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -56,8 +102,20 @@ const Ranking = () => {
     axios
       .get(`http://localhost:5000/game/2048`)
       .then((response) => {
-        console.log(response);
         const data = response.data;
+
+        const puzzleArray = data.map((data) => {
+          const form = {
+            weeks: 1,
+            games: "puzzleGame",
+            rank: data.index,
+            address: data.address,
+            balance: 0,
+          };
+          return form;
+        });
+        setPuzzleAddress(puzzleArray);
+
         setPuzzle(data);
         const puzzleIndex = data.findIndex((element) => {
           if (element.address === account) {
@@ -66,6 +124,7 @@ const Ranking = () => {
           }
         });
         setPuzzleT(puzzleIndex);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -74,9 +133,21 @@ const Ranking = () => {
     axios
       .get(`http://localhost:5000/game/mine`)
       .then((response) => {
-        console.log(response);
         const data = response.data;
         setMine(data);
+
+        const mineArray = data.map((data) => {
+          const form = {
+            weeks: 1,
+            games: "mineGame",
+            rank: data.index,
+            address: data.address,
+            balance: 0,
+          };
+          return form;
+        });
+        setMineAddress(mineArray);
+
         const mineIndex = data.findIndex((element) => {
           if (element.address === account) {
             setMineI(element);
@@ -84,6 +155,7 @@ const Ranking = () => {
           }
         });
         setMineT(mineIndex);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -92,9 +164,21 @@ const Ranking = () => {
     axios
       .get(`http://localhost:5000/game/tetris`)
       .then((response) => {
-        console.log(response);
         const data = response.data;
         setTetris(data);
+
+        const tetrisArray = data.map((data) => {
+          const form = {
+            weeks: 1,
+            games: "tetrisGame",
+            rank: data.index,
+            address: data.address,
+            balance: 0,
+          };
+          return form;
+        });
+        setTetrisAddress(tetrisArray);
+
         const tetrisIndex = data.findIndex((element) => {
           if (element.address === account) {
             setTetrisI(element);
@@ -147,15 +231,12 @@ const Ranking = () => {
               <hr />
               <Container>
                 <div className="ranking__box">
-                  {/* {loading ? (
-                  <strong> loading... </strong>
-                ) : ( */}
                   <div>
                     <b>SnakeGame</b>
                     <br />
                     {snake
                       .filter((v, i) => {
-                        return i < 5;
+                        return i < 3;
                       })
                       .map((v, i) => {
                         return (
@@ -181,7 +262,7 @@ const Ranking = () => {
                     <br />
                     {tetris
                       .filter((v, i) => {
-                        return i < 5;
+                        return i < 3;
                       })
                       .map((v, i) => {
                         return (
@@ -207,7 +288,7 @@ const Ranking = () => {
                     <br />
                     {puzzle
                       .filter((v, i) => {
-                        return i < 5;
+                        return i < 3;
                       })
                       .map((v, i) => {
                         return (
@@ -232,7 +313,7 @@ const Ranking = () => {
                     <br />
                     {mine
                       .filter((v, i) => {
-                        return i < 5;
+                        return i < 3;
                       })
                       .map((v, i) => {
                         return (
@@ -253,8 +334,10 @@ const Ranking = () => {
                         );
                       })}
                   </div>
-                  {/* )} */}
                 </div>
+                <button type="submit" onClick={sendReward}>
+                  SEND RANKING DB
+                </button>
               </Container>
             </div>
 
@@ -279,65 +362,61 @@ const Ranking = () => {
               <hr />
               <Container>
                 <div>
-                    <b>SnakeGame</b>
-                    <br />
-                    {snake
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.snakePoint === null ? "None" : snakeT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>2048Game</b>
-                    <br />
-                    {puzzle
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.puzzlePoint === null
-                              ? "None"
-                              : puzzleT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>TetrisGame</b>
-                    <br />
-                    {tetris
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.tetrisPoint === null
-                              ? "None"
-                              : tetrisT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>MineGame</b>
-                    <br />
-                    {mine
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.minePoint === null ? "None" : mineT + 1 + "등"}
-                          </div>
-                        );
-                      })}
+                  <b>SnakeGame</b>
+                  <br />
+                  {snake
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.snakePoint === null ? "None" : snakeT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>2048Game</b>
+                  <br />
+                  {puzzle
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.puzzlePoint === null ? "None" : puzzleT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>TetrisGame</b>
+                  <br />
+                  {tetris
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.tetrisPoint === null ? "None" : tetrisT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>MineGame</b>
+                  <br />
+                  {mine
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.minePoint === null ? "None" : mineT + 1 + "등"}
+                        </div>
+                      );
+                    })}
                 </div>
               </Container>
             </div>

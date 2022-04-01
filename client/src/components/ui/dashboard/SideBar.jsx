@@ -234,61 +234,7 @@ const SideBar = () => {
           <div className="myBset__ranking" content="">
             My Ranking
             <div>
-              <b>SnakeGame</b>
-              <br />
-              {snake
-                .filter((v, i) => {
-                  return i < 1;
-                })
-                .map((v, i) => {
-                  return (
-                    <div key={i}>
-                      {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
-                    </div>
-                  );
-                })}
-              <br />
-              <b>2048Game</b>
-              <br />
-              {puzzle
-                .filter((v, i) => {
-                  return i < 1;
-                })
-                .map((v, i) => {
-                  return (
-                    <div key={i}>
-                      {v.puzzlePoint === null ? "없음" : puzzleT + 1 + "등"}
-                    </div>
-                  );
-                })}
-              <br />
-              <b>TetrisGame</b>
-              <br />
-              {tetris
-                .filter((v, i) => {
-                  return i < 1;
-                })
-                .map((v, i) => {
-                  return (
-                    <div key={i}>
-                      {v.tetrisPoint === null ? "없음" : tetrisT + 1 + "등"}
-                    </div>
-                  );
-                })}
-              <br />
-              <b>MineGame</b>
-              <br />
-              {mine
-                .filter((v, i) => {
-                  return i < 1;
-                })
-                .map((v, i) => {
-                  return (
-                    <div key={i}>
-                      {v.minePoint === null ? "없음" : mineT + 1 + "등"}
-                    </div>
-                  );
-                })}
+              {(snakeT + 1 + (tetrisT + 1) + (puzzleT + 1) + (mineT + 1)) / 4}등
             </div>
           </div>
         </div>
