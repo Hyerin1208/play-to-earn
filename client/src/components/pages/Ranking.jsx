@@ -18,9 +18,9 @@ const Ranking = () => {
   const [mineAddress, setMineAddress] = useState([]);
 
   console.log(snakeAddress);
-  console.log(puzzleAddress);
-  console.log(tetrisAddress);
-  console.log(mineAddress);
+  // console.log(puzzleAddress);
+  // console.log(tetrisAddress);
+  // console.log(mineAddress);
 
   const sendReward = async () => {
     await axios
@@ -80,7 +80,7 @@ const Ranking = () => {
             games: "snakeGame",
             rank: index + 1,
             address: data.address,
-            balance: 0,
+            balance: [1000, 600, 400],
           };
           return form;
         });
@@ -110,7 +110,7 @@ const Ranking = () => {
             games: "puzzleGame",
             rank: index + 1,
             address: data.address,
-            balance: 0,
+            balance: [1000, 600, 400],
           };
           return form;
         });
@@ -142,7 +142,7 @@ const Ranking = () => {
             games: "mineGame",
             rank: index + 1,
             address: data.address,
-            balance: 0,
+            balance: [1000, 600, 400],
           };
           return form;
         });
@@ -173,7 +173,7 @@ const Ranking = () => {
             games: "tetrisGame",
             rank: index + 1,
             address: data.address,
-            balance: 0,
+            balance: [1000, 600, 400],
           };
           return form;
         });
