@@ -74,11 +74,11 @@ const Ranking = () => {
         const data = response.data;
         setSnake(data);
 
-        const snakeArray = data.map((data) => {
+        const snakeArray = data.map((data, index) => {
           const form = {
             weeks: 1,
             games: "snakeGame",
-            rank: data.index,
+            rank: index + 1,
             address: data.address,
             balance: 0,
           };
@@ -104,11 +104,11 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
 
-        const puzzleArray = data.map((data) => {
+        const puzzleArray = data.map((data, index) => {
           const form = {
             weeks: 1,
             games: "puzzleGame",
-            rank: data.index,
+            rank: index + 1,
             address: data.address,
             balance: 0,
           };
@@ -136,11 +136,11 @@ const Ranking = () => {
         const data = response.data;
         setMine(data);
 
-        const mineArray = data.map((data) => {
+        const mineArray = data.map((data, index) => {
           const form = {
             weeks: 1,
             games: "mineGame",
-            rank: data.index,
+            rank: index + 1,
             address: data.address,
             balance: 0,
           };
@@ -167,11 +167,11 @@ const Ranking = () => {
         const data = response.data;
         setTetris(data);
 
-        const tetrisArray = data.map((data) => {
+        const tetrisArray = data.map((data, index) => {
           const form = {
             weeks: 1,
             games: "tetrisGame",
-            rank: data.index,
+            rank: index + 1,
             address: data.address,
             balance: 0,
           };
