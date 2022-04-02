@@ -1,6 +1,6 @@
 import React from "react";
 
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
 import "./wallet.css";

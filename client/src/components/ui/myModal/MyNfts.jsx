@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import NftCard from "../NftCard";
+import NftCard from "../templete/NftCard";
 
 import "./my-nfts.css";
 

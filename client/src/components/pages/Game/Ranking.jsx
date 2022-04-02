@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container } from "reactstrap";
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -279,65 +279,61 @@ const Ranking = () => {
               <hr />
               <Container>
                 <div>
-                    <b>SnakeGame</b>
-                    <br />
-                    {snake
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>2048Game</b>
-                    <br />
-                    {puzzle
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.puzzlePoint === null
-                              ? "없음"
-                              : puzzleT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>TetrisGame</b>
-                    <br />
-                    {tetris
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.tetrisPoint === null
-                              ? "없음"
-                              : tetrisT + 1 + "등"}
-                          </div>
-                        );
-                      })}
-                    <br />
-                    <b>MineGame</b>
-                    <br />
-                    {mine
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        return (
-                          <div key={i}>
-                            {v.minePoint === null ? "없음" : mineT + 1 + "등"}
-                          </div>
-                        );
-                      })}
+                  <b>SnakeGame</b>
+                  <br />
+                  {snake
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.snakePoint === null ? "없음" : snakeT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>2048Game</b>
+                  <br />
+                  {puzzle
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.puzzlePoint === null ? "없음" : puzzleT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>TetrisGame</b>
+                  <br />
+                  {tetris
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.tetrisPoint === null ? "없음" : tetrisT + 1 + "등"}
+                        </div>
+                      );
+                    })}
+                  <br />
+                  <b>MineGame</b>
+                  <br />
+                  {mine
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      return (
+                        <div key={i}>
+                          {v.minePoint === null ? "없음" : mineT + 1 + "등"}
+                        </div>
+                      );
+                    })}
                 </div>
               </Container>
             </div>

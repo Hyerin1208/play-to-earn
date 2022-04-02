@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import ReactLoaing from "react-loading";
 
-import CommonSection from "../ui/CommonSection";
-import NftCard from "../ui/NftCard";
+import CommonSection from "../../ui/templete/CommonSection";
+import NftCard from "../../ui/templete/NftCard";
 
 import { Container, Row, Col } from "reactstrap";
-import { NFT__DATA } from "../../assets/data/data";
+import { NFT__DATA } from "../../../assets/data/data";
 
 import "./market.css";
 import { useSelector } from "react-redux";

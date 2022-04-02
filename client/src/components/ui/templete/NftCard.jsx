@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import "./nft-card.css";
-import Modal from "./Modal";
+import Modal from "../templete/Modal";
 import { Col, Row } from "reactstrap";
-import NftDetails from "../pages/NftDetails";
+import NftDetails from "../../pages/Market/NftDetails";
 import { Routes, Route, Link, useParams } from "react-router-dom";
 
 const NftCard = (props) => {

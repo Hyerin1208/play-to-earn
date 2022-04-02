@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import user__bg from "../../../assets/images/user_bg.png";
 
-import NftCard from "../NftCard";
+import NftCard from "../templete/NftCard";
 import ReactLoaing from "react-loading";
 
 import "./edit-profile.css";

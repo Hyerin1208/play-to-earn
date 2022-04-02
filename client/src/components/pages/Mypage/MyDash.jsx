@@ -1,6 +1,6 @@
 import React from "react";
-import SideBar from "../ui/dashboard/SideBar";
-import MainContent from "../ui/dashboard/MainContent";
+import SideBar from "../../ui/dashboard/SideBar";
+import MainContent from "../../ui/dashboard/MainContent";
 import { Container } from "reactstrap";
 
 const MyDash = () => {

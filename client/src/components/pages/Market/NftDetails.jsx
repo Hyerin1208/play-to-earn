@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
-import LiveList from "../ui/LiveList";
+import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
 
 import "./nft-details.css";

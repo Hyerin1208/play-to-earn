@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import NftCard from "../NftCard";
+import NftCard from "../templete/NftCard";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
