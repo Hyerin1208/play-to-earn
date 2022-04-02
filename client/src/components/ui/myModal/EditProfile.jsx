@@ -12,6 +12,8 @@ import { NFT__DATA } from "../../../assets/data/data";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import "./edit-profile.css";
+
 const EditProfile = ({ setShowModal }) => {
   const [seletedImg, setSelectedImg] = useState(NFT__DATA[0]);
 
@@ -33,7 +35,7 @@ const EditProfile = ({ setShowModal }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [CreateNFTContract]);
+  }, []);
 
   //내 nft 리스트
   async function mynftlists() {
@@ -73,7 +75,7 @@ const EditProfile = ({ setShowModal }) => {
     }
   }
 
-  // console.log(nftArray[0].fileUrl);
+  const onSelect = async () => {};
 
   if (Loading) {
     return (
@@ -85,42 +87,50 @@ const EditProfile = ({ setShowModal }) => {
   } else {
     return (
       <div className="nft_wrapper">
-        <div className="single_modal">
+        <div className="mySingle_modal">
           <span className="close_modal">
             <i
               className="ri-close-line"
               onClick={() => setShowModal(false)}
             ></i>
           </span>
-          <h6 className="text-center text-light">Change your NFT</h6>
-          <p className="text-center text-light">Buy. Sell. Collect.</p>
+          <h5 className="text-center text-light">Change your NFT</h5>
+          <br />
+          {/* <p className="text-center text-light">Buy. Sell. Collect.</p> */}
 
           <div className="box__myNft">
             <div className="mynft__list">
               <Container className="images__box">
                 <Row>
-                  {/* <Col lg="6" md="4" sm="2"> */}
+                  {/* */}
                   {/* <NftCard item={item} /> */}
-                  {/* </Col> */}
-                  {/* <img
+
+                  <img
                     src={nftArray[0].fileUrl}
                     alt="Selected"
                     className="selected"
-                  /> */}
+                  />
+
                   <div className="img__Container">
-                    {/* {nftArray.map((img, index) => (
-                      <img
-                        key={index}
-                        src={img.fileUrl}
-                        alt="nfts"
-                        onClick={() => setSelectedImg(img)}
-                        style={{
-                          border: seletedImg === img ? "4px solid purple" : "",
-                        }}
-                      />
-                    ))} */}
+                    {nftArray.map((img, index) => (
+                      <Col lg="2" md="4" sm="2">
+                        <img
+                          key={index}
+                          src={img.fileUrl}
+                          alt="nfts"
+                          onClick={() => setSelectedImg(img)}
+                          style={{
+                            border:
+                              seletedImg === img ? "4px solid purple" : "",
+                          }}
+                        />
+                      </Col>
+                    ))}
                   </div>
                 </Row>
+                <button className="selected__btn" onClick={() => onSelect()}>
+                  Selected
+                </button>
               </Container>
             </div>
           </div>

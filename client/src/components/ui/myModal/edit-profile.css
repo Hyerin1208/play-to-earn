@@ -9,12 +9,12 @@
   display: flex;
 }
 
-.editpfp_modal {
+.mySingle_modal {
   position: relative;
-  top: 55%;
-  left: 45%;
-  width: 560px;
-  max-height: 500px;
+  top: 52%;
+  left: 50%;
+  width: 860px;
+  max-height: 680px;
   transform: translate(-50%, -50%);
   background: rgb(28, 20, 37) !important;
   border-radius: 5px;
@@ -130,7 +130,8 @@
   cursor: pointer;
 }
 
-.closed_modal {
+.close_modal {
+  margin-right: 10px;
 }
 
 /* 여기서부터 기존 my-nfts */
@@ -278,6 +279,11 @@
   margin: auto;
   width: 100%;
   max-width: 500px;
+  border-radius: 50px;
+}
+
+.images__box img {
+  border-radius: 50px;
 }
 
 .images__box .selected {
@@ -292,11 +298,35 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 40px 0 0 0;
+  padding: 20px 0 0 0;
 }
 
 .images__box .img__Container img {
   width: 100px;
   height: 100px;
   margin: 5px 0;
+}
+
+.selected__btn {
+  display: flex;
+  align-items: center;
+  width: 120px;
+  border: none;
+  outline: none;
+  padding: 5px 22px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 0.9rem;
+  background-color: #5142fc;
+  color: white;
+  border-radius: 50px;
+  transition: 0.3s;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-left: 40%;
+}
+
+.selected__btn:hover {
+  color: white;
+  background-color: #5242fc63;
 }

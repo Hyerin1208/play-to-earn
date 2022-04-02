@@ -219,7 +219,14 @@ const Create = () => {
                 </form>
               </div>
             </Col>
-            <button className="create__btn" onClick={() => CreateNFT()}>
+
+            <button
+              className="create__btn"
+              onClick={async () => {
+                await CreateNFT();
+                window.location.href = "http://localhost:3000/market";
+              }}
+            >
               <span>
                 <i className="ri-edit-line"></i>
                 Create
