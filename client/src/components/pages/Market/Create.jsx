@@ -8,7 +8,7 @@ import "./create.css";
 
 ////////////////////////////////////////////////////////////////////
 /* 아래는 임시데이터와 img + 카드구조 & css */
-import CommonSection from "../../ui/ ";
+import CommonSection from "../../ui/templete/CommonSection";
 import NftCard from "../../ui/templete/NftCard";
 import { updateLists } from "../../../redux/actions/index";
 
