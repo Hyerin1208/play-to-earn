@@ -31,7 +31,7 @@ const MainContent = () => {
     return (
       <React.Fragment>
         <div className="main__dash">
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="sub__container">
             <div className="section__one">
               <Col className="col__one1">
