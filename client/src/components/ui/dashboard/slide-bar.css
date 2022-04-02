@@ -1,12 +1,12 @@
 .slide__container {
   width: 25%;
-  height: 100% !important;
+  height: 108% !important;
   border-radius: 2rem;
   background-color: #340c4e91;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.7rem;
+  gap: 2rem;
   margin-top: 24px;
 }
 
@@ -16,6 +16,9 @@
   margin-top: 50px;
   align-items: center;
   flex-direction: column;
+}
+
+.select__pfp {
 }
 
 .pfp__iamge {
@@ -37,8 +40,19 @@
   margin: 7.8rem 0 0.5rem 0;
 }
 
-.myBset__ranking {
-  margin: 3.8rem 0 0 0;
+.myBest__ranking {
+  margin: 2.2rem 0 0 0;
+}
+
+.my__Badge {
+  width: 120px;
+  height: 40px;
+}
+
+.my__Badge p {
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .link__conatainer {
@@ -61,11 +75,11 @@
   width: 140px;
   background-color: #180425b0;
   color: white;
-  margin: 1rem 1rem 0.2rem 2rem;
+  margin: 0.8rem 1rem 0.2rem 2rem;
   color: #4938ff;
   font: bold;
   padding: 0.4rem;
-  border: 1.5px solid #79797986;
+  border: 1.4px solid #79797986;
   border-radius: 6px;
   transition-duration: 0.5s;
   animation: ease-in-out;
