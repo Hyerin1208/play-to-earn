@@ -101,7 +101,7 @@ button {
   justify-content: center;
   background: linear-gradient(279deg, #050818, #390e32);
   height: 120px;
-  width: 280px;
+  width: 320px;
   color: #d742fc;
   text-shadow: 1px 1px 7px;
   border-radius: 15px;
@@ -115,4 +115,13 @@ button {
   justify-content: center;
   align-items: center;
   padding: 1rem;
+}
+
+.clock div p {
+  font-size: 1.3rem;
+}
+
+.clock div small {
+  color: silver;
+  text-shadow: none;
 }
