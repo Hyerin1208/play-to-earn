@@ -1,14 +1,14 @@
 .Ranking__container {
   padding: 15px;
   text-align: center;
-  width: 50%;
+  width: 70%;
   background: #343444;
   cursor: pointer;
   border-bottom: 1px solid #343444;
   box-sizing: content-box;
   position: relative;
   outline: none;
-  margin-left: 25%;
+  margin-left: 14%;
   margin-top: 2.5%;
 }
 
@@ -81,4 +81,38 @@ button {
 }
 .active-content {
   display: block;
+}
+
+.time__limit {
+  text-align: center;
+  height: 62vh;
+  background-color: #14141f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.clock {
+  position: relative;
+  margin: a;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(279deg, #050818, #390e32);
+  height: 120px;
+  width: 280px;
+  color: #d742fc;
+  text-shadow: 1px 1px 7px;
+  border-radius: 15px;
+  border: 2px solid #050818;
+  box-shadow: 0 0 4px 7px;
+}
+
+.clock div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
