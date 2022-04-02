@@ -68,19 +68,19 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res) => {
   const users = await Ranking.findAll({
-    attributes: ["address", "balance", "claim"],
-    order: [["claim", "desc"]],
+    attributes: ["weeks"],
+    order: [["weeks", "desc"]],
+    limit: 12,
   });
-  const reward = [];
+  const round = [];
 
   for (const user of users) {
-    reward.push({
-      address: user.address,
-      balance: user.balance,
+    round.push({
+      weeks: user.weeks,
     });
   }
 
-  res.json(reward);
+  res.json(round);
 });
 
 module.exports = router;

@@ -10,17 +10,10 @@ const Ranking = () => {
   const account = useSelector((state) => state.AppState.account);
 
   // Claim부분
-  const [balance, setBalance] = useState(0);
-  const [claim, setClaim] = useState(true);
   const [snakeAddress, setSnakeAddress] = useState([]);
   const [puzzleAddress, setPuzzleAddress] = useState([]);
   const [tetrisAddress, setTetrisAddress] = useState([]);
   const [mineAddress, setMineAddress] = useState([]);
-
-  // console.log(snakeAddress);
-  // console.log(puzzleAddress);
-  // console.log(tetrisAddress);
-  // console.log(mineAddress);
 
   const sendReward = async () => {
     await axios
@@ -29,7 +22,6 @@ const Ranking = () => {
         puzzleAddress,
         snakeAddress,
         mineAddress,
-        claim,
       })
       .then((res) => {
         console.log(res.data);
@@ -62,13 +54,21 @@ const Ranking = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // var count = 1;
-  // const timer = setInterval(function () {
-  //   count++;
-  // }, 30 * 60 * 1000);
-  // console.log(timer);
+  const [count, setCount] = useState([]);
 
   useEffect(() => {
+    axios.get(`http://localhost:5000/ranking`).then((response) => {
+      const data = response.data;
+      const weekArray = data.map((data, index) => {
+        const form = {
+          round: data.weeks,
+        };
+        return form;
+      });
+      setCount(weekArray);
+      console.log(weekArray);
+    });
+
     axios
       .get(`http://localhost:5000/game/snake`)
       .then((response) => {
@@ -77,7 +77,7 @@ const Ranking = () => {
 
         const snakeArray = data.map((data, index) => {
           const form = {
-            weeks: 1,
+            weeks: count + 1,
             games: "snakeGame",
             rank: index + 1,
             address: data.address,
@@ -107,7 +107,7 @@ const Ranking = () => {
 
         const puzzleArray = data.map((data, index) => {
           const form = {
-            weeks: 1,
+            weeks: count + 1,
             games: "puzzleGame",
             rank: index + 1,
             address: data.address,
@@ -139,7 +139,7 @@ const Ranking = () => {
 
         const mineArray = data.map((data, index) => {
           const form = {
-            weeks: 1,
+            weeks: count + 1,
             games: "mineGame",
             rank: index + 1,
             address: data.address,
@@ -170,7 +170,7 @@ const Ranking = () => {
 
         const tetrisArray = data.map((data, index) => {
           const form = {
-            weeks: 1,
+            weeks: count + 1,
             games: "tetrisGame",
             rank: index + 1,
             address: data.address,
@@ -336,7 +336,14 @@ const Ranking = () => {
                       })}
                   </div>
                 </div>
-                <button type="submit" onClick={sendReward}>
+                {/* <input
+                  type="number"
+                  onChange={(e) => {
+                    plusCount(e.target.value);
+                    console.log("c", count);
+                  }}
+                ></input> */}
+                <button type="submit" onClick={sendReward()}>
                   SEND RANKING DB
                 </button>
               </Container>
