@@ -72,15 +72,15 @@ router.get("/", async (req, res) => {
     order: [["weeks", "desc"]],
     limit: 12,
   });
-  const round = [];
+  const count = [];
 
   for (const user of users) {
-    round.push({
+    count.push({
       weeks: user.weeks,
     });
   }
 
-  res.json(round);
+  res.json(count);
 });
 
 module.exports = router;

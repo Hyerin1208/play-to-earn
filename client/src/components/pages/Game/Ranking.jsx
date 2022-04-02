@@ -61,7 +61,7 @@ const Ranking = () => {
       const data = response.data;
       const weekArray = data.map((data, index) => {
         const form = {
-          round: data.weeks,
+          count: data.weeks,
         };
         return form;
       });
