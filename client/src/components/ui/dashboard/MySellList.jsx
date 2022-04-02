@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "reactstrap";
-import { motion } from "framer-motion";
+
 import ReactLoaing from "react-loading";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -11,26 +11,13 @@ import NftCard from "../templete/NftCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const MySlick = () => {
+import "./my-sellList.css";
+
+const MySellList = () => {
   const [nftArray, setnftArray] = useState([]);
-  // const Selllists = useSelector((state) => state.AppState.Selllists);
+
   const [Loading, setLoading] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
-  // const [NFTimage, setNFTimage] = useState("");
-  // const [NFTname, setNFTname] = useState("");
-  // const [NFTdesc, setNFTdesc] = useState("");
-
-  // const [form, setForm] = useState({
-  //   fileUrl: fileUrl,
-  //   formInput: {
-  //     id: "",
-  //     price: "",
-  //     name: "",
-  //     description: "",
-  //   },
-  // });
-
-  // console.log(nftArray);
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -38,17 +25,17 @@ const MySlick = () => {
   );
 
   useEffect(() => {
-    mynftlists();
+    userselllists();
     setLoading(null);
   }, [CreateNFTContract]);
 
-  //내 nft 리스트
-  async function mynftlists() {
+  //유저(내가) 판매하는 nft 리스트
+  async function userselllists() {
     if ((await CreateNFTContract) === null) {
       setLoading(true);
     } else {
       const lists = await CreateNFTContract.methods
-        .MyNFTlists()
+        .UserSelllists()
         .call({ from: Account }, (error) => {
           if (!error) {
             console.log("send ok");
@@ -101,7 +88,7 @@ const MySlick = () => {
     );
   } else {
     return (
-      <div>
+      <div className="myselllist__box">
         {/* <button onClick={() => mynftlists()}>마이리스트</button> */}
         <div className="slick-arrow">
           <Slider {...settings} style={{ width: 900 }}>
@@ -129,4 +116,4 @@ const MySlick = () => {
   }
 };
 
-export default MySlick;
+export default MySellList;

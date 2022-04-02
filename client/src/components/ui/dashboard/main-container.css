@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-bottom: 50px;
 }
 
 .section__one {
@@ -29,7 +30,8 @@
 .section__two {
   display: flex;
   gap: 2rem;
-  height: 50vh;
+  height: 100vh;
+  margin-bottom: 500px;
 }
 
 .col__one1 {

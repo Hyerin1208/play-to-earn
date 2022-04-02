@@ -1,12 +1,12 @@
 .slide__container {
   width: 25%;
-  height: 100% !important;
+  height: 108% !important;
   border-radius: 2rem;
   background-color: #340c4e91;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.7rem;
+  gap: 2rem;
   margin-top: 24px;
 }
 
@@ -18,14 +18,42 @@
   flex-direction: column;
 }
 
+.profile__pic {
+  margin-bottom: 10px;
+}
+
 .pfp__iamge {
   width: 120px;
   background: rgb(255, 255, 255);
   border-radius: 50%;
   padding: 5px;
   display: flex;
-  position: absolute;
   object-fit: contain;
+  position: relative;
+  z-index: 3333;
+}
+
+#select__pfp {
+  width: 120px;
+  height: 123px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -7.9%;
+  background-color: #5242fc8c;
+  z-index: 444;
+  color: #ffffff;
+}
+
+.pfp__iamge:hover {
+  z-index: 222;
+  background-color: #5242fc8c transparent;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.select__label {
+  /* width: 100px; */
+  /* margin: 40px 10px; */
+  border-radius: 50%;
   position: relative;
 }
 
@@ -37,8 +65,19 @@
   margin: 7.8rem 0 0.5rem 0;
 }
 
-.myBset__ranking {
-  margin: 0.5rem 0 0 0;
+.myBest__ranking {
+  margin: 2.2rem 0 0 0;
+}
+
+.my__Badge {
+  width: 120px;
+  height: 40px;
+}
+
+.my__Badge p {
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .link__conatainer {
@@ -61,11 +100,11 @@
   width: 140px;
   background-color: #180425b0;
   color: white;
-  margin: 1rem 1rem 0.2rem 2rem;
+  margin: 0.8rem 1rem 0.2rem 2rem;
   color: #4938ff;
   font: bold;
   padding: 0.4rem;
-  border: 1.5px solid #79797986;
+  border: 1.4px solid #79797986;
   border-radius: 6px;
   transition-duration: 0.5s;
   animation: ease-in-out;
@@ -204,4 +243,56 @@
 .visible__btn:hover {
   background-color: #5142fc;
   color: #fff;
+}
+
+@media only screen and (max-width: 1440px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -8.4%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -11.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -15.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -27.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
 }

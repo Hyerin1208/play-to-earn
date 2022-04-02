@@ -35,11 +35,15 @@ router.post("/login", async (req, res, next) => {
     attributes: ["nick", "email"],
   });
 
-  console.log(users);
+  // console.log(users);
 
-  const login = { nick: users.nick, email: users.email };
-
-  res.json(login);
+  if (!users) {
+    const login = { nick: "noname", email: "no-email" };
+    res.json(login);
+  } else {
+    const login = { nick: users.nick, email: users.email };
+    res.json(login);
+  }
 });
 
 // 회원정보 수정

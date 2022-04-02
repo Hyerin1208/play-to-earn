@@ -69,23 +69,30 @@ function setRanker(string memory gameName, uint rank) public checkranker(gameNam
             // ArcadeToken.approve(msg.sender, reward[rank]);
             tokenClaim[msg.sender] = true;
     } else if (prevRanker!=msg.sender) {
-for(uint i = 3; i<rank; i--){
-    address prevAddress = gameRanker[gameName][round][i];
-                if (i+1==4){
+        for(uint i = 3; i<rank; i--){
+            address prevAddress = gameRanker[gameName][round][i];
+            if (i+1==4){
                 ArcadeToken.decreaseAllowance(prevAddress,reward[i]-reward[i+1]);
                 tokenClaim[prevAddress] = false;
-                } else {
+            } else {
                 ArcadeToken.decreaseAllowance(prevAddress,reward[i]-reward[i+1]);
-                    gameRanker[gameName][round][i+1]= prevAddress;
-                }
-}
+                gameRanker[gameName][round][i+1]= prevAddress;
+            }
+        }
         gameRanker[gameName][round][rank] = msg.sender;
-            ArcadeToken.increaseAllowance(msg.sender, reward[rank]);
-            // ArcadeToken.approve(msg.sender, reward[rank]);
-            tokenClaim[msg.sender] = true;
+        ArcadeToken.increaseAllowance(msg.sender, reward[rank]);
+        // ArcadeToken.approve(msg.sender, reward[rank]);
+        tokenClaim[msg.sender] = true;
+    }
 }
 
+
+function approveToken(uint amount) public{
+    ArcadeToken.approve(msg.sender,amount);
 }
+  function giveMeToken(uint tokenvalue) public {
+      ArcadeToken.transferFrom(ArcadeToken.getOwner(),msg.sender,tokenvalue);
+  }
 
   function getclaim() public view returns(uint){
       uint result = ArcadeToken.allowance(address(this),msg.sender);
@@ -98,5 +105,8 @@ for(uint i = 3; i<rank; i--){
       ArcadeToken.approve(msg.sender, 0);
   }
 
+function mybalance()public view returns(uint){
+    return ArcadeToken.balanceOf(msg.sender);
+}
 
 }

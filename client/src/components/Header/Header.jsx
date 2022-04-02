@@ -5,9 +5,10 @@ import "./header.css";
 import { Container } from "reactstrap";
 
 import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { updateAccounts, connectFailed } from "../../redux/actions/index";
+import axios from "axios";
 const NAV__LINKS = [
   {
     display: "Home",
@@ -34,12 +35,13 @@ const NAV__LINKS = [
     url: "/test",
   },
 ];
-
 const Header = () => {
   const dispatch = useDispatch();
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
   const [showWalletModal, setShowWalletModal] = useState(false);
   const wallet = useSelector((state) => state.AppState.wallet);
   const [isDisabled, setDisabled] = useState(false);
@@ -61,6 +63,43 @@ const Header = () => {
     };
   }, []);
 
+  async function MyList(account) {
+    if (CreateNFTContract !== null) {
+      const MyNFTlists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: account }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
+          }
+        });
+
+      const listsForm = await Promise.all(
+        MyNFTlists.map(async (i) => {
+          const tokenURI = await CreateNFTContract.methods
+            .tokenURI(i.tokenId)
+            .call();
+          const meta = await axios.get(tokenURI).then((res) => res.data);
+          let item = {
+            fileUrl: await meta.image,
+            formInput: {
+              tokenid: i.tokenId,
+              price: await meta.price,
+              name: await meta.name,
+              description: await meta.description,
+            },
+          };
+          return item;
+        })
+      );
+
+      return await listsForm;
+    } else {
+      return null;
+    }
+  }
+
   useEffect(async () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       if ((await window.ethereum._metamask.isUnlocked()) === true) {
@@ -74,33 +113,35 @@ const Header = () => {
             wallet: true,
             accounts: accounts,
             account: account,
+            MyNFTlists: await MyList(account),
           })
         );
         setAccount(account);
         setDisabled(true);
 
-        await window.ethereum.on("accountsChanged", (accounts) => {
-          console.log(accounts.length);
+        await window.ethereum.on("accountsChanged", async (accounts) => {
           if (accounts.length > 0) {
-            dispatch(
+            setAccount(accounts[0]);
+            setDisabled(true);
+            return dispatch(
               updateAccounts({
                 wallet: true,
                 accounts: accounts,
                 account: accounts[0],
+                MyNFTlists: await MyList(accounts[0]),
               })
             );
-            setAccount(accounts[0]);
-            setDisabled(true);
           } else {
-            dispatch(
+            setAccount("연결이 필요합니다.");
+            setDisabled(false);
+            return dispatch(
               updateAccounts({
                 wallet: false,
                 accounts: null,
                 account: null,
+                MyNFTlists: [],
               })
             );
-            setAccount("연결이 필요합니다.");
-            setDisabled(false);
           }
         });
       } else {
@@ -110,6 +151,7 @@ const Header = () => {
             wallet: false,
             accounts: null,
             account: null,
+            MyNFTlists: [],
           })
         );
         setDisabled(false);
@@ -121,6 +163,7 @@ const Header = () => {
         })
       );
     }
+
     return () => {
       window.ethereum.off("accountsChanged", () => {
         dispatch(
@@ -128,12 +171,13 @@ const Header = () => {
             wallet: false,
             accounts: null,
             account: null,
+            MyNFTlists: [],
           })
         );
         setDisabled(false);
       });
     };
-  }, [account]);
+  }, [dispatch, CreateNFTContract]);
 
   const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
@@ -148,6 +192,7 @@ const Header = () => {
           wallet: true,
           accounts: accounts,
           account: account,
+          MyNFTlists: MyList(account),
         })
       );
       setAccount(account);

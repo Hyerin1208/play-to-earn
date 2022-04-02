@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import "./main-section.css";
 
 // import mainImg from "../../assets/images/Medusa.png";
-import Hero1 from "../../assets/images/mainImg/char.png";
-import Hero2 from "../../assets/images/mainImg/char1.png";
-import Hero3 from "../../assets/images/mainImg/char2.png";
-import Hero4 from "../../assets/images/mainImg/char3.png";
+import Hero1 from "../../../assets/images/mainImg/char.png";
+import Hero2 from "../../../assets/images/mainImg/char1.png";
+import Hero3 from "../../../assets/images/mainImg/char2.png";
+import Hero4 from "../../../assets/images/mainImg/char3.png";
 
 const MainSection = () => {
   const fadeLeft = {

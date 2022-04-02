@@ -5,7 +5,7 @@ import "./walletmodal.css";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
-import { WALLET__DATA } from "../../assets/data/wallet";
+import { WALLET__DATA } from "../../../assets/data/wallet";
 
 const WalletModal = ({ setShowModal }) => {
   return (

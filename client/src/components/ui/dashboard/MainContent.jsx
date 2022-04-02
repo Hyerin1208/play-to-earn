@@ -12,6 +12,7 @@ import MyRanking from "./MyRanking";
 
 import MySlick from "./MySlick";
 import { MyWrapper } from "./MyWrapper";
+import MySellList from "./MySellList";
 
 const MainContent = () => {
   const [Loading, setLoading] = useState(true);
@@ -24,14 +25,14 @@ const MainContent = () => {
     return (
       <div>
         잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
       </div>
     );
   } else {
     return (
       <React.Fragment>
         <div className="main__dash">
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="sub__container">
             <div className="section__one">
               <Col className="col__one1">
@@ -48,6 +49,8 @@ const MainContent = () => {
             <div className="section__two">
               <MyWrapper>
                 <MySlick />
+                <br />
+                <MySellList />
               </MyWrapper>
             </div>
           </div>

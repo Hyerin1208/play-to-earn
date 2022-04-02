@@ -1,5 +1,6 @@
 import CreateNFT from "../../contracts/CreateNFT.json";
 import AmusementArcadeToken from "../../contracts/AmusementArcadeToken.json";
+import TokenClaim from "../../contracts/TokenClaim.json";
 import Web3 from "web3";
 import axios from "axios";
 
@@ -7,6 +8,7 @@ export const APP_STATE = "APP_STATE";
 export const CONNECTION_FAILED = "CONNECTION_FAILED";
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
 export const UPDATE_LISTS = "UPDATE_LISTS";
+export const UPDATE_MYLISTS = "UPDATE_MYLISTS";
 
 export const SET_NFTS = "SET_NFTS";
 export const SELECTED_NFT = "SELECTED_NFT";
@@ -56,9 +58,17 @@ export const selectNfts = (payload) => {
   };
 };
 
+export const updateMyLists = (payload) => {
+  return {
+    type: UPDATE_MYLISTS,
+    payload: payload,
+  };
+};
+
 export function getWeb3() {
   return async (dispatch) => {
     try {
+      // const web3 = new Web3(window.ethereum);
       const web3 = new Web3(rpcurl || "http://127.0.0.1:7545");
       await web3.eth.net
         .isListening()
@@ -66,6 +76,7 @@ export function getWeb3() {
           const networkId = await web3.eth.net.getId();
           const networkData_NFT = CreateNFT.networks[networkId];
           const networkData_Token = AmusementArcadeToken.networks[networkId];
+          const networkData_TokenClaim = TokenClaim.networks[networkId];
           if (networkData_NFT && networkData_Token) {
             const NFT_abi = CreateNFT.abi;
             const NFT_address = networkData_NFT.address;
@@ -73,12 +84,22 @@ export function getWeb3() {
               NFT_abi,
               NFT_address
             );
+            window.web3.CreateNFTContract = CreateNFTContract;
             const Token_abi = AmusementArcadeToken.abi;
             const Token_address = networkData_Token.address;
             const AmusementArcadeTokenContract = new web3.eth.Contract(
               Token_abi,
               Token_address
             );
+            window.web3.AmusementArcadeTokenContract =
+              AmusementArcadeTokenContract;
+            const TokenClaim_abi = TokenClaim.abi;
+            const TokenClaim_address = networkData_TokenClaim.address;
+            const TokenClaimContract = new web3.eth.Contract(
+              TokenClaim_abi,
+              TokenClaim_address
+            );
+            window.web3.TokenClaimContract = TokenClaimContract;
 
             const lists = await CreateNFTContract.methods
               .Selllists()
@@ -113,6 +134,7 @@ export function getWeb3() {
                 network: res,
                 CreateNFTContract: CreateNFTContract,
                 AmusementArcadeTokenContract: AmusementArcadeTokenContract,
+                TokenClaimContract: TokenClaimContract,
                 Selllists: listsForm,
                 errorMsg: "",
               })

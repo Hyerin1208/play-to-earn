@@ -4,6 +4,7 @@ import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
 import pfpImg from "../../../assets/images/img.jpg";
 import ReactLoaing from "react-loading";
+import Badge from "react-bootstrap/Badge";
 
 import axios from "axios";
 
@@ -22,24 +23,6 @@ const SideBar = () => {
     (state) => state.AppState.CreateNFTContract
   );
 
-  const [snake, setSnake] = useState([]);
-  const [snakeT, setSnakeT] = useState(null);
-  const [snakeI, setSnakeI] = useState(null);
-
-  const [puzzle, setPuzzle] = useState([]);
-  const [puzzleT, setPuzzleT] = useState(null);
-  const [puzzleI, setPuzzleI] = useState(null);
-
-  const [mine, setMine] = useState([]);
-  const [mineT, setMineT] = useState(null);
-  const [mineI, setMineI] = useState(null);
-
-  const [tetris, setTetris] = useState([]);
-  const [tetrisT, setTetrisT] = useState(null);
-  const [tetrisI, setTetrisI] = useState(null);
-
-  const [error, setError] = useState(null);
-
   const [EditProfileModal, setEditProfileModal] = useState(false);
 
   useEffect(() => {
@@ -57,78 +40,6 @@ const SideBar = () => {
         })
         .catch((err) => {
           console.log(err);
-        });
-
-      axios
-        .get(`http://localhost:5000/game/snake`)
-        .then((response) => {
-          console.log(response);
-          const data = response.data;
-          setSnake(data);
-          const snakeIndex = data.findIndex((element) => {
-            if (element.address === account) {
-              setSnakeI(element);
-              return true;
-            }
-          });
-          setSnakeT(snakeIndex);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-
-      axios
-        .get(`http://localhost:5000/game/2048`)
-        .then((response) => {
-          console.log(response);
-          const data = response.data;
-          setPuzzle(data);
-          const puzzleIndex = data.findIndex((element) => {
-            if (element.address === account) {
-              setPuzzleI(element);
-              return true;
-            }
-          });
-          setPuzzleT(puzzleIndex);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-
-      axios
-        .get(`http://localhost:5000/game/mine`)
-        .then((response) => {
-          console.log(response);
-          const data = response.data;
-          setMine(data);
-          const mineIndex = data.findIndex((element) => {
-            if (element.address === account) {
-              setMineI(element);
-              return true;
-            }
-          });
-          setMineT(mineIndex);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-
-      axios
-        .get(`http://localhost:5000/game/tetris`)
-        .then((response) => {
-          console.log(response);
-          const data = response.data;
-          setTetris(data);
-          const tetrisIndex = data.findIndex((element) => {
-            if (element.address === account) {
-              setTetrisI(element);
-              return true;
-            }
-          });
-          setTetrisT(tetrisIndex);
-        })
-        .catch((error) => {
-          setError(error);
         });
 
       setLoading(null);
@@ -162,30 +73,27 @@ const SideBar = () => {
     return (
       <div className="slide__container">
         <div className="pfpside__box">
+          {/* 여기부터 프로필 이미지 수정 */}
           <div className="profile__pic">
+            <img
+              className="pfp__iamge"
+              src={pfpImg}
+              id="upload__pfp"
+              // onChange="loadFile(event)"
+              alt="edit"
+            />
             <button id="select__pfp" onClick={() => setEditProfileModal(true)}>
-              <label className="-label">
+              <label className="select__label">
                 <i className="ri-gallery-upload-line"></i>
                 <span>Change Profile</span>
               </label>
-              <img
-                src=""
-                id="upload__pfp"
-                // onChange="loadFile(event)"
-                alt="edit"
-              />
             </button>
             {EditProfileModal && (
               <EditProfile setShowModal={setEditProfileModal} />
             )}
           </div>
 
-          {/* <img
-          className="pfp__iamge"
-          src={pfpImg}
-          alt="pfp"
-          // style={{ position: "absolute", width: "40px" }}
-        /> */}
+          {/* 여기서부터 닉넴 이메일 수정 */}
           <div className="mypfp__Container">
             <div className="nick__pfp" id="nick__pfp">
               {nickname}
@@ -231,11 +139,10 @@ const SideBar = () => {
             {/* Edit */}
           </button>
 
-          <div className="myBset__ranking" content="">
-            My Ranking
-            <div>
-              {(snakeT + 1 + (tetrisT + 1) + (puzzleT + 1) + (mineT + 1)) / 4}등
-            </div>
+          <div className="myBest__ranking" content="">
+            <Badge pill bg="light" text="dark" className="my__Badge">
+              <p>My Ranking</p>
+            </Badge>
           </div>
         </div>
         <div className="link__conatainer">
