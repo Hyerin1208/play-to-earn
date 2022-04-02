@@ -18,7 +18,8 @@
   flex-direction: column;
 }
 
-.select__pfp {
+.profile__pic {
+  margin-bottom: 10px;
 }
 
 .pfp__iamge {
@@ -27,8 +28,32 @@
   border-radius: 50%;
   padding: 5px;
   display: flex;
-  position: absolute;
   object-fit: contain;
+  position: relative;
+  z-index: 3333;
+}
+
+#select__pfp {
+  width: 123px;
+  height: 123px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -10.8%;
+  background-color: #5242fc8c;
+  z-index: 444;
+  color: #ffffff;
+}
+
+.pfp__iamge:hover {
+  z-index: 222;
+  background-color: #5242fc8c transparent;
+  transition: background-color 0.7s ease-in-out;
+}
+
+.select__label {
+  width: 100px;
+  /* margin: 40px 10px; */
+  border-radius: 50%;
   position: relative;
 }
 

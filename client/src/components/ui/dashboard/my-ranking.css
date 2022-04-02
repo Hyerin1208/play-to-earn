@@ -59,14 +59,18 @@
   display: flex;
   align-items: center;
   padding: 2px 4px;
-  border: 1px solid #5142fc;
+  border: 1px solid #14141fbd;
   border-radius: 50px;
-  background-color: #14141f7c;
+  background-color: #5242fcc9;
   color: white;
   justify-content: center;
   align-items: center;
   margin-top: 7px;
   margin-left: 5%;
+}
+
+.get__token:hover {
+  background-color: #5242fc31;
 }
 
 .carousel__card {
