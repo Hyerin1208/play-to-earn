@@ -34,11 +34,11 @@
 }
 
 #select__pfp {
-  width: 123px;
+  width: 120px;
   height: 123px;
   border-radius: 50%;
   position: absolute;
-  margin-top: -10.8%;
+  margin-top: -7.9%;
   background-color: #5242fc8c;
   z-index: 444;
   color: #ffffff;
@@ -47,11 +47,11 @@
 .pfp__iamge:hover {
   z-index: 222;
   background-color: #5242fc8c transparent;
-  transition: background-color 0.7s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .select__label {
-  width: 100px;
+  /* width: 100px; */
   /* margin: 40px 10px; */
   border-radius: 50%;
   position: relative;
@@ -243,4 +243,56 @@
 .visible__btn:hover {
   background-color: #5142fc;
   color: #fff;
+}
+
+@media only screen and (max-width: 1440px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -8.4%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -11.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -15.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 435px) {
+  #select__pfp {
+    width: 120px;
+    height: 123px;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -27.6%;
+    background-color: #5242fc8c;
+    z-index: 444;
+    color: #ffffff;
+  }
 }
