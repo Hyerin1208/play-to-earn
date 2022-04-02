@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container } from "reactstrap";
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -66,6 +66,7 @@ const Ranking = () => {
         return form;
       });
       setCount(weekArray);
+      setLoading(false);
       console.log(weekArray);
     });
 
@@ -343,7 +344,12 @@ const Ranking = () => {
                     console.log("c", count);
                   }}
                 ></input> */}
-                <button type="submit" onClick={sendReward()}>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    sendReward();
+                  }}
+                >
                   SEND RANKING DB
                 </button>
               </Container>
