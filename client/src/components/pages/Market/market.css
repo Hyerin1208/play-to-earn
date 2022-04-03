@@ -11,6 +11,30 @@
   border-radius: 5px;
 }
 
+button .active {
+  background: blue;
+  color: #fff;
+  font-weight: bolder;
+  margin: 0 4px;
+}
+
+.btn__Paginate {
+  margin: 10px 4px;
+  cursor: pointer;
+  font-weight: bolder;
+  border-radius: 8px;
+  background: #343444;
+  color: #fff;
+  border: 2px solid transparent;
+  padding: 5px 10px;
+}
+
+.btnPaginate.active__btn {
+  background: blue;
+  border: 2px solid turquoise;
+  color: #fff;
+}
+
 @media only screen and (max-width: 768px) {
   .all__category__filter select,
   .all__items__filter select,
