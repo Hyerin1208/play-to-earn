@@ -66,8 +66,7 @@ const Ranking = () => {
         return form;
       });
       setCount(weekArray);
-      setLoading(false);
-      console.log(weekArray);
+      setLoading(false)
     });
 
     axios
@@ -75,6 +74,7 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setSnake(data);
+        setLoading(false);
 
         const snakeArray = data.map((data, index) => {
           const form = {
@@ -95,7 +95,6 @@ const Ranking = () => {
           }
         });
         setSnakeT(snakeIndex);
-        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -105,6 +104,8 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/2048`)
       .then((response) => {
         const data = response.data;
+        setPuzzle(data);
+        setLoading(false);
 
         const puzzleArray = data.map((data, index) => {
           const form = {
@@ -118,7 +119,6 @@ const Ranking = () => {
         });
         setPuzzleAddress(puzzleArray);
 
-        setPuzzle(data);
         const puzzleIndex = data.findIndex((element) => {
           if (element.address === account) {
             setPuzzleI(element);
@@ -126,7 +126,6 @@ const Ranking = () => {
           }
         });
         setPuzzleT(puzzleIndex);
-        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -137,6 +136,7 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setMine(data);
+        setLoading(false);
 
         const mineArray = data.map((data, index) => {
           const form = {
@@ -157,7 +157,6 @@ const Ranking = () => {
           }
         });
         setMineT(mineIndex);
-        setLoading(false);
       })
       .catch((error) => {
         setError(error);
@@ -168,6 +167,7 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setTetris(data);
+        setLoading(false);
 
         const tetrisArray = data.map((data, index) => {
           const form = {
@@ -385,7 +385,7 @@ const Ranking = () => {
                     .map((v, i) => {
                       return (
                         <div key={i}>
-                          {v.snakePoint === null ? "None" : snakeT + 1 + "등"}
+                          {snakeI === null ? "None" : snakeT + 1 + "등"}
                         </div>
                       );
                     })}
@@ -399,7 +399,7 @@ const Ranking = () => {
                     .map((v, i) => {
                       return (
                         <div key={i}>
-                          {v.puzzlePoint === null ? "None" : puzzleT + 1 + "등"}
+                          {puzzleI === null ? "None" : puzzleT + 1 + "등"}
                         </div>
                       );
                     })}
@@ -413,7 +413,11 @@ const Ranking = () => {
                     .map((v, i) => {
                       return (
                         <div key={i}>
-                          {v.tetrisPoint === null ? "None" : tetrisT + 1 + "등"}
+                          {v.tetrisPoint === null
+                            ? "None"
+                            : tetrisI === null
+                            ? "None"
+                            : tetrisT + 1 + "등"}
                         </div>
                       );
                     })}
@@ -427,7 +431,7 @@ const Ranking = () => {
                     .map((v, i) => {
                       return (
                         <div key={i}>
-                          {v.minePoint === null ? "None" : mineT + 1 + "등"}
+                          {mineI === null ? "None" : mineT + 1 + "등"}
                         </div>
                       );
                     })}
