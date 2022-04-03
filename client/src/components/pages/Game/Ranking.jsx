@@ -191,13 +191,13 @@ const Ranking = () => {
                 >
                   <h2>Overall Ranking</h2>
                   <hr />
-                  <Container>
+                  <Container className="my__rank">
                     <div className="ranking__box">
                       {/* {loading ? (
                   <strong> loading... </strong>
                 ) : ( */}
-                      <div>
-                        <b>SnakeGame</b>
+                      <ul>
+                        <li>SnakeGame</li>
                         <br />
                         {snake
                           .filter((v, i) => {
@@ -223,7 +223,7 @@ const Ranking = () => {
                           })}
 
                         <br />
-                        <b>TetrisGame</b>
+                        <li>TetrisGame</li>
                         <br />
                         {tetris
                           .filter((v, i) => {
@@ -249,7 +249,7 @@ const Ranking = () => {
                           })}
 
                         <br />
-                        <b>2048Game</b>
+                        <li>2048Game</li>
                         <br />
                         {puzzle
                           .filter((v, i) => {
@@ -274,7 +274,7 @@ const Ranking = () => {
                             );
                           })}
                         <br />
-                        <b>MineGame</b>
+                        <li>MineGame</li>
                         <br />
                         {mine
                           .filter((v, i) => {
@@ -298,7 +298,7 @@ const Ranking = () => {
                               </p>
                             );
                           })}
-                      </div>
+                      </ul>
                       {/* )} */}
                     </div>
                   </Container>
