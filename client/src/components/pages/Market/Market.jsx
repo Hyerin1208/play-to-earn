@@ -162,6 +162,7 @@ const Market = () => {
                       : index === currentIndex / quantityPageRef.current &&
                         "active__btn"
                   }`}
+                  key={index}
                   onClick={() => handlePagination(index)}
                 >
                   {index + 1}
