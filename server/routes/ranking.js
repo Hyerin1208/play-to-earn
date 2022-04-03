@@ -63,13 +63,13 @@ router.post("/", async (req, res, next) => {
     const findAddress = await Ranking.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
-      attributes: ["address", "games", "claim"],
+      attributes: ["address", "games", "rank", "claim"],
     });
 
     if (findAddress) {
       Ranking.update(
-        { snakePoint: point, claim: findUser.claim },
-        { where: { address: account } }
+        { claim: findUser.claim },
+        { where: { address: account, games: games, rank: rank } }
       );
     }
 
