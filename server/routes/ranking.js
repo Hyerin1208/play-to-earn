@@ -3,8 +3,8 @@ var router = express.Router();
 const { Ranking, User } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { snakeAddress, tetrisAddress, puzzleAddress, mineAddress } = req.body;
-  console.log(req.body);
+  const { snakeAddress, tetrisAddress, puzzleAddress, mineAddress, claim } =
+    req.body;
 
   try {
     snakeAddress
@@ -59,6 +59,20 @@ router.post("/", async (req, res, next) => {
           balance: data.balance[index],
         });
       });
+
+    const findAddress = await Ranking.findOne({ where: { address: account } });
+    const findUser = await User.findOne({
+      where: { address: account },
+      attributes: ["address", "games", "claim"],
+    });
+
+    if (findAddress) {
+      Ranking.update(
+        { snakePoint: point, claim: findUser.claim },
+        { where: { address: account } }
+      );
+    }
+
     res.json({ message: "Ranking Send success!" });
   } catch (error) {
     console.error(error);
