@@ -35,7 +35,7 @@
 
 #select__pfp {
   width: 120px;
-  height: 123px;
+  height: 124px;
   border-radius: 50%;
   position: absolute;
   margin-top: -7.9%;
@@ -47,12 +47,13 @@
 .pfp__iamge:hover {
   z-index: 222;
   background-color: #5242fc8c transparent;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 1s ease-in-out;
 }
 
 .select__label {
-  /* width: 100px; */
-  /* margin: 40px 10px; */
+  width: 120px;
+  height: 400px;
+  padding: 40px 10px;
   border-radius: 50%;
   position: relative;
 }

@@ -167,19 +167,19 @@ const Ranking = () => {
                   className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(1)}
                 >
-                  종합랭킹
+                  Overall Ranking
                 </button>
                 <button
                   className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(2)}
                 >
-                  주간랭킹
+                  Weekly Ranking
                 </button>
                 <button
                   className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(3)}
                 >
-                  MY랭킹
+                  My Ranking
                 </button>
               </div>
 
@@ -189,7 +189,7 @@ const Ranking = () => {
                     toggleState === 1 ? "content  active-content" : "content"
                   }
                 >
-                  <h2>종합랭킹</h2>
+                  <h2>Overall Ranking</h2>
                   <hr />
                   <Container>
                     <div className="ranking__box">
@@ -309,7 +309,7 @@ const Ranking = () => {
                     toggleState === 2 ? "content  active-content" : "content"
                   }
                 >
-                  <h2>주간랭킹</h2>
+                  <h2>Weekly Ranking</h2>
                   <hr />
                   <Container>
                     <div className="ranking__box">
@@ -323,11 +323,11 @@ const Ranking = () => {
                     toggleState === 3 ? "content  active-content" : "content"
                   }
                 >
-                  <h2>나의랭킹</h2>
+                  <h2>My Ranking</h2>
                   <hr />
-                  <Container>
-                    <div>
-                      <b>SnakeGame</b>
+                  <Container className="my__rank">
+                    <ul>
+                      <li>SnakeGame</li>
                       <br />
                       {snake
                         .filter((v, i) => {
@@ -343,7 +343,7 @@ const Ranking = () => {
                           );
                         })}
                       <br />
-                      <b>2048Game</b>
+                      <li>2048Game</li>
                       <br />
                       {puzzle
                         .filter((v, i) => {
@@ -359,7 +359,7 @@ const Ranking = () => {
                           );
                         })}
                       <br />
-                      <b>TetrisGame</b>
+                      <li>TetrisGame</li>
                       <br />
                       {tetris
                         .filter((v, i) => {
@@ -375,7 +375,7 @@ const Ranking = () => {
                           );
                         })}
                       <br />
-                      <b>MineGame</b>
+                      <li>MineGame</li>
                       <br />
                       {mine
                         .filter((v, i) => {
@@ -388,14 +388,13 @@ const Ranking = () => {
                             </div>
                           );
                         })}
-                    </div>
+                    </ul>
                   </Container>
                 </div>
               </div>
             </Col>
             <Col className="time__limit" lg="4" md="3" sm="3">
               <h4>Time Limit</h4>
-              <p>You've reached your limit</p>
               <Clock
                 className="clock__box"
                 timerDays={timerDays}
