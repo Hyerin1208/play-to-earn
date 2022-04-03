@@ -25,7 +25,7 @@ const Ranking = () => {
       })
       .then((res) => {
         console.log(res.data);
-        alert("토큰 클레임 완료");
+        alert("DB 전송 완료");
       });
   };
 
