@@ -45,14 +45,24 @@ const MainContent = () => {
                 <MyLikes />
               </Col>
             </div>
-
-            <div className="section__two">
-              <MyWrapper>
-                <MySlick />
-                <br />
-                <MySellList />
-              </MyWrapper>
-            </div>
+            <Row>
+              {/* 내가 소유하고 있는 NFTs */}
+              <h4>Collected</h4>
+              <br />
+              <div className="section__two">
+                <MyWrapper>
+                  <MySlick />
+                </MyWrapper>
+              </div>
+              {/* 내가 만든 NFTs */}
+              <h4>Created</h4>
+              <br />
+              <div className="section__two">
+                <MyWrapper>
+                  <MySellList />
+                </MyWrapper>
+              </div>
+            </Row>
           </div>
         </div>
       </React.Fragment>

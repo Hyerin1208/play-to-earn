@@ -1,6 +1,6 @@
 .slide__container {
   width: 25%;
-  height: 108% !important;
+  height: 68% !important;
   border-radius: 2rem;
   background-color: #340c4e91;
   display: flex;
@@ -35,7 +35,7 @@
 
 #select__pfp {
   width: 120px;
-  height: 123px;
+  height: 124px;
   border-radius: 50%;
   position: absolute;
   margin-top: -7.9%;
@@ -47,12 +47,13 @@
 .pfp__iamge:hover {
   z-index: 222;
   background-color: #5242fc8c transparent;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 1s ease-in-out;
 }
 
 .select__label {
-  /* width: 100px; */
-  /* margin: 40px 10px; */
+  width: 120px;
+  height: 150px;
+  padding: 40px 10px;
   border-radius: 50%;
   position: relative;
 }
@@ -170,11 +171,15 @@
 }
 
 .mypfp__Container .nick__pfp {
-  margin-left: 10%;
+  text-align: center;
+  width: 100px;
 }
 
 .mypfp__Container .email__pfp {
-  margin-left: 10%;
+  text-align: center;
+  width: 100px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
 }
 
 .edit__name {

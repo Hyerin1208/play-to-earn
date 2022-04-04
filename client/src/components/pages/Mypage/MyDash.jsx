@@ -8,10 +8,10 @@ const MyDash = () => {
     <Container
       style={{
         display: "flex",
-        height: " 87vh",
+        height: " 120vh",
         background: "linear-gradient(to bottom right, white 0%, # e6e4ff 70%)",
         borderRadius: "2rem",
-        marginBottom: "100px",
+        marginBottom: "480px",
       }}
     >
       <SideBar />

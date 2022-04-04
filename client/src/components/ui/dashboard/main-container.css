@@ -2,7 +2,7 @@
 @import "slick-carousel/slick/slick-theme.css";
 
 .main__dash {
-  width: 80%;
+  width: 100%;
   background: linear-gradient(to bottom right, #343434 0% right, #e6e4ff 70%);
   border-bottom-right-radius: 2rem;
   border-top-right-radius: 2rem;
@@ -11,18 +11,18 @@
 
 .sub__container {
   margin: 0.5rem 0;
-  height: 100%;
+  height: 200%;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .section__one {
   display: flex;
   justify-content: space-between;
-  height: 30%;
+  height: 10.4%;
   gap: 1rem;
   width: 100%;
 }
@@ -30,8 +30,8 @@
 .section__two {
   display: flex;
   gap: 2rem;
-  height: 100vh;
-  margin-bottom: 500px;
+  height: 350%;
+  /* margin-bottom: 500px; */
 }
 
 .col__one1 {

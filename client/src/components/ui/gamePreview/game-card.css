@@ -26,7 +26,7 @@
 .card__body {
   text-align: center;
   width: 100%;
-  height: 280px;
+  height: 250px;
 }
 
 .gameCard__title {
@@ -101,6 +101,11 @@
   .gameCard__wrapper {
     width: 50%;
     height: 60%;
+  }
+
+  .single__game__card {
+    width: 100%;
+    font-size: 0.8rem;
   }
 
   .gameCard__title {
