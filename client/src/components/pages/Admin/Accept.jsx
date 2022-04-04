@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Carousel from "react-elastic-carousel";
+import { Col, Row } from "reactstrap";
 
 import "./accept.css";
 
@@ -13,21 +14,18 @@ const Accept = () => {
               <div className="winner__chart">{/* Snake */}</div>
               <div className="earing__text">
                 <div className="token__mybox">Snake Game Winner</div>
+
                 <div className="winner__box">
-                  <ul>
-                    <li>
-                      <p>user1 address</p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <p>user2 address</p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <p>user3 address</p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                  </ul>
+                  <p>user1 address</p>
+                  <button className="accept__btn">signed</button>
+                </div>
+                <div className="winner__box">
+                  <p>user2 address</p>
+                  <button className="accept__btn">signed</button>
+                </div>
+                <div className="winner__box">
+                  <p>user3 address</p>
+                  <button className="accept__btn">signed</button>
                 </div>
               </div>
             </div>
