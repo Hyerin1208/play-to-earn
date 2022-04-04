@@ -37,12 +37,13 @@
 .myrank__text {
   text-align: center;
   font-weight: normal;
+  font-size: 0.9rem;
   padding: 0.4rem 0;
 }
 
 .rank__mybox {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: normal;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.2);
@@ -50,7 +51,7 @@
 
 .rank__mybox span {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-left: 20px;
 }
 

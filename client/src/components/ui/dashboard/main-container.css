@@ -22,7 +22,7 @@
 .section__one {
   display: flex;
   justify-content: space-between;
-  height: 10.4%;
+  height: 11%;
   gap: 1rem;
   width: 100%;
 }
