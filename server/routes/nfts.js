@@ -26,13 +26,18 @@ router.post("/like", async (req, res, next) => {
       where: { tokenId: req.body.tokenId },
     });
     const user = await User.findOne({ where: { address: req.body.account } });
+    console.log(nft);
+    console.log(user);
 
     const getlike = await Likes.findOne({
       where: { address: req.body.account },
     });
 
-    if (!getlike) {
+    console.log(getlike);
+
+    if (getlike === null) {
       await nft.addLiker(user);
+      console.log("여기???");
       await Nfts.update(
         { likes: nft.likes + 1 },
         {
@@ -50,26 +55,6 @@ router.post("/like", async (req, res, next) => {
       );
       res.json({ message: "no" });
     }
-
-    // const nft = await Nfts.findOne({
-    //   where: { tokenId: req.body.tokenId },
-    // });
-    // const user = await User.findOne({ where: { address: req.body.account } });
-
-    // await nft.addLiker(user);
-
-    // const nfts = await Nfts.findOne({
-    //   where: { tokenId: req.body.tokenId },
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ["id", "address"],
-    //       as: "Liker",
-    //     },
-    //   ],
-    // });
-
-    // res.json({ message: "ok" });
   }
 });
 
