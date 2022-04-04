@@ -43,7 +43,6 @@ const Ranking = () => {
   const [puzzle, setPuzzle] = useState([]);
   const [puzzleT, setPuzzleT] = useState(null);
   const [puzzleI, setPuzzleI] = useState([]);
-  const [myPuzzle, setMyPuzzle] = useState([]);
 
   const [mine, setMine] = useState([]);
   const [mineT, setMineT] = useState(null);
@@ -54,7 +53,10 @@ const Ranking = () => {
   const [tetrisI, setTetrisI] = useState([]);
 
   const [error, setError] = useState(null);
-  const [count, setCount] = useState([]);
+  const [count, setCount] = useState(0);
+
+  console.log("v", count);
+  console.log("s", snakeAddress);
 
   useEffect(() => {
     axios
@@ -82,6 +84,10 @@ const Ranking = () => {
           return form;
         });
         setSnakeAddress(snakeArray);
+        const round = snakeArray.map((v, i) => {
+          setCount(v.weeks + 1);
+          return;
+        });
       })
       .catch((error) => {
         setError(error);
@@ -310,7 +316,7 @@ const Ranking = () => {
                                 {v === undefined
                                   ? "없음"
                                   : v.minePoint === null
-                                  ? "없음"
+                                  ? ""
                                   : v.nick}
                                 &nbsp;
                                 {v === undefined

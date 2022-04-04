@@ -169,6 +169,9 @@ router.get("/2048", async (req, res) => {
 // MineGame
 router.get("/mine", async (req, res) => {
   const users = await Game.findAll({
+    // where: {
+    //   minePoint: { [Op.ne]: null },
+    // },
     attributes: ["nick", "minePoint", "address"],
     order: [["minePoint", "asc"]],
   });
