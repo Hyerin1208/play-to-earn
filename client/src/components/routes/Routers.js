@@ -15,12 +15,14 @@ import Ranking from "../pages/Game/Ranking";
 import Test from "../pages/Test";
 import Error from "../ui/templete/Error404";
 import JoinUs from "../ui/register/JoinUs";
+import Admin from "../pages/Admin/Admin";
 
 const Routers = () => {
   return (
     <Fragment>
       <Routes>
         <Route path="/*" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/market" element={<Market />} />
         <Route path="/detailes/:card_id" element={<NftDetails />} />
         <Route path="/create" element={<Create />} />
