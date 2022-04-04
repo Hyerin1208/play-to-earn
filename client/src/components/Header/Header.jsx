@@ -292,7 +292,12 @@ const Header = () => {
             <img
               src={logoPng}
               alt=""
-              style={{ width: "60px", height: "55px", marginLeft: "10%" }}
+              style={{
+                width: "60px",
+                height: "50px",
+                marginLeft: "10%",
+                marginBottom: "10px",
+              }}
             />
           </div>
 

@@ -40,9 +40,9 @@ const AirDrop = () => {
   return (
     <>
       <div className="content-wrapper">
-        <h1 className="drop__title">작명소NFT Drop Coming Soon!!</h1>
+        <h1 className="drop__title">Naming Center NFT Drop Coming Soon!!</h1>
         <p className="drop__nft" id="new-nft">
-          A new batch of 작명소 nft will be available very soon!
+          A new batch of Naming Center nft will be available very soon!
         </p>
         <div className="timer">
           <div className="timer-box">

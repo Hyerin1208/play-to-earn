@@ -1,5 +1,7 @@
 import React from "react";
 
+import logoPng from "../../assets/images/logoPng.png";
+
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "./footer.css";
 
@@ -69,17 +71,27 @@ const Footer = () => {
         <Row>
           <Col lg="3" md="6" sm="6">
             <div className="logo">
-              <h2>
+              <img
+                src={logoPng}
+                alt=""
+                style={{
+                  width: "60px",
+                  height: "50px",
+                  marginLeft: "10%",
+                  marginBottom: "10px",
+                }}
+              />
+              {/* <h2>
                 <span>
-                  <i className="ri-bear-smile-line">
-                    {/* <img src={logo} alt="loading..." /> */}
-                  </i>
+                  <i className="ri-bear-smile-line"> */}
+              {/* <img src={logo} alt="loading..." /> */}
+              {/* </i>
                 </span>
                 NFTs
-              </h2>
+              </h2> */}
               <p>
                 Players can participate in amazing races on the battlefield to
-                earn 작명소Tokens.
+                earn Naming Center Tokens.
               </p>
             </div>
           </Col>
@@ -151,8 +163,8 @@ const Footer = () => {
 
           <Col lg="12" className="mt-4 text-center">
             <p className="copyright">
-              Copyrights 2022, Developed by 프로젝트작명소. @작명소's Tech Diary
-              All Rights Reserved.
+              Copyrights 2022, Developed by 프로젝트작명소. @Naming Center's
+              Tech Diary All Rights Reserved.
             </p>
           </Col>
         </Row>
