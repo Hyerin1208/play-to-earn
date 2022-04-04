@@ -60,18 +60,18 @@ router.post("/", async (req, res, next) => {
         });
       });
 
-    const findAddress = await Ranking.findOne({ where: { address: account } });
-    const findUser = await User.findOne({
-      where: { address: account },
-      attributes: ["address", "games", "rank", "claim"],
-    });
+    // const findAddress = await Ranking.findOne({ where: { address: account } });
+    // const findUser = await User.findOne({
+    //   where: { address: account },
+    //   attributes: ["address", "games", "rank", "claim"],
+    // });
 
-    if (findAddress) {
-      Ranking.update(
-        { claim: findUser.claim },
-        { where: { address: account, games: games, rank: rank } }
-      );
-    }
+    // if (findAddress) {
+    //   Ranking.update(
+    //     { claim: findUser.claim },
+    //     { where: { address: account, games: games, rank: rank } }
+    //   );
+    // }
 
     res.json({ message: "Ranking Send success!" });
   } catch (error) {
@@ -95,6 +95,7 @@ router.get("/", async (req, res) => {
   }
 
   res.json(count);
+  console.log(count);
 });
 
 module.exports = router;
