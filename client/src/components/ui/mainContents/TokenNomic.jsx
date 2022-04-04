@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Row, Container, Col } from "reactstrap";
 import { PieChart, Pie, Tooltip } from "recharts";
 
 import "./token-nomic.css";
 
 const TokenNomic = () => {
+  const [amount, setAmount] = useState(0);
+  const Account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+
+  async function getTokenAmount() {
+    const lists = await CreateNFTContract.methods
+      .totalNFTs()
+      .call({ from: Account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    console.log(await lists); //12
+    setAmount(await lists);
+  }
+
+  useEffect(() => {
+    getTokenAmount();
+  }, [amount]);
+
   const data = [
-    { name: "총 공급량", value: 2000 },
-    { name: "개인 보유량", value: 500 },
+    { name: "발행 공급량", value: amount },
+    { name: "예정 발행량", value: 500 },
   ];
   return (
     <div className="chart__container">
@@ -27,7 +52,7 @@ const TokenNomic = () => {
                   in the game, or become a trader of skins/items which hold
                   value in the NFT marketplace.
                 </p>
-                <a href="#">Read More</a>
+                <a href="/wallet">Read More</a>
               </div>
             </div>
           </Col>
@@ -46,6 +71,7 @@ const TokenNomic = () => {
                 />
                 <Tooltip />
               </PieChart>
+              {/* <button onClick={() => getTokenAmount()}>getAmount</button> */}
             </div>
           </Col>
         </Row>

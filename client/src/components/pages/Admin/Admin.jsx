@@ -32,11 +32,11 @@ const Admin = () => {
             background:
               "linear-gradient(to bottom right, white 0%, # e6e4ff 70%)",
             borderRadius: "2rem",
-            marginBottom: "480px",
+            marginBottom: "10px",
           }}
         >
           <div className="admin__dash">
-            <div className="sub__container">
+            <div className="sub__container2">
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />

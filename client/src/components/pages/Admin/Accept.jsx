@@ -25,9 +25,6 @@ const Accept = () => {
                     <li>
                       <button className="accept__btn">signed</button>
                     </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -40,10 +37,16 @@ const Accept = () => {
                 <div className="token__mybox">Tetris Game Winner</div>
                 <div className="winner__box">
                   <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                      <p></p>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -56,10 +59,16 @@ const Accept = () => {
                 <div className="token__mybox">2048 Game Winner</div>
                 <div className="winner__box">
                   <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                      <p></p>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -73,10 +82,16 @@ const Accept = () => {
                 <div className="token__mybox">Minesweeper Game Winner</div>
                 <div className="winner__box">
                   <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                      <p></p>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
                   </ul>
                 </div>
               </div>
