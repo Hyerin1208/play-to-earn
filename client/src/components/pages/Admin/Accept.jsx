@@ -16,13 +16,15 @@ const Accept = () => {
                 <div className="winner__box">
                   <ul>
                     <li>
-                      <p></p>
+                      <p>user1 address</p>
                       <button className="accept__btn">signed</button>
                     </li>
                     <li>
+                      <p>user2 address</p>
                       <button className="accept__btn">signed</button>
                     </li>
                     <li>
+                      <p>user3 address</p>
                       <button className="accept__btn">signed</button>
                     </li>
                   </ul>

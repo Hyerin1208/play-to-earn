@@ -40,23 +40,33 @@
   font-size: 2.5rem;
 }
 
+.token__mybox {
+  font-size: 1.2rem;
+}
+
 .accept__btn {
   display: flex;
   align-items: center;
-  gap: 1;
-  border: none;
   outline: none;
-  padding: 5px 20px;
+  padding: 1px 20px;
   background: transparent;
   border: 1px solid #5142fc;
   font-size: 0.9rem;
   color: #fff;
   border-radius: 50px;
   transition: 0.3s;
-  width: 35x;
 }
 
 .accept__btn:hover {
   background-color: #5142fc;
   color: #fff;
+}
+
+.winner__box ul li {
+  display: flex;
+}
+
+.winner__box ul li p {
+  list-style: none;
+  font-size: 0.8rem;
 }

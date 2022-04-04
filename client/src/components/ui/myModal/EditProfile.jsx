@@ -106,7 +106,7 @@ const EditProfile = ({ setShowModal }) => {
                   {/* <NftCard item={item} /> */}
 
                   <img
-                    src={nftArray[0].fileUrl}
+                    // src={nftArray[0].fileUrl}
                     alt="Selected"
                     className="selected"
                   />

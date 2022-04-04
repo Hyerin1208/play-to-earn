@@ -48,6 +48,7 @@ const Admin = () => {
               <Row>
                 <div className="section2__two">
                   <Col>
+                    <h5>작명소's All Nfts</h5>
                     <OwnerSellList />
                   </Col>
                 </div>
