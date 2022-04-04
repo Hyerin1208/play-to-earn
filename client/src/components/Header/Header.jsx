@@ -250,6 +250,12 @@ const Header = () => {
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
 
+            <div className="admin__btn">
+              <Link to="/admin">
+                <i className="ri-admin-line"></i>
+              </Link>
+            </div>
+
             {isDisabled === false ? (
               walletButton()
             ) : (

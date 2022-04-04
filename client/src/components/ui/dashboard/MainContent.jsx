@@ -11,8 +11,8 @@ import MyLikes from "./MyLikes";
 import MyRanking from "./MyRanking";
 
 import MySlick from "./MySlick";
-import { MyWrapper } from "./MyWrapper";
 import MySellList from "./MySellList";
+import { MyWrapper } from "./MyWrapper"; // slick css
 
 const MainContent = () => {
   const [Loading, setLoading] = useState(true);
