@@ -78,7 +78,7 @@ export const MEMBER__DATA = [
     id: "03",
     MemberName: "coolmarvel",
     MemberImg: member3,
-    part: "QA(Quality Assurance) Developer",
+    part: "Back-End Developer",
     fbUrl: "#",
     instaUrl: "#",
     twitUrl: "#",

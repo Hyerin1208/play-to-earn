@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   width: 500px;
-  height: 500px;
+  height: 400px;
   transform: translate(-50%, -50%);
   background: #14141f !important;
   border-radius: 5px;
@@ -57,7 +57,7 @@
 }
 
 .place__bid-btn {
-  padding: 7px 25px;
+  padding: 10px 28px;
   border: none;
   outline: none;
   width: 120px;
@@ -65,7 +65,23 @@
   background: #5142fc;
   color: #fff;
   border-radius: 50px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  display: block;
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.place__bid-btn:hover {
+  padding: 10px 28px;
+  border: none;
+  outline: none;
+  width: 120px;
+  margin: auto;
+  background: #5242fc2d;
+  color: #fff;
+  border: #14141f 1px solid;
+  border-radius: 50px;
+  font-size: 0.9rem;
   display: block;
   margin-top: 15px;
 }
@@ -82,6 +98,10 @@
   background: #5142fc;
   color: #fff;
   border-radius: 27%;
+}
+
+.buy__nfts {
+  padding: 40px 5px 40px 5px;
 }
 
 @media only screen and (max-width: 1024px) {

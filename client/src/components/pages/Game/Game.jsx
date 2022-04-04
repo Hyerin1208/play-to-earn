@@ -3,16 +3,16 @@ import { Link, Routes, Route } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
 import "./game.css";
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import Ranking from "./Ranking";
 import Compensation from "./Compensation";
-import GameCard from "../ui/gamePreview/GameCard";
+import GameCard from "../../ui/gamePreview/GameCard";
 
-import { GAMECARD__DATA } from "../../assets/data/gamecard";
-import SnakeGame from "../pages/SnakeGame/SnakeGame";
-import TetrisGame from "../pages/TetrisGame/Tetris";
-import PuzzleGame from "../pages/2048Game/2048Game";
-import MineGame from "../pages/MineGame/MineGame";
+import { GAMECARD__DATA } from "../../../assets/data/gamecard";
+import SnakeGame from "../SnakeGame/SnakeGame";
+import TetrisGame from "../TetrisGame/Tetris";
+import PuzzleGame from "../2048Game/2048Game";
+import MineGame from "../MineGame/MineGame";
 
 function Game() {
   const [showModal, setShowModal] = useState(false);

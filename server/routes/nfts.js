@@ -1,3 +1,4 @@
+const { text } = require("body-parser");
 var express = require("express");
 var router = express.Router();
 const Nfts = require("../models/nfts");
@@ -55,6 +56,22 @@ router.post("/like", async (req, res, next) => {
       );
       res.json({ message: "no" });
     }
+  }
+});
+
+router.post("/views", async (req, res, next) => {
+  try {
+    const nft = await Nfts.findOne({
+      where: { tokenId: req.body.tokenId },
+    });
+    await Nfts.update(
+      { views: nft.views + 1 },
+      { where: { tokenId: req.body.tokenId } }
+    );
+    res.json({ view: nft.views + 1 });
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
 });
 

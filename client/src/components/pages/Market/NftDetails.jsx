@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
-import LiveList from "../ui/LiveList";
+import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
 
 import "./nft-details.css";
@@ -69,6 +69,17 @@ const NftDetails = (props) => {
       });
   }, []);
 
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/nfts/views`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        console.log(res.data.view);
+        setView(res.data.view);
+      });
+  }, []);
+
   // function likeBtn() {
   //   if (likeActive) {
   //     setLikeActive(false);
@@ -129,6 +140,7 @@ const NftDetails = (props) => {
                     src={calldata.image}
                     alt=""
                     className="single__nft-img"
+                    style={{ width: "570px", height: "650px" }}
                   />
                 </Col>
 

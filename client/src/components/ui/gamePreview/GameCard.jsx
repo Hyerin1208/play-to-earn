@@ -39,7 +39,7 @@ const GameCard = (props) => {
         </div>
 
         <div className="card__body">
-          <Col lg="12" md="3" sm="6">
+          <Col>
             <div className="single__game__card">
               <h3 className="gameCard__title">{title}</h3>
               <p className="gameCard__text">{text}</p>

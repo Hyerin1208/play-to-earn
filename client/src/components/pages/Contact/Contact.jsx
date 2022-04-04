@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./contact.css";
 
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
 const Contact = () => {

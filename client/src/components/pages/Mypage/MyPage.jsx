@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import CommonSection from "../ui/CommonSection";
+import CommonSection from "../../ui/templete/CommonSection";
 
-import MyNfts from "../ui/myModal/MyNfts";
-import MyRanking from "../ui/myModal/MyRanking";
-import EditProfile from "../ui/myModal/EditProfile";
+import MyNfts from "../../ui/myModal/MyNfts";
+import MyRanking from "../../ui/myModal/MyRanking";
+import EditProfile from "../../ui/myModal/EditProfile";
 
 import "./mypage.css";
 import pfpImg from "../../assets/images/img.jpg";
