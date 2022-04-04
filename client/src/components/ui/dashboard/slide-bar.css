@@ -1,6 +1,6 @@
 .slide__container {
   width: 25%;
-  height: 68% !important;
+  height: 80% !important;
   border-radius: 2rem;
   background-color: #340c4e91;
   display: flex;
@@ -83,7 +83,7 @@
 
 .link__conatainer {
   background-color: #180425b0;
-  height: 60%;
+  height: 100%;
   width: 100%;
   border-radius: 2rem;
 }
@@ -93,6 +93,7 @@
 }
 
 .nav__itemBox {
+  height: 370px;
   margin-top: 20px;
   margin-right: 10px;
 }

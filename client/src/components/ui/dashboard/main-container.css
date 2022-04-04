@@ -64,7 +64,7 @@
 } */
 
 .slick-slider {
-  width: 300%;
+  width: 500px;
   /* background-color: #343434; */
 }
 /* .slick-slide {
@@ -78,7 +78,7 @@
   color: violet;
 }
 
-.slick-slider .slick-initialized {
+.slick-slider slick-initialized {
   width: 600px;
 }
 
