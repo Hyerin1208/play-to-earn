@@ -434,7 +434,6 @@ const Ranking = () => {
                           return i < 1;
                         })
                         .map((v, i) => {
-                          console.log("v", v.puzzlePoint);
                           return (
                             <div key={i}>
                               {v.puzzlePoint === null

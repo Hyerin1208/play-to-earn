@@ -80,22 +80,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/balance", async (req, res) => {
+  const { address } = req.body;
   const users = await Ranking.findAll({
-    attributes: ["weeks"],
-    order: [["weeks", "desc"]],
-    limit: 12,
+    where: { address: address },
+    attributes: ["address", "balance"],
   });
-  const count = [];
+  const balance = [];
 
   for (const user of users) {
-    count.push({
-      weeks: user.weeks,
+    balance.push({
+      balance: user.balance,
+      address: user.address,
     });
   }
-
-  res.json(count);
-  console.log(count);
+  res.json(balance);
 });
 
 module.exports = router;
