@@ -10,6 +10,7 @@ import axios from "axios";
 
 import "./slide-bar.css";
 import { useSelector } from "react-redux";
+import sum from "lodash/sum";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
@@ -165,7 +166,17 @@ const SideBar = () => {
             <Badge pill bg="light" text="dark" className="my__Badge">
               <p>My Ranking</p>
               <p className="my_balance">
-                {balance[0] + balance[1] + balance[2]}
+                {balance
+                  .filter((v, i) => {
+                    return i < 1;
+                  })
+                  .map((v, i) => {
+                    let sum = 0;
+                    for (let i = 0; i < balance.length; i++) {
+                      sum += balance[i];
+                    }
+                    return <div key={i}>{sum}</div>;
+                  })}
               </p>
             </Badge>
           </div>
