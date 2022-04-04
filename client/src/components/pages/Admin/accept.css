@@ -51,7 +51,7 @@
   padding: 1px 20px;
   background: transparent;
   border: 1px solid #5142fc;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #fff;
   border-radius: 50px;
   transition: 0.3s;
@@ -69,4 +69,12 @@
 .winner__box ul li p {
   list-style: none;
   font-size: 0.8rem;
+}
+
+.winner__box {
+  display: flex;
+}
+
+.winner__box button {
+  margin: 1px 12px 1px 12px;
 }

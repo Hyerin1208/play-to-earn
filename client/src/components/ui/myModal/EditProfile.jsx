@@ -128,7 +128,9 @@ const EditProfile = (props) => {
                           onClick={() => setSelectedImg(img.fileUrl)}
                           style={{
                             border:
-                              seletedImg === img ? "4px solid purple" : "",
+                              seletedImg === img.fileUrl
+                                ? "5px solid #5142fc"
+                                : "",
                           }}
                         />
                       </Col>

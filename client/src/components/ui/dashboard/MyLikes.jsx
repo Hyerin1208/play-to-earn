@@ -36,7 +36,7 @@ const MyLikes = () => {
           <i className="ri-thumb-up-line"></i>
         </div>
         <div className="myrank__text">
-          <div className="rank__mybox">Total {Liked} likes</div>
+          <div className="rank__mybox2">Total {Liked} likes</div>
           {/* <button onClick={() => getLike()}>total</button> */}
           <span>Content You Liked</span>
         </div>

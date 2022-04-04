@@ -42,6 +42,7 @@ const FreeCard = (props) => {
           }
           onChange={() => setCheckItem(props.item.id)}
           value={props.item.id}
+          aria-hidden="true"
           //   value={(e) => e.target}
         />
         <div className="front__card">

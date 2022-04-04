@@ -49,6 +49,14 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.rank__mybox2 {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: normal;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 .rank__mybox span {
   text-align: center;
   font-size: 0.8rem;
