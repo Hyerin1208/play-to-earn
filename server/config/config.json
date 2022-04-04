@@ -1,23 +1,23 @@
 {
-    "development": {
-        "username": "root",
-        "password": "1q2w3e4r",
-        "database": "play_to_earn",
-        "host": "play-to-earn.cl091e4r7yzt.ap-northeast-2.rds.amazonaws.com",
-        "dialect": "mysql"
-    },
-    "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
-    },
-    "production": {
-        "username": "root",
-        "password": null,
-        "database": "database_production",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
-    }
+  "development": {
+    "username": "root",
+    "password": "1234",
+    "database": "play_to_earn",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
 }
