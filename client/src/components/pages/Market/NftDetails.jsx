@@ -48,6 +48,18 @@ const NftDetails = (props) => {
       });
   };
 
+  const getLike = async () => {
+    await axios
+      .get(`http://localhost:5000/nfts/like`, {
+        tokenId: card_id,
+        account: account,
+      })
+      .then((res) => {
+        console.log(res.data);
+        alert("liked data 불러오기OK");
+      });
+  };
+
   // test
 
   useEffect(async () => {
