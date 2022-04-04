@@ -152,7 +152,7 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/2048`)
       .then((response) => {
         const data = response.data;
-        setPuzzle(data);
+        console.log(data);
 
         const puzzleArray = data.map((data, index) => {
           const form = {
@@ -168,6 +168,7 @@ const Ranking = () => {
 
         const puzzleIndex = data.findIndex((element) => {
           if (element.address === account) {
+            setPuzzle(data);
             setPuzzleI(element);
             return true;
           }
@@ -285,7 +286,7 @@ const Ranking = () => {
                         <br />
                         {snake
                           .filter((v, i) => {
-                            return i < 5;
+                            return i < 3;
                           })
                           .map((v, i) => {
                             return (
@@ -311,7 +312,7 @@ const Ranking = () => {
                         <br />
                         {tetris
                           .filter((v, i) => {
-                            return i < 5;
+                            return i < 3;
                           })
                           .map((v, i) => {
                             return (
@@ -337,7 +338,7 @@ const Ranking = () => {
                         <br />
                         {puzzle
                           .filter((v, i) => {
-                            return i < 5;
+                            return i < 3;
                           })
                           .map((v, i) => {
                             return (
@@ -362,7 +363,7 @@ const Ranking = () => {
                         <br />
                         {mine
                           .filter((v, i) => {
-                            return i < 5;
+                            return i < 3;
                           })
                           .map((v, i) => {
                             return (
