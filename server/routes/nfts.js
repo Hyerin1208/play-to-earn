@@ -55,26 +55,6 @@ router.post("/like", async (req, res, next) => {
   }
 });
 
-// 어떤 계정으로 nft를 정보를 불러와도 이전 좋아요도 볼수있도록
-// router.get("/like", async (req, res, next) => {
-//   try {
-//     const posts = await db.Nfts.findAll({
-//       include: [
-//         {
-//           model: db.User,
-//           through: "Likes", // DB 테이블 명
-//           as: "Liker", // 프론트에 전달할 객체의 key
-//           attributes: ["address"],
-//         },
-//       ],
-//     });
-//     return res.status(200).json(posts);
-//   } catch (err) {
-//     console.error(err);
-//     next(err);
-//   }
-// });
-
 // total 좋아요 수
 router.post("/likes", async (req, res, next) => {
   console.log(req.body.account);
@@ -82,9 +62,11 @@ router.post("/likes", async (req, res, next) => {
     res.json({ message: "fail" });
     return res.status(404).send("Connect your account");
   } else {
-    const likes = await Nfts.findOne({
-      where: { tokenId: req.body.tokenId },
+    const likes = await Likes.findAll({
+      where: { address: req.body.account },
     });
+    console.log(likes.length);
+    res.json({ like: likes.length });
   }
 });
 
