@@ -14,8 +14,8 @@ import { useSelector } from "react-redux";
 
 import "./edit-profile.css";
 
-const EditProfile = ({ setShowModal }) => {
-  const [seletedImg, setSelectedImg] = useState(NFT__DATA[0]);
+const EditProfile = (props) => {
+  const [seletedImg, setSelectedImg] = useState(null);
 
   const [nftArray, setnftArray] = useState([]);
   const [Loading, setLoading] = useState(true);
@@ -26,6 +26,10 @@ const EditProfile = ({ setShowModal }) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+
+  useEffect(() => {
+    console.log(seletedImg);
+  }, [seletedImg]);
 
   useEffect(() => {
     try {
@@ -72,10 +76,17 @@ const EditProfile = ({ setShowModal }) => {
       );
       console.log(result);
       setnftArray(result);
+      setSelectedImg(result[0].fileUrl);
     }
   }
 
-  const onSelect = async () => {};
+  const onSelect = async () => {
+    if (seletedImg !== null) {
+      props.setImageURL(seletedImg);
+    } else {
+      alert("이미지를 선택하세요");
+    }
+  };
 
   if (Loading) {
     return (
@@ -91,7 +102,7 @@ const EditProfile = ({ setShowModal }) => {
           <span className="close_modal">
             <i
               className="ri-close-line"
-              onClick={() => setShowModal(false)}
+              onClick={() => props.setShowModal(false)}
             ></i>
           </span>
           <h5 className="text-center text-light">Change your NFT</h5>
@@ -105,11 +116,7 @@ const EditProfile = ({ setShowModal }) => {
                   {/* */}
                   {/* <NftCard item={item} /> */}
 
-                  <img
-                    // src={nftArray[0].fileUrl}
-                    alt="Selected"
-                    className="selected"
-                  />
+                  <img src={seletedImg} alt="Selected" className="selected" />
 
                   <div className="img__Container">
                     {nftArray.map((img, index) => (
@@ -118,7 +125,7 @@ const EditProfile = ({ setShowModal }) => {
                           key={index}
                           src={img.fileUrl}
                           alt="nfts"
-                          onClick={() => setSelectedImg(img)}
+                          onClick={() => setSelectedImg(img.fileUrl)}
                           style={{
                             border:
                               seletedImg === img ? "4px solid purple" : "",

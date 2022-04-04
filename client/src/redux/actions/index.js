@@ -120,7 +120,7 @@ export function getWeb3() {
                 let item = {
                   fileUrl: await meta.image,
                   formInput: {
-                    tokenid: i.tokenId,
+                    tokenId: i.tokenId,
                     price: await meta.price,
                     name: await meta.name,
                     description: await meta.description,

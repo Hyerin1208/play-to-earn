@@ -63,10 +63,15 @@ const NftDetails = (props) => {
   // test
 
   useEffect(async () => {
-    gettokenuri(card_id);
+    if (CreateNFTContract !== null) {
+      gettokenuri(card_id);
+    } else {
+      return;
+    }
   }, [CreateNFTContract]);
 
   useEffect(async () => {
+    console.log(card_id);
     await axios
       .post(`http://localhost:5000/nfts/countoflike`, {
         tokenId: card_id,

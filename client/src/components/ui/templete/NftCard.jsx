@@ -11,6 +11,7 @@ const NftCard = (props) => {
 
   let params = useParams();
   const card_id = params.card_id;
+  console.log(props.item);
 
   return (
     <div>
@@ -22,7 +23,7 @@ const NftCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/detailes/${props.item.formInput.tokenid}`}>
+              <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                 {" "}
                 {props.item.formInput.name}
               </Link>
@@ -62,7 +63,7 @@ const NftCard = (props) => {
           {showModal && <Modal item={props.item} setShowModal={setShowModal} />}
 
           <span className="view__link">
-            <Link to={`/detailes/${props.item.formInput.tokenid}`}>
+            <Link to={`/detailes/${props.item.formInput.tokenId}`}>
               View More
             </Link>
           </span>

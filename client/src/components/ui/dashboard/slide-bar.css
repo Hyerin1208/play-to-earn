@@ -250,6 +250,11 @@
   color: #fff;
 }
 
+.my_small_ranking {
+  margin-bottom: -0.5rem;
+  text-align: center;
+}
+
 @media only screen and (max-width: 1440px) {
   #select__pfp {
     width: 120px;

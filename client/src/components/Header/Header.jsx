@@ -45,7 +45,8 @@ const Header = () => {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const wallet = useSelector((state) => state.AppState.wallet);
   const [isDisabled, setDisabled] = useState(false);
-  const [account, setAccount] = useState("연결이 필요합니다.");
+  const [account, setAccount] = useState(null);
+  const [Owner, setOwner] = useState(true);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -62,6 +63,22 @@ const Header = () => {
       window.removeEventListener("scroll");
     };
   }, []);
+
+  async function checkOwner(account) {
+    if (CreateNFTContract !== null) {
+      console.log(account);
+      const owner = await CreateNFTContract.methods.owner().call();
+      if (owner.toLowerCase() === account) {
+        console.log("트루");
+        setOwner(true);
+      } else {
+        console.log("펄스");
+        setOwner(false);
+      }
+    } else {
+      return;
+    }
+  }
 
   async function MyList(account) {
     if (CreateNFTContract !== null) {
@@ -108,6 +125,7 @@ const Header = () => {
           method: "eth_requestAccounts",
         });
         const account = accounts[0];
+
         dispatch(
           updateAccounts({
             wallet: true,
@@ -117,11 +135,54 @@ const Header = () => {
           })
         );
         setAccount(account);
+        checkOwner(account);
+        const result = await axios
+          .post("http://127.0.0.1:5000/user/login", { address: account })
+          .then((res) => res.data.nick);
+        if (result === "noname") {
+          console.log(result);
+          if (Owner === true) {
+            console.log(Owner);
+            document
+              .querySelector("#nav__item__Create")
+              .removeAttribute("hidden");
+          } else {
+            document
+              .querySelector("#nav__item__Create")
+              .setAttribute("hidden", "true");
+          }
+        } else {
+          document
+            .querySelector("#nav__item__Create")
+            .removeAttribute("display");
+        }
+
         setDisabled(true);
 
         await window.ethereum.on("accountsChanged", async (accounts) => {
           if (accounts.length > 0) {
             setAccount(accounts[0]);
+            checkOwner(accounts[0]);
+            const result = await axios
+              .post("http://127.0.0.1:5000/user/login", {
+                address: accounts[0],
+              })
+              .then((res) => res.data.nick);
+            if (result === "noname") {
+              if (Owner === true) {
+                document
+                  .querySelector("#nav__item__Create")
+                  .removeAttribute("hidden");
+              } else {
+                document
+                  .querySelector("#nav__item__Create")
+                  .setAttribute("hidden", "true");
+              }
+            } else {
+              document
+                .querySelector("#nav__item__Create")
+                .removeAttribute("hidden");
+            }
             setDisabled(true);
             return dispatch(
               updateAccounts({
@@ -212,7 +273,6 @@ const Header = () => {
       </button>
     );
   };
-
   return (
     <header className="header" ref={headerRef}>
       <Container>
@@ -231,7 +291,11 @@ const Header = () => {
           <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
             <ul className="nav__list">
               {NAV__LINKS.map((item, index) => (
-                <li className="nav__item" key={index}>
+                <li
+                  className="nav__item"
+                  id={`nav__item__${item.display}`}
+                  key={index}
+                >
                   <NavLink
                     to={item.url}
                     className={(navClass) =>
@@ -249,8 +313,7 @@ const Header = () => {
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
-
-            <div className="admin__btn">
+            <div className="admin__btn" hidden={!Owner}>
               <Link to="/admin">
                 <i className="ri-admin-line"></i>
               </Link>

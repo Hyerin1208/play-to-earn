@@ -13,10 +13,27 @@ import { useSelector } from "react-redux";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
+  const [imageURL, setImageURL] = useState(pfpImg);
   const [email, setEmail] = useState([]);
   // const [address, setAddress] = useState("address");
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
+
+  const [snake, setSnake] = useState([]);
+  const [snakeT, setSnakeT] = useState(null);
+  const [snakeI, setSnakeI] = useState(null);
+
+  const [puzzle, setPuzzle] = useState([]);
+  const [puzzleT, setPuzzleT] = useState(null);
+  const [puzzleI, setPuzzleI] = useState(null);
+
+  const [mine, setMine] = useState([]);
+  const [mineT, setMineT] = useState(null);
+  const [mineI, setMineI] = useState(null);
+
+  const [tetris, setTetris] = useState([]);
+  const [tetrisT, setTetrisT] = useState(null);
+  const [tetrisI, setTetrisI] = useState(null);
 
   const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -26,6 +43,50 @@ const SideBar = () => {
   const [EditProfileModal, setEditProfileModal] = useState(false);
 
   useEffect(() => {
+    axios.get(`http://localhost:5000/game/snake`).then((response) => {
+      const data = response.data;
+      setSnake(data);
+      const snakeIndex = data.findIndex((element) => {
+        if (element.address === account) {
+          setSnakeI(element);
+          return true;
+        }
+      });
+      setSnakeT(snakeIndex);
+    });
+    axios.get(`http://localhost:5000/game/tetris`).then((response) => {
+      const data = response.data;
+      setTetris(data);
+      const tetrisIndex = data.findIndex((element) => {
+        if (element.address === account) {
+          setTetrisI(element);
+          return true;
+        }
+      });
+      setTetrisT(tetrisIndex);
+    });
+    axios.get(`http://localhost:5000/game/mine`).then((response) => {
+      const data = response.data;
+      setMine(data);
+      const mineIndex = data.findIndex((element) => {
+        if (element.address === account) {
+          setMineI(element);
+          return true;
+        }
+      });
+      setMineT(mineIndex);
+    });
+    axios.get(`http://localhost:5000/game/2048`).then((response) => {
+      const data = response.data;
+      setPuzzle(data);
+      const puzzleIndex = data.findIndex((element) => {
+        if (element.address === account) {
+          setPuzzleI(element);
+          return true;
+        }
+      });
+      setPuzzleT(puzzleIndex);
+    });
     if (account !== null) {
       console.log("실행");
 
@@ -77,7 +138,7 @@ const SideBar = () => {
           <div className="profile__pic">
             <img
               className="pfp__iamge"
-              src={pfpImg}
+              src={imageURL}
               id="upload__pfp"
               // onChange="loadFile(event)"
               alt="edit"
@@ -89,7 +150,10 @@ const SideBar = () => {
               </label>
             </button>
             {EditProfileModal && (
-              <EditProfile setShowModal={setEditProfileModal} />
+              <EditProfile
+                setShowModal={setEditProfileModal}
+                setImageURL={setImageURL}
+              />
             )}
           </div>
 
@@ -143,6 +207,19 @@ const SideBar = () => {
             <Badge pill bg="light" text="dark" className="my__Badge">
               <p>My Ranking</p>
             </Badge>
+            {/* <p>{(snakeT + 1 + mineT + 1 + puzzleT + 1 + tetrisT + 1) / 4}등</p> */}
+            <p className="my_small_ranking">
+              Snake : {snakeI === null ? "None" : snakeT + 1 + "등"}
+            </p>
+            <p className="my_small_ranking">
+              Mine : {mineI === null ? "None" : mineT + 1 + "등"}
+            </p>
+            <p className="my_small_ranking">
+              2048 : {puzzleI === null ? "None" : puzzleT + 1 + "등"}
+            </p>
+            <p className="my_small_ranking">
+              Tetris : {tetrisI === null ? "None" : tetrisT + 1 + "등"}
+            </p>
           </div>
         </div>
         <div className="link__conatainer">

@@ -28,13 +28,18 @@ router.post("/like", async (req, res, next) => {
       where: { tokenId: req.body.tokenId },
     });
     const user = await User.findOne({ where: { address: req.body.account } });
+    console.log(nft);
+    console.log(user);
 
     const getlike = await Likes.findOne({
       where: { address: req.body.account },
     });
 
-    if (!getlike) {
+    console.log(getlike);
+
+    if (getlike === null) {
       await nft.addLiker(user);
+      console.log("여기???");
       await Nfts.update(
         { likes: nft.likes + 1 },
         {

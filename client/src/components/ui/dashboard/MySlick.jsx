@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Card, Col, Row } from "reactstrap";
 import { motion } from "framer-motion";
 import ReactLoaing from "react-loading";
@@ -16,6 +16,7 @@ const MySlick = () => {
   // const Selllists = useSelector((state) => state.AppState.Selllists);
   const [Loading, setLoading] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
+  const [test, setTest] = useState(false);
   // const [NFTimage, setNFTimage] = useState("");
   // const [NFTname, setNFTname] = useState("");
   // const [NFTdesc, setNFTdesc] = useState("");
@@ -69,6 +70,7 @@ const MySlick = () => {
             formInput: {
               price: await meta.price,
               name: await meta.name,
+              tokenId: i.tokenId,
               description: await meta.description,
             },
           };
@@ -106,20 +108,19 @@ const MySlick = () => {
         <div className="slick-arrow">
           <Slider {...settings} style={{ width: 900 }}>
             {nftArray.map((items, index) => {
+              console.log(items);
               return (
-                // <motion.div key={index} className="my-items">
-                <Col key={index} className="my-items">
-                  <NftCard
-                    item={items}
-                    id={items.formInput.tokenid}
-                    onClick={async (e) => {
-                      let tokenid = e.target.getAttribute("id");
-                      await CreateNFTContract.methods.tokenURI(tokenid).call({
-                        from: Account,
-                      });
-                    }}
-                  ></NftCard>
-                </Col>
+                <Fragment>
+                  <input
+                    type="checkbox"
+                    hidden={test}
+                    className={"myslic__kCheck"}
+                  />
+                  {/* // <motion.div key={index} className="my-items"> */}
+                  <Col key={index} className="my-items">
+                    <NftCard item={items}></NftCard>
+                  </Col>
+                </Fragment>
               );
             })}
           </Slider>
