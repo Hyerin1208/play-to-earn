@@ -173,7 +173,7 @@ router.get("/mine", async (req, res) => {
     //   minePoint: { [Op.ne]: null },
     // },
     attributes: ["nick", "minePoint", "address"],
-    order: [["minePoint", "asc"]],
+    order: [["minePoint", "ASC"]],
   });
   const mine = [];
 

@@ -54,9 +54,7 @@ const Ranking = () => {
 
   const [error, setError] = useState(null);
   const [count, setCount] = useState(0);
-
-  console.log("v", count);
-  console.log("s", snakeAddress);
+  console.log("s", mine);
 
   useEffect(() => {
     axios
