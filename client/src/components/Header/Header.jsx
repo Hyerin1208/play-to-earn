@@ -10,8 +10,10 @@ import { Container } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { updateAccounts, connectFailed } from "../../redux/actions/index";
+import { updateAccounts, getWeb3 } from "../../redux/actions/index";
 import axios from "axios";
+import { utils } from "ethers";
+
 const NAV__LINKS = [
     {
         display: "Home",
@@ -66,7 +68,7 @@ const Header = () => {
 
     async function checkOwner(account) {
         if (CreateNFTContract !== null) {
-            if (Owner.toLowerCase() === account) {
+            if (Owner === account) {
                 console.log("트루");
                 setIsOwner(true);
             } else {
@@ -121,26 +123,33 @@ const Header = () => {
     useEffect(async () => {
         if (MetaMaskOnboarding.isMetaMaskInstalled()) {
             if (accounts.length > 0) {
-                const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: accounts[0] }).then((res) => res.data.nick);
+                const getAddress = utils.getAddress(accounts[0]);
+                const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: getAddress }).then((res) => res.data.nick);
                 dispatch(
                     updateAccounts({
                         wallet: true,
-                        accounts: accounts,
-                        account: accounts[0],
+                        account: getAddress,
                         isUser: checkUser === "noname" ? false : true,
-                        MyNFTlists: await MyList(accounts[0]),
+                        MyNFTlists: await MyList(getAddress),
                     })
                 );
-                checkOwner(accounts[0]);
+                checkOwner(getAddress);
                 setDisabled(true);
                 await window.ethereum.on("accountsChanged", async (accounts) => setAccounts(accounts));
                 onboarding.current.stopOnboarding();
             } else {
-                setDisabled(false);
                 setIsOwner(false);
+                setDisabled(false);
             }
         }
     }, [accounts]);
+
+    useEffect(async () => {
+        if (isOwner) {
+            const getAddress = utils.getAddress(accounts[0]);
+            await axios.post("http://127.0.0.1:5000/user/owner", { address: getAddress }).then((res) => console.log(res.data.message));
+        }
+    }, [isOwner]);
 
     const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
@@ -231,7 +240,7 @@ const Header = () => {
                                     <Link to="/mypage">
                                         <i className="ri-user-3-line"></i>
                                     </Link>
-                                    {accounts[0]}
+                                    {utils.getAddress(accounts[0])}
                                 </div>
                             </div>
                         )}

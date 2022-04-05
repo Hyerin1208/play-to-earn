@@ -1,9 +1,8 @@
-import { APP_STATE, CONNECTION_FAILED, UPDATE_ACCOUNT, UPDATE_LISTS, UPDATE_MYLISTS } from "../actions";
+import { APP_STATE, CONNECTION_FAILED, UPDATE_ACCOUNT, UPDATE_LISTS, UPDATE_MYLISTS, CALL_CONTRACT } from "../actions";
 
 const initialState = {
     network: false,
     wallet: false,
-    accounts: null,
     account: null,
     Owner: null,
     isUser: false,
@@ -12,7 +11,7 @@ const initialState = {
     TokenClaimContract: null,
     Selllists: [],
     MyNFTlists: null,
-    errorMsg: "",
+    errorMsg: null,
 };
 
 export default function (state = initialState, action) {
@@ -22,9 +21,6 @@ export default function (state = initialState, action) {
                 ...state,
                 network: action.payload.network,
                 Owner: action.payload.Owner,
-                CreateNFTContract: action.payload.CreateNFTContract,
-                AmusementArcadeTokenContract: action.payload.AmusementArcadeTokenContract,
-                TokenClaimContract: action.payload.TokenClaimContract,
                 Selllists: action.payload.Selllists,
                 errorMsg: action.payload.errorMsg,
             };
@@ -33,11 +29,17 @@ export default function (state = initialState, action) {
                 ...initialState,
                 errorMsg: action.payload.errorMsg,
             };
+        case CALL_CONTRACT:
+            return {
+                ...state,
+                CreateNFTContract: action.payload.CreateNFTContract,
+                AmusementArcadeTokenContract: action.payload.AmusementArcadeTokenContract,
+                TokenClaimContract: action.payload.TokenClaimContract,
+            };
         case UPDATE_ACCOUNT:
             return {
                 ...state,
                 wallet: action.payload.wallet,
-                accounts: action.payload.accounts,
                 account: action.payload.account,
                 isUser: action.payload.isUser,
                 MyNFTlists: action.payload.MyNFTlists,
