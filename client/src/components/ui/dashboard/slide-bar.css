@@ -19,29 +19,38 @@
 }
 
 .profile__pic {
+  width: 200px;
+  height: 132px;
   margin-bottom: 10px;
+  margin-left: 40%;
+  position: relative;
 }
 
 .pfp__iamge {
   width: 120px;
-  background: rgb(255, 255, 255);
+  height: 120px;
+  background: #343434;
   border-radius: 50%;
   padding: 5px;
   display: flex;
   object-fit: contain;
-  position: relative;
+  position: absolute;
   z-index: 3333;
+  cursor: pointer;
+  border: 5px solid #5242fc;
 }
 
 #select__pfp {
   width: 120px;
-  height: 124px;
+  height: 120px;
   border-radius: 50%;
   position: absolute;
-  margin-top: -7.9%;
-  background-color: #5242fc8c;
+  /* margin-top: -7.9%; */
+  background-color: #5242fcee;
   z-index: 444;
   color: #ffffff;
+  position: absolute;
+  cursor: pointer;
 }
 
 .pfp__iamge:hover {
@@ -71,14 +80,35 @@
 }
 
 .my__Badge {
-  width: 120px;
+  width: 140px;
   height: 40px;
 }
 
 .my__Badge p {
-  color: black;
-  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  font-size: 0.9rem;
   font-weight: 500;
+}
+
+.get__token {
+  width: 140px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border: 1px solid #14141fbd;
+  border-radius: 50px;
+  background-color: #5242fcc9;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-left: 4%;
+  box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.445);
+}
+
+.get__token:hover {
+  background-color: #5242fc31;
 }
 
 .link__conatainer {

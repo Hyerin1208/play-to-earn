@@ -16,6 +16,7 @@ import "./edit-profile.css";
 
 const EditProfile = (props) => {
   const [seletedImg, setSelectedImg] = useState(null);
+  const [profileImage, setprofileImage] = useState("");
 
   const [nftArray, setnftArray] = useState([]);
   const [Loading, setLoading] = useState(true);
@@ -83,6 +84,16 @@ const EditProfile = (props) => {
   const onSelect = async () => {
     if (seletedImg !== null) {
       props.setImageURL(seletedImg);
+      await axios
+        .post("http://localhost:5000/user/img", {
+          address: Account,
+          image: seletedImg,
+        })
+        .then((res) => {
+          console.log(res.data.message);
+          alert("프로필이 해당 NFT이미지로 변경되었습니다.");
+          props.setShowModal(false);
+        });
     } else {
       alert("이미지를 선택하세요");
     }
@@ -119,16 +130,16 @@ const EditProfile = (props) => {
                   <img src={seletedImg} alt="Selected" className="selected" />
 
                   <div className="img__Container">
-                    {nftArray.map((img, index) => (
+                    {nftArray.map((image, index) => (
                       <Col lg="2" md="4" sm="2">
                         <img
                           key={index}
-                          src={img.fileUrl}
+                          src={image.fileUrl}
                           alt="nfts"
-                          onClick={() => setSelectedImg(img.fileUrl)}
+                          onClick={() => setSelectedImg(image.fileUrl)}
                           style={{
                             border:
-                              seletedImg === img.fileUrl
+                              seletedImg === image.fileUrl
                                 ? "5px solid #5142fc"
                                 : "",
                           }}

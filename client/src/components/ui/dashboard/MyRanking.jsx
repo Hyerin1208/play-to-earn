@@ -106,9 +106,9 @@ const MyRanking = () => {
                     SnakeGame <br />
                     {snakeI === null ? "None" : snakeT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
+                  {/* <button className="get__token" onClick={claimToken}>
                     Claim Token
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -122,9 +122,9 @@ const MyRanking = () => {
                     TetrisGame <br />
                     {tetrisI === null ? "None" : tetrisT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
+                  {/* <button className="get__token" onClick={claimToken}>
                     Claim Token
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -138,9 +138,9 @@ const MyRanking = () => {
                     2048Game <br />
                     {puzzleI === null ? "None" : puzzleT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
+                  {/* <button className="get__token" onClick={claimToken}>
                     Claim Token
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -154,9 +154,9 @@ const MyRanking = () => {
                     MineGame <br />
                     {mineI === null ? "None" : mineT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
+                  {/* <button className="get__token" onClick={claimToken}>
                     Claim Token
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

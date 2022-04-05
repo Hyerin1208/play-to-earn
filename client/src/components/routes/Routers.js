@@ -34,8 +34,7 @@ const Routers = () => {
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/test" element={<Test />} />
-        {/* <Route path="/error" element={<Error />} /> */}
-        <Route component={<Error />} />
+        <Route path="/error" element={<Error />} />
       </Routes>
     </Fragment>
   );

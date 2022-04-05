@@ -63,7 +63,7 @@
   margin-left: 20px;
 }
 
-.get__token {
+/* .get__token {
   width: 150px;
   height: 35px;
   display: flex;
@@ -81,7 +81,7 @@
 
 .get__token:hover {
   background-color: #5242fc31;
-}
+} */
 
 .carousel__card {
   height: 90%;

@@ -20,27 +20,6 @@ const FreeItem = (props) => {
 
   const dispatch = useDispatch();
 
-  // const fetchNfts = async () => {
-  //   const response = await axios
-  //     .get("http://localhost:5000/user")
-  //     .catch((err) => {
-  //       console.log("Err", err);
-  //     });
-  //   dispatch(response.data);
-  // };
-
-  // useEffect(() => {
-  //   try {
-  //     if (nfts !== null) {
-  //       console.log("실행");
-  //       setnftArray([...nfts].reverse());
-  //       setLoading(null);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
   console.log("Nfts :", nfts);
 
   return (
