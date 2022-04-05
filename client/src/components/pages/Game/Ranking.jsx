@@ -306,11 +306,6 @@ const Ranking = () => {
                             </div>
                         </Col>
                         <Col className="time__limit" lg="4" md="3" sm="3">
-                            <h4>Time Limit</h4>
-                            <Clock className="clock__box" timerDays={timerDays} timerHours={timerHours} timerMinutes={timerMinutes} timerSeconds={timerSeconds} />
-                            <div type="button" onClick={sendReward}>
-                                Claim All Reward!!
-                            </div>
                         </Col>
                     </Row>
                 </div>
