@@ -12,7 +12,7 @@ router.post("/", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: data.weeks + 1,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -25,7 +25,7 @@ router.post("/", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: data.weeks + 1,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -38,7 +38,7 @@ router.post("/", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: data.weeks + 1,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: data.weeks + 1,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -67,12 +67,18 @@ router.post("/", async (req, res, next) => {
 });
 
 router.post("/weeks", async (req, res) => {
-  const users = await Ranking.findOne({
+  const users = await Ranking.findAll({
     attributes: ["weeks"],
-    
+    limit: 1,
   });
-  const round = { weeks: users };
-  res.json(round);
+  console.log("u", users);
+  try {
+    const round = [{ weeks: users }];
+    res.json(round);
+  } catch (err) {
+    console.error(err);
+    return next(err);
+  }
 });
 
 router.post("/balance", async (req, res) => {

@@ -61,7 +61,12 @@ const Ranking = () => {
       .post(`http://localhost:5000/ranking/weeks`)
       .then((response) => {
         const data = response.data;
-        setWeeks(data);
+        console.log(data);
+
+        const weeksData = data.map((v, i) => {
+          return v.weeks[0].weeks;
+        });
+        setWeeks(weeksData);
       })
       .catch((error) => {
         setError(error);
