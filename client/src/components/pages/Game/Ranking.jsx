@@ -10,26 +10,6 @@ const Ranking = () => {
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
 
-  // Claim부분
-  const [snakeAddress, setSnakeAddress] = useState([]);
-  const [puzzleAddress, setPuzzleAddress] = useState([]);
-  const [tetrisAddress, setTetrisAddress] = useState([]);
-  const [mineAddress, setMineAddress] = useState([]);
-
-  const sendReward = async () => {
-    await axios
-      .post(`http://localhost:5000/ranking`, {
-        tetrisAddress,
-        puzzleAddress,
-        snakeAddress,
-        mineAddress,
-      })
-      .then((res) => {
-        console.log(res.data);
-        alert("DB 전송 완료");
-      });
-  };
-
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -53,25 +33,8 @@ const Ranking = () => {
   const [tetrisI, setTetrisI] = useState([]);
 
   const [error, setError] = useState(null);
-  const [weeks, setWeeks] = useState([]);
-  console.log("v", weeks);
 
   useEffect(() => {
-    axios
-      .post(`http://localhost:5000/ranking/weeks`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-
-        const weeksData = data.map((v, i) => {
-          return v.weeks[0].weeks;
-        });
-        setWeeks(weeksData);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-
     axios
       .get(`http://localhost:5000/game/snake`)
       .then((response) => {
@@ -85,18 +48,6 @@ const Ranking = () => {
           }
         });
         setSnakeT(snakeIndex);
-
-        const snakeArray = data.map((data, index) => {
-          const form = {
-            weeks: weeks + 1,
-            games: "snakeGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setSnakeAddress(snakeArray);
       })
       .catch((error) => {
         setError(error);
@@ -115,18 +66,6 @@ const Ranking = () => {
           }
         });
         setPuzzleT(puzzleIndex);
-
-        const puzzleArray = data.map((data, index) => {
-          const form = {
-            weeks: weeks + 1,
-            games: "puzzleGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setPuzzleAddress(puzzleArray);
       })
       .catch((error) => {
         setError(error);
@@ -145,18 +84,6 @@ const Ranking = () => {
           }
         });
         setMineT(mineIndex);
-
-        const mineArray = data.map((data, index) => {
-          const form = {
-            weeks: weeks + 1,
-            games: "mineGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setMineAddress(mineArray);
       })
       .catch((error) => {
         setError(error);
@@ -167,18 +94,6 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setTetris(data);
-
-        const tetrisArray = data.map((data, index) => {
-          const form = {
-            weeks: weeks + 1,
-            games: "tetrisGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setTetrisAddress(tetrisArray);
 
         const tetrisIndex = data.findIndex((element) => {
           if (element.address === account) {
@@ -389,9 +304,6 @@ const Ranking = () => {
               </div>
             </Col>
             <Col className="time__limit" lg="4" md="3" sm="3">
-              <div type="button" onClick={sendReward}>
-                Claim All Reward!!
-              </div>
             </Col>
           </Row>
         </div>
