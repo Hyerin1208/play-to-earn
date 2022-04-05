@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import {
-  useSpring,
-  animated,
-  config,
-  useChain,
-  useSpringRef,
-} from "react-spring";
+// import {
+//   useSpring,
+//   animated,
+//   config,
+//   useChain,
+//   useSpringRef,
+// } from "react-spring";
 
 import "./free-item.css";
 import { useSelector, useDispatch } from "react-redux";
