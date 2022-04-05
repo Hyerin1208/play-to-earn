@@ -25,18 +25,7 @@ const MyRanking = () => {
 
   const account = useSelector((state) => state.AppState.account);
 
-  const [claim, setClaim] = useState(1);
-
   const [loading, setLoading] = useState(true);
-
-  const claimToken = async () => {
-    await axios
-      .post(`http://localhost:5000/ranking`, { claim, account })
-      .then((res) => {
-        console.log(res.data);
-        alert("토큰 클레임 완료");
-      });
-  };
 
   useEffect(() => {
     axios.get(`http://localhost:5000/game/snake`).then((response) => {
@@ -106,9 +95,6 @@ const MyRanking = () => {
                     SnakeGame <br />
                     {snakeI === null ? "None" : snakeT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
-                    Claim Token
-                  </button>
                 </div>
               </div>
             </div>
@@ -122,9 +108,6 @@ const MyRanking = () => {
                     TetrisGame <br />
                     {tetrisI === null ? "None" : tetrisT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
-                    Claim Token
-                  </button>
                 </div>
               </div>
             </div>
@@ -138,9 +121,6 @@ const MyRanking = () => {
                     2048Game <br />
                     {puzzleI === null ? "None" : puzzleT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
-                    Claim Token
-                  </button>
                 </div>
               </div>
             </div>
@@ -154,9 +134,6 @@ const MyRanking = () => {
                     MineGame <br />
                     {mineI === null ? "None" : mineT + 1 + "위"}
                   </div>
-                  <button className="get__token" onClick={claimToken}>
-                    Claim Token
-                  </button>
                 </div>
               </div>
             </div>

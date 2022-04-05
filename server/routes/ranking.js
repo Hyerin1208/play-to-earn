@@ -2,76 +2,73 @@ var express = require("express");
 var router = express.Router();
 const { Ranking, User } = require("../models");
 
-router.post("/", async (req, res, next) => {
-  const { snakeAddress, tetrisAddress, puzzleAddress, mineAddress, claim } =
-    req.body;
+router.post("/reward", async (req, res, next) => {
+  const { snakeRank, tetrisRank, puzzleRank, mineRank, address } = req.body;
+  const findUser = await User.findOne({
+    where: { address: address },
+    attributes: ["address", "weeks"],
+  });
 
   try {
-    snakeAddress
+    snakeRank
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
+        console.log("w", data);
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
           balance: data.balance[index],
         });
       });
-    tetrisAddress
+    tetrisRank
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
           balance: data.balance[index],
         });
       });
-    puzzleAddress
+    puzzleRank
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
           balance: data.balance[index],
         });
       });
-    mineAddress
+    mineRank
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
           balance: data.balance[index],
         });
       });
-
-    // const findAddress = await Ranking.findOne({ where: { address: account } });
-    // const findUser = await User.findOne({
-    //   where: { address: account },
-    //   attributes: ["address", "games", "rank", "claim"],
-    // });
-
-    // if (findAddress) {
-    //   Ranking.update(
-    //     { claim: findUser.claim },
-    //     { where: { address: account, games: games, rank: rank } }
-    //   );
-    // }
+    if (findUser) {
+      User.update(
+        { weeks: findUser.weeks + 1 },
+        { where: { address: address } }
+      );
+    }
 
     res.json({ message: "Ranking Send success!" });
   } catch (error) {
@@ -80,22 +77,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/balance", async (req, res) => {
+  const { address } = req.body;
   const users = await Ranking.findAll({
-    attributes: ["weeks"],
-    order: [["weeks", "desc"]],
-    limit: 12,
+    where: { address: address },
+    attributes: ["address", "balance"],
   });
-  const count = [];
+  const balance = [];
 
   for (const user of users) {
-    count.push({
-      weeks: user.weeks,
+    balance.push({
+      balance: user.balance,
+      address: user.address,
     });
   }
-
-  res.json(count);
-  console.log(count);
+  res.json(balance);
 });
 
 module.exports = router;

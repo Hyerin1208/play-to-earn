@@ -4,75 +4,11 @@ import CommonSection from "../../ui/templete/CommonSection";
 import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Clock from "./Clock";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
-
-  // Claim부분
-  const [snakeAddress, setSnakeAddress] = useState([]);
-  const [puzzleAddress, setPuzzleAddress] = useState([]);
-  const [tetrisAddress, setTetrisAddress] = useState([]);
-  const [mineAddress, setMineAddress] = useState([]);
-
-  const sendReward = async () => {
-    await axios
-      .post(`http://localhost:5000/ranking`, {
-        tetrisAddress,
-        puzzleAddress,
-        snakeAddress,
-        mineAddress,
-      })
-      .then((res) => {
-        console.log(res.data);
-        alert("DB 전송 완료");
-      });
-  };
-
-  // const [timerDays, setTimerDays] = useState();
-  // const [timerHours, setTimerHours] = useState();
-  // const [timerMinutes, setTimerMinutes] = useState();
-  // const [timerSeconds, setTimerSeconds] = useState();
-
-  // let interval;
-
-  // const startTimer = () => {
-  //   const countDownDate = new Date("May 01, 2022").getTime();
-
-  //   interval = setInterval(() => {
-  //     const now = new Date().getTime();
-
-  //     const distance = countDownDate - now;
-
-  //     const days = Math.floor(distance / (24 * 60 * 60 * 1000));
-
-  //     const hours = Math.floor(
-  //       (distance % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60)
-  //     );
-
-  //     const minutes = Math.floor((distance % (60 * 60 * 1000)) / (1000 * 60));
-
-  //     const seconds = Math.floor((distance % (60 * 1000)) / 1000);
-
-  //     if (distance < 0) {
-  //       //Stop Timer
-
-  //       clearInterval(interval.current);
-  //     } else {
-  //       // Update Timer
-  //       setTimerDays(days);
-  //       setTimerHours(hours);
-  //       setTimerMinutes(minutes);
-  //       setTimerSeconds(seconds);
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   startTimer();
-  // }, []);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -82,59 +18,28 @@ const Ranking = () => {
   // 변수 뒤에 I => 받은 데이터의 배열
   const [snake, setSnake] = useState([]);
   const [snakeT, setSnakeT] = useState(null);
-  const [snakeI, setSnakeI] = useState(null);
+  const [snakeI, setSnakeI] = useState([]);
 
   const [puzzle, setPuzzle] = useState([]);
   const [puzzleT, setPuzzleT] = useState(null);
-  const [puzzleI, setPuzzleI] = useState(null);
+  const [puzzleI, setPuzzleI] = useState([]);
 
   const [mine, setMine] = useState([]);
   const [mineT, setMineT] = useState(null);
-  const [mineI, setMineI] = useState(null);
+  const [mineI, setMineI] = useState([]);
 
   const [tetris, setTetris] = useState([]);
   const [tetrisT, setTetrisT] = useState(null);
-  const [tetrisI, setTetrisI] = useState(null);
+  const [tetrisI, setTetrisI] = useState([]);
 
   const [error, setError] = useState(null);
 
-  const [count, setCount] = useState([]);
-  console.log(count);
-
   useEffect(() => {
-    axios.get(`http://localhost:5000/ranking`).then((response) => {
-      const data = response.data;
-      const weekArray = data
-        .filter((v, i) => {
-          return i < 1;
-        })
-        .map((data, index) => {
-          const form = {
-            count: data.weeks,
-          };
-          return form;
-        });
-      setCount(weekArray);
-      console.log(weekArray);
-    });
-
     axios
       .get(`http://localhost:5000/game/snake`)
       .then((response) => {
         const data = response.data;
         setSnake(data);
-
-        const snakeArray = data.map((data, index) => {
-          const form = {
-            weeks: count + 1,
-            games: "snakeGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setSnakeAddress(snakeArray);
 
         const snakeIndex = data.findIndex((element) => {
           if (element.address === account) {
@@ -152,23 +57,10 @@ const Ranking = () => {
       .get(`http://localhost:5000/game/2048`)
       .then((response) => {
         const data = response.data;
-        console.log(data);
-
-        const puzzleArray = data.map((data, index) => {
-          const form = {
-            weeks: count + 1,
-            games: "puzzleGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setPuzzleAddress(puzzleArray);
+        setPuzzle(data);
 
         const puzzleIndex = data.findIndex((element) => {
           if (element.address === account) {
-            setPuzzle(data);
             setPuzzleI(element);
             return true;
           }
@@ -184,18 +76,6 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setMine(data);
-
-        const mineArray = data.map((data, index) => {
-          const form = {
-            weeks: count + 1,
-            games: "mineGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setMineAddress(mineArray);
 
         const mineIndex = data.findIndex((element) => {
           if (element.address === account) {
@@ -214,18 +94,6 @@ const Ranking = () => {
       .then((response) => {
         const data = response.data;
         setTetris(data);
-
-        const tetrisArray = data.map((data, index) => {
-          const form = {
-            weeks: count + 1,
-            games: "tetrisGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setTetrisAddress(tetrisArray);
 
         const tetrisIndex = data.findIndex((element) => {
           if (element.address === account) {
@@ -372,7 +240,7 @@ const Ranking = () => {
                                 {v === undefined
                                   ? "없음"
                                   : v.minePoint === null
-                                  ? "없음"
+                                  ? ""
                                   : v.nick}
                                 &nbsp;
                                 {v === undefined
@@ -413,83 +281,29 @@ const Ranking = () => {
                     <ul>
                       <li>SnakeGame</li>
                       <br />
-                      {snake
-                        .filter((v, i) => {
-                          return i < 1;
-                        })
-                        .map((v, i) => {
-                          return (
-                            <div key={i}>
-                              {v.snakePoint === null
-                                ? "없음"
-                                : snakeT + 1 + "등"}
-                            </div>
-                          );
-                        })}
+                      {snakeI.snakePoint !== null ? snakeT + 1 + "등" : "없음"}
                       <br />
                       <li>2048Game</li>
                       <br />
-                      {puzzle
-                        .filter((v, i) => {
-                          return i < 1;
-                        })
-                        .map((v, i) => {
-                          console.log("v", v.puzzlePoint);
-                          return (
-                            <div key={i}>
-                              {v.puzzlePoint === null
-                                ? "없음"
-                                : puzzleT + 1 + "등"}
-                            </div>
-                          );
-                        })}
+                      {puzzleI.puzzlePoint !== null
+                        ? puzzleT + 1 + "등"
+                        : "없음"}
                       <br />
                       <li>TetrisGame</li>
                       <br />
-                      {tetris
-                        .filter((v, i) => {
-                          return i < 1;
-                        })
-                        .map((v, i) => {
-                          return (
-                            <div key={i}>
-                              {v.tetrisPoint === null
-                                ? "없음"
-                                : tetrisT + 1 + "등"}
-                            </div>
-                          );
-                        })}
+                      {tetrisI.tetrisPoint !== null
+                        ? tetrisT + 1 + "등"
+                        : "없음"}
                       <br />
                       <li>MineGame</li>
                       <br />
-                      {mine
-                        .filter((v, i) => {
-                          return i < 1;
-                        })
-                        .map((v, i) => {
-                          return (
-                            <div key={i}>
-                              {v.minePoint === null ? "없음" : mineT + 1 + "등"}
-                            </div>
-                          );
-                        })}
+                      {mineI.minePoint !== null ? mineT + 1 + "등" : "없음"}
                     </ul>
                   </Container>
                 </div>
               </div>
             </Col>
             <Col className="time__limit" lg="4" md="3" sm="3">
-              <h4>Time Limit</h4>
-              {/* <Clock
-                className="clock__box"
-                timerDays={timerDays}
-                timerHours={timerHours}
-                timerMinutes={timerMinutes}
-                timerSeconds={timerSeconds}
-              /> */}
-              <div type="button" onClick={sendReward}>
-                Claim All Reward!!
-              </div>
             </Col>
           </Row>
         </div>

@@ -71,4 +71,19 @@ router.post("/edit", async (req, res) => {
   }
 });
 
+// 오너 유저의 회차 가져가버리기!
+router.post("/weeks", async (req, res) => {
+  const { address } = req.body;
+  const users = await User.findOne({
+    where: { address: address },
+    attributes: ["address", "weeks"],
+  });
+
+  if ((users.address = address)) {
+    const round = { weeks: users.weeks };
+    res.json(round);
+  } else {
+  }
+});
+
 module.exports = router;

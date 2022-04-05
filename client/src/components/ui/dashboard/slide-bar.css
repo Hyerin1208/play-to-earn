@@ -250,9 +250,10 @@
   color: #fff;
 }
 
-.my_small_ranking {
+.my_balance {
   margin-bottom: -0.5rem;
   text-align: center;
+  background-color: #340c4e91;
 }
 
 @media only screen and (max-width: 1440px) {
