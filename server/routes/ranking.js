@@ -15,8 +15,9 @@ router.post("/reward", async (req, res, next) => {
         return i < 3;
       })
       .map((data, index) => {
+        console.log("w", data);
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -29,7 +30,7 @@ router.post("/reward", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -42,7 +43,7 @@ router.post("/reward", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,
@@ -55,7 +56,7 @@ router.post("/reward", async (req, res, next) => {
       })
       .map((data, index) => {
         Ranking.create({
-          weeks: data.weeks,
+          weeks: findUser.weeks,
           games: data.games,
           rank: data.rank,
           address: data.address,

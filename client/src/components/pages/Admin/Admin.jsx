@@ -21,7 +21,6 @@ const Admin = () => {
   const [puzzleRank, setPuzzleRank] = useState([]);
   const [tetrisRank, setTetrisRank] = useState([]);
   const [mineRank, setMineRank] = useState([]);
-  const [weeks, setWeeks] = useState([]);
 
   const sendReward = async () => {
     await axios
@@ -40,13 +39,6 @@ const Admin = () => {
 
   useEffect(() => {
     axios
-      .post(`http://localhost:5000/user/weeks`, { address: account })
-      .then((res) => {
-        const data = res.data;
-        setWeeks(data.weeks);
-      });
-
-    axios
       .get(`http://localhost:5000/game/snake`)
       .then((response) => {
         const data = response.data;
@@ -54,7 +46,6 @@ const Admin = () => {
 
         const snakeInfo = data.map((data, index) => {
           const form = {
-            weeks: weeks,
             games: "snakeGame",
             rank: index + 1,
             address: data.address,
@@ -76,7 +67,6 @@ const Admin = () => {
 
         const tetrisInfo = data.map((data, index) => {
           const form = {
-            weeks: weeks,
             games: "tetrisGame",
             rank: index + 1,
             address: data.address,
@@ -98,7 +88,6 @@ const Admin = () => {
 
         const puzzleInfo = data.map((data, index) => {
           const form = {
-            weeks: weeks,
             games: "puzzleGame",
             rank: index + 1,
             address: data.address,
@@ -120,7 +109,6 @@ const Admin = () => {
 
         const mineInfo = data.map((data, index) => {
           const form = {
-            weeks: weeks,
             games: "mineGame",
             rank: index + 1,
             address: data.address,
