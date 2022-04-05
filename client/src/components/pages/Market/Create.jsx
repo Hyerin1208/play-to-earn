@@ -87,7 +87,7 @@ const Create = () => {
         let item = {
           fileUrl: fileUrl,
           formInput: {
-            tokenid: res.events.NFTItemCreated.returnValues.tokenId,
+            tokenId: res.events.NFTItemCreated.returnValues.tokenId,
             price: formInput.price,
             name: formInput.name,
             description: formInput.description,

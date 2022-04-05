@@ -25,17 +25,17 @@ const MySellList = () => {
   );
 
   useEffect(() => {
-    userselllists();
+    mynftlists();
     setLoading(null);
   }, [CreateNFTContract]);
 
-  //유저(내가) 판매하는 nft 리스트
-  async function userselllists() {
+  //내 nft 리스트 > 내가 판매하려고 올린 (내가만든 nft)리스트
+  async function mynftlists() {
     if ((await CreateNFTContract) === null) {
       setLoading(true);
     } else {
       const lists = await CreateNFTContract.methods
-        .UserSelllists()
+        .MyNFTlists()
         .call({ from: Account }, (error) => {
           if (!error) {
             console.log("send ok");
@@ -59,7 +59,10 @@ const MySellList = () => {
               description: await meta.description,
             },
           };
-          return item;
+          console.log(i.sell);
+          if (i.sell === true) {
+            return item;
+          }
         })
       );
 
@@ -92,23 +95,27 @@ const MySellList = () => {
         {/* <button onClick={() => mynftlists()}>마이리스트</button> */}
         <div className="slick-arrow">
           <Slider {...settings} style={{ width: 900 }}>
-            {nftArray.map((items, index) => {
-              return (
-                // <motion.div key={index} className="my-items">
-                <Col key={index} className="my-items">
-                  <NftCard
-                    item={items}
-                    id={items.formInput.tokenid}
-                    onClick={async (e) => {
-                      let tokenid = e.target.getAttribute("id");
-                      await CreateNFTContract.methods.tokenURI(tokenid).call({
-                        from: Account,
-                      });
-                    }}
-                  ></NftCard>
-                </Col>
-              );
-            })}
+            {nftArray[0] !== undefined ? (
+              nftArray.map((items, index) => {
+                return (
+                  // <motion.div key={index} className="my-items">
+                  <Col key={index} className="my-items">
+                    <NftCard
+                      item={items}
+                      id={items.formInput.tokenid}
+                      onClick={async (e) => {
+                        let tokenid = e.target.getAttribute("id");
+                        await CreateNFTContract.methods.tokenURI(tokenid).call({
+                          from: Account,
+                        });
+                      }}
+                    ></NftCard>
+                  </Col>
+                );
+              })
+            ) : (
+              <div>항목없음</div>
+            )}
           </Slider>
         </div>
       </div>
