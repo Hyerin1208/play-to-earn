@@ -22,7 +22,7 @@
 .section__one {
   display: flex;
   justify-content: space-between;
-  height: 10.4%;
+  height: 11%;
   gap: 1rem;
   width: 100%;
 }
@@ -64,7 +64,7 @@
 } */
 
 .slick-slider {
-  width: 300%;
+  width: 500px;
   /* background-color: #343434; */
 }
 /* .slick-slide {
@@ -78,7 +78,7 @@
   color: violet;
 }
 
-.slick-slider .slick-initialized {
+.slick-slider slick-initialized {
   width: 600px;
 }
 

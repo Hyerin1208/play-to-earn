@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import {
+  useSpring,
+  animated,
+  config,
+  useChain,
+  useSpringRef,
+} from "react-spring";
 
 import "./free-item.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +16,30 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 const FreeCard = (props) => {
   const { title, imgUrl, desc } = props.item;
   const { checkItem, setCheckItem } = props.check;
-  const [fileUrl, setFileUrl] = useState(null);
+
+  // const checkboxAnimationRef = useSpringRef();
+  // const checkboxAnimationStyle = useSpring({
+  //   backgroundColor: checkItem ? "#808" : "#fff",
+  //   borderColor: checkItem ? "#808" : "#ddd",
+  //   config: config.gentle,
+  //   ref: checkboxAnimationRef,
+  // });
+
+  // const [checkmarkLength, setCheckmarkLength] = useState(null);
+
+  // const checkmarkAnimationRef = useSpringRef();
+  // const checkmarkAnimationStyle = useSpring({
+  //   x: checkItem ? 0 : checkmarkLength,
+  //   config: config.gentle,
+  //   ref: checkmarkAnimationRef,
+  // });
+
+  // useChain(
+  //   checkItem
+  //     ? [checkboxAnimationRef, checkmarkAnimationRef]
+  //     : [checkmarkAnimationRef, checkboxAnimationRef],
+  //   [0, 0.1]
+  // );
 
   // const { title, imgUrl, desc } = nfts[0];
 
@@ -44,6 +74,28 @@ const FreeCard = (props) => {
           value={props.item.id}
           //   value={(e) => e.target}
         />
+
+        {/* <animated.svg
+          style={checkboxAnimationStyle}
+          className={`checkbox ${checkItem ? "checkbox--active" : ""}`}
+          aria-hidden="true"
+          viewBox="0 0 15 11"
+          fill="none"
+        >
+          <animated.path
+            d="M1 4.5L5 9L14 1"
+            strokeWidth="2"
+            stroke="#fff"
+            ref={(ref) => {
+              if (ref) {
+                setCheckmarkLength(ref.getTotalLength());
+              }
+            }}
+            strokeDasharray={checkmarkLength}
+            strokeDashoffset={checkmarkAnimationStyle.x}
+          />
+        </animated.svg> */}
+
         <div className="front__card">
           <div className="free__nft__img">
             <img src={imgUrl} alt="" />

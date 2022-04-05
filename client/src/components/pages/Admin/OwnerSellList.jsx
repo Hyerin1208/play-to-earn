@@ -24,7 +24,7 @@ const OwnerSellList = () => {
   useEffect(() => {
     ownerselllists([...nftArray].reverse());
     setLoading(null);
-  }, [nftArray]);
+  }, []);
 
   //오너 nft 판매 리스트
   async function ownerselllists() {
@@ -74,7 +74,7 @@ const OwnerSellList = () => {
     return (
       <div>
         잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
       </div>
     );
   } else {

@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
+
+import logoPng from "../../assets/images/logoPng.png";
+
 // 로고 만들어서 아래 넣을예정
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
@@ -166,12 +169,24 @@ const Header = () => {
             <Container>
                 <div className="navigation">
                     <div className="logo">
-                        <h2>
-                            <span>
-                                <i className="ri-bear-smile-line">{/* <img src={logo} alt="loading..." /> */}</i>
-                            </span>
-                            NFTs
-                        </h2>
+                        {/* <h2>
+              <span>
+                <i className="ri-bear-smile-line"> */}
+                        {/* <img src={logo} alt="loading..." /> */}
+                        {/*  </i>
+              </span>
+              NFTs
+            </h2> */}
+                        <img
+                            src={logoPng}
+                            alt=""
+                            style={{
+                                width: "60px",
+                                height: "50px",
+                                marginLeft: "10%",
+                                marginBottom: "10px",
+                            }}
+                        />
                     </div>
 
                     <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>

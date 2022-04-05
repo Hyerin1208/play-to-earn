@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Carousel from "react-elastic-carousel";
+import { Col, Row } from "reactstrap";
 
 import "./accept.css";
 
@@ -13,6 +14,27 @@ const Accept = () => {
               <div className="winner__chart">{/* Snake */}</div>
               <div className="earing__text">
                 <div className="token__mybox">Snake Game Winner</div>
+
+                <div className="winner__box">
+                  <p>user1 address</p>
+                  <button className="accept__btn">signed</button>
+                </div>
+                <div className="winner__box">
+                  <p>user2 address</p>
+                  <button className="accept__btn">signed</button>
+                </div>
+                <div className="winner__box">
+                  <p>user3 address</p>
+                  <button className="accept__btn">signed</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="winner__card" numbers="2">
+            <div className="winner__content">
+              <div className="winner__chart">{/* Tetris */}</div>
+              <div className="earing__text">
+                <div className="token__mybox">Tetris Game Winner</div>
                 <div className="winner__box">
                   <ul>
                     <li>
@@ -25,25 +47,6 @@ const Accept = () => {
                     <li>
                       <button className="accept__btn">signed</button>
                     </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="winner__card" numbers="2">
-            <div className="winner__content">
-              <div className="winner__chart">{/* Tetris */}</div>
-              <div className="earing__text">
-                <div className="token__mybox">Tetris Game Winner</div>
-                <div className="winner__box">
-                  <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
                   </ul>
                 </div>
               </div>
@@ -56,10 +59,16 @@ const Accept = () => {
                 <div className="token__mybox">2048 Game Winner</div>
                 <div className="winner__box">
                   <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                      <p></p>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -73,10 +82,16 @@ const Accept = () => {
                 <div className="token__mybox">Minesweeper Game Winner</div>
                 <div className="winner__box">
                   <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                      <p></p>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
+                    <li>
+                      <button className="accept__btn">signed</button>
+                    </li>
                   </ul>
                 </div>
               </div>

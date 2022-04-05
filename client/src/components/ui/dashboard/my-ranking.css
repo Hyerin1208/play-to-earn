@@ -37,12 +37,21 @@
 .myrank__text {
   text-align: center;
   font-weight: normal;
+  font-size: 0.9rem;
   padding: 0.4rem 0;
 }
 
 .rank__mybox {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  font-weight: normal;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.rank__mybox2 {
+  text-align: center;
+  font-size: 1.2rem;
   font-weight: normal;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.2);
@@ -50,11 +59,11 @@
 
 .rank__mybox span {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-left: 20px;
 }
 
-.get__token {
+/* .get__token {
   width: 150px;
   height: 35px;
   display: flex;
@@ -72,7 +81,7 @@
 
 .get__token:hover {
   background-color: #5242fc31;
-}
+} */
 
 .carousel__card {
   height: 90%;

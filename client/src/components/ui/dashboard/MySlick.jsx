@@ -111,11 +111,11 @@ const MySlick = () => {
               console.log(items);
               return (
                 <Fragment>
-                  <input
+                  {/* <input
                     type="checkbox"
                     hidden={test}
                     className={"myslic__kCheck"}
-                  />
+                  /> */}
                   {/* // <motion.div key={index} className="my-items"> */}
                   <Col key={index} className="my-items">
                     <NftCard item={items}></NftCard>
