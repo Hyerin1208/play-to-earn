@@ -35,6 +35,11 @@ const NAV__LINKS = [
         url: "/test",
     },
 ];
+
+const ONBOARD_TEXT = "Click here to install MetaMask!";
+const CONNECT_TEXT = "Connect";
+const CONNECTED_TEXT = "Connected";
+
 const Header = () => {
     const dispatch = useDispatch();
     const headerRef = useRef(null);
@@ -45,8 +50,9 @@ const Header = () => {
     const [showWalletModal, setShowWalletModal] = useState(false);
     const wallet = useSelector((state) => state.AppState.wallet);
     const [isDisabled, setDisabled] = useState(false);
-    const [account, setAccount] = useState(null);
+    const [accounts, setAccounts] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
+    const onboarding = useRef();
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -109,121 +115,45 @@ const Header = () => {
         }
     }
 
+    useEffect(() => {
+        if (!onboarding.current) {
+            onboarding.current = new MetaMaskOnboarding();
+        }
+    }, []);
+
     useEffect(async () => {
         if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-            if ((await window.ethereum._metamask.isUnlocked()) === true) {
-                console.log("메타있는데 안잠겼지롱~");
-                const accounts = await window.ethereum.request({
-                    method: "eth_requestAccounts",
-                });
-                const account = accounts[0];
-                const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: account }).then((res) => res.data.nick);
+            if (accounts.length > 0) {
+                const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: accounts[0] }).then((res) => res.data.nick);
                 dispatch(
                     updateAccounts({
                         wallet: true,
                         accounts: accounts,
-                        account: account,
+                        account: accounts[0],
                         isUser: checkUser === "noname" ? false : true,
-                        MyNFTlists: await MyList(account),
+                        MyNFTlists: await MyList(accounts[0]),
                     })
                 );
-                setAccount(account);
-                checkOwner(account);
+                checkOwner(accounts[0]);
                 setDisabled(true);
-
-                await window.ethereum.on("accountsChanged", async (accounts) => {
-                    if (accounts.length > 0) {
-                        const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: account }).then((res) => res.data.nick);
-                        setAccount(accounts[0]);
-                        checkOwner(accounts[0]);
-                        setDisabled(true);
-                        return dispatch(
-                            updateAccounts({
-                                wallet: true,
-                                accounts: accounts,
-                                account: accounts[0],
-                                isUser: checkUser === "noname" ? false : true,
-                                MyNFTlists: await MyList(accounts[0]),
-                            })
-                        );
-                    } else {
-                        setAccount(null);
-                        setDisabled(false);
-                        setIsOwner(false);
-                        return dispatch(
-                            updateAccounts({
-                                wallet: false,
-                                accounts: null,
-                                account: null,
-                                isUser: false,
-                                MyNFTlists: [],
-                            })
-                        );
-                    }
-                });
+                await window.ethereum.on("accountsChanged", async (accounts) => setAccounts(accounts));
+                onboarding.current.stopOnboarding();
             } else {
-                console.log("메타있는데 잠김");
-                dispatch(
-                    updateAccounts({
-                        wallet: false,
-                        accounts: null,
-                        account: null,
-                        isUser: false,
-                        MyNFTlists: [],
-                    })
-                );
                 setDisabled(false);
                 setIsOwner(false);
             }
-        } else {
-            dispatch(
-                connectFailed({
-                    errorMsg: "메타마스크가 필요합니다.",
-                })
-            );
-            setIsOwner(false);
         }
-
-        return () => {
-            window.ethereum.off("accountsChanged", () => {
-                dispatch(
-                    updateAccounts({
-                        wallet: false,
-                        accounts: null,
-                        account: null,
-                        isUser: false,
-                        MyNFTlists: [],
-                    })
-                );
-                setDisabled(false);
-                setIsOwner(false);
-            });
-        };
-    }, [dispatch, CreateNFTContract]);
+    }, [accounts]);
 
     const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
     async function checkWallet() {
         if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            const account = accounts[0];
-            const checkUser = await axios.post("http://127.0.0.1:5000/user/login", { address: account }).then((res) => res.data.nick);
-            dispatch(
-                updateAccounts({
-                    wallet: true,
-                    accounts: accounts,
-                    account: account,
-                    isUser: checkUser === "noname" ? false : true,
-                    MyNFTlists: MyList(account),
-                })
-            );
-            setAccount(account);
-            checkOwner(account);
-            setDisabled(true);
+            window.ethereum.request({ method: "eth_requestAccounts" }).then((newAccounts) => setAccounts(newAccounts));
         } else {
-            alert("메타마스크 설치하세요");
+            if (window.confirm("메타마스크 설치가 필요합니다.\n설치페이지로 이동하시겠습니까?")) {
+                onboarding.current.startOnboarding();
+            }
         }
     }
 
@@ -292,7 +222,7 @@ const Header = () => {
                                     <Link to="/mypage">
                                         <i className="ri-user-3-line"></i>
                                     </Link>
-                                    {account}
+                                    {accounts[0]}
                                 </div>
                             </div>
                         )}
