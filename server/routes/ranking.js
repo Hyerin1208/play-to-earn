@@ -66,6 +66,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.post("/weeks", async (req, res) => {
+  const users = await Ranking.findOne({
+    attributes: ["weeks"],
+    
+  });
+  const round = { weeks: users };
+  res.json(round);
+});
+
 router.post("/balance", async (req, res) => {
   const { address } = req.body;
   const users = await Ranking.findAll({
