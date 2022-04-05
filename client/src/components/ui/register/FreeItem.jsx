@@ -11,7 +11,7 @@ import FreeCard from "./FreeCard";
 import axios from "axios";
 
 const FreeItem = (props) => {
-  const [checkItem, setCheckItem] = useState(null);
+  const [checkItem, setCheckItem] = useState(false);
 
   const nfts = useSelector((state) => state);
   console.log(nfts);

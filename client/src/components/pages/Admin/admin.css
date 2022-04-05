@@ -8,7 +8,7 @@
 
 .sub__container2 {
   margin: 0.5rem 0;
-  height: 200%;
+  height: 120%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,15 +19,15 @@
 .section1__one {
   display: flex;
   justify-content: space-between;
-  height: 12.8%;
-  gap: 1rem;
-  width: 100%;
+  height: 21.8%;
   /* gap: 1rem; */
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .section2__two {
   display: flex;
   gap: 2rem;
-  height: 350%;
+  height: 100%;
   /* margin-bottom: 500px; */
 }
