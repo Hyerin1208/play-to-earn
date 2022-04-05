@@ -36,10 +36,6 @@ const NAV__LINKS = [
     },
 ];
 
-const ONBOARD_TEXT = "Click here to install MetaMask!";
-const CONNECT_TEXT = "Connect";
-const CONNECTED_TEXT = "Connected";
-
 const Header = () => {
     const dispatch = useDispatch();
     const headerRef = useRef(null);
@@ -47,8 +43,6 @@ const Header = () => {
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     const Owner = useSelector((state) => state.AppState.Owner);
     const isUser = useSelector((state) => state.AppState.isUser);
-    const [showWalletModal, setShowWalletModal] = useState(false);
-    const wallet = useSelector((state) => state.AppState.wallet);
     const [isDisabled, setDisabled] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [isOwner, setIsOwner] = useState(false);
