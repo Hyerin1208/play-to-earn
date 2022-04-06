@@ -11,7 +11,6 @@ const Ranking = () => {
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
 
-  console.log(account);
   // Claim부분
   const [snakeAddress, setSnakeAddress] = useState([]);
   const [puzzleAddress, setPuzzleAddress] = useState([]);
@@ -37,42 +36,35 @@ const Ranking = () => {
   const [timerMinutes, setTimerMinutes] = useState();
   const [timerSeconds, setTimerSeconds] = useState();
 
-  let interval;
+  const [isStop, setIsStop] = useState(false);
 
-  const startTimer = () => {
-    const countDownDate = new Date("May 01, 2022").getTime();
-    console.log(countDownDate);
-    interval = setInterval(() => {
+  useEffect(() => {
+    let interval = setInterval(() => {
+      const countdownDate = new Date("apr 15, 2022 18:00:00").getTime();
+      // var weeks = new Date(now.getDate() + 7);
+
       const now = new Date().getTime();
+      const distance = countdownDate - now;
 
-      const distance = countDownDate - now;
-
-      const days = Math.floor(distance / (24 * 60 * 60 * 1000));
-
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (distance % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60)
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
-
-      const minutes = Math.floor((distance % (60 * 60 * 1000)) / (1000 * 60));
-
-      const seconds = Math.floor((distance % (60 * 1000)) / 1000);
-
-      if (distance < 0) {
-        //Stop Timer
-
-        clearInterval(interval.current);
-      } else {
-        // Update Timer
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (!isStop) {
+        // update timer
         setTimerDays(days);
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
+      } else {
+        clearInterval(interval);
       }
-    });
-  };
-
-  useEffect(() => {
-    startTimer();
+    }, 1000);
+    return () => {
+      setIsStop(true);
+    };
   }, []);
 
   const toggleTab = (index) => {

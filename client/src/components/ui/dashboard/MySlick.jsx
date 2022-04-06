@@ -57,7 +57,6 @@ const MySlick = () => {
             console.log(error);
           }
         });
-      console.log(await lists);
 
       const result = await Promise.all(
         lists.map(async (i) => {
@@ -108,9 +107,8 @@ const MySlick = () => {
         <div className="slick-arrow">
           <Slider {...settings} style={{ width: 900 }}>
             {nftArray.map((items, index) => {
-              console.log(items);
               return (
-                <Fragment>
+                <Fragment key={index}>
                   {/* <input
                     type="checkbox"
                     hidden={test}

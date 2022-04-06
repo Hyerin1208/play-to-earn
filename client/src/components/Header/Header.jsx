@@ -60,13 +60,10 @@ const Header = () => {
 
   const [cookies, setCookie, removeCookie] = useCookies(["rememberAddress"]);
 
-  console.log(cookies.rememberAddress);
-
   useEffect(() => {
     if (cookies.rememberAddress === undefined) {
       if (Account !== null) {
         setCookie("rememberAddress", Account, { maxAge: 30 });
-        console.log(Account);
       }
     } else {
       removeCookie("rememberAddress");
@@ -191,7 +188,6 @@ const Header = () => {
 
   useEffect(async () => {
     if (isOwner) {
-      console.log(accounts[0]);
       const getAddress = utils.getAddress(accounts[0]);
       await axios
         .post("http://127.0.0.1:5000/user/owner", { address: getAddress })

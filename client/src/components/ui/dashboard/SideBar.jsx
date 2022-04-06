@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
-import pfpImg from "../../../assets/images/img.jpg";
 import ReactLoaing from "react-loading";
 import Badge from "react-bootstrap/Badge";
 
@@ -10,7 +8,6 @@ import axios from "axios";
 
 import "./slide-bar.css";
 import { useSelector } from "react-redux";
-import sum from "lodash/sum";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
@@ -29,12 +26,9 @@ const SideBar = () => {
   );
 
   const [EditProfileModal, setEditProfileModal] = useState(false);
-  console.log("Balance", balance);
 
   useEffect(() => {
     if (account !== null) {
-      console.log("실행");
-
       axios
         .post("http://localhost:5000/user/login", {
           address: account,
@@ -58,7 +52,6 @@ const SideBar = () => {
       .post(`http://localhost:5000/ranking/balance`, { address: account })
       .then((response) => {
         const data = response.data;
-        console.log(data);
         const balanceData = data.map((v, i) => {
           return v.balance;
         });
@@ -70,10 +63,6 @@ const SideBar = () => {
 
     setLoading(null);
   }, []);
-
-  // const updateProfile = async () => {
-  //   await axios.post("http://localhost:5000/user/edit").then();
-  // };
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -186,17 +175,19 @@ const SideBar = () => {
           <div className="myBest__ranking" content="">
             <Badge pill bg="dark" text="dark" className="my__Badge">
               <p>Total balance</p>
-              {balance
-                .filter((v, i) => {
-                  return i < 1;
-                })
-                .map((v, i) => {
-                  let sum = 0;
-                  for (let i = 0; i < balance.length; i++) {
-                    sum += balance[i];
-                  }
-                  return <div key={i}>{sum}</div>;
-                })}
+              {balance.length === 0
+                ? "보상 집계중"
+                : balance
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      let sum = 0;
+                      for (let i = 0; i < balance.length; i++) {
+                        sum += balance[i];
+                      }
+                      return <div key={i}>{sum}</div>;
+                    })}
             </Badge>
           </div>
         </div>
