@@ -26,7 +26,6 @@ module.exports = class Game extends Sequelize.Model {
         },
         minePoint: {
           type: Sequelize.INTEGER(100),
-          defaultValue: 50,
           allowNull: true,
         },
         tetrisPoint: {
