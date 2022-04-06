@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
-import pfpImg from "../../../assets/images/img.jpg";
 import ReactLoaing from "react-loading";
 import Badge from "react-bootstrap/Badge";
 
@@ -10,13 +8,11 @@ import axios from "axios";
 
 import "./slide-bar.css";
 import { useSelector } from "react-redux";
-import sum from "lodash/sum";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
   const [imageURL, setImageURL] = useState([]);
   const [email, setEmail] = useState([]);
-  // const [address, setAddress] = useState("address");
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
@@ -82,10 +78,6 @@ const SideBar = () => {
     setLoading(null);
   }, []);
 
-  // const updateProfile = async () => {
-  //   await axios.post("http://localhost:5000/user/edit").then();
-  // };
-
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
     const email = document.getElementById("email__pfp").innerText;
@@ -104,7 +96,6 @@ const SideBar = () => {
       })
       .catch((err) => {
         console.log(err);
-        // window.location("/error");
       });
   };
 
@@ -191,7 +182,6 @@ const SideBar = () => {
             }}
           >
             {visible ? "Exit" : "Edit"}
-            {/* Edit */}
           </button>
 
           <div className="myBest__ranking" content="">
@@ -211,11 +201,6 @@ const SideBar = () => {
                       return <div key={i}>{sum}</div>;
                     })}
             </Badge>
-            {/* <p>{(snakeT + 1 + mineT + 1 + puzzleT + 1 + tetrisT + 1) / 4}등</p> */}
-            {/* <p className="my_small_ranking">Snake : {snakeI === null ? "None" : snakeT + 1 + "등"}</p>
-                        <p className="my_small_ranking">Mine : {mineI === null ? "None" : mineT + 1 + "등"}</p>
-                        <p className="my_small_ranking">2048 : {puzzleI === null ? "None" : puzzleT + 1 + "등"}</p>
-                        <p className="my_small_ranking">Tetris : {tetrisI === null ? "None" : tetrisT + 1 + "등"}</p> */}
             <button className="get__token" onClick={claimToken}>
               Claim Token
             </button>

@@ -16,7 +16,7 @@ const Ranking = () => {
   const [timerMinutes, setTimerMinutes] = useState();
   const [timerSeconds, setTimerSeconds] = useState();
 
-  const [isStop, setIsStop] = useState(false);
+  // const [isStop, setIsStop] = useState(false);
 
   //   useEffect(() => {
   //     let interval = setInterval(() => {

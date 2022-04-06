@@ -22,6 +22,10 @@ module.exports = class Ranking extends Sequelize.Model {
           type: Sequelize.STRING(200),
           allowNull: true,
         },
+        nick: {
+          type: Sequelize.STRING(200),
+          allowNull: true,
+        },
         balance: {
           type: Sequelize.INTEGER(100),
           allowNull: true,
