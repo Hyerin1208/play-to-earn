@@ -5,6 +5,9 @@ import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Clock from "./Clock";
+import Slider from "react-slick";
+
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
@@ -38,12 +41,14 @@ const Ranking = () => {
 
   const [isStop, setIsStop] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
+    const countdownDate = await axios.get(`http://localhost:5000/user/time`);
+
     let interval = setInterval(() => {
-      const countdownDate = new Date("apr 15, 2022 18:00:00").getTime();
+      // var weeks = new Date(now.getDate() + 7);
 
       const now = new Date().getTime();
-      const distance = countdownDate - now;
+      const distance = 604800000 + parseInt(countdownDate.data.count) - now;
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
@@ -164,6 +169,36 @@ const Ranking = () => {
       });
     setLoading(false);
   }, []);
+
+  const NextArrow = ({ onClick }) => {
+    return (
+      <div className="arrow next" onClick={{}}>
+        <FaArrowLeft />
+      </div>
+    );
+  };
+
+  const PrevArrow = ({ onClick }) => {
+    return (
+      <div className="arrow next" onClick={{}}>
+        <FaArrowRight />
+      </div>
+    );
+  };
+
+  const [itemIndex, setItemIndex] = useState(0);
+
+  const settings = {
+    infinite: true,
+    lazyLoad: true,
+    speed: 300,
+    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: 0,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    beforeChange: (current, next) => setItemIndex(next),
+  };
 
   return (
     <>
@@ -321,7 +356,13 @@ const Ranking = () => {
                   <hr />
                   <Container>
                     <div className="ranking__box">
-                      여기에 주간랭킹 순위표만들기
+                      <Slider {...settings}>
+                        {/* {data.map((item, idx) => (
+                          <div key={idx} className={idx === itemIndex ? "slide activeSlide" : "slide"}>
+                            <div item={item} className="Rank__item" />
+                          </div>
+                        ))} */}
+                      </Slider>
                     </div>
                   </Container>
                 </div>
