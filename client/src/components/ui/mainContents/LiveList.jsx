@@ -14,7 +14,6 @@ const LiveList = () => {
   useEffect(() => {
     try {
       if (Selllists !== null) {
-        console.log("실행");
         setnftArray([...Selllists].reverse());
         setLoading(null);
       }
