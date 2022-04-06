@@ -1,9 +1,11 @@
 var express = require("express");
 var router = express.Router();
-const { Game, User } = require("../models");
+const { Game, User, Ranking } = require("../models");
+const { Op } = require("sequelize");
 
 // router.post 모음
 // SnakeGame
+
 router.post("/snake", async (req, res, next) => {
   const { point, account } = req.body;
 
@@ -128,83 +130,117 @@ router.post("/tetris", async (req, res, next) => {
 });
 
 // router.get 모음
+
 // SnakeGame
-router.get("/snake", async (req, res) => {
-  const users = await Game.findAll({
+router.post("/ranking", async (req, res) => {
+  const address = req.body.address;
+  const snake = await Game.findAll({
+    where: { snakePoint: { [Op.not]: null } },
     attributes: ["nick", "snakePoint", "address"],
     order: [["snakePoint", "desc"]],
   });
-  const snake = [];
 
-  for (const user of users) {
-    snake.push({
-      nick: user.nick,
-      address: user.address,
-      snakePoint: user.snakePoint,
-    });
-  }
+  const snakeranker = await snake.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.snakePoint,
+      };
+      return form;
+    }
+  });
 
-  res.json(snake);
-});
+  const snakeMyRanking = snake.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-// 2048Game
-router.get("/2048", async (req, res) => {
-  const users = await Game.findAll({
+  const puzzle = await Game.findAll({
+    where: { puzzlePoint: { [Op.not]: null } },
     attributes: ["nick", "puzzlePoint", "address"],
     order: [["puzzlePoint", "desc"]],
   });
-  const puzzle = [];
 
-  for (const user of users) {
-    puzzle.push({
-      nick: user.nick,
-      address: user.address,
-      puzzlePoint: user.puzzlePoint,
-    });
-  }
+  const puzzleranker = await puzzle.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.puzzlePoint,
+      };
+      return form;
+    }
+  });
 
-  res.json(puzzle);
-});
+  const puzzleMyRanking = puzzle.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-// MineGame
-router.get("/mine", async (req, res) => {
-  const users = await Game.findAll({
-    // where: {
-    //   minePoint: { [Op.ne]: null },
-    // },
+  const mine = await Game.findAll({
+    where: { minePoint: { [Op.not]: null } },
     attributes: ["nick", "minePoint", "address"],
     order: [["minePoint", "ASC"]],
   });
-  const mine = [];
 
-  for (const user of users) {
-    mine.push({
-      nick: user.nick,
-      address: user.address,
-      minePoint: user.minePoint,
-    });
-  }
+  const mineranker = await mine.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.minePoint,
+      };
+      return form;
+    }
+  });
 
-  res.json(mine);
-});
+  const mineMyRanking = puzzle.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-// TetrisGame
-router.get("/tetris", async (req, res) => {
-  const users = await Game.findAll({
+  const tetris = await Game.findAll({
+    where: { tetrisPoint: { [Op.not]: null } },
     attributes: ["nick", "tetrisPoint", "address"],
     order: [["tetrisPoint", "desc"]],
   });
-  const tetris = [];
 
-  for (const user of users) {
-    tetris.push({
-      nick: user.nick,
-      address: user.address,
-      tetrisPoint: user.tetrisPoint,
-    });
-  }
+  const tetrisranker = await tetris.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.tetrisPoint,
+      };
+      return form;
+    }
+  });
+  const tetrisMyRanking = puzzle.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-  res.json(tetris);
+  res.json({
+    snakeranker: snakeranker,
+    snakeMyRanking: snakeMyRanking + 1,
+    puzzleranker: puzzleranker,
+    puzzleMyRanking: puzzleMyRanking + 1,
+    mineranker: mineranker,
+    mineMyRanking: mineMyRanking + 1,
+    tetrisranker: tetrisranker,
+    tetrisMyRanking: tetrisMyRanking + 1,
+  });
+});
+
+// RankingDB
+router.post("/weekly", async (req, res) => {
+  const RankingDB = await Ranking.findAll();
+  res.json(RankingDB);
 });
 
 module.exports = router;

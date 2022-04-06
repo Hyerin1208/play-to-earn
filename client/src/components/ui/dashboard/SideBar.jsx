@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
+import pfpImg from "../../../assets/images/img.jpg";
 import ReactLoaing from "react-loading";
 import Badge from "react-bootstrap/Badge";
 
@@ -8,17 +10,20 @@ import axios from "axios";
 
 import "./slide-bar.css";
 import { useSelector } from "react-redux";
+import sum from "lodash/sum";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
   const [imageURL, setImageURL] = useState([]);
   const [email, setEmail] = useState([]);
-
+  // const [address, setAddress] = useState("address");
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
 
   const [balance, setBalance] = useState([]);
+
+  const [claim, setClaim] = useState(1);
 
   const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -26,9 +31,21 @@ const SideBar = () => {
   );
 
   const [EditProfileModal, setEditProfileModal] = useState(false);
+  console.log("Balance", balance);
+
+  const claimToken = async () => {
+    await axios
+      .post(`http://localhost:5000/ranking`, { claim, account })
+      .then((res) => {
+        console.log(res.data);
+        alert("토큰 클레임 완료");
+      });
+  };
 
   useEffect(() => {
     if (account !== null) {
+      console.log("실행");
+
       axios
         .post("http://localhost:5000/user/login", {
           address: account,
@@ -52,6 +69,7 @@ const SideBar = () => {
       .post(`http://localhost:5000/ranking/balance`, { address: account })
       .then((response) => {
         const data = response.data;
+        console.log(data);
         const balanceData = data.map((v, i) => {
           return v.balance;
         });
@@ -62,7 +80,11 @@ const SideBar = () => {
       });
 
     setLoading(null);
-  }, [account]);
+  }, []);
+
+  // const updateProfile = async () => {
+  //   await axios.post("http://localhost:5000/user/edit").then();
+  // };
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -174,23 +196,29 @@ const SideBar = () => {
 
           <div className="myBest__ranking" content="">
             <Badge pill bg="dark" text="dark" className="my__Badge">
-              <p>Claimable Tokens</p>
-              <div className="my_balance">
-                {balance.length === 0
-                  ? "Counting Star"
-                  : balance
-                      .filter((v, i) => {
-                        return i < 1;
-                      })
-                      .map((v, i) => {
-                        let sum = 0;
-                        for (let i = 0; i < balance.length; i++) {
-                          sum += balance[i];
-                        }
-                        return <div key={i}>{sum}개</div>;
-                      })}
-              </div>
+              <p>Total balance</p>
+              {balance.length === 0
+                ? "보상 집계중"
+                : balance
+                    .filter((v, i) => {
+                      return i < 1;
+                    })
+                    .map((v, i) => {
+                      let sum = 0;
+                      for (let i = 0; i < balance.length; i++) {
+                        sum += balance[i];
+                      }
+                      return <div key={i}>{sum}</div>;
+                    })}
             </Badge>
+            {/* <p>{(snakeT + 1 + mineT + 1 + puzzleT + 1 + tetrisT + 1) / 4}등</p> */}
+            {/* <p className="my_small_ranking">Snake : {snakeI === null ? "None" : snakeT + 1 + "등"}</p>
+                        <p className="my_small_ranking">Mine : {mineI === null ? "None" : mineT + 1 + "등"}</p>
+                        <p className="my_small_ranking">2048 : {puzzleI === null ? "None" : puzzleT + 1 + "등"}</p>
+                        <p className="my_small_ranking">Tetris : {tetrisI === null ? "None" : tetrisT + 1 + "등"}</p> */}
+            <button className="get__token" onClick={claimToken}>
+              Claim Token
+            </button>
           </div>
         </div>
         <div className="link__conatainer">
