@@ -125,17 +125,28 @@ label:hover :checked + .free__nft__card {
 }
  */
 
-/* .item__choice {
-  clip: rect(0 0 0 0);
+input[type="checkbox"] {
+  /*  clip: rect(0 0 0 0);
   clip-path: inset(50%);
+  height: 1px; */
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px;
-  height: 1px;
-  z-index: 1111;
+  /* width: 1px; */
+}
+
+/* .item__choice {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  background-color: #808;
+  border-color: #808;
+  background: #fff;
+  border: 2px #ddd solid;
+  margin-right: 4px;
 } */
-.item__choice {
+
+.checkbox {
   display: inline-block;
   height: 20px;
   width: 20px;

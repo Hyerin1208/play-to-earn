@@ -77,7 +77,11 @@ const FreeCard = (props) => {
 
         {/* <animated.svg
           style={checkboxAnimationStyle}
-          className={`checkbox ${checkItem ? "checkbox--active" : ""}`}
+          className={`checkbox ${
+            parseInt(checkItem) === parseInt(props.item.id)
+              ? "checkbox--active"
+              : ""
+          }`}
           aria-hidden="true"
           viewBox="0 0 15 11"
           fill="none"
