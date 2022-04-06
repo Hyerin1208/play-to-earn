@@ -5,6 +5,9 @@ import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Clock from "./Clock";
+import Slider from "react-slick";
+
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
@@ -167,6 +170,36 @@ const Ranking = () => {
     setLoading(false);
   }, []);
 
+  const NextArrow = ({ onClick }) => {
+    return (
+      <div className="arrow next" onClick={{}}>
+        <FaArrowLeft />
+      </div>
+    );
+  };
+
+  const PrevArrow = ({ onClick }) => {
+    return (
+      <div className="arrow next" onClick={{}}>
+        <FaArrowRight />
+      </div>
+    );
+  };
+
+  const [itemIndex, setItemIndex] = useState(0);
+
+  const settings = {
+    infinite: true,
+    lazyLoad: true,
+    speed: 300,
+    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: 0,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    beforeChange: (current, next) => setItemIndex(next),
+  };
+
   return (
     <>
       <CommonSection title="Ranking" />
@@ -323,7 +356,13 @@ const Ranking = () => {
                   <hr />
                   <Container>
                     <div className="ranking__box">
-                      여기에 주간랭킹 순위표만들기
+                      <Slider {...settings}>
+                        {/* {data.map((item, idx) => (
+                          <div key={idx} className={idx === itemIndex ? "slide activeSlide" : "slide"}>
+                            <div item={item} className="Rank__item" />
+                          </div>
+                        ))} */}
+                      </Slider>
                     </div>
                   </Container>
                 </div>
