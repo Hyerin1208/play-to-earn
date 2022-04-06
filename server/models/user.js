@@ -28,10 +28,14 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(40),
           allowNull: false,
         },
+        count: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
+        },
       },
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         underscored: false,
         modelName: "User",
         tableName: "users",
