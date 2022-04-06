@@ -62,7 +62,7 @@ const SideBar = () => {
       });
 
     setLoading(null);
-  }, []);
+  }, [account]);
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -174,20 +174,22 @@ const SideBar = () => {
 
           <div className="myBest__ranking" content="">
             <Badge pill bg="dark" text="dark" className="my__Badge">
-              <p>Total balance</p>
-              {balance.length === 0
-                ? "보상 집계중"
-                : balance
-                    .filter((v, i) => {
-                      return i < 1;
-                    })
-                    .map((v, i) => {
-                      let sum = 0;
-                      for (let i = 0; i < balance.length; i++) {
-                        sum += balance[i];
-                      }
-                      return <div key={i}>{sum}</div>;
-                    })}
+              <p>Claimable Tokens</p>
+              <div className="my_balance">
+                {balance.length === 0
+                  ? "Counting Star"
+                  : balance
+                      .filter((v, i) => {
+                        return i < 1;
+                      })
+                      .map((v, i) => {
+                        let sum = 0;
+                        for (let i = 0; i < balance.length; i++) {
+                          sum += balance[i];
+                        }
+                        return <div key={i}>{sum}개</div>;
+                      })}
+              </div>
             </Badge>
           </div>
         </div>

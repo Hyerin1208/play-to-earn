@@ -145,10 +145,8 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                </Col>
-                <Col xs="1">
                   <div type="button" onClick={sendReward}>
-                    Send Reward
+                    <b>Send Reward</b>
                   </div>
                 </Col>
                 <Col xs="8">

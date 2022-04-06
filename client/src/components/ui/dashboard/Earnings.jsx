@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-
-import { Card } from "reactstrap";
-
 import "./earning.css";
 
 const Earnings = () => {

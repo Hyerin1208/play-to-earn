@@ -41,7 +41,6 @@ const Ranking = () => {
   useEffect(() => {
     let interval = setInterval(() => {
       const countdownDate = new Date("apr 15, 2022 18:00:00").getTime();
-      // var weeks = new Date(now.getDate() + 7);
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
