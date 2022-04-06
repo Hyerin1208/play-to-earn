@@ -9,8 +9,10 @@ import Hero1 from "../../../assets/images/mainImg/char.png";
 import Hero2 from "../../../assets/images/mainImg/char1.png";
 import Hero3 from "../../../assets/images/mainImg/char2.png";
 import Hero4 from "../../../assets/images/mainImg/char3.png";
+import { useSelector } from "react-redux";
 
 const MainSection = () => {
+  const isUser = useSelector((state) => state.AppState.isUser);
   const fadeLeft = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0 },
@@ -46,6 +48,7 @@ const MainSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1, transition: { duration: 1.5 } }}
                   className="join__btn"
+                  hidden={isUser}
                 >
                   <i className="ri-registered-line"></i>
                   <Link to="/join/step1"> Join Us</Link>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./nft-card.css";
 import Modal from "../templete/Modal";
@@ -10,8 +10,6 @@ const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   let params = useParams();
-  const card_id = params.card_id;
-  console.log(props.item);
 
   return (
     <div>
