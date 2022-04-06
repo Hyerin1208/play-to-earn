@@ -46,9 +46,6 @@ const Ranking = () => {
 
       const now = new Date().getTime();
       const distance = 604800000 + parseInt(countdownDate.data.count) - now;
-      // console.log(typeof now);
-      // console.log(countdownDate.data.count);
-      // console.log(distance);
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
