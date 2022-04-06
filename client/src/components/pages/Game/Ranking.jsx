@@ -53,8 +53,8 @@ const Ranking = () => {
 
   const [rankingDB, setRankingDB] = useState(null);
   const [weekly, setWeekly] = useState(null);
+  console.log("w", weekly);
   const [error, setError] = useState(null);
-  console.log(weekly);
 
   useEffect(() => {
     if (account !== null) {
@@ -76,7 +76,6 @@ const Ranking = () => {
       .post(`http://localhost:5000/game/weekly`)
       .then((response) => {
         const data = response.data;
-        console.log(data);
         setWeekly(data);
       })
       .catch((error) => {
@@ -186,7 +185,6 @@ const Ranking = () => {
                   <hr />
                   <Container>
                     <div className="ranking__box">
-                      여기에 주간랭킹 순위표만들기
                     </div>
                   </Container>
                 </div>

@@ -76,7 +76,7 @@ const SideBar = () => {
       });
 
     setLoading(null);
-  }, []);
+  }, [account]);
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -186,9 +186,9 @@ const SideBar = () => {
 
           <div className="myBest__ranking" content="">
             <Badge pill bg="dark" text="dark" className="my__Badge">
-              <p>Total balance</p>
+              <p>Claimable Token</p>
               {balance.length === 0
-                ? "보상 집계중"
+                ? "Counting Token"
                 : balance
                     .filter((v, i) => {
                       return i < 1;

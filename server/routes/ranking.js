@@ -5,7 +5,7 @@ const { Ranking, User } = require("../models");
 router.post("/", async (req, res, next) => {
   const { rankingDB, address } = req.body;
   const reward = [1000, 600, 400];
-  
+
   const findUser = await User.findOne({
     where: { address: address },
     attributes: ["address", "weeks"],
@@ -98,6 +98,11 @@ router.post("/balance", async (req, res) => {
     });
   }
   res.json(balance);
+});
+
+router.post("/previous", async (req, res) => {
+  const previousRank = await Ranking.findAll();
+  res.json(previousRank);
 });
 
 module.exports = router;
