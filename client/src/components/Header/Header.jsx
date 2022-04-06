@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
+import { useCookies } from "react-cookie";
 
 import logoPng from "../../assets/images/logoPng.png";
 
@@ -54,6 +55,23 @@ const Header = () => {
   const [accounts, setAccounts] = useState([]);
   const [isOwner, setIsOwner] = useState(false);
   const onboarding = useRef();
+
+  const Account = useSelector((state) => state.AppState.account);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberAddress"]);
+
+  console.log(cookies.rememberAddress);
+
+  useEffect(() => {
+    if (cookies.rememberAddress === undefined) {
+      if (Account !== null) {
+        setCookie("rememberAddress", Account, { maxAge: 30 });
+        console.log(Account);
+      }
+    } else {
+      removeCookie("rememberAddress");
+    }
+  }, [Account]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {

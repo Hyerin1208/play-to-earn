@@ -11,10 +11,10 @@
 
 .mySingle_modal {
   position: relative;
-  top: 52%;
+  top: 54%;
   left: 50%;
   width: 860px;
-  max-height: 680px;
+  max-height: 650px;
   transform: translate(-50%, -50%);
   background: rgb(28, 20, 37) !important;
   border-radius: 5px;
@@ -283,8 +283,8 @@
 }
 
 .images__box .selected {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   margin: 0 auto;
   /* border: 5px solid palevioletred; */

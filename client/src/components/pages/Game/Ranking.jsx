@@ -11,6 +11,7 @@ const Ranking = () => {
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
 
+  console.log(account);
   // Claim부분
   const [snakeAddress, setSnakeAddress] = useState([]);
   const [puzzleAddress, setPuzzleAddress] = useState([]);
