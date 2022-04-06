@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
+import { useCookies } from "react-cookie";
 
 import logoPng from "../../assets/images/logoPng.png";
 
@@ -12,6 +13,7 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { updateAccounts, connectFailed } from "../../redux/actions/index";
 import axios from "axios";
+
 const NAV__LINKS = [
   {
     display: "Home",
@@ -50,6 +52,23 @@ const Header = () => {
   const [isDisabled, setDisabled] = useState(false);
   const [account, setAccount] = useState(null);
   const [Owner, setOwner] = useState(true);
+
+  const Account = useSelector((state) => state.AppState.account);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberAddress"]);
+
+  console.log(cookies.rememberAddress);
+
+  useEffect(() => {
+    if (cookies.rememberAddress === undefined) {
+      if (Account !== null) {
+        setCookie("rememberAddress", Account, { maxAge: 30 });
+        console.log(Account);
+      }
+    } else {
+      removeCookie("rememberAddress");
+    }
+  }, [Account]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
