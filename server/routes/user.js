@@ -126,6 +126,7 @@ router.post("/weeks", async (req, res) => {
 
 // 오너체크
 router.post("/owner", async (req, res, next) => {
+  const { count } = req.body;
   try {
     const newDate = new Date().getTime();
 
