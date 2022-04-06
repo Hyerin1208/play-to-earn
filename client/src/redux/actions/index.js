@@ -6,6 +6,7 @@ import axios from "axios";
 
 export const APP_STATE = "APP_STATE";
 export const CONNECTION_FAILED = "CONNECTION_FAILED";
+export const CALL_CONTRACT = "CALL_CONTRACT";
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
 export const UPDATE_LISTS = "UPDATE_LISTS";
 export const UPDATE_MYLISTS = "UPDATE_MYLISTS";
@@ -26,6 +27,13 @@ export const connectSuccess = (payload) => {
 export const connectFailed = (payload) => {
     return {
         type: CONNECTION_FAILED,
+        payload: payload,
+    };
+};
+
+export const callContract = (payload) => {
+    return {
+        type: CALL_CONTRACT,
         payload: payload,
     };
 };
@@ -65,10 +73,10 @@ export const updateMyLists = (payload) => {
     };
 };
 
-export function getWeb3() {
+export function connect() {
+    console.log("커낵트 이거실행??");
     return async (dispatch) => {
         try {
-            // const web3 = new Web3(window.ethereum);
             const web3 = new Web3(rpcurl || "http://127.0.0.1:7545");
             await web3.eth.net
                 .isListening()
@@ -81,12 +89,6 @@ export function getWeb3() {
                         const NFT_abi = CreateNFT.abi;
                         const NFT_address = networkData_NFT.address;
                         const CreateNFTContract = new web3.eth.Contract(NFT_abi, NFT_address);
-                        const Token_abi = AmusementArcadeToken.abi;
-                        const Token_address = networkData_Token.address;
-                        const AmusementArcadeTokenContract = new web3.eth.Contract(Token_abi, Token_address);
-                        const TokenClaim_abi = TokenClaim.abi;
-                        const TokenClaim_address = networkData_TokenClaim.address;
-                        const TokenClaimContract = new web3.eth.Contract(TokenClaim_abi, TokenClaim_address);
                         const Owner = await CreateNFTContract.methods.owner().call();
                         const lists = await CreateNFTContract.methods.Selllists().call((error) => {
                             if (!error) {
@@ -116,21 +118,54 @@ export function getWeb3() {
                             connectSuccess({
                                 network: res,
                                 Owner: Owner,
-                                CreateNFTContract: CreateNFTContract,
-                                AmusementArcadeTokenContract: AmusementArcadeTokenContract,
-                                TokenClaimContract: TokenClaimContract,
                                 Selllists: listsForm,
                                 errorMsg: "",
                             })
                         );
                     } else {
+                        console.log("1");
                         dispatch(connectFailed("접속네트워크를 확인하세요"));
                     }
                 })
                 .catch((error) => {
                     console.log(error);
+                    console.log("2");
                     dispatch(connectFailed("접속네트워크를 확인하세요"));
                 });
+        } catch (error) {
+            console.log(error);
+            console.log("3");
+            dispatch(connectFailed("에러 확인"));
+        }
+    };
+}
+
+export function getWeb3() {
+    return async (dispatch) => {
+        try {
+            const web3js = new Web3(Web3.givenProvider);
+            const givenNetworkId = await web3js.eth.net.getId();
+            const networkId = Object.keys(CreateNFT.networks)[0];
+            console.log(givenNetworkId);
+            console.log(networkId);
+            if (parseInt(givenNetworkId) === parseInt(networkId)) {
+                const networkData_NFT = CreateNFT.networks[givenNetworkId];
+                const networkData_Token = AmusementArcadeToken.networks[givenNetworkId];
+                const networkData_TokenClaim = TokenClaim.networks[givenNetworkId];
+                const NFT_abi = CreateNFT.abi;
+                const NFT_address = networkData_NFT.address;
+                const CreateNFTContract = new web3js.eth.Contract(NFT_abi, NFT_address);
+                const Token_abi = AmusementArcadeToken.abi;
+                const Token_address = networkData_Token.address;
+                const AmusementArcadeTokenContract = new web3js.eth.Contract(Token_abi, Token_address);
+                const TokenClaim_abi = TokenClaim.abi;
+                const TokenClaim_address = networkData_TokenClaim.address;
+                const TokenClaimContract = new web3js.eth.Contract(TokenClaim_abi, TokenClaim_address);
+                dispatch(callContract({ CreateNFTContract: CreateNFTContract, AmusementArcadeTokenContract: AmusementArcadeTokenContract, TokenClaimContract: TokenClaimContract }));
+            } else {
+                console.log("여기인가봐");
+                dispatch(callContract({ CreateNFTContract: null, AmusementArcadeTokenContract: null, TokenClaimContract: null }));
+            }
         } catch (error) {
             console.log(error);
             dispatch(connectFailed("에러 확인"));
