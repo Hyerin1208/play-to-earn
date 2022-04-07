@@ -7,22 +7,12 @@ import "./token-nomic.css";
 
 const TokenNomic = () => {
     const [amount, setAmount] = useState(0);
-    const Account = useSelector((state) => state.AppState.account);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
 
     async function getTokenAmount() {
         if (CreateNFTContract !== null) {
-            const lists = await CreateNFTContract.methods.totalNFTs().call({ from: Account }, (error) => {
-                if (!error) {
-                    console.log("send ok");
-                } else {
-                    console.log(error);
-                }
-            });
-            console.log(await lists); //12
+            const lists = await CreateNFTContract.methods.totalNFTs().call();
             setAmount(await lists);
-        } else {
-            console.log("로딩중...");
         }
     }
 

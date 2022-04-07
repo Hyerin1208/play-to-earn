@@ -27,9 +27,9 @@ const SideBar = () => {
 
     const account = useSelector((state) => state.AppState.account);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
+    const TokenClaimContract = useSelector((state) => state.AppState.TokenClaimContract);
 
     const [EditProfileModal, setEditProfileModal] = useState(false);
-    console.log("Balance", balance);
 
     const claimToken = async () => {
         await axios.post(`http://localhost:5000/ranking`, { claim, account }).then((res) => {
@@ -38,16 +38,37 @@ const SideBar = () => {
         });
     };
 
-    useEffect(() => {
-        if (account !== null) {
-            console.log("실행");
+    const getClaim = async () => {
+        if (TokenClaimContract !== null) {
+            const result = await TokenClaimContract.methods.getclaim().call({ from: account });
+            return alert(await result);
+        } else {
+            alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
+        }
+    };
+    const mybalance = async () => {
+        if (TokenClaimContract !== null) {
+            const result = await TokenClaimContract.methods.mybalance().call({ from: account });
+            return alert(await result);
+        } else {
+            alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
+        }
+    };
+    const gettoken = async () => {
+        if (TokenClaimContract !== null) {
+            await TokenClaimContract.methods.gettoken().send({ from: account, gas: 3000000 });
+        } else {
+            alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
+        }
+    };
 
-            axios
+    useEffect(async () => {
+        if (account !== null) {
+            await axios
                 .post("http://localhost:5000/user/login", {
                     address: account,
                 })
                 .then((res) => {
-                    console.log(res.data.nick);
                     setNicName(res.data.nick);
                     setEmail(res.data.email);
                     setImageURL(res.data.image);
@@ -60,8 +81,8 @@ const SideBar = () => {
         }
     }, [account]);
 
-    useEffect(() => {
-        axios
+    useEffect(async () => {
+        await axios
             .post(`http://localhost:5000/ranking/balance`, { address: account })
             .then((response) => {
                 const data = response.data;
@@ -184,16 +205,38 @@ const SideBar = () => {
 
                     <div className="myBest__ranking" content="">
                         <Badge pill bg="dark" text="dark" className="my__Badge">
-                            <p>Total balance</p>
+                            <p>Total Claim</p>
+                            {/* {balance.length === 0
+                                ? "보상 집계중"
+                                : balance
+                                      .filter((v, i) => {
+                                          return i < 1;
+                                      })
+                                      .map((v, i) => {
+                                          let sum = 0;
+                                          for (let i = 0; i < balance.length; i++) {
+                                              sum += balance[i];
+                                          }
+                                          return <div key={i}>{sum}</div>;
+                                      })} */}
                         </Badge>
+                        <button className="get__token" onClick={() => getClaim()}>
+                            Claim
+                        </button>
                         {/* <p>{(snakeT + 1 + mineT + 1 + puzzleT + 1 + tetrisT + 1) / 4}등</p> */}
                         {/* <p className="my_small_ranking">Snake : {snakeI === null ? "None" : snakeT + 1 + "등"}</p>
                         <p className="my_small_ranking">Mine : {mineI === null ? "None" : mineT + 1 + "등"}</p>
                         <p className="my_small_ranking">2048 : {puzzleI === null ? "None" : puzzleT + 1 + "등"}</p>
                         <p className="my_small_ranking">Tetris : {tetrisI === null ? "None" : tetrisT + 1 + "등"}</p> */}
-                        <button className="get__token" onClick={claimToken}>
-                            Claim Token
+                        <button className="get__token" onClick={() => mybalance()}>
+                            My Balance
                         </button>
+                        <button className="get__token" onClick={() => gettoken()}>
+                            get Token
+                        </button>
+                        {/* <button className="get__token" onClick={claimToken}>
+                            Claim Token
+                        </button> */}
                     </div>
                 </div>
                 <div className="link__conatainer">
