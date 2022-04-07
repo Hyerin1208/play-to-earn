@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { Marginer } from "./Marginer";
 
+import NaimingLogo from "../../../assets/images/naminglogo.png";
+
 const DetailsContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -52,6 +54,19 @@ const EvoButton = styled.button`
   }
 `;
 
+const OurLogo = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: auto;
+    height: 13px;
+  }
+`;
+
 const EvoDetails = (props) => {
   return (
     <DetailsContainer>
@@ -59,6 +74,9 @@ const EvoDetails = (props) => {
       <SpaceHorizontalContainer>
         <MediumText>Choose the nft that needs to be evolution</MediumText>
       </SpaceHorizontalContainer>
+      {/* <OurLogo>
+        <img src={NaimingLogo} alt="" />
+      </OurLogo> */}
       <Marginer direction="vertical" margin="1.2em" />
       <SpaceHorizontalContainer>
         <MediumText>YOUR NEXT PROFILE</MediumText>

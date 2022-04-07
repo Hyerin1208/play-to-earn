@@ -140,7 +140,7 @@ router.post("/owner", async (req, res, next) => {
       await User.create({
         address: address,
         nick: "운영자",
-        image: "/images/Owner.jpg",
+        image: "/images/naminglogo.png",
         email: "Owner@gmail.com",
         count: newDate.toString(),
       });
