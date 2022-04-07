@@ -43,6 +43,7 @@ const EvoButton = styled.button`
   outline: none;
   cursor: pointer;
   transition: all 290ms ease-in-out;
+  border-radius: 8px;
 
   &:hover {
     background-color: transparent;
@@ -61,6 +62,7 @@ const EvoDetails = (props) => {
       <Marginer direction="vertical" margin="1.2em" />
       <SpaceHorizontalContainer>
         <MediumText>YOUR NEXT PROFILE</MediumText>
+        <EvoButton>Evolution</EvoButton>
       </SpaceHorizontalContainer>
     </DetailsContainer>
   );
