@@ -11,9 +11,9 @@ const SellModal = (props) => {
   );
 
   const [form, setForm] = useState({
-    bid: props.item.formInput.price,
+    price: props.item.formInput.price,
   });
-  console.log(form);
+  console.log(form.bid);
 
   useEffect(async () => {
     setLoading(null);
@@ -38,7 +38,7 @@ const SellModal = (props) => {
     }
   }
   console.log(props.item.formInput.tokenId);
-  console.log(form.bid);
+  console.log(form);
 
   if (Loading) {
     return (
@@ -70,20 +70,20 @@ const SellModal = (props) => {
                 <input
                   type="number"
                   placeholder="00 . 00 ETH"
-                  onChange={(e) => setForm({ ...form, bid: e.target.value })}
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="must__bid">
               <p>Total Bid Amount</p>
-              <span className="money">{form.bid} ETH</span>
+              <span className="money">{form.price} ETH</span>
             </div>
           </div>
           <button
             className="place__bid-btn"
             onClick={async () => {
-              await sellnft(props.item.formInput.tokenId, form.bid);
+              await sellnft(props.item.formInput.tokenId, form.price);
             }}
           >
             Sell Now
