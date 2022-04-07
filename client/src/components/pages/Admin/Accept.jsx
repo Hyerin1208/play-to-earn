@@ -1,106 +1,241 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
+import { useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 
 import "./accept.css";
-
 const Accept = () => {
-  return (
-    <div className="admin__card">
-      <div className="carousel__con">
-        <Carousel itemsToShow={1}>
-          <div className="winner__card" numbers="1">
-            <div className="winner__content">
-              <div className="winner__chart">{/* Snake */}</div>
-              <div className="earing__text">
-                <div className="token__mybox">Snake Game Winner</div>
+    const [rankingDB, setRankingDB] = useState(null);
+    const account = useSelector((state) => state.AppState.account);
+    const TokenContract = useSelector((state) => state.AppState.AmusementArcadeTokenContract);
+    useEffect(() => {
+        if (account !== null) {
+            axios.post(`http://localhost:5000/game/ranking`, { address: account }).then((response) => {
+                const data = response.data;
+                setRankingDB(data);
+            });
+        }
+    }, [account]);
 
-                <div className="winner__box">
-                  <p>user1 address</p>
-                  <button className="accept__btn">signed</button>
-                </div>
-                <div className="winner__box">
-                  <p>user2 address</p>
-                  <button className="accept__btn">signed</button>
-                </div>
-                <div className="winner__box">
-                  <p>user3 address</p>
-                  <button className="accept__btn">signed</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="winner__card" numbers="2">
-            <div className="winner__content">
-              <div className="winner__chart">{/* Tetris */}</div>
-              <div className="earing__text">
-                <div className="token__mybox">Tetris Game Winner</div>
-                <div className="winner__box">
-                  <ul>
-                    <li>
-                      <p></p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="winner__card" numbers="3">
-            <div className="winner__content">
-              <div className="winner_chart">{/* 2048 */}</div>
-              <div className="earing__text">
-                <div className="token__mybox">2048 Game Winner</div>
-                <div className="winner__box">
-                  <ul>
-                    <li>
-                      <p></p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+    async function approveToken(address, amount) {
+        if (TokenContract !== null) {
+            await TokenContract.methods.approve(address, amount).send({ from: account, gas: 3000000 });
+        } else {
+            alert("컨트랙트 로드 실패");
+        }
+    }
 
-          <div className="winner__card" numbers="4">
-            <div className="winner__content">
-              <div className="winner__chart">{/* Minesweeper */}</div>
-              <div className="earing__text">
-                <div className="token__mybox">Minesweeper Game Winner</div>
-                <div className="winner__box">
-                  <ul>
-                    <li>
-                      <p></p>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                    <li>
-                      <button className="accept__btn">signed</button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+    return (
+        <div className="admin__card">
+            <div className="carousel__con">
+                <Carousel itemsToShow={1}>
+                    <div className="winner__card" numbers="1">
+                        <div className="winner__content">
+                            <div className="winner__chart">{/* Snake */}</div>
+                            <div className="earing__text">
+                                <div className="token__mybox">Snake Game Winner</div>
+
+                                <div className="winner__box">
+                                    <p>{rankingDB !== null ? (rankingDB.snakeranker[0] !== undefined ? rankingDB.snakeranker[0].address : "순위없음") : "순위없음"}</p>
+                                    <button
+                                        className="accept__btn"
+                                        onClick={() => {
+                                            if (rankingDB !== null && rankingDB.snakeranker[0] !== undefined) {
+                                                approveToken(rankingDB.snakeranker[0].address, 1000);
+                                            }
+                                        }}
+                                    >
+                                        signed
+                                    </button>
+                                </div>
+                                <div className="winner__box">
+                                    <p>{rankingDB !== null ? (rankingDB.snakeranker[1] !== undefined ? rankingDB.snakeranker[1].address : "순위없음") : "순위없음"}</p>
+                                    <button
+                                        className="accept__btn"
+                                        onClick={() => {
+                                            if (rankingDB !== null && rankingDB.snakeranker[1] !== undefined) {
+                                                approveToken(rankingDB.snakeranker[1].address, 600);
+                                            }
+                                        }}
+                                    >
+                                        signed
+                                    </button>
+                                </div>
+                                <div className="winner__box">
+                                    <p>{rankingDB !== null ? (rankingDB.snakeranker[2] !== undefined ? rankingDB.snakeranker[2].address : "순위없음") : "순위없음"}</p>
+                                    <button
+                                        className="accept__btn"
+                                        onClick={() => {
+                                            if (rankingDB !== null && rankingDB.snakeranker[2] !== undefined) {
+                                                approveToken(rankingDB.snakeranker[2].address, 400);
+                                            }
+                                        }}
+                                    >
+                                        signed
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="winner__card" numbers="2">
+                        <div className="winner__content">
+                            <div className="winner__chart">{/* Tetris */}</div>
+                            <div className="earing__text">
+                                <div className="token__mybox">Tetris Game Winner</div>
+                                <div className="winner__box">
+                                    <ul>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.tetrisranker[0] !== undefined ? rankingDB.tetrisranker[0].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.tetrisranker[0] !== undefined) {
+                                                        approveToken(rankingDB.tetrisranker[0].address, 1000);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.tetrisranker[1] !== undefined ? rankingDB.tetrisranker[1].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.tetrisranker[1] !== undefined) {
+                                                        approveToken(rankingDB.tetrisranker[1].address, 600);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.tetrisranker[2] !== undefined ? rankingDB.tetrisranker[2].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.tetrisranker[2] !== undefined) {
+                                                        approveToken(rankingDB.tetrisranker[2].address, 400);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="winner__card" numbers="3">
+                        <div className="winner__content">
+                            <div className="winner_chart">{/* 2048 */}</div>
+                            <div className="earing__text">
+                                <div className="token__mybox">2048 Game Winner</div>
+                                <div className="winner__box">
+                                    <ul>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.puzzleranker[0] !== undefined ? rankingDB.puzzleranker[0].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.puzzleranker[0] !== undefined) {
+                                                        approveToken(rankingDB.puzzleranker[0].address, 1000);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.puzzleranker[1] !== undefined ? rankingDB.puzzleranker[1].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.puzzleranker[1] !== undefined) {
+                                                        approveToken(rankingDB.puzzleranker[1].address, 600);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.puzzleranker[2] !== undefined ? rankingDB.puzzleranker[2].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.puzzleranker[2] !== undefined) {
+                                                        approveToken(rankingDB.puzzleranker[2].address, 400);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="winner__card" numbers="4">
+                        <div className="winner__content">
+                            <div className="winner__chart">{/* Minesweeper */}</div>
+                            <div className="earing__text">
+                                <div className="token__mybox">Minesweeper Game Winner</div>
+                                <div className="winner__box">
+                                    <ul>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.mineranker[0] !== undefined ? rankingDB.mineranker[0].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.mineranker[0] !== undefined) {
+                                                        approveToken(rankingDB.mineranker[0].address, 1000);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.mineranker[1] !== undefined ? rankingDB.mineranker[1].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.mineranker[1] !== undefined) {
+                                                        approveToken(rankingDB.mineranker[1].address, 600);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <p>{rankingDB !== null ? (rankingDB.mineranker[2] !== undefined ? rankingDB.mineranker[2].address : "순위없음") : "순위없음"}</p>
+                                            <button
+                                                className="accept__btn"
+                                                onClick={() => {
+                                                    if (rankingDB !== null && rankingDB.mineranker[2] !== undefined) {
+                                                        approveToken(rankingDB.mineranker[2].address, 400);
+                                                    }
+                                                }}
+                                            >
+                                                signed
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Carousel>
             </div>
-          </div>
-        </Carousel>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Accept;
