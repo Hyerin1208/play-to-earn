@@ -8,11 +8,16 @@ import temporaryData from "../../../assets/images/free.png";
 import EvoDetails from "./EvoDetails";
 
 const Evolution = (props) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-100, 100], [30, -30]);
+  const rotateY = useTransform(x, [-100, 100], [-30, 30]);
+
   return (
     <div className="card__wrapper">
       <motion.div
         className="card__container"
-        style={{ z: 100 }}
+        style={{ x, y, rotateX, rotateY, z: 100 }}
         drag
         dragElastic={0.16}
         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
@@ -23,7 +28,10 @@ const Evolution = (props) => {
             <div className="circle__cir"></div>
           </div>
           <div className="evolution__wrapper">
-            <motion.div className="evolution__evo" style={{ rotate: "-23deg" }}>
+            <motion.div
+              className="evolution__evo"
+              style={{ x, y, rotateX, rotateY, rotate: "-23deg", z: 10000 }}
+            >
               <img src={temporaryData} alt="" />
             </motion.div>
           </div>

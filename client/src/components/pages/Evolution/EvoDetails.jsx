@@ -79,7 +79,7 @@ const EvoDetails = (props) => {
       </OurLogo> */}
       <Marginer direction="vertical" margin="1.2em" />
       <SpaceHorizontalContainer>
-        <MediumText>YOUR NEXT PROFILE</MediumText>
+        <SmallText>YOUR NEXT PROFILE</SmallText>
         <EvoButton>Evolution</EvoButton>
       </SpaceHorizontalContainer>
     </DetailsContainer>
