@@ -19,25 +19,25 @@ const SellModal = (props) => {
     setLoading(null);
   }, [CreateNFTContract]);
 
-  //nft 구매
-  //   async function buynft(tokenId, price) {
-  //     if (CreateNFTContract === null) {
-  //       setLoading(true);
-  //     } else {
-  //       await CreateNFTContract.methods
-  //         .getNFTItem(tokenId)
-  //         .send({ from: Account, gas: 3000000, value: price }, (error) => {
-  //           if (!error) {
-  //             console.log("send ok");
-  //           } else {
-  //             console.log(error);
-  //           }
-  //         });
-  //       window.location.reload();
-  //       setLoading(false);
-  //     }
-  //   }
-
+  //nft 판매
+  async function sellnft(tokenId, price) {
+    if (CreateNFTContract.methods === null) {
+      setLoading(true);
+    } else {
+      await CreateNFTContract.methods
+        .sellMyNFTItem(tokenId, price)
+        .send({ from: Account, gas: 3000000, value: price }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
+          }
+        });
+      window.location.reload();
+      setLoading(false);
+    }
+  }
+  console.log(props.item.formInput.tokenId);
   console.log(form.bid);
 
   if (Loading) {
@@ -82,12 +82,9 @@ const SellModal = (props) => {
           </div>
           <button
             className="place__bid-btn"
-            // onClick={async () => {
-            //   await buynft(
-            //     props.item.formInput.tokenId,
-            //     props.item.formInput.price
-            //   );
-            // }}
+            onClick={async () => {
+              await sellnft(props.item.formInput.tokenId, form.bid);
+            }}
           >
             Sell Now
           </button>
