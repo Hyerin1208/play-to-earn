@@ -6,32 +6,18 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import NftCard from "../templete/NftCard";
+import "./myslick.css";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
+import MySellCard from "./MySellCard";
 
-const MySlick = () => {
+const MySlick = (props) => {
   const [nftArray, setnftArray] = useState([]);
   // const Selllists = useSelector((state) => state.AppState.Selllists);
   const [Loading, setLoading] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
   const [test, setTest] = useState(false);
-  // const [NFTimage, setNFTimage] = useState("");
-  // const [NFTname, setNFTname] = useState("");
-  // const [NFTdesc, setNFTdesc] = useState("");
-
-  // const [form, setForm] = useState({
-  //   fileUrl: fileUrl,
-  //   formInput: {
-  //     id: "",
-  //     price: "",
-  //     name: "",
-  //     description: "",
-  //   },
-  // });
-
-  // console.log(nftArray);
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -118,7 +104,7 @@ const MySlick = () => {
                   /> */}
                   {/* // <motion.div key={index} className="my-items"> */}
                   <Col key={index} className="my-items">
-                    <NftCard item={items}></NftCard>
+                    <MySellCard item={items} />
                   </Col>
                 </Fragment>
               );

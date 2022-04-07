@@ -55,13 +55,13 @@ const Modal = (props) => {
 
           <div className="buy__nfts">
             <div className="must__bid">
-              <p>You must bid at least</p>
+              <p>Top bid</p>
               <span className="money"> {props.item.formInput.price} ETH</span>
             </div>
 
             <div className="must__bid">
-              <p>Gas Fee</p>
-              <span className="money"> ETH</span>
+              <p>Sale ends</p>
+              <span className="money">April 22, 2022 at 2:44am</span>
             </div>
 
             <div className="must__bid">
