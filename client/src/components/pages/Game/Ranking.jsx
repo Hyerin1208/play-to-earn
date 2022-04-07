@@ -21,34 +21,38 @@ const Ranking = () => {
 
   const [isStop, setIsStop] = useState(false);
 
-  //   useEffect(() => {
-  //     let interval = setInterval(() => {
-  //       const countdownDate = new Date("apr 15, 2022 18:00:00").getTime();
-  //       // var weeks = new Date(now.getDate() + 7);
+  useEffect(async () => {
+    const countdownDate = await axios.get(`http://localhost:5000/user/time`);
 
-  //       const now = new Date().getTime();
-  //       const distance = countdownDate - now;
+    let interval = setInterval(() => {
+      // var weeks = new Date(now.getDate() + 7);
 
-  //       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //       const hours = Math.floor(
-  //         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //       );
-  //       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  //       if (!isStop) {
-  //         // update timer
-  //         setTimerDays(days);
-  //         setTimerHours(hours);
-  //         setTimerMinutes(minutes);
-  //         setTimerSeconds(seconds);
-  //       } else {
-  //         clearInterval(interval);
-  //       }
-  //     }, 1000);
-  //     return () => {
-  //       setIsStop(true);
-  //     };
-  //   }, []);
+      const now = new Date().getTime();
+      const distance = 604800000 + parseInt(countdownDate.data.count) - now;
+      // console.log(typeof now);
+      // console.log(countdownDate.data.count);
+      // console.log(distance);
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (!isStop) {
+        // update timer
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerSeconds(seconds);
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      setIsStop(true);
+    };
+  }, []);
 
   const toggleTab = (index) => {
     setToggleState(index);
