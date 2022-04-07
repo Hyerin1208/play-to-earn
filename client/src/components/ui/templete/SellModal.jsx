@@ -13,7 +13,7 @@ const SellModal = (props) => {
   const [form, setForm] = useState({
     price: props.item.formInput.price,
   });
-  console.log(form.bid);
+  //   console.log(form.bid);
 
   useEffect(async () => {
     setLoading(null);
@@ -24,6 +24,9 @@ const SellModal = (props) => {
     if (CreateNFTContract.methods === null) {
       setLoading(true);
     } else {
+      console.log(tokenId);
+      console.log(price);
+      console.log(Account);
       await CreateNFTContract.methods
         .sellMyNFTItem(tokenId, price)
         .send({ from: Account, gas: 3000000, value: price }, (error) => {
@@ -38,7 +41,7 @@ const SellModal = (props) => {
     }
   }
   console.log(props.item.formInput.tokenId);
-  console.log(form);
+  console.log(form.price);
 
   if (Loading) {
     return (

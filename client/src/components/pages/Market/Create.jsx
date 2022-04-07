@@ -111,19 +111,6 @@ const Create = () => {
       });
   }
 
-  //nft 판매
-  async function sellnft(tokenId, price) {
-    await CreateNFTContract.methods
-      .sellMyNFTItem(tokenId, price)
-      .send({ from: Account, gas: 3000000 }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-  }
-
   return (
     <>
       <CommonSection title="Create Item" />

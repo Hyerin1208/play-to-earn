@@ -7,6 +7,8 @@ import { Container, Row, Col } from "reactstrap";
 import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
 
+import { FaStar } from "react-icons/fa";
+
 import "./nft-details.css";
 
 import { Link } from "react-router-dom";
@@ -25,6 +27,9 @@ const NftDetails = (props) => {
 
   const [likeActive, setLikeActive] = useState(false);
   const [viewActive, setViewActive] = useState(false);
+
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
 
   let params = useParams();
   const card_id = params.card_id;
@@ -193,6 +198,33 @@ const NftDetails = (props) => {
                     <p>
                       Price : <span>{calldata.price}</span> ETH
                     </p>
+                  </div>
+
+                  <div class="pixel__container">
+                    {[...Array(5)].map((star, i) => {
+                      const ratingValue = i + 1;
+                      return (
+                        <label>
+                          <input
+                            type="radio"
+                            className="rating"
+                            value={ratingValue}
+                            onClick={() => setRating(ratingValue)}
+                          />
+                          <FaStar
+                            className="star"
+                            color={
+                              ratingValue <= (hover || rating)
+                                ? "#ffc107"
+                                : "#e4e5e9"
+                            }
+                            size={40}
+                            onMouseEnter={() => setHover(ratingValue)}
+                            onMouseLeave={() => setHover(null)}
+                          />
+                        </label>
+                      );
+                    })}
                   </div>
 
                   <p className="my-3">Description : {calldata.description}</p>

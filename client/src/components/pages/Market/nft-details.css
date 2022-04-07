@@ -169,6 +169,14 @@
   color: #5142fc;
 }
 
+input[type="radio"] {
+  display: none;
+}
+
+.star {
+  transition: color 200ms;
+}
+
 @media only screen and (max-width: 1024px) {
   .single__nft-img {
     width: 100%;
