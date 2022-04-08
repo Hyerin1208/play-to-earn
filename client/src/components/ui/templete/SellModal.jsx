@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactLoaing from "react-loading";
-import "./modal.css";
+import "./sell-modal.css";
 
-const Modal = (props) => {
+const SellModal = (props) => {
   const [Loading, setLoading] = useState(true);
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
 
+  const [form, setForm] = useState({
+    price: props.item.formInput.price,
+  });
+  //   console.log(form.bid);
+
   useEffect(async () => {
     setLoading(null);
   }, [CreateNFTContract]);
 
-  //nft 구매
-  async function buynft(tokenId, price) {
-    if (CreateNFTContract === null) {
+  //nft 판매
+  async function sellnft(tokenId, price) {
+    if (CreateNFTContract.methods === null) {
       setLoading(true);
     } else {
+      console.log(tokenId);
+      console.log(price);
+      console.log(Account);
       await CreateNFTContract.methods
-        .getNFTItem(tokenId)
+        .sellMyNFTItem(tokenId, price)
         .send({ from: Account, gas: 3000000, value: price }, (error) => {
           if (!error) {
             console.log("send ok");
@@ -32,6 +40,8 @@ const Modal = (props) => {
       setLoading(false);
     }
   }
+  console.log(props.item.formInput.tokenId);
+  console.log(form.price);
 
   if (Loading) {
     return (
@@ -42,9 +52,8 @@ const Modal = (props) => {
     );
   } else {
     return (
-      <div className="modal__wrapper">
-        return (
-        <div className="single__modal">
+      <div className="modal2__wrapper">
+        <div className="single2__modal">
           <span className="close__modal">
             <i
               className="ri-close-line"
@@ -55,30 +64,32 @@ const Modal = (props) => {
 
           <div className="buy__nfts">
             <div className="must__bid">
-              <p>Top bid</p>
+              <p>You must bid at least</p>
               <span className="money"> {props.item.formInput.price} ETH</span>
             </div>
 
             <div className="must__bid">
-              <p>Sale ends</p>
-              <span className="money">April 22, 2022 at 2:44am</span>
+              <div className="input__item mb-4">
+                <input
+                  type="number"
+                  placeholder="00 . 00 ETH"
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                />
+              </div>
             </div>
 
             <div className="must__bid">
               <p>Total Bid Amount</p>
-              <span className="money">{props.item.formInput.price} ETH</span>
+              <span className="money">{form.price} ETH</span>
             </div>
           </div>
           <button
             className="place__bid-btn"
             onClick={async () => {
-              await buynft(
-                props.item.formInput.tokenId,
-                props.item.formInput.price
-              );
+              await sellnft(props.item.formInput.tokenId, form.price);
             }}
           >
-            Buy now
+            Sell Now
           </button>
         </div>
       </div>
@@ -86,4 +97,4 @@ const Modal = (props) => {
   }
 };
 
-export default Modal;
+export default SellModal;

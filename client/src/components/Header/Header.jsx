@@ -37,6 +37,10 @@ const NAV__LINKS = [
         url: "/contact",
     },
     {
+        display: "Evolution",
+        url: "/upgrade",
+    },
+    {
         display: "TestField",
         url: "/test",
     },
@@ -101,7 +105,7 @@ const Header = () => {
                         fileUrl: await meta.image,
                         formInput: {
                             tokenid: i.tokenId,
-                            price: await meta.price,
+                            price: i.price,
                             name: await meta.name,
                             description: await meta.description,
                         },
