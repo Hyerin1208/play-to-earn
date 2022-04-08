@@ -119,6 +119,15 @@
   text-shadow: 0 0 0.125em hsl(0, 0%, 100%);
 }
 
+.nft__img i {
+  font-size: 8rem;
+  margin-left: 20%;
+  z-index: -1;
+  color: #4b50e6;
+  transition: 0.4s ease-in-out;
+  /* text-shadow: 0 0 0.125em hsl(0, 0%, 100%); */
+}
+
 .upload__evo:hover {
   font-size: 8.7rem;
   z-index: -1;
@@ -154,11 +163,7 @@
 
 .last__evobox .single__nft__card {
   width: 270px;
-  height: 400px;
-}
-
-.last__evobox .single__nft__card {
-  height: 390px;
+  height: 420px;
 }
 
 .last__evobox .single__nft__card .nft__img img {

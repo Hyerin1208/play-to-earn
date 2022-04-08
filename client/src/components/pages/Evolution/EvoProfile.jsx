@@ -81,16 +81,8 @@ const EvoProfile = (props) => {
   const onSelect = async () => {
     if (seletedImg !== null) {
       props.setImageURL(seletedImg);
-      await axios
-        .post("http://localhost:5000/user/img", {
-          address: Account,
-          image: seletedImg,
-        })
-        .then((res) => {
-          console.log(res.data.message);
-          alert("해당 NFT로 진행하시겠습니까?");
-          props.setShowModal(false);
-        });
+      alert("해당 NFT로 진행하시겠습니까?");
+      props.setShowModal(false);
     } else {
       alert("진화를 원하는 NFT를 선택하세요");
     }

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
 import "./evolution.css";
@@ -12,16 +12,29 @@ import NftDetails from "../Market/NftDetails";
 import SellModal from "../../ui/templete/SellModal";
 import EvoProfile from "./EvoProfile";
 
+import { FaStar } from "react-icons/fa";
+import Badge from "react-bootstrap/Badge";
+
 const Evolution = (props) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
 
+  const [Loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const [EvoProfileModal, setEvoProfileModal] = useState(false);
   const [imageURL, setImageURL] = useState([]);
+
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+
+  useEffect(async () => {
+    setLoading(null);
+    setImageURL(imageURL);
+  }, []);
 
   return (
     <Fragment>
@@ -58,9 +71,10 @@ const Evolution = (props) => {
                     >
                       <i className="ri-add-circle-line"></i>
                     </div>
+
                     <img
                       className="evo__iamge"
-                      src=""
+                      src={imageURL}
                       id="upload__pfp"
                       onChange={(e) => {
                         setImageURL(e.target.value);
@@ -80,7 +94,12 @@ const Evolution = (props) => {
             </motion.div>
           </div>
         </Col>
-        {EvoProfileModal && <EvoProfile setShowModal={setEvoProfileModal} />}
+        {EvoProfileModal && (
+          <EvoProfile
+            setShowModal={setEvoProfileModal}
+            setImageURL={setImageURL}
+          />
+        )}
         <Col md="2">
           <div className="right__arrows">
             <i className="ri-arrow-right-line"></i>
@@ -103,12 +122,13 @@ const Evolution = (props) => {
             <div>
               <div className="single__nft__card">
                 <div className="nft__img">
-                  <img src={temporaryData} alt="" />
+                  <i className="ri-question-line"></i>
                 </div>
 
                 <div className="nft__content">
                   <Row>
                     <h5 className="nft__title">
+                      카드이름
                       {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                         {props.item.formInput.name}
                       </Link> */}
@@ -116,17 +136,53 @@ const Evolution = (props) => {
                     <Col>
                       <div className="bid__container">
                         <h6>Current Bid</h6>
+                        금액
                         {/* <p>{props.item.formInput.price} ETH</p> */}
                       </div>
+                      <Badge
+                        pill
+                        bg="light"
+                        text="dark"
+                        className="rare__badge"
+                      >
+                        rare :
+                      </Badge>
                     </Col>
                     <Col>
                       <div className="prevNft__desc">
+                        설명
                         {/* <p>{props.item.formInput.description}</p> */}
+                      </div>
+                      <div className="pixel__container">
+                        {[...Array(5)].map((star, i) => {
+                          const ratingValue = i + 1;
+                          return (
+                            <label key={i}>
+                              <input
+                                type="radio"
+                                className="rating"
+                                value={ratingValue}
+                                onClick={() => setRating(ratingValue)}
+                              />
+                              <FaStar
+                                className="star"
+                                color={
+                                  ratingValue <= (hover || rating)
+                                    ? "#ffc107"
+                                    : "#e4e5e9"
+                                }
+                                size={20}
+                                onMouseEnter={() => setHover(ratingValue)}
+                                onMouseLeave={() => setHover(null)}
+                              />
+                            </label>
+                          );
+                        })}
                       </div>
                     </Col>
                   </Row>
                 </div>
-
+                <br />
                 <div className="bid__box">
                   <div className="sell__box">
                     <button
@@ -141,6 +197,8 @@ const Evolution = (props) => {
                     {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                       View More
                     </Link> */}
+
+                    <Link to="">View More</Link>
                   </span>
                 </div>
               </div>
