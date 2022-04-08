@@ -153,6 +153,7 @@ const NftDetails = (props) => {
             <Container>
               <Row className="row__box">
                 <Col lg="6" md="6" sm="6">
+                  {/* 아래 이미지만 들어오도록 */}
                   <img
                     src={calldata.image}
                     alt=""

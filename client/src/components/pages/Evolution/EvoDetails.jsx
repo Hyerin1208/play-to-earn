@@ -35,7 +35,7 @@ const SpaceHorizontalContainer = styled.div`
 `;
 
 const EvoButton = styled.button`
-  padding: 10px 16px;
+  padding: 8px 10px;
   background-color: #4b50e6;
   color: #000;
   text-transform: uppercase;
@@ -46,6 +46,7 @@ const EvoButton = styled.button`
   cursor: pointer;
   transition: all 290ms ease-in-out;
   border-radius: 8px;
+  margin-left: 4px;
 
   &:hover {
     background-color: transparent;
