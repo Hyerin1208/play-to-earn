@@ -81,14 +81,18 @@ const Setup = () => {
                     formInput: {
                         tokenId: res.events.NFTItemCreated.returnValues.tokenId,
                         price: price,
+                        rare: res.events.NFTItemCreated.returnValues.rare,
+                        star: res.events.NFTItemCreated.returnValues.star,
                         name: SelectNFT.name,
                         description: SelectNFT.description,
                     },
                 };
-                dispatch(updateLists({ Selllists: item }));
+                if (res.events.NFTItemCreated.returnValues.sell) dispatch(updateLists({ Selllists: item }));
                 await axios
                     .post(`http://localhost:5000/nfts`, {
                         tokenId: res.events.NFTItemCreated.returnValues.tokenId,
+                        rare: res.events.NFTItemCreated.returnValues.rare,
+                        star: res.events.NFTItemCreated.returnValues.star,
                     })
                     .then((res) => {
                         console.log(res.data.message);
