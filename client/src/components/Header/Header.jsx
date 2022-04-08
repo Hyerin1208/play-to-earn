@@ -37,6 +37,10 @@ const NAV__LINKS = [
         url: "/contact",
     },
     {
+        display: "Evolution",
+        url: "/upgrade",
+    },
+    {
         display: "TestField",
         url: "/test",
     },

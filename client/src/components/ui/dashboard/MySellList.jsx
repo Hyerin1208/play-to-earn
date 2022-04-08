@@ -6,12 +6,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import NftCard from "../templete/NftCard";
-
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 import "./my-sellList.css";
+import NftSellCard from "./MySellCard";
 
 const MySellList = () => {
   const [nftArray, setnftArray] = useState([]);
@@ -100,7 +99,7 @@ const MySellList = () => {
                 return (
                   // <motion.div key={index} className="my-items">
                   <Col key={index} className="my-items">
-                    <NftCard
+                    <NftSellCard
                       item={items}
                       id={items.formInput.tokenid}
                       onClick={async (e) => {
@@ -109,7 +108,7 @@ const MySellList = () => {
                           from: Account,
                         });
                       }}
-                    ></NftCard>
+                    ></NftSellCard>
                   </Col>
                 );
               })

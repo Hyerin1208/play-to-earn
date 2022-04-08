@@ -16,6 +16,7 @@ import Test from "../pages/Test";
 import Error from "../ui/templete/Error404";
 import JoinUs from "../ui/register/JoinUs";
 import Admin from "../pages/Admin/Admin";
+import Evolution from "../pages/Evolution/Evolution";
 
 const Routers = () => {
   return (
@@ -33,6 +34,7 @@ const Routers = () => {
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
+        <Route path="/upgrade" element={<Evolution />} />
         <Route path="/test" element={<Test />} />
         <Route path="/error" element={<Error />} />
       </Routes>
