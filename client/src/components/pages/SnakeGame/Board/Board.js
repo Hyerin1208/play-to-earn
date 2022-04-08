@@ -17,10 +17,6 @@ const Board = () => {
     (state) => state.AppState.CreateNFTContract
   );
 
-  const [Loading, setLoading] = useState(true);
-
-  const [nftList, setNftList] = useState([]);
-
   useEffect(() => {
     mynftlists();
     setLoading(null);
@@ -67,6 +63,9 @@ const Board = () => {
   );
   var [sectionCard, setSectionCard] = useState(false);
   var [score, setScore] = useState(0);
+  const [Loading, setLoading] = useState(true);
+  const [nftList, setNftList] = useState([]);
+  const [point, setPoint] = useState(0);
 
   // Function
   // Handling restart request
@@ -157,6 +156,7 @@ const Board = () => {
           [snake[len - 1][0] - adder[0], snake[len - 1][1] - adder[1]],
         ];
       }
+      setLoading(false);
     }, refreshTime);
 
     return () => {
