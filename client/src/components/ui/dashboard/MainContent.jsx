@@ -1,10 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Col, Container, Navbar, Row } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row } from "reactstrap";
 import Earnings from "./Earnings";
 import ReactLoaing from "react-loading";
-
-import axios from "axios";
 
 import "./main-container.css";
 import MyLikes from "./MyLikes";

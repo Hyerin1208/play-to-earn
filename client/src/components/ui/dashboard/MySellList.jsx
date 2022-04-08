@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row } from "reactstrap";
+import { Col } from "reactstrap";
 
 import ReactLoaing from "react-loading";
 import Slider from "react-slick";
@@ -42,7 +42,6 @@ const MySellList = () => {
             console.log(error);
           }
         });
-      console.log(await lists);
 
       const result = await Promise.all(
         lists.map(async (i) => {

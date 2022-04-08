@@ -16,126 +16,30 @@ const Admin = () => {
 
   const account = useSelector((state) => state.AppState.account);
 
-  // Claim부분
-  const [snakeRank, setSnakeRank] = useState([]);
-  const [puzzleRank, setPuzzleRank] = useState([]);
-  const [tetrisRank, setTetrisRank] = useState([]);
-  const [mineRank, setMineRank] = useState([]);
-  const [timerSigned, setTimerSigned] = useState([]);
-
-  const sendTimer = async () => {
-    await axios
-      .post(`http://localhost:5000/user/owner`, {
-        count: timerSigned,
-      })
-      .then((res) => {
-        console.log(res.data);
-        alert("DB 전송 완료");
-      });
-  };
-
-  const sendReward = async () => {
-    await axios
-      .post(`http://localhost:5000/ranking/reward`, {
-        tetrisRank,
-        puzzleRank,
-        snakeRank,
-        mineRank,
-        address: account,
-      })
-      .then((res) => {
-        console.log(res.data);
-        alert("DB 전송 완료");
-      });
-  };
+  const [rankingDB, setRankingDB] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/game/snake`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-
-        const snakeInfo = data.map((data, index) => {
-          const form = {
-            games: "snakeGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
+    if (account !== null) {
+      axios
+        .post(`http://localhost:5000/game/ranking`, { address: account })
+        .then((response) => {
+          const data = response.data;
+          setRankingDB(data);
+        })
+        .catch((error) => {
+          setError(error);
         });
-        setSnakeRank(snakeInfo);
-      })
-      .catch((error) => {
-        setError(error);
+    }
+    setLoading(false);
+  }, [account]);
+
+  const sendRank = async () => {
+    await axios
+      .post(`http://localhost:5000/ranking`, { rankingDB, address: account })
+      .then((res) => {
+        alert("DB 전송 완료");
       });
-
-    axios
-      .get(`http://localhost:5000/game/tetris`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-
-        const tetrisInfo = data.map((data, index) => {
-          const form = {
-            games: "tetrisGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setTetrisRank(tetrisInfo);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-
-    axios
-      .get(`http://localhost:5000/game/2048`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-
-        const puzzleInfo = data.map((data, index) => {
-          const form = {
-            games: "puzzleGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setPuzzleRank(puzzleInfo);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-
-    axios
-      .get(`http://localhost:5000/game/mine`)
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-
-        const mineInfo = data.map((data, index) => {
-          const form = {
-            games: "mineGame",
-            rank: index + 1,
-            address: data.address,
-            balance: [1000, 600, 400],
-          };
-          return form;
-        });
-        setMineRank(mineInfo);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-
-    setLoading(null);
-  }, []);
+  };
 
   if (Loading) {
     return (
@@ -162,10 +66,8 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                </Col>
-                <Col xs="1">
-                  <div type="button" onClick={sendReward}>
-                    Send Reward
+                  <div type="button" onClick={sendRank}>
+                    Send Ranking
                   </div>
                 </Col>
                 <Col xs="8">
