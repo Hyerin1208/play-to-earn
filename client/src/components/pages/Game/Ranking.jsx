@@ -54,7 +54,6 @@ const Ranking = () => {
     const [rankingDB, setRankingDB] = useState(null);
     const [weekly, setWeekly] = useState(null);
     const [error, setError] = useState(null);
-    console.log(weekly);
 
     useEffect(() => {
         if (account !== null) {
@@ -108,6 +107,7 @@ const Ranking = () => {
     }
 
     function weeklyRanking(form) {
+        console.log(form);
         const result = [];
         for (let i = 0; i < weekly.length; i++) {
             if (form[i] !== weekly.index) {
