@@ -13,6 +13,7 @@ contract CreateNFT is ERC721URIStorage,Ownable  {
     }
 
 mapping(uint => NFTItem) private idToNFTItem;
+mapping(uint => NFTOption) public idToNFTOption;
 mapping(address=>bool) private getDefault;
 
     struct NFTItem {
@@ -23,10 +24,17 @@ mapping(address=>bool) private getDefault;
       bool sell;
     }
 
+    struct NFTOption {
+      uint rare;
+      uint star;
+    }
+
     event NFTItemCreated (
       uint indexed tokenId,
       address owner,
       uint price,
+            uint rare,
+      uint star,
       bool getDefault,
       bool sell
     );
@@ -35,8 +43,9 @@ mapping(address=>bool) private getDefault;
       _safeMint(msg.sender, _tokenId);
       _setTokenURI(_tokenId, _tokenURI);
       idToNFTItem[_tokenId]=NFTItem(_tokenId,payable(msg.sender),_price,_getDefault,_sell);
+      idToNFTOption[_tokenId]=NFTOption(1,1);
       _approve(msg.sender, _tokenId);
-      emit NFTItemCreated(_tokenId,msg.sender,_price,_getDefault,_sell);
+      emit NFTItemCreated(_tokenId,msg.sender,_price,1,1,_getDefault,_sell);
     }
 
     function CreateNFTinContract(string memory tokenURI, uint price) public{
@@ -50,6 +59,31 @@ mapping(address=>bool) private getDefault;
         CreateNFTItem(tokenId,tokenURI,price,true,false);
         }
       }
+
+function randomOption(uint _input) private view returns (uint) {
+uint option;
+  uint result = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, msg.sender,_input)))%100;
+if(result>0&&result<80){
+  option = 1;
+} else if(result>=80&&result<91){
+  option = 2;
+} else if(result>=91&&result<96){
+  option = 3;
+} else if(result>=96&&result<99){
+  option = 4;
+}else if(result==99){
+  option = 5;
+}
+  return option;
+}
+
+function changeOption(uint _tokenId, address _msgsender) external returns(bool){
+  require(idToNFTItem[_tokenId].owner== _msgsender);
+  uint rare = randomOption(99);
+  uint star = randomOption(1);
+idToNFTOption[_tokenId]=NFTOption(rare,star);
+return true;
+}
 
     function getNFTItem(uint tokenId) public payable{
         require(isApprovedForAll(owner(),msg.sender)== true);

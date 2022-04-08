@@ -99,7 +99,7 @@ export function connect() {
                                     fileUrl: await meta.image,
                                     formInput: {
                                         tokenId: i.tokenId,
-                                        price: await meta.price,
+                                        price: i.price,
                                         name: await meta.name,
                                         description: await meta.description,
                                     },

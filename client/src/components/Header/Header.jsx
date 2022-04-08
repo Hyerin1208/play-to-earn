@@ -101,7 +101,7 @@ const Header = () => {
                         fileUrl: await meta.image,
                         formInput: {
                             tokenid: i.tokenId,
-                            price: await meta.price,
+                            price: i.price,
                             name: await meta.name,
                             description: await meta.description,
                         },
