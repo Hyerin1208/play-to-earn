@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactLoaing from "react-loading";
 import "./Board.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -16,7 +17,16 @@ const Board = () => {
     (state) => state.AppState.CreateNFTContract
   );
 
+  const [Loading, setLoading] = useState(true);
+
   const [nftList, setNftList] = useState([]);
+  console.log("R", nftList[0].rare);
+  console.log("S", nftList[0].star);
+
+  useEffect(() => {
+    mynftlists();
+    setLoading(null);
+  }, [CreateNFTContract]);
 
   // 내 nft 리스트
   async function mynftlists() {
@@ -29,7 +39,7 @@ const Board = () => {
           console.log(error);
         }
       });
-    console.log(await lists);
+    setNftList(await lists);
   }
 
   const sendPoint = async () => {
@@ -38,6 +48,8 @@ const Board = () => {
     await axios
       .post(`http://localhost:5000/game/snake`, { point, account })
       .then((res) => {
+        console.log("c", score);
+        console.log(point);
         console.log(res.data);
         alert("점수 등록 완료");
       });
@@ -150,80 +162,92 @@ const Board = () => {
     };
   }, [start]);
 
-  return (
-    <React.Fragment>
-      {/* Section card */}
-      {sectionCard && (
-        <div id="snake_message">
-          <div id="snake_card">
-            <h1 className="snake_card-heading">Score</h1>
-            <h2 className="snake_card-value">{score}</h2>
-            <div onClick={sendPoint}>점수 등록</div>
-            <div onClick={mynftlists}>mynftlists</div>
-            <div
-              className="snake_restart button-space"
-              onClick={handleRestart}
-            ></div>
-          </div>
-        </div>
-      )}
-      {/* Display container */}
-      <div id="snake_display">
-        <div id="snake_score">
-          <div id="snake_apple-image"></div>
-          <h3>{score}</h3>
-        </div>
-        <div className="snake_restart" onClick={handleRestart}></div>
+  if (Loading) {
+    return (
+      <div>
+        잠시만 기다려 주세요
+        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
       </div>
-
-      {/* Board */}
-      <div id="snake_board">
-        {board.map((rowValue, rowIndex) => {
-          return (
-            <div key={rowIndex} className="snake_row">
-              {rowValue.map((cellValue, cellIndex) => {
-                return (
-                  <div
-                    key={cellIndex}
-                    className={`snake_cell ${
-                      cellValue === 1 ? "snake" : cellValue === 2 ? "food" : ""
-                    }`}
-                  ></div>
-                );
-              })}
+    );
+  } else {
+    return (
+      <React.Fragment>
+        {/* Section card */}
+        {sectionCard && (
+          <div id="snake_message">
+            <div id="snake_card">
+              <h1 className="snake_card-heading">Score</h1>
+              <h2 className="snake_card-value">{score}</h2>
+              <div onClick={sendPoint}>점수 등록</div>
+              <div
+                className="snake_restart button-space"
+                onClick={handleRestart}
+              ></div>
             </div>
-          );
-        })}
-      </div>
-      {/* Controller */}
-      <div id="snake_controller">
-        <div
-          id="snake_ArrowLeft"
-          className="snake_direction-button"
-          onClick={() => setDirection("ArrowLeft")}
-        ></div>
-        <div
-          id="snake_ArrowUp"
-          className="snake_direction-button"
-          onClick={() => setDirection("ArrowUp")}
-        ></div>
-        <div
-          id="snake_ArrowDown"
-          className="snake_direction-button"
-          onClick={() => setDirection("ArrowDown")}
-        ></div>
-        <div
-          id="snake_ArrowRight"
-          className="snake_direction-button"
-          onClick={() => setDirection("ArrowRight")}
-        ></div>
-      </div>
-      {/* Info */}
-      <div id="snake_info">
-        Controll movement by keyboard or virtual arrrows.
-      </div>
-    </React.Fragment>
-  );
+          </div>
+        )}
+        {/* Display container */}
+        <div id="snake_display">
+          <div id="snake_score">
+            <div id="snake_apple-image"></div>
+            <h3>{score}</h3>
+          </div>
+          <div className="snake_restart" onClick={handleRestart}></div>
+        </div>
+
+        {/* Board */}
+        <div id="snake_board">
+          {board.map((rowValue, rowIndex) => {
+            return (
+              <div key={rowIndex} className="snake_row">
+                {rowValue.map((cellValue, cellIndex) => {
+                  return (
+                    <div
+                      key={cellIndex}
+                      className={`snake_cell ${
+                        cellValue === 1
+                          ? "snake"
+                          : cellValue === 2
+                          ? "food"
+                          : ""
+                      }`}
+                    ></div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+        {/* Controller */}
+        <div id="snake_controller">
+          <div
+            id="snake_ArrowLeft"
+            className="snake_direction-button"
+            onClick={() => setDirection("ArrowLeft")}
+          ></div>
+          <div
+            id="snake_ArrowUp"
+            className="snake_direction-button"
+            onClick={() => setDirection("ArrowUp")}
+          ></div>
+          <div
+            id="snake_ArrowDown"
+            className="snake_direction-button"
+            onClick={() => setDirection("ArrowDown")}
+          ></div>
+          <div
+            id="snake_ArrowRight"
+            className="snake_direction-button"
+            onClick={() => setDirection("ArrowRight")}
+          ></div>
+        </div>
+        {/* Info */}
+        <div id="snake_info">
+          Controll movement by keyboard or virtual arrrows.
+        </div>
+      </React.Fragment>
+    );
+  }
 };
 
 export default Board;
