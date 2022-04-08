@@ -12,10 +12,52 @@ var count = 0;
 
 const Board = () => {
   const account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+
+  const [NFTname, setNFTname] = useState("");
+  const [NFTdesc, setNFTdesc] = useState("");
+  const [NFTimage, setNFTimage] = useState("");
+  const [NFTstart, setNFTstar] = useState("");
+  const [NFTrare, setNFTrare] = useState("");
+
+  // 내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    console.log(await lists);
+  }
+
+  //URI 확인
+  async function gettokenuri(tokenId) {
+    const tokenURI = await CreateNFTContract.methods
+      .tokenURI(tokenId)
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    await axios.get(tokenURI).then(async (data) => {
+      setNFTname(data.data.name);
+      setNFTdesc(data.data.description);
+      setNFTimage(data.data.image);
+      setNFTstar(data.data.start);
+      setNFTrare(data.data.rare);
+    });
+    // const result = await axios.get(tokenURI).then((data) => data.data);
+  }
 
   const sendPoint = async () => {
-    console.log(score);
-    console.log(account);
     const point = score;
 
     await axios
