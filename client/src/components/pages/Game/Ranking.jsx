@@ -117,12 +117,16 @@ const Ranking = () => {
               {i + 1}주차
               <br />
               {weekly[i].map((v, i) => {
-                return v.games;
+                return "games : " + v.games;
+              })}
+              <br />
+              {weekly[i].map((v, i) => {
+                return "ranks : " + v.rank;
               })}
               <br />
               <br />
               {weekly[i].map((v, i) => {
-                return v.nick;
+                return "nick : " + v.nick;
               })}
               <br />
             </p>
