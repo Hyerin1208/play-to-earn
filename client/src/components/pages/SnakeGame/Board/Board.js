@@ -16,11 +16,7 @@ const Board = () => {
     (state) => state.AppState.CreateNFTContract
   );
 
-  const [NFTname, setNFTname] = useState("");
-  const [NFTdesc, setNFTdesc] = useState("");
-  const [NFTimage, setNFTimage] = useState("");
-  const [NFTstart, setNFTstar] = useState("");
-  const [NFTrare, setNFTrare] = useState("");
+  const [nftList, setNftList] = useState([]);
 
   // 내 nft 리스트
   async function mynftlists() {
@@ -34,27 +30,6 @@ const Board = () => {
         }
       });
     console.log(await lists);
-  }
-
-  //URI 확인
-  async function gettokenuri(tokenId) {
-    const tokenURI = await CreateNFTContract.methods
-      .tokenURI(tokenId)
-      .call({ from: account }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
-    await axios.get(tokenURI).then(async (data) => {
-      setNFTname(data.data.name);
-      setNFTdesc(data.data.description);
-      setNFTimage(data.data.image);
-      setNFTstar(data.data.start);
-      setNFTrare(data.data.rare);
-    });
-    // const result = await axios.get(tokenURI).then((data) => data.data);
   }
 
   const sendPoint = async () => {
@@ -184,6 +159,7 @@ const Board = () => {
             <h1 className="snake_card-heading">Score</h1>
             <h2 className="snake_card-value">{score}</h2>
             <div onClick={sendPoint}>점수 등록</div>
+            <div onClick={mynftlists}>mynftlists</div>
             <div
               className="snake_restart button-space"
               onClick={handleRestart}
