@@ -6,8 +6,14 @@ import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
 import { Routes, Route, Link, useParams } from "react-router-dom";
 
+import { FaStar } from "react-icons/fa";
+import Badge from "react-bootstrap/Badge";
+
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
+
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
 
   let params = useParams();
 
@@ -22,7 +28,6 @@ const NftCard = (props) => {
           <Row>
             <h5 className="nft__title">
               <Link to={`/detailes/${props.item.formInput.tokenId}`}>
-                {" "}
                 {props.item.formInput.name}
               </Link>
             </h5>
@@ -43,10 +48,39 @@ const NftCard = (props) => {
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
                 <p>{props.item.formInput.price} ETH</p>
               </div>
+              <Badge pill bg="light" text="dark" className="rare__Badge">
+                rare :
+              </Badge>
             </Col>
             <Col>
               <div className="prevNft__desc">
                 <p>{props.item.formInput.description}</p>
+              </div>
+              <div class="pixel__container">
+                {[...Array(5)].map((star, i) => {
+                  const ratingValue = i + 1;
+                  return (
+                    <label>
+                      <input
+                        type="radio"
+                        className="rating"
+                        value={ratingValue}
+                        onClick={() => setRating(ratingValue)}
+                      />
+                      <FaStar
+                        className="star"
+                        color={
+                          ratingValue <= (hover || rating)
+                            ? "#ffc107"
+                            : "#e4e5e9"
+                        }
+                        size={20}
+                        onMouseEnter={() => setHover(ratingValue)}
+                        onMouseLeave={() => setHover(null)}
+                      />
+                    </label>
+                  );
+                })}
               </div>
             </Col>
           </Row>

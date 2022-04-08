@@ -34,6 +34,8 @@ const NftDetails = (props) => {
   let params = useParams();
   const card_id = params.card_id;
 
+  console.log(calldata);
+
   // test
   const sendLike = async () => {
     await axios
@@ -166,6 +168,7 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{calldata.name}</h2>
                   </div>
+                  <div className="owner__address__box"></div>
 
                   <div className="single__nft__icon">
                     <div className="single__nft-seen">

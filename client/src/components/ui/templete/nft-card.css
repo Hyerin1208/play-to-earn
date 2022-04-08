@@ -42,6 +42,11 @@
   margin-top: -0.5rem;
 }
 
+.rare__Badge {
+  width: 68px;
+  height: 25px;
+}
+
 @media only screen and (max-width: 1024px) {
   .nft__title {
     font-size: 0.9rem !important;

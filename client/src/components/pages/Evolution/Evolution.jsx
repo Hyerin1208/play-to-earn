@@ -139,7 +139,7 @@ const Evolution = (props) => {
         </Col>
       </Row>
 
-      <Row></Row>
+      <Row>{/* <h4>My Collection</h4> */}</Row>
     </Fragment>
   );
 };
