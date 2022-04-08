@@ -186,7 +186,7 @@ const NftDetails = (props) => {
                     src={calldata.image}
                     alt=""
                     className="single__nft-img"
-                    style={{ width: "570px", height: "650px" }}
+                    style={{ width: "540px", height: "630px" }}
                   />
                 </Col>
 
@@ -220,6 +220,7 @@ const NftDetails = (props) => {
                           bg="light"
                           text="dark"
                           className="rare__Badge"
+                          style={{ width: "110px", height: "32px" }}
                         >
                           rare :
                         </Badge>
@@ -273,6 +274,20 @@ const NftDetails = (props) => {
                     <i className="ri-shopping-bag-line"></i>
                     <Link to="/wallet">Place a Bid</Link>
                   </button>
+                  <br />
+                  <div className="accordian__box">
+                    <div className="tab__tab" onClick="{this.handleToggle}">
+                      <span>History</span>
+                      <i className="ri-add-line"></i>
+                    </div>
+                    {/* <div className={this.state.showInfo ? "show__content" : "content"}> */}
+                    <div className="content__text">
+                      <p>
+                        이곳에 Transfer 거래내역 기록되도록 누가 누구에게 날짜
+                        From / To / Date
+                      </p>
+                    </div>
+                  </div>
                 </Col>
               </Row>
             </Container>
