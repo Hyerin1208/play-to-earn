@@ -47,20 +47,20 @@ const NftCard = (props) => {
                 <h6>Current Bid</h6>
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
                 <p>{props.item.formInput.price} ETH</p>
+                <Badge pill bg="light" text="dark" className="rare__badge">
+                  rare :
+                </Badge>
               </div>
-              <Badge pill bg="light" text="dark" className="rare__Badge">
-                rare :
-              </Badge>
             </Col>
             <Col>
               <div className="prevNft__desc">
                 <p>{props.item.formInput.description}</p>
               </div>
-              <div class="pixel__container">
+              <div className="pixel__container">
                 {[...Array(5)].map((star, i) => {
                   const ratingValue = i + 1;
                   return (
-                    <label>
+                    <label key={i}>
                       <input
                         type="radio"
                         className="rating"

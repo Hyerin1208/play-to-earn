@@ -14,11 +14,37 @@ import "./nft-details.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import Badge from "react-bootstrap/Badge";
+
 const NftDetails = (props) => {
+  const [nftArray, setnftArray] = useState([]);
+
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
   const account = useSelector((state) => state.AppState.account);
+  const owner = useSelector((state) => state.AppState.Owner);
+
+  console.log(owner);
+
+  // async function mynftlists() {
+  //   if ((await CreateNFTContract) === null) {
+  //     setLoading(true);
+  //   } else {
+  //     const lists = await CreateNFTContract.methods
+  //       .MyNFTlists()
+  //       .call({ from: account }, (error) => {
+  //         if (!error) {
+  //           console.log("send ok");
+  //         } else {
+  //           console.log(error);
+  //         }
+  //       });
+  //     console.log(await lists);
+  //     setnftArray(lists);
+  //   }
+  // }
+
   const [Loading, setLoading] = useState(true);
   const [calldata, setCalldata] = useState(null);
 
@@ -132,8 +158,8 @@ const NftDetails = (props) => {
       setCalldata(await data.data);
       setLoading(false);
     });
+    console.log(tokenURI);
   }
-  console.log(calldata);
 
   function testfunc(Loading) {
     if (Loading) {
@@ -168,7 +194,7 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{calldata.name}</h2>
                   </div>
-                  <div className="owner__address__box"></div>
+                  <div className="owner__address__box">owner : {owner}</div>
 
                   <div className="single__nft__icon">
                     <div className="single__nft-seen">
@@ -187,6 +213,17 @@ const NftDetails = (props) => {
                           <i className="ri-eye-line"></i> {view}
                         </button>
                       </span>
+
+                      <span>
+                        <Badge
+                          pill
+                          bg="light"
+                          text="dark"
+                          className="rare__Badge"
+                        >
+                          rare :
+                        </Badge>
+                      </span>
                     </div>
 
                     <div className="single__nft-more">
@@ -204,11 +241,11 @@ const NftDetails = (props) => {
                     </p>
                   </div>
 
-                  <div class="pixel__container">
+                  <div className="pixel__container">
                     {[...Array(5)].map((star, i) => {
                       const ratingValue = i + 1;
                       return (
-                        <label>
+                        <label key={i}>
                           <input
                             type="radio"
                             className="rating"
