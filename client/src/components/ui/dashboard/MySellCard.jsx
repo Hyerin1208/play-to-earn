@@ -8,11 +8,15 @@ import { Routes, Route, Link, useParams } from "react-router-dom";
 
 import SellModal from "../templete/SellModal";
 
-const NftSellCard = (props) => {
-  //   const [showModal, setShowModal] = useState(false);
+import { FaStar } from "react-icons/fa";
+import Badge from "react-bootstrap/Badge";
 
+const NftSellCard = (props) => {
   //   let params = useParams();
   const [showModal, setShowModal] = useState(false);
+
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
 
   return (
     <div>
@@ -46,10 +50,39 @@ const NftSellCard = (props) => {
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
                 <p>{props.item.formInput.price} ETH</p>
               </div>
+              <Badge pill bg="light" text="dark" className="rare__badge">
+                rare :
+              </Badge>
             </Col>
             <Col>
               <div className="prevNft__desc">
                 <p>{props.item.formInput.description}</p>
+              </div>
+              <div className="pixel__container">
+                {[...Array(5)].map((star, i) => {
+                  const ratingValue = i + 1;
+                  return (
+                    <label key={i}>
+                      <input
+                        type="radio"
+                        className="rating"
+                        value={ratingValue}
+                        onClick={() => setRating(ratingValue)}
+                      />
+                      <FaStar
+                        className="star"
+                        color={
+                          ratingValue <= (hover || rating)
+                            ? "#ffc107"
+                            : "#e4e5e9"
+                        }
+                        size={20}
+                        onMouseEnter={() => setHover(ratingValue)}
+                        onMouseLeave={() => setHover(null)}
+                      />
+                    </label>
+                  );
+                })}
               </div>
             </Col>
           </Row>

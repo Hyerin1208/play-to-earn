@@ -183,6 +183,11 @@
   padding-right: 15px;
 }
 
+.evo__rules {
+  margin-left: 10%;
+  margin-bottom: 50px;
+}
+
 @media only screen and (max-width: 1024px) {
   .nft__title {
     font-size: 0.9rem !important;

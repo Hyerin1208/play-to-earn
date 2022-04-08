@@ -5,7 +5,7 @@ import "./evolution.css";
 
 import temporaryData from "../../../assets/images/free.png";
 import EvoDetails from "./EvoDetails";
-import { Col, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import NftCard from "../../ui/templete/NftCard";
 import { Link, Route, Routes } from "react-router-dom";
 import NftDetails from "../Market/NftDetails";
@@ -213,7 +213,20 @@ const Evolution = (props) => {
         </Col>
       </Row>
 
-      <Row>{/* <h4>My Collection</h4> */}</Row>
+      <Container>
+        <div className="evo__rules">
+          <h4>Evolution rules</h4>
+          <ul>
+            <li>1. Evolution needs to consume 작명소's Token</li>
+            <li>
+              2. Evolution will only change the rarity and stars, other
+              attributes will be inherited (character, talent, skill, potential,
+              training).
+            </li>
+            <li>3. Costs a certain amount of Token and $BNB</li>
+          </ul>
+        </div>
+      </Container>
     </Fragment>
   );
 };
