@@ -61,10 +61,6 @@ const NftSellCard = (props) => {
               <i className="ri-price-tag-3-line"></i>
               Sell
             </button>
-
-            {showModal && (
-              <SellModal item={props.item} setShowModal={setShowModal} />
-            )}
           </div>
           <span className="view__link">
             <Link to={`/detailes/${props.item.formInput.tokenId}`}>
@@ -73,6 +69,7 @@ const NftSellCard = (props) => {
           </span>
         </div>
       </div>
+      {showModal && <SellModal item={props.item} setShowModal={setShowModal} />}
       <Routes>
         <Route path="detailes/*" element={<NftDetails item={props.item} />} />
       </Routes>

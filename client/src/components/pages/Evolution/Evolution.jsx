@@ -10,6 +10,7 @@ import NftCard from "../../ui/templete/NftCard";
 import { Link, Route, Routes } from "react-router-dom";
 import NftDetails from "../Market/NftDetails";
 import SellModal from "../../ui/templete/SellModal";
+import EvoProfile from "./EvoProfile";
 
 const Evolution = (props) => {
   const x = useMotionValue(0);
@@ -18,6 +19,8 @@ const Evolution = (props) => {
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
 
   const [showModal, setShowModal] = useState(false);
+
+  const [EvoProfileModal, setEvoProfileModal] = useState(false);
 
   return (
     <Fragment>
@@ -48,12 +51,16 @@ const Evolution = (props) => {
                       z: 10000,
                     }}
                   >
-                    <div className="upload__evo">
+                    <div
+                      className="upload__evo"
+                      onClick={() => setEvoProfileModal(true)}
+                    >
                       <i className="ri-add-circle-line"></i>
                     </div>
                     {/* <img src={temporaryData} alt="" /> */}
                   </motion.div>
                 </div>
+
                 <div className="evolu__text">Naming Center</div>
               </div>
 
@@ -64,7 +71,7 @@ const Evolution = (props) => {
             </motion.div>
           </div>
         </Col>
-
+        {EvoProfileModal && <EvoProfile setShowModal={setEvoProfileModal} />}
         <Col md="2">
           <div className="right__arrows">
             <i className="ri-arrow-right-line"></i>
