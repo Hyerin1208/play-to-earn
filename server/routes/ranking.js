@@ -2,67 +2,73 @@ var express = require("express");
 var router = express.Router();
 const { Ranking, User } = require("../models");
 
-router.post("/reward", async (req, res, next) => {
-  const { snakeRank, tetrisRank, puzzleRank, mineRank, address } = req.body;
+router.post("/", async (req, res, next) => {
+  const { rankingDB, address } = req.body;
+  const reward = [1000, 600, 400];
+
   const findUser = await User.findOne({
     where: { address: address },
     attributes: ["address", "weeks"],
   });
 
   try {
-    snakeRank
-      .filter((v, i) => {
-        return i < 3;
-      })
-      .map((data, index) => {
-        console.log("w", data);
-        Ranking.create({
-          weeks: findUser.weeks,
-          games: data.games,
-          rank: data.rank,
-          address: data.address,
-          balance: data.balance[index],
-        });
-      });
-    tetrisRank
+    rankingDB.mineranker
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
           weeks: findUser.weeks,
-          games: data.games,
-          rank: data.rank,
+          games: "mineGame",
+          rank: index + 1,
           address: data.address,
-          balance: data.balance[index],
+          nick: data.nick,
+          balance: reward[index],
         });
       });
-    puzzleRank
+    rankingDB.snakeranker
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
           weeks: findUser.weeks,
-          games: data.games,
-          rank: data.rank,
+          games: "snakeGame",
+          rank: index + 1,
           address: data.address,
-          balance: data.balance[index],
+          nick: data.nick,
+          balance: reward[index],
         });
       });
-    mineRank
+    rankingDB.puzzleranker
       .filter((v, i) => {
         return i < 3;
       })
       .map((data, index) => {
         Ranking.create({
           weeks: findUser.weeks,
-          games: data.games,
-          rank: data.rank,
+          games: "2048Game",
+          rank: index + 1,
           address: data.address,
-          balance: data.balance[index],
+          nick: data.nick,
+          balance: reward[index],
         });
       });
+    rankingDB.tetrisranker
+      .filter((v, i) => {
+        return i < 3;
+      })
+      .map((data, index) => {
+        Ranking.create({
+          weeks: findUser.weeks,
+          games: "tetrisGame",
+          rank: index + 1,
+          address: data.address,
+          nick: data.nick,
+          balance: reward[index],
+        });
+      });
+
     if (findUser) {
       User.update(
         { weeks: findUser.weeks + 1 },
@@ -92,6 +98,11 @@ router.post("/balance", async (req, res) => {
     });
   }
   res.json(balance);
+});
+
+router.post("/previous", async (req, res) => {
+  const previousRank = await Ranking.findAll();
+  res.json(previousRank);
 });
 
 module.exports = router;

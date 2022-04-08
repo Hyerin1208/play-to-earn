@@ -223,20 +223,12 @@ const SideBar = () => {
                         <button className="get__token" onClick={() => getClaim()}>
                             Claim
                         </button>
-                        {/* <p>{(snakeT + 1 + mineT + 1 + puzzleT + 1 + tetrisT + 1) / 4}등</p> */}
-                        {/* <p className="my_small_ranking">Snake : {snakeI === null ? "None" : snakeT + 1 + "등"}</p>
-                        <p className="my_small_ranking">Mine : {mineI === null ? "None" : mineT + 1 + "등"}</p>
-                        <p className="my_small_ranking">2048 : {puzzleI === null ? "None" : puzzleT + 1 + "등"}</p>
-                        <p className="my_small_ranking">Tetris : {tetrisI === null ? "None" : tetrisT + 1 + "등"}</p> */}
                         <button className="get__token" onClick={() => mybalance()}>
                             My Balance
                         </button>
                         <button className="get__token" onClick={() => gettoken()}>
                             get Token
                         </button>
-                        {/* <button className="get__token" onClick={claimToken}>
-                            Claim Token
-                        </button> */}
                     </div>
                 </div>
                 <div className="link__conatainer">

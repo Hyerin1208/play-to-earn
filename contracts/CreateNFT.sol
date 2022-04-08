@@ -12,13 +12,15 @@ contract CreateNFT is ERC721URIStorage,Ownable  {
     constructor() ERC721("CreateNFT", "CNT") {
     }
 
-mapping(uint => NFTItem) private idToNFTItem;
+mapping(uint => NFTItem) public idToNFTItem;
 mapping(address=>bool) private getDefault;
 
     struct NFTItem {
       uint tokenId;
       address payable owner;
       uint price;
+      uint rare;
+      uint star;
       bool getDefault;
       bool sell;
     }
@@ -27,6 +29,8 @@ mapping(address=>bool) private getDefault;
       uint indexed tokenId,
       address owner,
       uint price,
+            uint rare,
+      uint star,
       bool getDefault,
       bool sell
     );
@@ -34,9 +38,9 @@ mapping(address=>bool) private getDefault;
     function CreateNFTItem(uint _tokenId, string memory _tokenURI, uint _price, bool _getDefault,bool _sell) private {
       _safeMint(msg.sender, _tokenId);
       _setTokenURI(_tokenId, _tokenURI);
-      idToNFTItem[_tokenId]=NFTItem(_tokenId,payable(msg.sender),_price,_getDefault,_sell);
+      idToNFTItem[_tokenId]=NFTItem(_tokenId,payable(msg.sender),_price,1,1,_getDefault,_sell);
       _approve(msg.sender, _tokenId);
-      emit NFTItemCreated(_tokenId,msg.sender,_price,_getDefault,_sell);
+      emit NFTItemCreated(_tokenId,msg.sender,_price,1,1,_getDefault,_sell);
     }
 
     function CreateNFTinContract(string memory tokenURI, uint price) public{
@@ -50,6 +54,32 @@ mapping(address=>bool) private getDefault;
         CreateNFTItem(tokenId,tokenURI,price,true,false);
         }
       }
+
+function randomOption(uint _input) private view returns (uint) {
+uint option;
+  uint result = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, msg.sender,_input)))%100;
+if(result>0&&result<50){
+  option = 1;
+} else if(result>=50&&result<70){
+  option = 2;
+} else if(result>=70&&result<96){
+  option = 3;
+} else if(result>=96&&result<99){
+  option = 4;
+}else if(result==99){
+  option = 5;
+}
+  return option;
+}
+
+function changeOption(uint _tokenId, address _msgsender) external returns(bool){
+  require(idToNFTItem[_tokenId].owner== _msgsender);
+  uint rare = randomOption(99);
+  uint star = randomOption(1);
+  idToNFTItem[_tokenId].rare = rare;
+  idToNFTItem[_tokenId].star = star;
+return true;
+}
 
     function getNFTItem(uint tokenId) public payable{
         require(isApprovedForAll(owner(),msg.sender)== true);
