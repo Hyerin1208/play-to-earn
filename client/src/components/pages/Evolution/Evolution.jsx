@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
 import "./evolution.css";
@@ -6,12 +6,18 @@ import "./evolution.css";
 import temporaryData from "../../../assets/images/free.png";
 import EvoDetails from "./EvoDetails";
 import { Col, Row } from "reactstrap";
+import NftCard from "../../ui/templete/NftCard";
+import { Link, Route, Routes } from "react-router-dom";
+import NftDetails from "../Market/NftDetails";
+import SellModal from "../../ui/templete/SellModal";
 
 const Evolution = (props) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Fragment>
@@ -76,8 +82,64 @@ const Evolution = (props) => {
             </div>
           </div>
         </Col>
-        <Col md="5"></Col>
+        <Col md="5">
+          <div className="last__evobox">
+            <div>
+              <div className="single__nft__card">
+                <div className="nft__img">
+                  <img src={temporaryData} alt="" />
+                </div>
+
+                <div className="nft__content">
+                  <Row>
+                    <h5 className="nft__title">
+                      {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+                        {props.item.formInput.name}
+                      </Link> */}
+                    </h5>
+                    <Col>
+                      <div className="bid__container">
+                        <h6>Current Bid</h6>
+                        {/* <p>{props.item.formInput.price} ETH</p> */}
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="prevNft__desc">
+                        {/* <p>{props.item.formInput.description}</p> */}
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                <div className="bid__box">
+                  <div className="sell__box">
+                    <button
+                      className="sell__btn"
+                      onClick={() => setShowModal(true)}
+                    >
+                      <i className="ri-price-tag-3-line"></i>
+                      Sell
+                    </button>
+                  </div>
+                  <span className="view__link">
+                    {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+                      View More
+                    </Link> */}
+                  </span>
+                </div>
+              </div>
+              <Routes>
+                <Route
+                  path="detailes/*"
+                  element={<NftDetails item={props.item} />}
+                />
+              </Routes>
+            </div>
+          </div>
+        </Col>
       </Row>
+
+      <Row></Row>
     </Fragment>
   );
 };

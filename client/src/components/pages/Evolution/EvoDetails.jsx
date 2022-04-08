@@ -47,6 +47,7 @@ const EvoButton = styled.button`
   transition: all 290ms ease-in-out;
   border-radius: 8px;
   margin-left: 4px;
+  text-shadow: 0 0 0.125em hsl(0, 0%, 98.0392156862745%);
 
   &:hover {
     background-color: transparent;
