@@ -115,7 +115,7 @@
   font-size: 9.8rem;
   z-index: -1;
   color: #4b50e6;
-  transition: 0ms.4s ease-in-out;
+  transition: 0.4s ease-in-out;
   text-shadow: 0 0 0.125em hsl(0, 0%, 100%);
 }
 
@@ -134,11 +134,15 @@
   border-radius: 1rem;
   color: whitesmoke;
   cursor: pointer;
-  transition: 0ms.4s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .token__mybox {
   font-size: 1.5rem;
+}
+
+.row__box {
+  width: 99%;
 }
 
 /* nfts 카드 css */

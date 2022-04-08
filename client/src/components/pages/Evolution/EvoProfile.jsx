@@ -88,11 +88,11 @@ const EvoProfile = (props) => {
         })
         .then((res) => {
           console.log(res.data.message);
-          alert("프로필이 해당 NFT이미지로 변경되었습니다.");
+          alert("해당 NFT로 진행하시겠습니까?");
           props.setShowModal(false);
         });
     } else {
-      alert("이미지를 선택하세요");
+      alert("진화를 원하는 NFT를 선택하세요");
     }
   };
 

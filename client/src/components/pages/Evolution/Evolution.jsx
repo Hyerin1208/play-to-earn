@@ -21,10 +21,11 @@ const Evolution = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const [EvoProfileModal, setEvoProfileModal] = useState(false);
+  const [imageURL, setImageURL] = useState([]);
 
   return (
     <Fragment>
-      <Row>
+      <Row className="row__box">
         <Col md="5">
           <div className="card__wrapper">
             <motion.div
@@ -57,7 +58,15 @@ const Evolution = (props) => {
                     >
                       <i className="ri-add-circle-line"></i>
                     </div>
-                    {/* <img src={temporaryData} alt="" /> */}
+                    <img
+                      className="evo__iamge"
+                      src=""
+                      id="upload__pfp"
+                      onChange={(e) => {
+                        setImageURL(e.target.value);
+                      }}
+                      alt="edit"
+                    />
                   </motion.div>
                 </div>
 
