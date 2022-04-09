@@ -54,8 +54,28 @@ const NftDetails = (props) => {
   const [likeActive, setLikeActive] = useState(false);
   const [viewActive, setViewActive] = useState(false);
 
-  const [rating, setRating] = useState(null);
-  const [hover, setHover] = useState(null);
+  // const [rating, setRating] = useState(null);
+  // const [hover, setHover] = useState(null);
+
+  const stars = Array(5).fill(1);
+  const [currentValue, setCurrnetValue] = useState(1);
+  const [hoverValue, setHoverValue] = useState(undefined);
+
+  const handleClick = (value) => {
+    setCurrnetValue(value);
+  };
+
+  const handleMouseOver = (value) => {
+    setHoverValue(value);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverValue(undefined);
+  };
+
+  console.log(1);
+
+  useEffect(() => {}, [currentValue]);
 
   const [rare, setRare] = useState("");
   const [star, setStar] = useState("");
@@ -132,9 +152,9 @@ const NftDetails = (props) => {
         tokenId: card_id,
       })
       .then((res) => {
-        setRare(res.rare);
-        setStar(res.star);
-        console.log(res.data.rare);
+        setRare(res.data.rare);
+        setStar(res.data.star);
+        console.log(res.data);
       });
   }, []);
 
@@ -235,7 +255,7 @@ const NftDetails = (props) => {
                           className="rare__Badge"
                           style={{ width: "110px", height: "32px" }}
                         >
-                          rare : {}
+                          rare : {rare}
                         </Badge>
                       </span>
                     </div>
@@ -256,26 +276,26 @@ const NftDetails = (props) => {
                   </div>
 
                   <div className="pixel__container">
-                    {[...Array(5)].map((star, i) => {
-                      const ratingValue = i + 1;
+                    {stars.map((_, i) => {
+                      const ratingValue = star;
                       return (
                         <label key={i}>
                           <input
                             type="radio"
                             className="rating"
                             value={ratingValue}
-                            onClick={() => setRating(ratingValue)}
                           />
                           <FaStar
                             className="star"
+                            defaultValue={star}
+                            key={i}
                             color={
-                              ratingValue <= (hover || rating)
+                              (hoverValue || currentValue) > i
                                 ? "#ffc107"
                                 : "#e4e5e9"
                             }
-                            size={40}
-                            onMouseEnter={() => setHover(ratingValue)}
-                            onMouseLeave={() => setHover(null)}
+                            size={20}
+                            onChange={() => setCurrnetValue(ratingValue)}
                           />
                         </label>
                       );
@@ -289,45 +309,42 @@ const NftDetails = (props) => {
                   </button>
                   <br />
                   <div className="accordian__box">
-                    <div className="tab__tab" onClick="{this.handleToggle}">
+                    <div className="tab__tab">
                       <span>History</span>
                       <i className="ri-add-line"></i>
                     </div>
                     {/* <div className={this.state.showInfo ? "show__content" : "content"}> */}
                     <div className="content__text">
-                      <p>
-                        {/* 이곳에 Transfer 거래내역 기록되도록 누가 누구에게 날짜 */}
-                        <Table dark>
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>From</th>
-                              <th>To</th>
-                              <th>Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>address</td>
-                              <td>address</td>
-                              <td>2022-00-00</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>address</td>
-                              <td>Thaddressornton</td>
-                              <td>2022-00-00</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td>address</td>
-                              <td>address</td>
-                              <td>2022-00-00</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </p>
+                      <Table dark>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>address</td>
+                            <td>address</td>
+                            <td>2022-00-00</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>address</td>
+                            <td>Thaddressornton</td>
+                            <td>2022-00-00</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">3</th>
+                            <td>address</td>
+                            <td>address</td>
+                            <td>2022-00-00</td>
+                          </tr>
+                        </tbody>
+                      </Table>
                     </div>
                   </div>
                 </Col>
