@@ -137,7 +137,14 @@ const EvoProfile = (props) => {
                     ))}
                   </div>
                 </Row>
-                <button className="selected__btn" onClick={() => onSelect()}>
+                <button
+                  className="selected__btn"
+                  item={props.item}
+                  onClick={async () => {
+                    await onSelect();
+                    // window.location.href = "http://localhost:3000/upgrade";
+                  }}
+                >
                   Selected
                 </button>
               </Container>

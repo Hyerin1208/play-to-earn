@@ -36,6 +36,8 @@ const Evolution = (props) => {
     setImageURL(imageURL);
   }, []);
 
+  console.log(props);
+
   return (
     <Fragment>
       <Row className="row__box">
@@ -67,20 +69,31 @@ const Evolution = (props) => {
                   >
                     <div
                       className="upload__evo"
-                      onClick={() => setEvoProfileModal(true)}
-                    >
-                      <i className="ri-add-circle-line"></i>
-                    </div>
-
-                    <img
-                      className="evo__iamge"
-                      src={imageURL}
-                      id="upload__pfp"
-                      onChange={(e) => {
-                        setImageURL(e.target.value);
+                      onClick={() => {
+                        setEvoProfileModal(true);
+                        setVisible(!visible);
                       }}
-                      alt="edit"
-                    />
+                    >
+                      {visible ? "" : <i className="ri-add-circle-line"></i>}
+
+                      {visible && (
+                        <img
+                          className="evo__iamge"
+                          src={imageURL}
+                          id="upload__pfp"
+                          alt="edit"
+                          value={props}
+                          onChange={async (e) => {
+                            const changeNft = e.target.getAttribute("value");
+                            if (!changeNft) {
+                              await alert("진화를 원하는 NFT를 선택하세요.");
+                            } else {
+                              setImageURL(e.target.value);
+                            }
+                          }}
+                        />
+                      )}
+                    </div>
                   </motion.div>
                 </div>
 
