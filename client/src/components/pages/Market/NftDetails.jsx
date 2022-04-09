@@ -25,8 +25,6 @@ const NftDetails = (props) => {
   const account = useSelector((state) => state.AppState.account);
   const owner = useSelector((state) => state.AppState.Owner);
 
-  console.log(owner);
-
   // async function mynftlists() {
   //   if ((await CreateNFTContract) === null) {
   //     setLoading(true);
@@ -48,6 +46,8 @@ const NftDetails = (props) => {
   const [Loading, setLoading] = useState(true);
   const [calldata, setCalldata] = useState(null);
 
+  console.log(calldata);
+
   const [like, setLike] = useState(0);
   const [view, setView] = useState(0);
 
@@ -57,10 +57,11 @@ const NftDetails = (props) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
+  const [rare, setRare] = useState("");
+  const [star, setStar] = useState("");
+
   let params = useParams();
   const card_id = params.card_id;
-
-  console.log(calldata);
 
   // test
   const sendLike = async () => {
@@ -122,6 +123,18 @@ const NftDetails = (props) => {
       .then((res) => {
         console.log(res.data.view);
         setView(res.data.view);
+      });
+  }, []);
+
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/nfts`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        setRare(res.rare);
+        setStar(res.star);
+        console.log(res.data.rare);
       });
   }, []);
 
@@ -222,7 +235,7 @@ const NftDetails = (props) => {
                           className="rare__Badge"
                           style={{ width: "110px", height: "32px" }}
                         >
-                          rare :
+                          rare : {}
                         </Badge>
                       </span>
                     </div>
@@ -283,7 +296,7 @@ const NftDetails = (props) => {
                     {/* <div className={this.state.showInfo ? "show__content" : "content"}> */}
                     <div className="content__text">
                       <p>
-                        이곳에 Transfer 거래내역 기록되도록 누가 누구에게 날짜
+                        {/* 이곳에 Transfer 거래내역 기록되도록 누가 누구에게 날짜 */}
                         <Table dark>
                           <thead>
                             <tr>

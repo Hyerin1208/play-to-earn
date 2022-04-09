@@ -206,6 +206,10 @@ input[type="radio"] {
   font-size: 1.5rem;
 }
 
+.tab__tab span {
+  margin-left: 20px;
+}
+
 .content__text {
   background-color: rgb(48, 14, 70);
   transition: all 0.5s ease-in-out;

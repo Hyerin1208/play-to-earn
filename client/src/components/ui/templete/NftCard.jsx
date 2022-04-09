@@ -67,7 +67,7 @@ const NftCard = (props) => {
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
                 <p>{props.item.formInput.price} ETH</p>
                 <Badge pill bg="light" text="dark" className="rare__badge">
-                  rare :
+                  rare : {props.item.formInput.rare}
                 </Badge>
               </div>
             </Col>

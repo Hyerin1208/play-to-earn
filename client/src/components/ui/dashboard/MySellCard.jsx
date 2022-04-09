@@ -70,7 +70,7 @@ const NftSellCard = (props) => {
                 <p>{props.item.formInput.price} ETH</p>
               </div>
               <Badge pill bg="light" text="dark" className="rare__badge">
-                rare :
+                rare : {props.item.formInput.rare}
               </Badge>
             </Col>
             <Col>
