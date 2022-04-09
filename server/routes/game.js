@@ -1,19 +1,23 @@
 var express = require("express");
 var router = express.Router();
-const { Game, User, Ranking } = require("../models");
+const { Game, User, Ranking, Nfts } = require("../models");
 const { Op } = require("sequelize");
 
 // router.post 모음
 // SnakeGame
 
 router.post("/snake", async (req, res, next) => {
-  const { point, account } = req.body;
+  const { point, account, tokenId } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
       attributes: ["address", "nick"],
+    });
+    const findStar = await Nfts.findOne({
+      where: { id: tokenId },
+      attributes: ["star"],
     });
 
     if (!findAddress) {
@@ -23,10 +27,22 @@ router.post("/snake", async (req, res, next) => {
         snakePoint: point,
       });
     } else {
-      Game.update(
-        { snakePoint: point, nick: findUser.nick },
-        { where: { address: account } }
-      );
+      if (findStar.star === 1) {
+        Game.update(
+          { snakePoint: point, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 2) {
+        Game.update(
+          { snakePoint: point * 2, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 3) {
+        Game.update(
+          { snakePoint: point * 3, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      }
     }
 
     res.json({ message: "ok" });

@@ -17,8 +17,8 @@ const Board = () => {
     (state) => state.AppState.CreateNFTContract
   );
   const [Loading, setLoading] = useState(true);
-  const [nftList, setNftList] = useState([]);
-  const [point, setPoint] = useState(0);
+  const [tokenId, setTokenId] = useState([]);
+  console.log(tokenId);
 
   useEffect(() => {
     mynftlists();
@@ -36,38 +36,22 @@ const Board = () => {
           console.log(error);
         }
       });
-    setNftList(
+    console.log(lists);
+    setTokenId(
       await lists.map((v, i) => {
-        return { rare: v.rare, star: v.star };
+        return v.tokenId;
       })
     );
   }
 
   const sendPoint = async () => {
     const point = score;
-    // if (nftList[0].rare !== null) {
-    //   switch (nftList[0].rare) {
-    //     case "1":
-    //       return point;
-    //       break;
-    //     case "2":
-    //       return point * 1.5;
-    //       break;
-    //     case "3":
-    //       return point * 2;
-    //       break;
-    //     case "4":
-    //       return point * 2.5;
-    //       break;
-    //     default:
-    //       console.log("default");
-    //   }
-    // }
 
     await axios
-      .post(`http://localhost:5000/game/snake`, { point, account })
+      .post(`http://localhost:5000/game/snake`, { point, account, tokenId })
       .then((res) => {
         console.log(point);
+        console.log(tokenId);
         console.log(res.data);
         alert("점수 등록 완료");
       });
@@ -164,9 +148,9 @@ const Board = () => {
         clearInterval(frame);
         setSectionCard(true);
       }
+
       if (snake[0][0] === food[0] && snake[0][1] === food[1]) {
         setScore(++count);
-        // setPoint(++count);
         randomCell(food, snake, ...boardSize);
         snake = [
           ...snake,
