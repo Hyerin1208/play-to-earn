@@ -19,7 +19,9 @@ const pageSize = 10;
 const Market = () => {
   const Selllists = useSelector((state) => state.AppState.Selllists);
   const [Loading, setLoading] = useState(true);
+
   const [nftArray, setnftArray] = useState([]);
+  const [seletedPrice, setSeletedPrice] = useState(null);
 
   const [data, setData] = useState("");
 
@@ -39,7 +41,15 @@ const Market = () => {
       //     .value()
       // );
     }
-  }, [Selllists]);
+  }, []);
+
+  const sortNfts = nftArray.map((price) => {
+    console.log(price.formInput.price);
+    return price.formInput.price;
+  });
+
+  console.log(Selllists);
+  console.log(sortNfts);
 
   const handlePagination = (index) => {
     setEndPosition((index + 1) * quantityPageRef.current);
@@ -71,29 +81,27 @@ const Market = () => {
     const filterValue = e.target.value;
 
     if (filterValue === "high") {
-      const filterData = NFT__DATA.filter((item) => item.currentBid >= 6);
-
+      const filterData = sortNfts.filter((item) => item.price >= 10);
+      console.log(filterData);
       setData(filterData);
     }
 
     if (filterValue === "mid") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 5.5 && item.currentBid < 6
+      const filterData = sortNfts.filter(
+        (item) => item.currentBid >= 5 && item.currentBid < 10
       );
 
       setData(filterData);
     }
 
     if (filterValue === "low") {
-      const filterData = NFT__DATA.filter(
-        (item) => item.currentBid >= 4.89 && item.currentBid < 5.5
+      const filterData = sortNfts.filter(
+        (item) => item.currentBid >= 1 && item.currentBid < 5
       );
 
       setData(filterData);
     }
   };
-
-  // const navigate = useNavigate();
 
   if (Loading) {
     return (
@@ -115,19 +123,19 @@ const Market = () => {
                   <div className="filter__left">
                     <div className="all__category__filter">
                       <select>
-                        <option>All Categories</option>
-                        <option value="Art">Art</option>
-                        <option value="badge">Badge</option>
-                        <option value="Item">Item</option>
-                        <option value="domain-name">Domain Name</option>
-                        <option value="Trading Card">Trading Card</option>
+                        <option>STAR LEVEL</option>
+                        <option value="one">one</option>
+                        <option value="two">two</option>
+                        <option value="three">three</option>
+                        <option value="four">four</option>
+                        <option value="five">five</option>
                       </select>
                     </div>
                     <div className="all__items__filter">
                       <select>
-                        <option value="">All Items</option>
-                        <option value="single-item">Single Item</option>
-                        <option value="bundle">Bundle</option>
+                        <option>All Rarity</option>
+                        <option value="high">High</option>
+                        <option value="low">Low</option>
                       </select>
                     </div>
                   </div>
