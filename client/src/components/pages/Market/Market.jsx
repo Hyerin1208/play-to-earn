@@ -90,7 +90,7 @@ const Market = () => {
       const filterData = sortNfts.filter(
         (item) => item.currentBid >= 5 && item.currentBid < 10
       );
-
+      console.log(filterData);
       setData(filterData);
     }
 
@@ -98,7 +98,7 @@ const Market = () => {
       const filterData = sortNfts.filter(
         (item) => item.currentBid >= 1 && item.currentBid < 5
       );
-
+      console.log(filterData);
       setData(filterData);
     }
   };
