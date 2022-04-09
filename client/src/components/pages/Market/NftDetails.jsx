@@ -3,7 +3,7 @@ import ReactLoaing from "react-loading";
 
 import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Table } from "reactstrap";
 import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
 
@@ -284,7 +284,36 @@ const NftDetails = (props) => {
                     <div className="content__text">
                       <p>
                         이곳에 Transfer 거래내역 기록되도록 누가 누구에게 날짜
-                        From / To / Date
+                        <Table dark>
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>From</th>
+                              <th>To</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>address</td>
+                              <td>address</td>
+                              <td>2022-00-00</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>address</td>
+                              <td>Thaddressornton</td>
+                              <td>2022-00-00</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>address</td>
+                              <td>address</td>
+                              <td>2022-00-00</td>
+                            </tr>
+                          </tbody>
+                        </Table>
                       </p>
                     </div>
                   </div>

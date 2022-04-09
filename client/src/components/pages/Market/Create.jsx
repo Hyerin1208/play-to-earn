@@ -112,6 +112,7 @@ const Create = () => {
               alert("이미 발급된 번호입니다.");
             }
           });
+        console.log(res.events.NFTItemCreated.returnValues.star);
       });
   }
 
