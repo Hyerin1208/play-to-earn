@@ -18,13 +18,15 @@ import { useNavigate } from "react-router-dom";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-const Create = () => {
+const Create = (props) => {
   let Navi = useNavigate();
   const [fileUrl, setFileUrl] = useState(defaultImg);
   const [formInput, updateFormInput] = useState({
     price: "00.00",
     name: "noname",
     description: "desc",
+    rare: "1",
+    star: "1",
   });
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
