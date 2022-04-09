@@ -14,6 +14,7 @@ import "./MineGame.css";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
+import ReactLoaing from "react-loading";
 
 function MineGame({ setShowModal }) {
   let [gameAttr, setGameAttr] = useState({
@@ -32,6 +33,35 @@ function MineGame({ setShowModal }) {
   let [showSet, setShowSet] = useState(false);
 
   const account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const [Loading, setLoading] = useState(true);
+
+  const [nftList, setNftList] = useState([]);
+
+  useEffect(() => {
+    mynftlists();
+    setLoading(false);
+  }, [CreateNFTContract]);
+
+  // 내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    setNftList(
+      await lists.map((v, i) => {
+        return { rare: v.rare, star: v.star };
+      })
+    );
+  }
 
   const sendPoint = async () => {
     console.log(runtime);
@@ -155,39 +185,48 @@ function MineGame({ setShowModal }) {
     };
   }, []);
 
-  return (
-    <>
-      <div className="game_modal__wrapper">
-        <div className="game_single__modal">
-          <span className="game_close__modal">
-            <i
-              className="ri-close-line"
-              onClick={() => setShowModal(false)}
-            ></i>
-          </span>
-          <div className="box">
-            <main>
-              <InfoWrapper
-                mines={gameAttr.mines}
-                leftMines={gameAttr.mines - flagCount}
-                gameState={gameState}
-                handleRestart={handleRestart}
-                runtime={runtime}
-                handleShowSet={handleShowSet}
-              />
-              <Board
-                boardData={boardData}
-                handleLeftClick={handleLeftClick}
-                handleRightClick={handleRightClick}
-                gameState={gameState}
-              />
-            </main>
-          </div>
-          <Setting show={showSet} handleSet={handleSet} />
-        </div>
+  if (Loading) {
+    return (
+      <div>
+        잠시만 기다려 주세요
+        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
       </div>
-    </>
-  );
+    );
+  } else {
+    return (
+      <>
+        <div className="game_modal__wrapper">
+          <div className="game_single__modal">
+            <span className="game_close__modal">
+              <i
+                className="ri-close-line"
+                onClick={() => setShowModal(false)}
+              ></i>
+            </span>
+            <div className="box">
+              <main>
+                <InfoWrapper
+                  mines={gameAttr.mines}
+                  leftMines={gameAttr.mines - flagCount}
+                  gameState={gameState}
+                  handleRestart={handleRestart}
+                  runtime={runtime}
+                  handleShowSet={handleShowSet}
+                />
+                <Board
+                  boardData={boardData}
+                  handleLeftClick={handleLeftClick}
+                  handleRightClick={handleRightClick}
+                  gameState={gameState}
+                />
+              </main>
+            </div>
+            <Setting show={showSet} handleSet={handleSet} />
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default MineGame;

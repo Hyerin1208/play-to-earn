@@ -6,6 +6,8 @@ import React, {
   useCallback,
 } from "react";
 
+import ReactLoaing from "react-loading";
+
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "./constants";
 
 import { renderStartBackground } from "./js/Render";
@@ -14,7 +16,7 @@ import { Game } from "./js/Game.js";
 import Settings from "./Settings";
 import "./styles/Tetris.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 let sirtet;
 
@@ -48,12 +50,38 @@ const Tetris = ({ setShowModal }) => {
   const [countdownText, setCountdownText] = useState("");
   const [showSettings, setShowSettings] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [Loading, setLoading] = useState(true);
 
   const account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const [nftList, setNftList] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
+    mynftlists();
+    setLoading(null);
+  }, [CreateNFTContract]);
+
+  // 내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    setNftList(
+      await lists.map((v, i) => {
+        return { rare: v.rare, star: v.star };
+      })
+    );
+  }
+
+  useEffect(() => {
     canvasRef.current.width = CANVAS_WIDTH;
     canvasRef.current.height = CANVAS_HEIGHT;
     const ctx = canvasRef.current.getContext("2d");
@@ -183,32 +211,49 @@ const Tetris = ({ setShowModal }) => {
     const overlayClass = `canvas__overlay vignette ${
       backgroundImage ? "animate__animated animate__fadeIn" : ""
     }`;
-
-    return (
-      <div className={overlayClass} style={overlayStyle}>
-        {!showSettings ? (
-          <>
-            <h1 className="display-3">Tetris</h1>
-            <button className="btn btn-primary mb-3" onClick={startGameHandler}>
-              Play
-            </button>
-            <button
-              className="btn btn-outline-light"
-              onClick={showSettingsHandler}
-            >
-              Settings
-            </button>
-          </>
-        ) : (
-          <Settings
-            customization={customization}
-            setCustomization={setCustomization}
-            onHide={hideSettingsHandler}
-            onTestSound={sirtet.playTestSound}
+    
+    if (Loading) {
+      return (
+        <div>
+          잠시만 기다려 주세요
+          <ReactLoaing
+            type={"bars"}
+            color={"purple"}
+            height={375}
+            width={375}
           />
-        )}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className={overlayClass} style={overlayStyle}>
+          {!showSettings ? (
+            <>
+              <h1 className="display-3">Tetris</h1>
+              <button
+                className="btn btn-primary mb-3"
+                onClick={startGameHandler}
+              >
+                Play
+              </button>
+              <button
+                className="btn btn-outline-light"
+                onClick={showSettingsHandler}
+              >
+                Settings
+              </button>
+            </>
+          ) : (
+            <Settings
+              customization={customization}
+              setCustomization={setCustomization}
+              onHide={hideSettingsHandler}
+              onTestSound={sirtet.playTestSound}
+            />
+          )}
+        </div>
+      );
+    }
   }, [gameState, showSettings, backgroundImage, customization]);
 
   const gameOverOverlay = useMemo(() => {
