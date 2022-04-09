@@ -19,12 +19,10 @@ const Board = () => {
   const [Loading, setLoading] = useState(true);
   const [nftList, setNftList] = useState([]);
   const [point, setPoint] = useState(0);
-  console.log("r", nftList[0].rare);
-  console.log("s", nftList[0].star);
 
   useEffect(() => {
     mynftlists();
-    setLoading(null);
+    setLoading(false);
   }, [CreateNFTContract]);
 
   // 내 nft 리스트
@@ -47,9 +45,25 @@ const Board = () => {
 
   const sendPoint = async () => {
     const point = score;
-    // if (nftList[0].rare === "1" && nftList[0].star === "1") {
-    //   return point * 2;
+    // if (nftList[0].rare !== null) {
+    //   switch (nftList[0].rare) {
+    //     case "1":
+    //       return point;
+    //       break;
+    //     case "2":
+    //       return point * 1.5;
+    //       break;
+    //     case "3":
+    //       return point * 2;
+    //       break;
+    //     case "4":
+    //       return point * 2.5;
+    //       break;
+    //     default:
+    //       console.log("default");
+    //   }
     // }
+
     await axios
       .post(`http://localhost:5000/game/snake`, { point, account })
       .then((res) => {
@@ -152,6 +166,7 @@ const Board = () => {
       }
       if (snake[0][0] === food[0] && snake[0][1] === food[1]) {
         setScore(++count);
+        // setPoint(++count);
         randomCell(food, snake, ...boardSize);
         snake = [
           ...snake,

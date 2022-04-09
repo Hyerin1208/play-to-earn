@@ -253,7 +253,6 @@ router.post("/weekly", async (req, res) => {
     });
     testArray.push(await RankingDB);
   }
-  console.log(testArray);
   res.json(testArray);
 });
 
