@@ -56,11 +56,11 @@ const Tetris = ({ setShowModal }) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  const [nftList, setNftList] = useState([]);
+  const [tokenId, setTokenId] = useState([]);
 
   useEffect(() => {
     mynftlists();
-    setLoading(null);
+    setLoading(false);
   }, [CreateNFTContract]);
 
   // 내 nft 리스트
@@ -74,9 +74,9 @@ const Tetris = ({ setShowModal }) => {
           console.log(error);
         }
       });
-    setNftList(
+    setTokenId(
       await lists.map((v, i) => {
-        return { rare: v.rare, star: v.star };
+        return v.tokenId;
       })
     );
   }
@@ -211,7 +211,7 @@ const Tetris = ({ setShowModal }) => {
     const overlayClass = `canvas__overlay vignette ${
       backgroundImage ? "animate__animated animate__fadeIn" : ""
     }`;
-    
+
     if (Loading) {
       return (
         <div>
@@ -264,7 +264,7 @@ const Tetris = ({ setShowModal }) => {
       console.log(account);
 
       await axios
-        .post(`http://localhost:5000/game/tetris`, { data, account })
+        .post(`http://localhost:5000/game/tetris`, { data, account, tokenId })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");

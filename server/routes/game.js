@@ -16,7 +16,7 @@ router.post("/snake", async (req, res, next) => {
       attributes: ["address", "nick"],
     });
     const findStar = await Nfts.findOne({
-      where: { id: tokenId },
+      where: { id: tokenId[0] },
       attributes: ["star"],
     });
 
@@ -42,6 +42,16 @@ router.post("/snake", async (req, res, next) => {
           { snakePoint: point * 3, nick: findUser.nick },
           { where: { address: account } }
         );
+      } else if (findStar.star === 4) {
+        Game.update(
+          { snakePoint: point * 4, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 5) {
+        Game.update(
+          { snakePoint: point * 5, nick: findUser.nick },
+          { where: { address: account } }
+        );
       }
     }
 
@@ -54,13 +64,17 @@ router.post("/snake", async (req, res, next) => {
 
 // 2048Game
 router.post("/2048", async (req, res, next) => {
-  const { score, account } = req.body;
+  const { score, account, tokenId } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
       attributes: ["address", "nick"],
+    });
+    const findStar = await Nfts.findOne({
+      where: { id: tokenId[0] },
+      attributes: ["star"],
     });
 
     if (!findAddress) {
@@ -70,10 +84,32 @@ router.post("/2048", async (req, res, next) => {
         puzzlePoint: score,
       });
     } else {
-      Game.update(
-        { puzzlePoint: score, nick: findUser.nick },
-        { where: { address: account } }
-      );
+      if (findStar.star === 1) {
+        Game.update(
+          { puzzlePoint: point, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 2) {
+        Game.update(
+          { puzzlePoint: score * 2, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 3) {
+        Game.update(
+          { puzzlePoint: score * 3, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 4) {
+        Game.update(
+          { puzzlePoint: score * 4, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 5) {
+        Game.update(
+          { puzzlePoint: score * 5, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      }
     }
 
     res.json({ message: "ok" });
@@ -85,13 +121,17 @@ router.post("/2048", async (req, res, next) => {
 
 // MineGame
 router.post("/mine", async (req, res, next) => {
-  const { runtime, account } = req.body;
+  const { runtime, account, tokenId } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
       attributes: ["address", "nick"],
+    });
+    const findStar = await Nfts.findOne({
+      where: { id: tokenId[0] },
+      attributes: ["star"],
     });
 
     if (!findAddress) {
@@ -101,10 +141,32 @@ router.post("/mine", async (req, res, next) => {
         minePoint: runtime,
       });
     } else {
-      Game.update(
-        { minePoint: runtime, nick: findUser.nick },
-        { where: { address: account } }
-      );
+      if (findStar.star === 1) {
+        Game.update(
+          { minePoint: runtime, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 2) {
+        Game.update(
+          { minePoint: runtime * 2, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 3) {
+        Game.update(
+          { minePoint: runtime * 3, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 4) {
+        Game.update(
+          { minePoint: runtime * 4, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 5) {
+        Game.update(
+          { minePoint: runtime * 5, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      }
     }
 
     res.json({ message: "ok" });
@@ -116,13 +178,17 @@ router.post("/mine", async (req, res, next) => {
 
 // TetrisGame
 router.post("/tetris", async (req, res, next) => {
-  const { data, account } = req.body;
+  const { data, account, tokenId } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
       attributes: ["address", "nick"],
+    });
+    const findStar = await Nfts.findOne({
+      where: { id: tokenId[0] },
+      attributes: ["star"],
     });
 
     if (!findAddress) {
@@ -132,10 +198,32 @@ router.post("/tetris", async (req, res, next) => {
         tetrisPoint: data,
       });
     } else {
-      Game.update(
-        { tetrisPoint: data, nick: findUser.nick },
-        { where: { address: account } }
-      );
+      if (findStar.star === 1) {
+        Game.update(
+          { tetrisPoint: data, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 2) {
+        Game.update(
+          { tetrisPoint: data * 2, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 3) {
+        Game.update(
+          { tetrisPoint: data * 3, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 4) {
+        Game.update(
+          { tetrisPoint: data * 4, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (findStar.star === 5) {
+        Game.update(
+          { tetrisPoint: data * 5, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      }
     }
 
     res.json({ message: "ok" });

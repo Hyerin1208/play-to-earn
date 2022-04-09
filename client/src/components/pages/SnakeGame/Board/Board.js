@@ -18,7 +18,6 @@ const Board = () => {
   );
   const [Loading, setLoading] = useState(true);
   const [tokenId, setTokenId] = useState([]);
-  console.log(tokenId);
 
   useEffect(() => {
     mynftlists();
@@ -36,7 +35,6 @@ const Board = () => {
           console.log(error);
         }
       });
-    console.log(lists);
     setTokenId(
       await lists.map((v, i) => {
         return v.tokenId;
@@ -51,7 +49,6 @@ const Board = () => {
       .post(`http://localhost:5000/game/snake`, { point, account, tokenId })
       .then((res) => {
         console.log(point);
-        console.log(tokenId);
         console.log(res.data);
         alert("점수 등록 완료");
       });
