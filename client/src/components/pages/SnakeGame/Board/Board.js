@@ -18,6 +18,7 @@ const Board = () => {
   );
   const [Loading, setLoading] = useState(true);
   const [tokenId, setTokenId] = useState([]);
+  console.log(tokenId);
 
   useEffect(() => {
     mynftlists();
