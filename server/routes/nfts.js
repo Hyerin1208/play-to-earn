@@ -14,12 +14,13 @@ router.post("/", async (req, res, next) => {
   if (!nft) {
     Nfts.create({
       tokenId: req.body.tokenId,
+      address: req.body.address,
       rare: req.body.rare,
       star: req.body.star,
     });
     res.json({ message: "ok" });
   } else {
-    res.json({ rare: nft.rare, star: nft.star });
+    res.json({ rare: nft.rare, star: nft.star, address: nft.address });
   }
 });
 

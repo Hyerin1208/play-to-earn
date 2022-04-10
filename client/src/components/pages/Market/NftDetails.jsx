@@ -59,6 +59,10 @@ const NftDetails = (props) => {
   const [currentValue, setCurrnetValue] = useState(1);
   const [hoverValue, setHoverValue] = useState(undefined);
 
+  const [rare, setRare] = useState("");
+  const [star, setStar] = useState("");
+  const [address, setAddress] = useState("");
+
   const handleClick = (value) => {
     setCurrnetValue(value);
   };
@@ -71,12 +75,7 @@ const NftDetails = (props) => {
     setHoverValue(undefined);
   };
 
-  console.log(1);
-
   useEffect(() => {}, [currentValue]);
-
-  const [rare, setRare] = useState("");
-  const [star, setStar] = useState("");
 
   let params = useParams();
   const card_id = params.card_id;
@@ -167,6 +166,7 @@ const NftDetails = (props) => {
       .then((res) => {
         setRare(res.data.rare);
         setStar(res.data.star);
+        setAddress(res.data.address);
         console.log(res.data);
       });
   }, []);
@@ -328,10 +328,9 @@ const NftDetails = (props) => {
                     </div>
                     {/* <div className={this.state.showInfo ? "show__content" : "content"}> */}
                     <div className="content__text">
-                      <Table dark>
+                      <Table dark style={{ tableLayout: "fixed" }}>
                         <thead>
                           <tr>
-                            <th>#</th>
                             <th>From</th>
                             <th>To</th>
                             <th>Date</th>
@@ -339,21 +338,21 @@ const NftDetails = (props) => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope="row">1</th>
+                            {/* 누구에서 */}
+                            <td
+                              width="30%"
+                              style={{
+                                overflow: "hidden",
+                                extOverflow: "ellipsis",
+                                whiteSpace: "wrap",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {address}
+                            </td>
+                            {/* 누구에게 */}
                             <td>address</td>
-                            <td>address</td>
-                            <td>2022-00-00</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>address</td>
-                            <td>Thaddressornton</td>
-                            <td>2022-00-00</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>address</td>
-                            <td>address</td>
+                            {/* 언제 거래됏는지 날짜*/}
                             <td>2022-00-00</td>
                           </tr>
                         </tbody>

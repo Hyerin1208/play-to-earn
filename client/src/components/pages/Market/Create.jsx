@@ -91,6 +91,7 @@ const Create = (props) => {
           formInput: {
             tokenId: res.events.NFTItemCreated.returnValues.tokenId,
             price: formInput.price,
+            address: Account,
             rare: res.events.NFTItemCreated.returnValues.rare,
             star: res.events.NFTItemCreated.returnValues.star,
             name: formInput.name,
@@ -103,6 +104,7 @@ const Create = (props) => {
         await axios
           .post(`http://localhost:5000/nfts`, {
             tokenId: res.events.NFTItemCreated.returnValues.tokenId,
+            address: Account,
             rare: res.events.NFTItemCreated.returnValues.rare,
             star: res.events.NFTItemCreated.returnValues.star,
           })
