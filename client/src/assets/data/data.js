@@ -9,7 +9,7 @@ import admin from "../images/avatar.png";
 
 import member1 from "../images/member.png";
 import member2 from "../images/member2.png";
-import member3 from "../images/member3.png";
+import member3 from "../images/sh_png.png";
 
 export const NFT__DATA = [
   {

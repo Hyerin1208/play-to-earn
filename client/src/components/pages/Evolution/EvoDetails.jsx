@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Marginer } from "./Marginer";
@@ -70,6 +70,20 @@ const OurLogo = styled.div`
 `;
 
 const EvoDetails = (props) => {
+  console.log(props.item);
+
+  const [autoChange, setAutoChange] = useState(false);
+  const [changeCard, setChangeCard] = useState(false);
+
+  const onEvolution = async () => {
+    if (props.item !== null) {
+      alert("해당 NFT를 진화 시키겠습니까?");
+      setChangeCard(true);
+    } else {
+      alert("진화를 원하는 NFT를 다시 선택하세요");
+    }
+  };
+
   return (
     <DetailsContainer>
       <SmallText>Evolution ?</SmallText>
@@ -82,7 +96,13 @@ const EvoDetails = (props) => {
       <Marginer direction="vertical" margin="1.2em" />
       <SpaceHorizontalContainer>
         <SmallText>YOUR NEXT PROFILE</SmallText>
-        <EvoButton>Evolution</EvoButton>
+        <EvoButton
+          onClick={onEvolution}
+          evo={props.item}
+          autoChange={setChangeCard}
+        >
+          Evolution
+        </EvoButton>
       </SpaceHorizontalContainer>
     </DetailsContainer>
   );

@@ -18,30 +18,28 @@ import Badge from "react-bootstrap/Badge";
 
 const NftDetails = (props) => {
   const [nftArray, setnftArray] = useState([]);
+  const [ownerAddr, setOwnerAddr] = useState("");
 
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  const account = useSelector((state) => state.AppState.account);
-  const owner = useSelector((state) => state.AppState.Owner);
 
-  // async function mynftlists() {
-  //   if ((await CreateNFTContract) === null) {
-  //     setLoading(true);
-  //   } else {
-  //     const lists = await CreateNFTContract.methods
-  //       .MyNFTlists()
-  //       .call({ from: account }, (error) => {
-  //         if (!error) {
-  //           console.log("send ok");
-  //         } else {
-  //           console.log(error);
-  //         }
-  //       });
-  //     console.log(await lists);
-  //     setnftArray(lists);
-  //   }
-  // }
+  // console.log(CreateNFTContract._address);
+  console.log(CreateNFTContract);
+
+  const account = useSelector((state) => state.AppState.account);
+
+  // const nftOwner = CreateNFTContract.methods
+  //   .UserSelllists()
+  //   .call({ from: account }, (error) => {
+  //     if (!error) {
+  //       console.log("send ok");
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   });
+
+  // console.log(nftOwner);
 
   const [Loading, setLoading] = useState(true);
   const [calldata, setCalldata] = useState(null);
@@ -82,6 +80,21 @@ const NftDetails = (props) => {
 
   let params = useParams();
   const card_id = params.card_id;
+
+  async function MyAddress(account) {
+    if (CreateNFTContract !== null) {
+      const MyAddr = await CreateNFTContract.methods.ownerOf(card_id).call();
+      console.log(MyAddr);
+
+      setOwnerAddr(MyAddr);
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(async () => {
+    MyAddress();
+  }, []);
 
   // test
   const sendLike = async () => {
@@ -227,7 +240,7 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{calldata.name}</h2>
                   </div>
-                  <div className="owner__address__box">owner : {owner}</div>
+                  <div className="owner__address__box">owner : {ownerAddr}</div>
 
                   <div className="single__nft__icon">
                     <div className="single__nft-seen">

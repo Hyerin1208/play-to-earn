@@ -98,7 +98,7 @@ const MySlick = (props) => {
             {nftArray.map((items, index) => {
               console.log(items);
               return (
-                <Fragment>
+                <Fragment key={index}>
                   {/* <input
                     type="checkbox"
                     hidden={test}

@@ -18,8 +18,6 @@ const EvoProfile = (props) => {
   const [nftArray, setnftArray] = useState([]);
   const [Loading, setLoading] = useState(true);
 
-  const [userBackImage, setUserBackImage] = useState(user__bg);
-
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
