@@ -12,7 +12,6 @@ module.exports = class Nfts extends Sequelize.Model {
         address: {
           type: Sequelize.STRING(200),
           allowNull: true,
-          unique: true,
         },
         likes: {
           type: Sequelize.INTEGER(200),
