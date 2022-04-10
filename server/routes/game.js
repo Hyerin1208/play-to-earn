@@ -34,22 +34,22 @@ router.post("/snake", async (req, res, next) => {
         );
       } else if (findStar.star === 2) {
         Game.update(
-          { snakePoint: point * 2, nick: findUser.nick },
+          { snakePoint: point * 1.2, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 3) {
         Game.update(
-          { snakePoint: point * 3, nick: findUser.nick },
+          { snakePoint: point * 1.3, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 4) {
         Game.update(
-          { snakePoint: point * 4, nick: findUser.nick },
+          { snakePoint: point * 1.4, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 5) {
         Game.update(
-          { snakePoint: point * 5, nick: findUser.nick },
+          { snakePoint: point * 1.5, nick: findUser.nick },
           { where: { address: account } }
         );
       }
@@ -91,22 +91,22 @@ router.post("/2048", async (req, res, next) => {
         );
       } else if (findStar.star === 2) {
         Game.update(
-          { puzzlePoint: score * 2, nick: findUser.nick },
+          { puzzlePoint: score * 1.2, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 3) {
         Game.update(
-          { puzzlePoint: score * 3, nick: findUser.nick },
+          { puzzlePoint: score * 1.3, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 4) {
         Game.update(
-          { puzzlePoint: score * 4, nick: findUser.nick },
+          { puzzlePoint: score * 1.4, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 5) {
         Game.update(
-          { puzzlePoint: score * 5, nick: findUser.nick },
+          { puzzlePoint: score * 1.5, nick: findUser.nick },
           { where: { address: account } }
         );
       }
@@ -121,17 +121,13 @@ router.post("/2048", async (req, res, next) => {
 
 // MineGame
 router.post("/mine", async (req, res, next) => {
-  const { runtime, account, tokenId } = req.body;
+  const { runtime, account } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
       attributes: ["address", "nick"],
-    });
-    const findStar = await Nfts.findOne({
-      where: { id: tokenId[0] },
-      attributes: ["star"],
     });
 
     if (!findAddress) {
@@ -141,32 +137,10 @@ router.post("/mine", async (req, res, next) => {
         minePoint: runtime,
       });
     } else {
-      if (findStar.star === 1) {
-        Game.update(
-          { minePoint: runtime, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (findStar.star === 2) {
-        Game.update(
-          { minePoint: runtime * 2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (findStar.star === 3) {
-        Game.update(
-          { minePoint: runtime * 3, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (findStar.star === 4) {
-        Game.update(
-          { minePoint: runtime * 4, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (findStar.star === 5) {
-        Game.update(
-          { minePoint: runtime * 5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      }
+      Game.update(
+        { minePoint: runtime, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -205,22 +179,22 @@ router.post("/tetris", async (req, res, next) => {
         );
       } else if (findStar.star === 2) {
         Game.update(
-          { tetrisPoint: data * 2, nick: findUser.nick },
+          { tetrisPoint: data * 1.2, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 3) {
         Game.update(
-          { tetrisPoint: data * 3, nick: findUser.nick },
+          { tetrisPoint: data * 1.3, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 4) {
         Game.update(
-          { tetrisPoint: data * 4, nick: findUser.nick },
+          { tetrisPoint: data * 1.4, nick: findUser.nick },
           { where: { address: account } }
         );
       } else if (findStar.star === 5) {
         Game.update(
-          { tetrisPoint: data * 5, nick: findUser.nick },
+          { tetrisPoint: data * 1.5, nick: findUser.nick },
           { where: { address: account } }
         );
       }
