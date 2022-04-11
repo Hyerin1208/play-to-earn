@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
+import { FiHeart } from "react-icons/fi";
+
 import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Table } from "reactstrap";
@@ -250,7 +252,8 @@ const NftDetails = (props) => {
                           type="submit"
                           onClick={sendLike}
                         >
-                          <i className="ri-heart-line"></i> {like}
+                          <FiHeart className="heart__beat" /> {like}
+                          {/* <i className="ri-heart-line"></i> {like} */}
                         </button>
                       </span>
 
