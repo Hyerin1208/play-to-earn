@@ -13,6 +13,9 @@ import "./evo-profile.css";
 
 const EvoProfile = (props) => {
   const [seletedImg, setSelectedImg] = useState(null);
+  const [seletedNFT, setSeletedNFT] = useState(null);
+  const [selectIndex, setSelectIndex] = useState(null);
+  const [selectTokenId, setSelectTokenId] = useState(null);
   const [profileImage, setprofileImage] = useState("");
 
   const [nftArray, setnftArray] = useState([]);
@@ -22,9 +25,7 @@ const EvoProfile = (props) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-
   console.log(props.item);
-
   useEffect(() => {
     console.log(seletedImg);
   }, [seletedImg]);
@@ -64,7 +65,10 @@ const EvoProfile = (props) => {
           let item = {
             fileUrl: await meta.image,
             formInput: {
+              tokenid: i.tokenId,
               price: i.price,
+              rare: i.rare,
+              star: i.star,
               name: await meta.name,
               description: await meta.description,
             },
@@ -79,10 +83,13 @@ const EvoProfile = (props) => {
   }
 
   const onSelect = async () => {
-    if (seletedImg !== null) {
-      props.setImageURL(seletedImg);
-      alert("해당 NFT로 진행하시겠습니까?");
-      props.setShowModal(false);
+    if (seletedNFT !== null) {
+      if (window.confirm("해당 NFT로 진행하시겠습니까?")) {
+        props.setBeforeEvo(seletedNFT);
+        props.setNFTIndex(selectIndex);
+        props.setNFTId(selectTokenId);
+        props.setShowModal(false);
+      }
     } else {
       alert("진화를 원하는 NFT를 선택하세요");
     }
@@ -102,7 +109,10 @@ const EvoProfile = (props) => {
           <span className="close_modal">
             <i
               className="ri-close-line"
-              onClick={() => props.setShowModal(false)}
+              onClick={() => {
+                props.setShowModal(false);
+                props.setVisible(false);
+              }}
             ></i>
           </span>
           <h5 className="text-center text-light">Change your NFT</h5>
@@ -120,17 +130,21 @@ const EvoProfile = (props) => {
 
                   <div className="img__Container">
                     {nftArray.map((image, index) => (
-                      <Col lg="2" md="4" sm="2" key={index}>
+                      <Col lg="2" md="4" sm="2">
                         <img
                           key={index}
                           src={image.fileUrl}
                           alt="nfts"
-                          onClick={() => setSelectedImg(image.fileUrl)}
+                          onClick={() => {
+                            console.log(image);
+                            setSeletedNFT(image);
+                            setSelectIndex(index);
+                            setSelectTokenId(image.formInput.tokenid);
+                            setSelectedImg(image.fileUrl);
+                          }}
                           style={{
                             border:
-                              seletedImg === image.fileUrl
-                                ? "5px solid #5142fc"
-                                : "",
+                              seletedNFT !== null ? "5px solid #5142fc" : "",
                           }}
                         />
                       </Col>
@@ -139,10 +153,8 @@ const EvoProfile = (props) => {
                 </Row>
                 <button
                   className="selected__btn"
-                  item={props.item}
                   onClick={async () => {
                     await onSelect();
-                    // window.location.href = "http://localhost:3000/upgrade";
                   }}
                 >
                   Selected

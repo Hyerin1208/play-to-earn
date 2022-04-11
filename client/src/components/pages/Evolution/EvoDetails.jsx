@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { Marginer } from "./Marginer";
 
 import NaimingLogo from "../../../assets/images/naminglogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { updateMyLists } from "../../../redux/actions/index";
+import axios from "axios";
 
 const DetailsContainer = styled.div`
   width: 100%;
@@ -70,19 +73,18 @@ const OurLogo = styled.div`
 `;
 
 const EvoDetails = (props) => {
+  const [autoChange, setAutoChange] = useState(false);
   const [changeCard, setChangeCard] = useState(false);
-  const [apparent, setApparent] = useState(false);
+  const [tokenId, setTokenId] = useState(null);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const account = useSelector((state) => state.AppState.account);
+  const dispatch = useDispatch();
 
-  const onEvolution = async () => {
-    if (props.item !== null) {
-      alert("해당 NFT를 진화 시키겠습니까?");
-      setChangeCard(true);
-    } else {
-      alert("진화를 원하는 NFT를 다시 선택하세요");
-    }
-  };
-
-  console.log(props.item);
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
 
   return (
     <DetailsContainer>
@@ -97,12 +99,43 @@ const EvoDetails = (props) => {
       <SpaceHorizontalContainer>
         <SmallText>YOUR NEXT PROFILE</SmallText>
         <EvoButton
-          onClick={() => {
-            onEvolution();
-            setApparent(!apparent);
+          onClick={async () => {
+            if (CreateNFTContract !== null) {
+              await CreateNFTContract.methods
+                .changeOption(parseInt(props.data.NFTId), account)
+                .send({ from: account, gas: 3000000 })
+                .then(async () => {
+                  const MyNFTlists = await CreateNFTContract.methods
+                    .MyNFTlists()
+                    .call({ from: account });
+
+                  const listsForm = await Promise.all(
+                    MyNFTlists.map(async (i) => {
+                      const tokenURI = await CreateNFTContract.methods
+                        .tokenURI(i.tokenId)
+                        .call();
+                      const meta = await axios
+                        .get(tokenURI)
+                        .then((res) => res.data);
+                      let item = {
+                        fileUrl: await meta.image,
+                        formInput: {
+                          tokenid: i.tokenId,
+                          price: i.price,
+                          rare: i.rare,
+                          star: i.star,
+                          name: await meta.name,
+                          description: await meta.description,
+                        },
+                      };
+                      return item;
+                    })
+                  );
+                  props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
+                  dispatch(updateMyLists(await listsForm));
+                });
+            }
           }}
-          evo={apparent}
-          autoChange={setChangeCard}
         >
           Evolution
         </EvoButton>
