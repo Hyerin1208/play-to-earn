@@ -1,15 +1,40 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./nft-card.css";
 import Modal from "../templete/Modal";
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
 import { Routes, Route, Link, useParams } from "react-router-dom";
 
+import { FaStar } from "react-icons/fa";
+import Badge from "react-bootstrap/Badge";
+
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
-
   let params = useParams();
+
+  // const [rating, setRating] = useState(null);
+  // const [hover, setHover] = useState(null);
+
+  const stars = Array(5).fill(1);
+  const [currentValue, setCurrnetValue] = useState(props.item.formInput.star);
+  const [hoverValue, setHoverValue] = useState(undefined);
+
+  const handleClick = (value) => {
+    setCurrnetValue(value);
+  };
+
+  const handleMouseOver = (value) => {
+    setHoverValue(value);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverValue(undefined);
+  };
+
+  console.log(props.item.formInput.star);
+
+  useEffect(() => {}, [currentValue]);
 
   return (
     <div>
@@ -22,7 +47,6 @@ const NftCard = (props) => {
           <Row>
             <h5 className="nft__title">
               <Link to={`/detailes/${props.item.formInput.tokenId}`}>
-                {" "}
                 {props.item.formInput.name}
               </Link>
             </h5>
@@ -42,11 +66,40 @@ const NftCard = (props) => {
                 <h6>Current Bid</h6>
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
                 <p>{props.item.formInput.price} ETH</p>
+                <Badge pill bg="light" text="dark" className="rare__badge">
+                  rare : {props.item.formInput.rare}
+                </Badge>
               </div>
             </Col>
             <Col>
               <div className="prevNft__desc">
                 <p>{props.item.formInput.description}</p>
+              </div>
+              <div className="pixel__container">
+                {stars.map((_, i) => {
+                  const ratingValue = props.item.formInput.star;
+                  return (
+                    <label key={i}>
+                      <input
+                        type="radio"
+                        className="rating"
+                        value={ratingValue}
+                      />
+                      <FaStar
+                        className="star"
+                        defaultValue={props.item.formInput.star}
+                        key={i}
+                        color={
+                          (hoverValue || currentValue) > i
+                            ? "#ffc107"
+                            : "#e4e5e9"
+                        }
+                        size={20}
+                        onChange={() => setCurrnetValue(ratingValue)}
+                      />
+                    </label>
+                  );
+                })}
               </div>
             </Col>
           </Row>

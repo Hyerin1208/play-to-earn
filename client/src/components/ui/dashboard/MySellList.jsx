@@ -53,6 +53,8 @@ const MySellList = () => {
             fileUrl: await meta.image,
             formInput: {
               price: i.price,
+              rare: i.rare,
+              star: i.star,
               name: await meta.name,
               description: await meta.description,
             },
@@ -65,6 +67,7 @@ const MySellList = () => {
       );
 
       setnftArray(result);
+      console.log(result);
     }
   }
 

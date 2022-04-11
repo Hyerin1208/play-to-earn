@@ -3,7 +3,7 @@ import ReactLoaing from "react-loading";
 
 import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Table } from "reactstrap";
 import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
 
@@ -14,13 +14,37 @@ import "./nft-details.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import Badge from "react-bootstrap/Badge";
+
 const NftDetails = (props) => {
+  const [nftArray, setnftArray] = useState([]);
+  const [ownerAddr, setOwnerAddr] = useState("");
+
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+
+  // console.log(CreateNFTContract._address);
+  console.log(CreateNFTContract);
+
   const account = useSelector((state) => state.AppState.account);
+
+  // const nftOwner = CreateNFTContract.methods
+  //   .UserSelllists()
+  //   .call({ from: account }, (error) => {
+  //     if (!error) {
+  //       console.log("send ok");
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   });
+
+  // console.log(nftOwner);
+
   const [Loading, setLoading] = useState(true);
   const [calldata, setCalldata] = useState(null);
+
+  console.log(calldata);
 
   const [like, setLike] = useState(0);
   const [view, setView] = useState(0);
@@ -28,11 +52,48 @@ const NftDetails = (props) => {
   const [likeActive, setLikeActive] = useState(false);
   const [viewActive, setViewActive] = useState(false);
 
-  const [rating, setRating] = useState(null);
-  const [hover, setHover] = useState(null);
+  // const [rating, setRating] = useState(null);
+  // const [hover, setHover] = useState(null);
+
+  const stars = Array(5).fill(1);
+  const [currentValue, setCurrnetValue] = useState(1);
+  const [hoverValue, setHoverValue] = useState(undefined);
+
+  const [rare, setRare] = useState("");
+  const [star, setStar] = useState("");
+  const [address, setAddress] = useState("");
+
+  const handleClick = (value) => {
+    setCurrnetValue(value);
+  };
+
+  const handleMouseOver = (value) => {
+    setHoverValue(value);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverValue(undefined);
+  };
+
+  useEffect(() => {}, [currentValue]);
 
   let params = useParams();
   const card_id = params.card_id;
+
+  async function MyAddress(account) {
+    if (CreateNFTContract !== null) {
+      const MyAddr = await CreateNFTContract.methods.ownerOf(card_id).call();
+      console.log(MyAddr);
+
+      setOwnerAddr(MyAddr);
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(async () => {
+    MyAddress();
+  }, []);
 
   // test
   const sendLike = async () => {
@@ -97,6 +158,19 @@ const NftDetails = (props) => {
       });
   }, []);
 
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/nfts`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        setRare(res.data.rare);
+        setStar(res.data.star);
+        setAddress(res.data.address);
+        console.log(res.data);
+      });
+  }, []);
+
   // function likeBtn() {
   //   if (likeActive) {
   //     setLikeActive(false);
@@ -130,8 +204,8 @@ const NftDetails = (props) => {
       setCalldata(await data.data);
       setLoading(false);
     });
+    console.log(tokenURI);
   }
-  console.log(calldata);
 
   function testfunc(Loading) {
     if (Loading) {
@@ -158,7 +232,7 @@ const NftDetails = (props) => {
                     src={calldata.image}
                     alt=""
                     className="single__nft-img"
-                    style={{ width: "570px", height: "650px" }}
+                    style={{ width: "540px", height: "630px" }}
                   />
                 </Col>
 
@@ -166,6 +240,7 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{calldata.name}</h2>
                   </div>
+                  <div className="owner__address__box">owner : {ownerAddr}</div>
 
                   <div className="single__nft__icon">
                     <div className="single__nft-seen">
@@ -184,6 +259,18 @@ const NftDetails = (props) => {
                           <i className="ri-eye-line"></i> {view}
                         </button>
                       </span>
+
+                      <span>
+                        <Badge
+                          pill
+                          bg="light"
+                          text="dark"
+                          className="rare__Badge"
+                          style={{ width: "110px", height: "32px" }}
+                        >
+                          rare : {rare}
+                        </Badge>
+                      </span>
                     </div>
 
                     <div className="single__nft-more">
@@ -201,27 +288,27 @@ const NftDetails = (props) => {
                     </p>
                   </div>
 
-                  <div class="pixel__container">
-                    {[...Array(5)].map((star, i) => {
-                      const ratingValue = i + 1;
+                  <div className="pixel__container">
+                    {stars.map((_, i) => {
+                      const ratingValue = star;
                       return (
-                        <label>
+                        <label key={i}>
                           <input
                             type="radio"
                             className="rating"
                             value={ratingValue}
-                            onClick={() => setRating(ratingValue)}
                           />
                           <FaStar
                             className="star"
+                            defaultValue={star}
+                            key={i}
                             color={
-                              ratingValue <= (hover || rating)
+                              (hoverValue || currentValue) > i
                                 ? "#ffc107"
                                 : "#e4e5e9"
                             }
-                            size={40}
-                            onMouseEnter={() => setHover(ratingValue)}
-                            onMouseLeave={() => setHover(null)}
+                            size={20}
+                            onChange={() => setCurrnetValue(ratingValue)}
                           />
                         </label>
                       );
@@ -233,6 +320,45 @@ const NftDetails = (props) => {
                     <i className="ri-shopping-bag-line"></i>
                     <Link to="/wallet">Place a Bid</Link>
                   </button>
+                  <br />
+                  <div className="accordian__box">
+                    <div className="tab__tab">
+                      <span>History</span>
+                      <i className="ri-add-line"></i>
+                    </div>
+                    {/* <div className={this.state.showInfo ? "show__content" : "content"}> */}
+                    <div className="content__text">
+                      <Table dark style={{ tableLayout: "fixed" }}>
+                        <thead>
+                          <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            {/* 누구에서 */}
+                            <td
+                              width="30%"
+                              style={{
+                                overflow: "hidden",
+                                extOverflow: "ellipsis",
+                                whiteSpace: "wrap",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {address}
+                            </td>
+                            {/* 누구에게 */}
+                            <td>address</td>
+                            {/* 언제 거래됏는지 날짜*/}
+                            <td>2022-00-00</td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </div>
+                  </div>
                 </Col>
               </Row>
             </Container>

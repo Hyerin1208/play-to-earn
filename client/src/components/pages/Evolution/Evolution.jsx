@@ -1,15 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
 import "./evolution.css";
 
 import temporaryData from "../../../assets/images/free.png";
 import EvoDetails from "./EvoDetails";
-import { Col, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import NftCard from "../../ui/templete/NftCard";
 import { Link, Route, Routes } from "react-router-dom";
 import NftDetails from "../Market/NftDetails";
 import SellModal from "../../ui/templete/SellModal";
+import EvoProfile from "./EvoProfile";
+
+import { FaStar } from "react-icons/fa";
+import Badge from "react-bootstrap/Badge";
 
 const Evolution = (props) => {
   const x = useMotionValue(0);
@@ -17,11 +21,26 @@ const Evolution = (props) => {
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
 
+  const [Loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const [EvoProfileModal, setEvoProfileModal] = useState(false);
+  const [imageURL, setImageURL] = useState([]);
+
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+
+  useEffect(async () => {
+    setLoading(null);
+    setImageURL(imageURL);
+  }, []);
+
+  console.log(props);
 
   return (
     <Fragment>
-      <Row>
+      <Row className="row__box">
         <Col md="5">
           <div className="card__wrapper">
             <motion.div
@@ -48,12 +67,36 @@ const Evolution = (props) => {
                       z: 10000,
                     }}
                   >
-                    <div className="upload__evo">
-                      <i className="ri-add-circle-line"></i>
+                    <div
+                      className="upload__evo"
+                      onClick={() => {
+                        setEvoProfileModal(true);
+                        setVisible(!visible);
+                      }}
+                    >
+                      {visible ? "" : <i className="ri-add-circle-line"></i>}
+
+                      {visible && (
+                        <img
+                          className="evo__iamge"
+                          src={imageURL}
+                          id="upload__pfp"
+                          alt="edit"
+                          value={props}
+                          onChange={async (e) => {
+                            const changeNft = e.target.getAttribute("value");
+                            if (!changeNft) {
+                              await alert("진화를 원하는 NFT를 선택하세요.");
+                            } else {
+                              setImageURL(e.target.value);
+                            }
+                          }}
+                        />
+                      )}
                     </div>
-                    {/* <img src={temporaryData} alt="" /> */}
                   </motion.div>
                 </div>
+
                 <div className="evolu__text">Naming Center</div>
               </div>
 
@@ -64,7 +107,12 @@ const Evolution = (props) => {
             </motion.div>
           </div>
         </Col>
-
+        {EvoProfileModal && (
+          <EvoProfile
+            setShowModal={setEvoProfileModal}
+            setImageURL={setImageURL}
+          />
+        )}
         <Col md="2">
           <div className="right__arrows">
             <i className="ri-arrow-right-line"></i>
@@ -87,12 +135,13 @@ const Evolution = (props) => {
             <div>
               <div className="single__nft__card">
                 <div className="nft__img">
-                  <img src={temporaryData} alt="" />
+                  <i className="ri-question-line"></i>
                 </div>
 
                 <div className="nft__content">
                   <Row>
                     <h5 className="nft__title">
+                      카드이름
                       {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                         {props.item.formInput.name}
                       </Link> */}
@@ -100,17 +149,53 @@ const Evolution = (props) => {
                     <Col>
                       <div className="bid__container">
                         <h6>Current Bid</h6>
+                        금액
                         {/* <p>{props.item.formInput.price} ETH</p> */}
                       </div>
+                      <Badge
+                        pill
+                        bg="light"
+                        text="dark"
+                        className="rare__badge"
+                      >
+                        rare :
+                      </Badge>
                     </Col>
                     <Col>
                       <div className="prevNft__desc">
+                        설명
                         {/* <p>{props.item.formInput.description}</p> */}
+                      </div>
+                      <div className="pixel__container">
+                        {[...Array(5)].map((star, i) => {
+                          const ratingValue = i + 1;
+                          return (
+                            <label key={i}>
+                              <input
+                                type="radio"
+                                className="rating"
+                                value={ratingValue}
+                                onClick={() => setRating(ratingValue)}
+                              />
+                              <FaStar
+                                className="star"
+                                color={
+                                  ratingValue <= (hover || rating)
+                                    ? "#ffc107"
+                                    : "#e4e5e9"
+                                }
+                                size={20}
+                                onMouseEnter={() => setHover(ratingValue)}
+                                onMouseLeave={() => setHover(null)}
+                              />
+                            </label>
+                          );
+                        })}
                       </div>
                     </Col>
                   </Row>
                 </div>
-
+                <br />
                 <div className="bid__box">
                   <div className="sell__box">
                     <button
@@ -125,6 +210,8 @@ const Evolution = (props) => {
                     {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                       View More
                     </Link> */}
+
+                    <Link to="">View More</Link>
                   </span>
                 </div>
               </div>
@@ -139,7 +226,20 @@ const Evolution = (props) => {
         </Col>
       </Row>
 
-      <Row></Row>
+      <Container>
+        <div className="evo__rules">
+          <h4>Evolution rules</h4>
+          <ul>
+            <li>1. Evolution needs to consume 작명소's Token</li>
+            <li>
+              2. Evolution will only change the rarity and stars, other
+              attributes will be inherited (character, talent, skill, potential,
+              training).
+            </li>
+            <li>3. Costs a certain amount of Token and $BNB</li>
+          </ul>
+        </div>
+      </Container>
     </Fragment>
   );
 };

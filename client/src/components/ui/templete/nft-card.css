@@ -2,8 +2,18 @@
   font-size: 0.8rem;
 }
 
+.bid__container p {
+  margin-bottom: -2px;
+}
+
+.bid__container .rare__badge {
+  margin-bottom: 20px;
+  width: 68px;
+  height: 25px;
+}
+
 .prevNft__desc p {
-  font-size: 0.7rem;
+  font-size: 0.5rem;
 }
 
 .nft__content h5 {
