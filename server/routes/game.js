@@ -8,18 +8,26 @@ const { Op } = require("sequelize");
 
 router.post("/snake", async (req, res, next) => {
   const { point, account, rare, star } = req.body;
+  console.log("rare", rare);
+  console.log("star", star);
 
-  let rareSum = 0;
-  for (let i = 0; i < rare.length; i++) {
-    rareSum += rare[i];
-  }
-  console.log("rareSum", rareSum);
+  const rareResult = [];
+  const starResult = [];
 
-  let starSum = 0;
-  for (let i = 0; i < star.length; i++) {
-    starSum += star[i];
-  }
-  console.log("starSum", starSum);
+  var rareMax = rare.slice(0).sort().reverse()[0];
+  var starMax = star.slice(0).sort().reverse()[0];
+
+  rare.forEach((x) => {
+    rareResult[x] = (rareResult[x] || 0) + 1;
+  });
+  star.forEach((x) => {
+    starResult[x] = (starResult[x] || 0) + 1;
+  });
+
+  console.log("rareResult", rareResult[1]);
+  console.log("starResult", starResult[1]);
+  console.log(rareMax);
+  console.log(starMax);
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
@@ -35,29 +43,29 @@ router.post("/snake", async (req, res, next) => {
         snakePoint: point,
       });
     } else {
-      if (rareSum === 3 && starSum === 3) {
+      if ((rareMax = 5 && starResult[5] >= 3)) {
         Game.update(
-          { snakePoint: point, nick: findUser.nick },
+          { snakePoint: point * 3, nick: findUser.nick },
           { where: { address: account } }
         );
-      } else if (rareSum === 5 && starSum === 5) {
+      } else if (rareResult[4] >= 3 && starResult[4] >= 3) {
         Game.update(
-          { snakePoint: point * 1.2, nick: findUser.nick },
+          { snakePoint: point * 2.5, nick: findUser.nick },
           { where: { address: account } }
         );
-      } else if (rareSum === 7 && starSum === 7) {
+      } else if (rareResult[3] >= 3 && starResult[3] >= 3) {
         Game.update(
-          { snakePoint: point * 1.3, nick: findUser.nick },
+          { snakePoint: point * 2, nick: findUser.nick },
           { where: { address: account } }
         );
-      } else if (rareSum === 9 && starSum === 9) {
-        Game.update(
-          { snakePoint: point * 1.4, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareSum === 11 && starSum === 11) {
+      } else if (rareResult[2] >= 3 && starResult[2] >= 3) {
         Game.update(
           { snakePoint: point * 1.5, nick: findUser.nick },
+          { where: { address: account } }
+        );
+      } else if (rareResult[1] >= 3 && (rareMax = 1 && starResult[1] >= 3)) {
+        Game.update(
+          { snakePoint: point * 1.2, nick: findUser.nick },
           { where: { address: account } }
         );
       }
