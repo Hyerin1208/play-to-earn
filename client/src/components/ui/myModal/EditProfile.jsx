@@ -61,7 +61,10 @@ const EditProfile = (props) => {
                     let item = {
                         fileUrl: await meta.image,
                         formInput: {
+                            tokenid: i.tokenId,
                             price: i.price,
+                            rare: i.rare,
+                            star: i.star,
                             name: await meta.name,
                             description: await meta.description,
                         },
