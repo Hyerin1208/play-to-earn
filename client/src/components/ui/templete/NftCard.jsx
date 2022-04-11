@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./nft-card.css";
+import "../../pages/Admin/owner-sellList.css";
 import Modal from "../templete/Modal";
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
