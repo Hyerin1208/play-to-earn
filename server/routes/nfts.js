@@ -24,6 +24,19 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.post("/upgrade", async (req, res, next) => {
+  try {
+    await Nfts.update(
+      { rare: req.body.rare, star: req.body.star },
+      { where: { tokenId: req.body.tokenId } }
+    );
+    res.json({ rare: req.body.rare, star: req.body.star });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 router.post("/like", async (req, res, next) => {
   console.log(req.body.account);
   if (req.body.account === null) {
