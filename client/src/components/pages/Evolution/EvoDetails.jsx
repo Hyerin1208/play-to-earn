@@ -132,6 +132,7 @@ const EvoDetails = (props) => {
                     })
                   );
                   props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
+
                   dispatch(updateMyLists(await listsForm));
                 });
             }
