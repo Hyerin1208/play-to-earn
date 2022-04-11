@@ -17,8 +17,8 @@ const Board = () => {
     (state) => state.AppState.CreateNFTContract
   );
   const [Loading, setLoading] = useState(true);
-  const [tokenId, setTokenId] = useState([]);
-  console.log(tokenId);
+  const [rare, setRare] = useState([]);
+  const [star, setStar] = useState([]);
 
   useEffect(() => {
     mynftlists();
@@ -36,9 +36,16 @@ const Board = () => {
           console.log(error);
         }
       });
-    setTokenId(
+    setRare(
       await lists.map((v, i) => {
-        return v.tokenId;
+        let intRare = parseInt(v["rare"]);
+        return intRare;
+      })
+    );
+    setStar(
+      await lists.map((v, i) => {
+        let intStar = parseInt(v["star"]);
+        return intStar;
       })
     );
   }
@@ -47,7 +54,7 @@ const Board = () => {
     const point = score;
 
     await axios
-      .post(`http://localhost:5000/game/snake`, { point, account, tokenId })
+      .post(`http://localhost:5000/game/snake`, { point, account, rare, star })
       .then((res) => {
         console.log(point);
         console.log(res.data);
