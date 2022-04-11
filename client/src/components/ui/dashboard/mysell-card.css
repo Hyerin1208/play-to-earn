@@ -22,11 +22,11 @@
 
 .slick-track .single__nft__card {
   width: 270px;
-  height: 420px;
+  height: 425px;
 }
 
 .slick-track .single__nft__card {
-  height: 420px;
+  height: 425px;
 }
 
 .slick-track .single__nft__card .nft__img img {
@@ -39,7 +39,7 @@
 }
 
 .slick-track .single__nft__card .bid__box {
-  margin-top: 1.2rem;
+  margin-top: 1.1rem;
 }
 
 .bid__box i {

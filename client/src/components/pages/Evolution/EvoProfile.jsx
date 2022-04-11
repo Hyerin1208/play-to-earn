@@ -144,7 +144,9 @@ const EvoProfile = (props) => {
                           }}
                           style={{
                             border:
-                              seletedNFT !== null ? "5px solid #5142fc" : "",
+                              seletedImg === image.fileUrl
+                                ? "5px solid #5142fc"
+                                : "",
                           }}
                         />
                       </Col>
