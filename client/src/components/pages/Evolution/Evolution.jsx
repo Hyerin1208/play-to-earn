@@ -14,8 +14,17 @@ import EvoProfile from "./EvoProfile";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
+import EvoBackGround from "./EvoBackGround";
+import { useDispatch, useSelector } from "react-redux";
+import { utils } from "ethers";
+
+import axios from "axios";
+
+import { updateAccounts } from "../../../redux/actions/index";
 
 const Evolution = (props) => {
+  const dispatch = useDispatch();
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
@@ -24,6 +33,7 @@ const Evolution = (props) => {
   const [Loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [visible, setVisible] = useState(false);
+  // const [apparent, setApparent] = useState(false);
 
   const [EvoProfileModal, setEvoProfileModal] = useState(false);
   const [imageURL, setImageURL] = useState([]);
@@ -31,12 +41,55 @@ const Evolution = (props) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
+  const [accounts, setAccounts] = useState([]);
+  const [autoChange, setAutoChange] = useState(false);
+  const [dataBox, setDataBox] = useState("");
+
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+
+  const Account = useSelector((state) => state.AppState.account);
+
   useEffect(async () => {
     setLoading(null);
-    setImageURL(imageURL);
+    // setImageURL(imageURL);
   }, []);
 
-  console.log(props);
+  console.log(props.autoChange);
+  console.log(imageURL);
+  // console.log(props.apparent);
+
+  async function MyList(Account) {
+    if (CreateNFTContract !== null) {
+      const MyNFTlists = await CreateNFTContract.methods.MyNFTlists().call();
+
+      const listsForm = await Promise.all(
+        MyNFTlists.map(async (i) => {
+          const tokenURI = await CreateNFTContract.methods
+            .tokenURI(i.tokenId)
+            .call();
+          const meta = await axios.get(tokenURI).then((res) => res.data);
+          let item = {
+            fileUrl: await meta.image,
+            formInput: {
+              tokenid: i.tokenId,
+              price: i.price,
+              rare: i.rare,
+              star: i.star,
+              name: await meta.name,
+              description: await meta.description,
+            },
+          };
+          return await item;
+        })
+      );
+      return await listsForm;
+    } else {
+      return null;
+    }
+  }
+  // console.log(dataBox);
 
   return (
     <Fragment>
@@ -75,25 +128,25 @@ const Evolution = (props) => {
                       }}
                     >
                       {visible ? "" : <i className="ri-add-circle-line"></i>}
-
-                      {visible && (
-                        <img
-                          className="evo__iamge"
-                          src={imageURL}
-                          id="upload__pfp"
-                          alt="edit"
-                          value={props}
-                          onChange={async (e) => {
-                            const changeNft = e.target.getAttribute("value");
-                            if (!changeNft) {
-                              await alert("진화를 원하는 NFT를 선택하세요.");
-                            } else {
-                              setImageURL(e.target.value);
-                            }
-                          }}
-                        />
-                      )}
                     </div>
+
+                    {visible && (
+                      <img
+                        className="evo__iamge"
+                        src={imageURL}
+                        id="upload__pfp"
+                        alt="edit"
+                        value={props}
+                        onChange={async (e) => {
+                          const changeNft = e.target.getAttribute("value");
+                          if (!changeNft) {
+                            await alert("진화를 원하는 NFT를 선택하세요.");
+                          } else {
+                            setImageURL(e.target.value);
+                          }
+                        }}
+                      />
+                    )}
                   </motion.div>
                 </div>
 
@@ -101,7 +154,7 @@ const Evolution = (props) => {
               </div>
 
               <div className="bottom__container">
-                <EvoDetails />
+                <EvoDetails item={imageURL} />
                 <div className="evolu__details" />
               </div>
             </motion.div>
@@ -131,17 +184,33 @@ const Evolution = (props) => {
           </div>
         </Col>
         <Col md="5">
+          {/* {props.autoChange && ( */}
           <div className="last__evobox">
             <div>
               <div className="single__nft__card">
                 <div className="nft__img">
-                  <i className="ri-question-line"></i>
+                  {/* {props.apparent && <i className="ri-question-line"></i>} */}
+                  {props.apparent ? (
+                    <img
+                      className="evocard__img"
+                      src={dataBox.fileUrl}
+                      value={dataBox.fileUrl}
+                      id="upload__evocard"
+                      onChange={(e) => {
+                        setImageURL(e.target.value);
+                      }}
+                      alt=""
+                    />
+                  ) : (
+                    <i className="ri-question-line"></i>
+                  )}
+                  <img src={dataBox.fileUrl} alt="" />
                 </div>
 
                 <div className="nft__content">
                   <Row>
                     <h5 className="nft__title">
-                      카드이름
+                      {props.item}
                       {/* <Link to={`/detailes/${props.item.formInput.tokenId}`}>
                         {props.item.formInput.name}
                       </Link> */}
@@ -149,7 +218,7 @@ const Evolution = (props) => {
                     <Col>
                       <div className="bid__container">
                         <h6>Current Bid</h6>
-                        금액
+                        {dataBox.price}
                         {/* <p>{props.item.formInput.price} ETH</p> */}
                       </div>
                       <Badge
@@ -223,6 +292,7 @@ const Evolution = (props) => {
               </Routes>
             </div>
           </div>
+          {/* )} */}
         </Col>
       </Row>
 
@@ -240,6 +310,7 @@ const Evolution = (props) => {
           </ul>
         </div>
       </Container>
+      {/* <EvoBackGround /> */}
     </Fragment>
   );
 };

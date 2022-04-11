@@ -70,10 +70,8 @@ const OurLogo = styled.div`
 `;
 
 const EvoDetails = (props) => {
-  console.log(props.item);
-
-  const [autoChange, setAutoChange] = useState(false);
   const [changeCard, setChangeCard] = useState(false);
+  const [apparent, setApparent] = useState(false);
 
   const onEvolution = async () => {
     if (props.item !== null) {
@@ -83,6 +81,8 @@ const EvoDetails = (props) => {
       alert("진화를 원하는 NFT를 다시 선택하세요");
     }
   };
+
+  console.log(props.item);
 
   return (
     <DetailsContainer>
@@ -97,8 +97,11 @@ const EvoDetails = (props) => {
       <SpaceHorizontalContainer>
         <SmallText>YOUR NEXT PROFILE</SmallText>
         <EvoButton
-          onClick={onEvolution}
-          evo={props.item}
+          onClick={() => {
+            onEvolution();
+            setApparent(!apparent);
+          }}
+          evo={apparent}
           autoChange={setChangeCard}
         >
           Evolution
