@@ -30,18 +30,23 @@ export const Overlay = ({ handleReset, score }) => {
           console.log(error);
         }
       });
-    setRare(
-      await lists.map((v, i) => {
-        let intRare = parseInt(v["rare"]);
-        return intRare;
-      })
-    );
-    setStar(
-      await lists.map((v, i) => {
-        let intStar = parseInt(v["star"]);
-        return intStar;
-      })
-    );
+    console.log(lists);
+    if (lists.length >= 3) {
+      setRare(
+        await lists.map((v, i) => {
+          // let intRare = parseInt(v["rare"]);
+          // return intRare;
+          return v["rare"];
+        })
+      );
+      setStar(
+        await lists.map((v, i) => {
+          // let intStar = parseInt(v["star"]);
+          // return intStar;
+          return v["star"];
+        })
+      );
+    }
   }
 
   const sendPoint = async () => {

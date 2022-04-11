@@ -58,6 +58,8 @@ const Tetris = ({ setShowModal }) => {
   );
   const [rare, setRare] = useState([]);
   const [star, setStar] = useState([]);
+  console.log("rare", rare);
+  console.log("star", star);
 
   useEffect(() => {
     mynftlists();
@@ -75,18 +77,23 @@ const Tetris = ({ setShowModal }) => {
           console.log(error);
         }
       });
-    setRare(
-      await lists.map((v, i) => {
-        let intRare = parseInt(v["rare"]);
-        return intRare;
-      })
-    );
-    setStar(
-      await lists.map((v, i) => {
-        let intStar = parseInt(v["star"]);
-        return intStar;
-      })
-    );
+    console.log(lists);
+    if (lists.length >= 3) {
+      setRare(
+        await lists.map((v, i) => {
+          // let intRare = parseInt(v["rare"]);
+          // return intRare;
+          return v["rare"];
+        })
+      );
+      setStar(
+        await lists.map((v, i) => {
+          // let intStar = parseInt(v["star"]);
+          // return intStar;
+          return v["star"];
+        })
+      );
+    }
   }
 
   useEffect(() => {

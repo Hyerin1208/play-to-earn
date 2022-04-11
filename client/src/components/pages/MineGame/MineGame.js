@@ -37,8 +37,10 @@ function MineGame({ setShowModal }) {
     (state) => state.AppState.CreateNFTContract
   );
   const [Loading, setLoading] = useState(true);
-
-  const [tokenId, setTokenId] = useState([]);
+  const [rare, setRare] = useState([]);
+  const [star, setStar] = useState([]);
+  console.log("rare", rare);
+  console.log("star", star);
 
   useEffect(() => {
     mynftlists();
@@ -56,11 +58,23 @@ function MineGame({ setShowModal }) {
           console.log(error);
         }
       });
-    setTokenId(
-      await lists.map((v, i) => {
-        return v.tokenId;
-      })
-    );
+    console.log(lists);
+    if (lists.length >= 3) {
+      setRare(
+        await lists.map((v, i) => {
+          // let intRare = parseInt(v["rare"]);
+          // return intRare;
+          return v["rare"];
+        })
+      );
+      setStar(
+        await lists.map((v, i) => {
+          // let intStar = parseInt(v["star"]);
+          // return intStar;
+          return v["star"];
+        })
+      );
+    }
   }
 
   const sendPoint = async () => {
@@ -68,7 +82,7 @@ function MineGame({ setShowModal }) {
     console.log(account);
 
     await axios
-      .post(`http://localhost:5000/game/mine`, { runtime, account, tokenId })
+      .post(`http://localhost:5000/game/mine`, { runtime, account, rare, star })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
