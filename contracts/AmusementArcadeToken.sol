@@ -117,45 +117,49 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
     emit Transfer(address(0), msg.sender, _totalSupply);
   }
 
+  function getmsgsender() public view returns (address) {
+    return _msgSender();
+  }
+
   /**
    * @dev Returns the bep token owner.
    */
-  function getOwner() external override view returns (address) {
+  function getOwner() public override view returns (address) {
     return owner();
   }
 
   /**
    * @dev Returns the token decimals.
    */
-  function decimals() external override view returns (uint8) {
+  function decimals() public override view returns (uint8) {
     return _decimals;
   }
 
   /**
    * @dev Returns the token symbol.
    */
-  function symbol() external override view returns (string memory) {
+  function symbol() public override view returns (string memory) {
     return _symbol;
   }
 
   /**
   * @dev Returns the token name.
   */
-  function name() external override view returns (string memory) {
+  function name() public override view returns (string memory) {
     return _name;
   }
 
   /**
    * @dev See {BEP20-totalSupply}.
    */
-  function totalSupply() external override view returns (uint256) {
+  function totalSupply() public override view returns (uint256) {
     return _totalSupply;
   }
 
   /**
    * @dev See {BEP20-balanceOf}.
    */
-  function balanceOf(address account) external override view returns (uint256) {
+  function balanceOf(address account) public override view returns (uint256) {
     return _balances[account];
   }
 
@@ -167,7 +171,7 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
    * - `recipient` cannot be the zero address.
    * - the caller must have a balance of at least `amount`.
    */
-  function transfer(address recipient, uint256 amount) external override returns (bool) {
+  function transfer(address recipient, uint256 amount) public override returns (bool) {
     _transfer(_msgSender(), recipient, amount);
     return true;
   }
@@ -175,7 +179,7 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
   /**
    * @dev See {BEP20-allowance}.
    */
-  function allowance(address owner, address spender) external override view returns (uint256) {
+  function allowance(address owner, address spender) public override view returns (uint256) {
     return _allowances[owner][spender];
   }
 
@@ -186,7 +190,7 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
    *
    * - `spender` cannot be the zero address.
    */
-  function approve(address spender, uint256 amount) external override returns (bool) {
+  function approve(address spender, uint256 amount) public override returns (bool) {
     _approve(_msgSender(), spender, amount);
     return true;
   }
@@ -203,7 +207,7 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
    * - the caller must have allowance for `sender`'s tokens of at least
    * `amount`.
    */
-  function transferFrom(address sender, address recipient, uint256 amount) external override returns (bool) {
+  function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
     _transfer(sender, recipient, amount);
     _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "BEP20: transfer amount exceeds allowance"));
     return true;

@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TokenClaim is Ownable{
 
+
     AmusementArcadeToken private ArcadeToken;
     CreateNFT private NFT;
 
@@ -15,7 +16,7 @@ contract TokenClaim is Ownable{
     NFT =  CreateNFT(NFTAddress);
     }
 
-mapping(address=>mapping(address=>uint)) private claim;
+mapping(address=>mapping(address=>uint)) public claim;
 
 
 
@@ -28,43 +29,47 @@ function setClaim(address user,uint amount) public onlyOwner{
     if(claim[address(this)][user]>0){
         uint newAmount = claim[address(this)][user]+amount;
         claim[address(this)][user] = newAmount;
-        ArcadeToken.approve(msg.sender,newAmount);
+        ArcadeToken.approve(user,newAmount);
     } else {
 claim[address(this)][user] = amount;
-ArcadeToken.approve(msg.sender,amount);
+ArcadeToken.approve(user,amount);
     }
 }
 
-  function getClaim() public view checkNFT returns(uint) {
+  function getClaim() public view returns(uint) {
       uint myclaim = claim[address(this)][msg.sender];
       require(myclaim==ArcadeToken.allowance(address(this),msg.sender));
       return myclaim;
   }
 
-  function gettoken() public checkNFT{
-      uint tokenvalue = ArcadeToken.allowance(address(this),msg.sender);
-      require(tokenvalue==claim[address(this)][msg.sender]);
-      require(ArcadeToken.balanceOf(address(this))>=tokenvalue,"transfer amount exceeds balance");
-      ArcadeToken.transferFrom(address(this),msg.sender,tokenvalue);
+  function getmsgsender() public view returns (address) {
+    return ArcadeToken.getmsgsender();
   }
 
-function ChangOption(uint _tokenId) payable public checkNFT{
+  function gettoken() public {
+      uint tokenvalue = ArcadeToken.allowance(address(this),msg.sender);
+      require(tokenvalue==claim[address(this)][msg.sender]);
+      require(ArcadeToken.balanceOf(address(this))>=
+      tokenvalue,"transfer amount exceeds balance");
+      ArcadeToken.transfer(msg.sender,tokenvalue);
+      ArcadeToken.approve(msg.sender,0);
+      claim[address(this)][msg.sender] = 0;
+  }
+
+function ChangOption(uint _tokenId ) payable public checkNFT{
     uint cost = 1000;
     require(ArcadeToken.balanceOf(msg.sender)>1000,"amount exceeds balance");
 ArcadeToken.transferFrom(msg.sender,address(this),cost);
     NFT.changeOption(_tokenId,msg.sender);
 }
 
-  function transfer(address recipient, uint256 amount) public returns (bool) {
-      require(ArcadeToken.balanceOf(msg.sender)>amount);
-      AmusementArcadeToken myToken = AmusementArcadeToken(msg.sender);
-myToken.transfer(recipient,amount);
-    return true;
-  }
-
 
 function mybalance()public view returns(uint){
     return ArcadeToken.balanceOf(msg.sender);
+}
+
+function contractbalance()public view returns(uint){
+    return ArcadeToken.balanceOf(address(this));
 }
 
 }

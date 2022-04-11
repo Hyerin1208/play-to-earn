@@ -9,6 +9,7 @@ const Accept = () => {
     const [rankingDB, setRankingDB] = useState(null);
     const account = useSelector((state) => state.AppState.account);
     const TokenContract = useSelector((state) => state.AppState.AmusementArcadeTokenContract);
+    const TokenClaimContract = useSelector((state) => state.AppState.TokenClaimContract);
     useEffect(() => {
         if (account !== null) {
             axios.post(`http://localhost:5000/game/ranking`, { address: account }).then((response) => {
@@ -18,9 +19,9 @@ const Accept = () => {
         }
     }, [account]);
 
-    async function approveToken(address, amount) {
-        if (TokenContract !== null) {
-            await TokenContract.methods.approve(address, amount).send({ from: account, gas: 3000000 });
+    async function setClaim(address, amount) {
+        if (TokenClaimContract !== null) {
+            await TokenClaimContract.methods.setClaim(address, amount).send({ from: account, gas: 3000000 });
         } else {
             alert("컨트랙트 로드 실패");
         }
@@ -40,9 +41,10 @@ const Accept = () => {
                                     <p>{rankingDB !== null ? (rankingDB.snakeranker[0] !== undefined ? rankingDB.snakeranker[0].address : "순위없음") : "순위없음"}</p>
                                     <button
                                         className="accept__btn"
-                                        onClick={() => {
+                                        onClick={(e) => {
                                             if (rankingDB !== null && rankingDB.snakeranker[0] !== undefined) {
-                                                approveToken(rankingDB.snakeranker[0].address, 1000);
+                                                setClaim(rankingDB.snakeranker[0].address, 1000);
+                                                e.currentTarget.setAttribute("hidden", "true");
                                             }
                                         }}
                                     >
@@ -55,7 +57,8 @@ const Accept = () => {
                                         className="accept__btn"
                                         onClick={() => {
                                             if (rankingDB !== null && rankingDB.snakeranker[1] !== undefined) {
-                                                approveToken(rankingDB.snakeranker[1].address, 600);
+                                                setClaim(rankingDB.snakeranker[1].address, 600);
+                                                e.currentTarget.setAttribute("hidden", "true");
                                             }
                                         }}
                                     >
@@ -68,7 +71,8 @@ const Accept = () => {
                                         className="accept__btn"
                                         onClick={() => {
                                             if (rankingDB !== null && rankingDB.snakeranker[2] !== undefined) {
-                                                approveToken(rankingDB.snakeranker[2].address, 400);
+                                                setClaim(rankingDB.snakeranker[2].address, 400);
+                                                e.currentTarget.setAttribute("hidden", "true");
                                             }
                                         }}
                                     >
@@ -91,7 +95,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.tetrisranker[0] !== undefined) {
-                                                        approveToken(rankingDB.tetrisranker[0].address, 1000);
+                                                        setClaim(rankingDB.tetrisranker[0].address, 1000);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -104,7 +109,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.tetrisranker[1] !== undefined) {
-                                                        approveToken(rankingDB.tetrisranker[1].address, 600);
+                                                        setClaim(rankingDB.tetrisranker[1].address, 600);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -117,7 +123,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.tetrisranker[2] !== undefined) {
-                                                        approveToken(rankingDB.tetrisranker[2].address, 400);
+                                                        setClaim(rankingDB.tetrisranker[2].address, 400);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -142,7 +149,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.puzzleranker[0] !== undefined) {
-                                                        approveToken(rankingDB.puzzleranker[0].address, 1000);
+                                                        setClaim(rankingDB.puzzleranker[0].address, 1000);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -155,7 +163,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.puzzleranker[1] !== undefined) {
-                                                        approveToken(rankingDB.puzzleranker[1].address, 600);
+                                                        setClaim(rankingDB.puzzleranker[1].address, 600);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -168,7 +177,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.puzzleranker[2] !== undefined) {
-                                                        approveToken(rankingDB.puzzleranker[2].address, 400);
+                                                        setClaim(rankingDB.puzzleranker[2].address, 400);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -194,7 +204,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.mineranker[0] !== undefined) {
-                                                        approveToken(rankingDB.mineranker[0].address, 1000);
+                                                        setClaim(rankingDB.mineranker[0].address, 1000);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -207,7 +218,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.mineranker[1] !== undefined) {
-                                                        approveToken(rankingDB.mineranker[1].address, 600);
+                                                        setClaim(rankingDB.mineranker[1].address, 600);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >
@@ -220,7 +232,8 @@ const Accept = () => {
                                                 className="accept__btn"
                                                 onClick={() => {
                                                     if (rankingDB !== null && rankingDB.mineranker[2] !== undefined) {
-                                                        approveToken(rankingDB.mineranker[2].address, 400);
+                                                        setClaim(rankingDB.mineranker[2].address, 400);
+                                                        e.currentTarget.setAttribute("hidden", "true");
                                                     }
                                                 }}
                                             >

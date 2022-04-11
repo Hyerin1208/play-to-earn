@@ -28,16 +28,7 @@ const Evolution = (props) => {
     const [EvoProfileModal, setEvoProfileModal] = useState(false);
     const [imageURL, setImageURL] = useState([]);
     const [beforeEvo, setBeforeEvo] = useState(null);
-    const [afterEvo, setAfterEvo] = useState({
-      fileUrl: await meta.image,
-      formInput: {
-        tokenid: i.tokenId,
-        price: i.price,
-        rare: i.rare,
-        star: i.star,
-        name: await meta.name,
-        description: await meta.description,
-      });
+    const [afterEvo, setAfterEvo] = useState(null);
     const [NFTIndex, setNFTIndex] = useState(null);
     const [NFTId, setNFTId] = useState(null);
 
