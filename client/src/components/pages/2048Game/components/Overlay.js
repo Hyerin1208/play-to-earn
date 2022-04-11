@@ -11,8 +11,8 @@ export const Overlay = ({ handleReset, score }) => {
     (state) => state.AppState.CreateNFTContract
   );
   const [Loading, setLoading] = useState(true);
-
-  const [tokenId, setTokenId] = useState([]);
+  const [rare, setRare] = useState([]);
+  const [star, setStar] = useState([]);
 
   useEffect(() => {
     mynftlists();
@@ -30,9 +30,16 @@ export const Overlay = ({ handleReset, score }) => {
           console.log(error);
         }
       });
-    setTokenId(
+    setRare(
       await lists.map((v, i) => {
-        return v.tokenId;
+        let intRare = parseInt(v["rare"]);
+        return intRare;
+      })
+    );
+    setStar(
+      await lists.map((v, i) => {
+        let intStar = parseInt(v["star"]);
+        return intStar;
       })
     );
   }
@@ -42,7 +49,7 @@ export const Overlay = ({ handleReset, score }) => {
     console.log(account);
 
     await axios
-      .post(`http://localhost:5000/game/2048`, { score, account, tokenId })
+      .post(`http://localhost:5000/game/2048`, { score, account, rare, star })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
