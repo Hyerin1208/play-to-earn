@@ -56,7 +56,8 @@ const Tetris = ({ setShowModal }) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  const [tokenId, setTokenId] = useState([]);
+  const [rare, setRare] = useState([]);
+  const [star, setStar] = useState([]);
 
   useEffect(() => {
     mynftlists();
@@ -74,9 +75,16 @@ const Tetris = ({ setShowModal }) => {
           console.log(error);
         }
       });
-    setTokenId(
+    setRare(
       await lists.map((v, i) => {
-        return v.tokenId;
+        let intRare = parseInt(v["rare"]);
+        return intRare;
+      })
+    );
+    setStar(
+      await lists.map((v, i) => {
+        let intStar = parseInt(v["star"]);
+        return intStar;
       })
     );
   }
@@ -264,7 +272,12 @@ const Tetris = ({ setShowModal }) => {
       console.log(account);
 
       await axios
-        .post(`http://localhost:5000/game/tetris`, { data, account, tokenId })
+        .post(`http://localhost:5000/game/tetris`, {
+          data,
+          account,
+          rare,
+          star,
+        })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");
