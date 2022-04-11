@@ -28,9 +28,13 @@ const TokenNomic = () => {
   }, [amount]);
 
   const data = [
-    { name: "총 발행량", value: amount }, // user + owner + default
-    { name: "총 공급량", value: Selllists.length }, // market에 판매되고있는 수량
+    { name: "총 발행량", value: parseInt(amount) }, // user + owner + default
+    { name: "총 공급량", value: parseInt(Selllists.length) }, // market에 판매되고있는 수량
   ];
+
+  //   var option = {
+  //     maintainAspectRatio: false,
+  //   };
 
   return (
     <div className="chart__container">
@@ -59,7 +63,7 @@ const TokenNomic = () => {
               <PieChart width={500} height={500}>
                 <Pie
                   dataKey="value"
-                  indexLabel="{data} - {y}%"
+                  nameKey="name"
                   isAnimationActive={true}
                   data={data}
                   radius={100}
@@ -68,6 +72,7 @@ const TokenNomic = () => {
                   outerRadius={175}
                   fill="#8884d8"
                   label
+                  //   options={options}
                 />
                 <Tooltip />
               </PieChart>
