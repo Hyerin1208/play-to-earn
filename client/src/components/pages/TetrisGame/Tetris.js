@@ -283,9 +283,6 @@ const Tetris = ({ setShowModal }) => {
         } else {
           starD = 1;
         }
-        console.log("point : " + data);
-        console.log("rareD : " + rareD);
-        console.log("starD : " + starD);
         return data * (starD * rareD);
       }
       await axios

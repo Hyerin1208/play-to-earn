@@ -67,9 +67,6 @@ const Board = () => {
       } else {
         starD = 1;
       }
-      console.log("point : " + point);
-      console.log("rareD : " + rareD);
-      console.log("starD : " + starD);
       return point * (starD * rareD);
     }
     await axios
