@@ -152,7 +152,8 @@ const EvoDetails = (props) => {
                       setStar(res.data.star);
                       console.log(res.data.star);
                     });
-                  dispatch(updateMyLists(await listsForm));
+                  console.log(await listsForm);
+                  dispatch(updateMyLists({ MyNFTlists: await listsForm }));
                 });
             }
           }}
