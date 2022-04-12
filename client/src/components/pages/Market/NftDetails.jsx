@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
+import { FiHeart } from "react-icons/fi";
+
 import CommonSection from "../../ui/templete/CommonSection";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Table } from "reactstrap";
@@ -56,26 +58,14 @@ const NftDetails = (props) => {
   // const [hover, setHover] = useState(null);
 
   const stars = Array(5).fill(1);
-  const [currentValue, setCurrnetValue] = useState(1);
-  const [hoverValue, setHoverValue] = useState(undefined);
+  const [currentValue, setCurrnetValue] = useState("");
+  const [hoverValue, setHoverValue] = useState("");
 
   const [rare, setRare] = useState("");
   const [star, setStar] = useState("");
   const [address, setAddress] = useState("");
 
-  const handleClick = (value) => {
-    setCurrnetValue(value);
-  };
-
-  const handleMouseOver = (value) => {
-    setHoverValue(value);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverValue(undefined);
-  };
-
-  useEffect(() => {}, [currentValue]);
+  useEffect(() => {}, []);
 
   let params = useParams();
   const card_id = params.card_id;
@@ -91,8 +81,42 @@ const NftDetails = (props) => {
     }
   }
 
+  async function plusInfo(account) {
+    if (CreateNFTContract !== null) {
+      const MyAddr = await CreateNFTContract.methods.MyNFTlists().call();
+      const listsForm = await Promise.all(
+        MyAddr.map(async (i) => {
+          const tokenURI = await CreateNFTContract.methods
+            .tokenURI(i.tokenId)
+            .call();
+          const meta = await axios.get(tokenURI).then((res) => res.data);
+          let item = {
+            fileUrl: await meta.image,
+            formInput: {
+              tokenid: i.tokenId,
+              price: i.price,
+              rare: i.rare,
+              star: i.star,
+              name: await meta.name,
+              description: await meta.description,
+            },
+          };
+          setnftArray(item.formInput);
+          return item;
+        })
+      );
+
+      return await listsForm;
+    } else {
+      return null;
+    }
+  }
+
+  console.log(nftArray);
+
   useEffect(async () => {
     MyAddress();
+    plusInfo();
   }, []);
 
   // test
@@ -250,7 +274,8 @@ const NftDetails = (props) => {
                           type="submit"
                           onClick={sendLike}
                         >
-                          <i className="ri-heart-line"></i> {like}
+                          <FiHeart className="heart__beat" /> {like}
+                          {/* <i className="ri-heart-line"></i> {like} */}
                         </button>
                       </span>
 
@@ -268,7 +293,7 @@ const NftDetails = (props) => {
                           className="rare__Badge"
                           style={{ width: "110px", height: "32px" }}
                         >
-                          rare : {rare}
+                          rare : {nftArray.rare}
                         </Badge>
                       </span>
                     </div>
@@ -290,7 +315,7 @@ const NftDetails = (props) => {
 
                   <div className="pixel__container">
                     {stars.map((_, i) => {
-                      const ratingValue = star;
+                      const ratingValue = nftArray.star;
                       return (
                         <label key={i}>
                           <input
@@ -300,15 +325,11 @@ const NftDetails = (props) => {
                           />
                           <FaStar
                             className="star"
-                            defaultValue={star}
+                            defaultValue={nftArray.star}
                             key={i}
-                            color={
-                              (hoverValue || currentValue) > i
-                                ? "#ffc107"
-                                : "#e4e5e9"
-                            }
+                            color={ratingValue > i ? "#ffc107" : "#e4e5e9"}
                             size={20}
-                            onChange={() => setCurrnetValue(ratingValue)}
+                            onChange={() => setHoverValue(ratingValue)}
                           />
                         </label>
                       );

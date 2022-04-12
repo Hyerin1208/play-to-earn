@@ -45,11 +45,12 @@
   }
 }
 
-.nft-heart__btn i:hover {
+.heart__beat:hover {
   animation: heartbeat 1s infinite;
   fill: red;
   color: red;
   opacity: 1;
+  transition: opacity 500ms;
 }
 
 .nft-heart__btn {
