@@ -72,7 +72,7 @@ if(result>0&&result<50){
   return option;
 }
 
-function changeOption(uint _tokenId, address _msgsender) public returns(bool){
+function changeOption(uint _tokenId, address _msgsender) external returns(bool){
   require(idToNFTItem[_tokenId].owner== _msgsender);
   uint rare = randomOption(99);
   uint star = randomOption(1);

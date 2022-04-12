@@ -100,8 +100,9 @@ const Header = () => {
 
   async function MyList(account) {
     if (CreateNFTContract !== null) {
-      const MyNFTlists = await CreateNFTContract.methods.MyNFTlists().call();
-
+      const MyNFTlists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: account });
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
           const tokenURI = await CreateNFTContract.methods
@@ -122,7 +123,6 @@ const Header = () => {
           return item;
         })
       );
-
       return await listsForm;
     } else {
       return null;

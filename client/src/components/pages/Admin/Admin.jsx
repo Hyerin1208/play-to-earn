@@ -35,9 +35,17 @@ const Admin = () => {
 
   const sendRank = async () => {
     await axios
-      .post(`http://localhost:5000/ranking`, { rankingDB, address: account })
+      .post(`http://localhost:5000/ranking`, {
+        rankingDB: rankingDB,
+        address: account,
+      })
       .then((res) => {
-        alert("DB 전송 완료");
+        if (res.data.message === "ok") {
+          alert("DB 전송 완료");
+          window.location.reload();
+        } else {
+          alert("아직 미승인된 유저가 있습니다.");
+        }
       });
   };
 
@@ -66,7 +74,7 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                  <div type="button" onClick={sendRank}>
+                  <div type="button" onClick={() => sendRank()}>
                     Send Ranking
                   </div>
                 </Col>
