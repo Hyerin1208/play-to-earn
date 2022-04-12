@@ -25,6 +25,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.post("/upgrade", async (req, res, next) => {
+  console.log(req.body.tokenId);
   try {
     await Nfts.update(
       { rare: req.body.rare, star: req.body.star },
