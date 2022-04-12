@@ -19,36 +19,43 @@ const Ranking = () => {
 
   const [isStop, setIsStop] = useState(false);
 
-  // useEffect(async () => {
-  //     const count = await axios.get(`http://localhost:5000/user/time`).then((res) => res.data);
-  //     setdefaultTime(parseInt(count.count));
-  // }, []);
+  useEffect(async () => {
+    const count = await axios
+      .get(`http://localhost:5000/user/time`)
+      .then((res) => res.data);
+    setdefaultTime(parseInt(count.count));
+  }, []);
 
-  // useEffect(() => {
-  //     let interval = setInterval(async () => {
-  //         const countdownDate = new Date(defaultTime).getTime();
+  useEffect(() => {
+    let interval = setInterval(async () => {
+      //   const count = await axios
+      //     .get(`http://localhost:5000/user/time`)
+      //     .then((res) => res.data);
+      const countdownDate = new Date(defaultTime).getTime();
 
-  //         const now = new Date().getTime();
-  //         const distance = countdownDate - now;
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
 
-  //         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  //         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  //         if (!isStop) {
-  //             // update timer
-  //             setTimerDays(days);
-  //             setTimerHours(hours);
-  //             setTimerMinutes(minutes);
-  //             setTimerSeconds(seconds);
-  //         } else {
-  //             clearInterval(interval);
-  //         }
-  //     }, 1000);
-  //     return () => {
-  //         setIsStop(true);
-  //     };
-  // }, []);
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (!isStop) {
+        // update timer
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerSeconds(seconds);
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      setIsStop(true);
+    };
+  }, [defaultTime]);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -91,15 +98,15 @@ const Ranking = () => {
       if (form[i] === undefined) {
         // console.log("위쪽");
         result.push(
-          <Fragment key={i}>
-            <p>{i + 1}등 : 바로당신의 자리 </p>
+          <Fragment>
+            <p key={i}>{i + 1}등 : 바로당신의 자리 </p>
           </Fragment>
         );
       } else {
         // console.log("아래쪽");
         result.push(
-          <Fragment key={i}>
-            <p>
+          <Fragment>
+            <p key={i}>
               {i + 1}등 : {form[i].nick}
             </p>
           </Fragment>
@@ -113,23 +120,23 @@ const Ranking = () => {
     const result = [];
     for (let i = 0; i < form.length; i++) {
       result.push(
-        <Fragment key={i}>
-          <p>{i + 1}주차</p>
+        <Fragment>
+          <p key={i}>{i + 1}주차</p>
         </Fragment>
       );
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           // console.log("위쪽");
           result.push(
-            <Fragment key={k}>
-              <p> 공석 </p>
+            <Fragment>
+              <p key={k}> 공석 </p>
             </Fragment>
           );
         } else {
           // console.log("아래쪽");
           result.push(
-            <Fragment key={k}>
-              <p>
+            <Fragment>
+              <p key={k}>
                 {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
               </p>
             </Fragment>

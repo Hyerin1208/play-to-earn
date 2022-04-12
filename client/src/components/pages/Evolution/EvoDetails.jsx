@@ -134,8 +134,6 @@ const EvoDetails = (props) => {
                           description: await meta.description,
                         },
                       };
-                      console.log(item.formInput.tokenid);
-                      setTokenId(item.formInput.tokenid);
                       return item;
                     })
                   );
@@ -145,7 +143,7 @@ const EvoDetails = (props) => {
 
                   axios
                     .post(`http://localhost:5000/nfts/upgrade`, {
-                      tokenId: tokenId,
+                      tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
                       rare: listsForm[props.data.NFTIndex].formInput.rare,
                       star: listsForm[props.data.NFTIndex].formInput.star,
                     })
@@ -154,7 +152,8 @@ const EvoDetails = (props) => {
                       setStar(res.data.star);
                       console.log(res.data.star);
                     });
-                  dispatch(updateMyLists(await listsForm));
+                  console.log(await listsForm);
+                  dispatch(updateMyLists({ MyNFTlists: await listsForm }));
                 });
             }
           }}
