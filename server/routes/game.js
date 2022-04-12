@@ -138,11 +138,7 @@ router.post("/ranking", async (req, res) => {
   console.log(address);
   const snake = await Game.findAll({
     where: { snakePoint: { [Op.not]: null } },
-<<<<<<< HEAD
     attributes: ["nick", "snakePoint", "address", "approve"],
-=======
-    attributes: ["nick", "snakePoint", "address"],
->>>>>>> hyerin
     order: [["snakePoint", "desc"]],
   });
 
@@ -152,10 +148,7 @@ router.post("/ranking", async (req, res) => {
         nick: data.nick,
         address: data.address,
         snakePoint: data.snakePoint,
-<<<<<<< HEAD
         approve: data.approve,
-=======
->>>>>>> hyerin
       };
       return form;
     }
