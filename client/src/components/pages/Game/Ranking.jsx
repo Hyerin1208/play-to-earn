@@ -24,6 +24,7 @@ const Ranking = () => {
       .get(`http://localhost:5000/user/time`)
       .then((res) => res.data);
     setdefaultTime(parseInt(count.count));
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const Ranking = () => {
     }, 1000);
     return () => {
       setIsStop(true);
+      setLoading(false);
     };
   }, [defaultTime]);
 
@@ -90,6 +92,7 @@ const Ranking = () => {
       .catch((error) => {
         setError(error);
       });
+    setLoading(false);
   }, [account]);
 
   function RankingListForm(form) {
@@ -98,15 +101,15 @@ const Ranking = () => {
       if (form[i] === undefined) {
         // console.log("위쪽");
         result.push(
-          <Fragment>
-            <p key={i}>{i + 1}등 : 바로당신의 자리 </p>
+          <Fragment key={i}>
+            <p>{i + 1}등 : 바로당신의 자리 </p>
           </Fragment>
         );
       } else {
         // console.log("아래쪽");
         result.push(
-          <Fragment>
-            <p key={i}>
+          <Fragment key={i}>
+            <p>
               {i + 1}등 : {form[i].nick}
             </p>
           </Fragment>
@@ -120,23 +123,23 @@ const Ranking = () => {
     const result = [];
     for (let i = 0; i < form.length; i++) {
       result.push(
-        <Fragment>
-          <p key={i}>{i + 1}주차</p>
+        <Fragment key={i}>
+          <p>{i + 1}주차</p>
         </Fragment>
       );
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           // console.log("위쪽");
           result.push(
-            <Fragment>
+            <Fragment key={k}>
               <p key={k}> 공석 </p>
             </Fragment>
           );
         } else {
           // console.log("아래쪽");
           result.push(
-            <Fragment>
-              <p key={k}>
+            <Fragment key={k}>
+              <p>
                 {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
               </p>
             </Fragment>
