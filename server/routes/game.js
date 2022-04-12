@@ -7,27 +7,7 @@ const { Op } = require("sequelize");
 // SnakeGame
 
 router.post("/snake", async (req, res, next) => {
-  const { point, account, rare, star } = req.body;
-  console.log("rare", rare);
-  console.log("star", star);
-
-  const rareResult = [];
-  const starResult = [];
-
-  var rareMax = rare.slice(0).sort().reverse()[0];
-  var starMax = star.slice(0).sort().reverse()[0];
-
-  rare.forEach((x) => {
-    rareResult[x] = (rareResult[x] || 0) + 1;
-  });
-  star.forEach((x) => {
-    starResult[x] = (starResult[x] || 0) + 1;
-  });
-
-  console.log("rareResult", rareResult[1]);
-  console.log("starResult", starResult[1]);
-  console.log("rareMax", rareMax);
-  console.log("starMax", starMax);
+  const { point, account } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
@@ -43,32 +23,10 @@ router.post("/snake", async (req, res, next) => {
         snakePoint: point,
       });
     } else {
-      if ((rareMax = 5 && starResult[5] >= 3)) {
-        Game.update(
-          { snakePoint: point * 3, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[4] >= 3 && starResult[4] >= 3) {
-        Game.update(
-          { snakePoint: point * 2.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[3] >= 3 && starResult[3] >= 3) {
-        Game.update(
-          { snakePoint: point * 2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[2] >= 3 && starResult[2] >= 3) {
-        Game.update(
-          { snakePoint: point * 1.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[1] >= 3 && (rareMax = 1 && starResult[1] >= 3)) {
-        Game.update(
-          { snakePoint: point * 1.2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      }
+      Game.update(
+        { snakePoint: point, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -80,27 +38,7 @@ router.post("/snake", async (req, res, next) => {
 
 // 2048Game
 router.post("/2048", async (req, res, next) => {
-  const { score, account, rare, star } = req.body;
-  console.log("rare", rare);
-  console.log("star", star);
-
-  const rareResult = [];
-  const starResult = [];
-
-  var rareMax = rare.slice(0).sort().reverse()[0];
-  var starMax = star.slice(0).sort().reverse()[0];
-
-  rare.forEach((x) => {
-    rareResult[x] = (rareResult[x] || 0) + 1;
-  });
-  star.forEach((x) => {
-    starResult[x] = (starResult[x] || 0) + 1;
-  });
-
-  console.log("rareResult", rareResult[1]);
-  console.log("starResult", starResult[1]);
-  console.log("rareMax", rareMax);
-  console.log("starMax", starMax);
+  const { score, account } = req.body;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
@@ -116,32 +54,10 @@ router.post("/2048", async (req, res, next) => {
         puzzlePoint: score,
       });
     } else {
-      if ((rareMax = 5 && starResult[5] >= 3)) {
-        Game.update(
-          { puzzlePoint: score * 3, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[4] >= 3 && starResult[4] >= 3) {
-        Game.update(
-          { puzzlePoint: score * 2.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[3] >= 3 && starResult[3] >= 3) {
-        Game.update(
-          { puzzlePoint: score * 2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[2] >= 3 && starResult[2] >= 3) {
-        Game.update(
-          { puzzlePoint: score * 1.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[1] >= 3 && (rareMax = 1 && starResult[1] >= 3)) {
-        Game.update(
-          { puzzlePoint: score * 1.2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      }
+      Game.update(
+        { puzzlePoint: score, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -153,28 +69,8 @@ router.post("/2048", async (req, res, next) => {
 
 // MineGame
 router.post("/mine", async (req, res, next) => {
-  const { runtime, account, rare, star } = req.body;
+  const { runtime, account } = req.body;
   const minePoint = (1 / runtime) * 1000;
-  console.log("rare", rare);
-  console.log("star", star);
-
-  const rareResult = [];
-  const starResult = [];
-
-  var rareMax = rare.slice(0).sort().reverse()[0];
-  var starMax = star.slice(0).sort().reverse()[0];
-
-  rare.forEach((x) => {
-    rareResult[x] = (rareResult[x] || 0) + 1;
-  });
-  star.forEach((x) => {
-    starResult[x] = (starResult[x] || 0) + 1;
-  });
-
-  console.log("rareResult", rareResult[1]);
-  console.log("starResult", starResult[1]);
-  console.log("rareMax", rareMax);
-  console.log("starMax", starMax);
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
@@ -190,32 +86,10 @@ router.post("/mine", async (req, res, next) => {
         minePoint: minePoint,
       });
     } else {
-      if ((rareMax = 5 && starResult[5] >= 3)) {
-        Game.update(
-          { minePoint: runtime * 3, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[4] >= 3 && starResult[4] >= 3) {
-        Game.update(
-          { minePoint: runtime * 2.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[3] >= 3 && starResult[3] >= 3) {
-        Game.update(
-          { minePoint: runtime * 2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[2] >= 3 && starResult[2] >= 3) {
-        Game.update(
-          { minePoint: runtime * 1.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[1] >= 3 && (rareMax = 1 && starResult[1] >= 3)) {
-        Game.update(
-          { minePoint: runtime * 1.2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      }
+      Game.update(
+        { minePoint: runtime, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
     res.json({ message: "ok" });
   } catch (error) {
@@ -226,29 +100,9 @@ router.post("/mine", async (req, res, next) => {
 
 // TetrisGame
 router.post("/tetris", async (req, res, next) => {
-  const { data, account, rare, star } = req.body;
-  console.log("rare", rare);
-  console.log("star", star);
+  const { data, account } = req.body;
 
-  const rareResult = [];
-  const starResult = [];
-
-  var rareMax = rare.slice(0).sort().reverse()[0];
-  var starMax = star.slice(0).sort().reverse()[0];
-
-  rare.forEach((x) => {
-    rareResult[x] = (rareResult[x] || 0) + 1;
-  });
-  star.forEach((x) => {
-    starResult[x] = (starResult[x] || 0) + 1;
-  });
-
-  console.log("rareResult", rareResult[1]);
-  console.log("starResult", starResult[1]);
-  console.log("rareMax", rareMax);
-  console.log("starMax", starMax);
-
-    try {
+  try {
     const findAddress = await Game.findOne({ where: { address: account } });
     const findUser = await User.findOne({
       where: { address: account },
@@ -262,32 +116,10 @@ router.post("/tetris", async (req, res, next) => {
         tetrisPoint: data,
       });
     } else {
-      if ((rareMax = 5 && starResult[5] >= 3)) {
-        Game.update(
-          { tetrisPoint: data * 3, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[4] >= 3 && starResult[4] >= 3) {
-        Game.update(
-          { tetrisPoint: data * 2.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[3] >= 3 && starResult[3] >= 3) {
-        Game.update(
-          { tetrisPoint: data * 2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[2] >= 3 && starResult[2] >= 3) {
-        Game.update(
-          { tetrisPoint: data * 1.5, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      } else if (rareResult[1] >= 3 && (rareMax = 1 && starResult[1] >= 3)) {
-        Game.update(
-          { tetrisPoint: data * 1.2, nick: findUser.nick },
-          { where: { address: account } }
-        );
-      }
+      Game.update(
+        { tetrisPoint: data, nick: findUser.nick },
+        { where: { address: account } }
+      );
     }
 
     res.json({ message: "ok" });
@@ -410,7 +242,7 @@ router.post("/ranking", async (req, res) => {
 // RankingDB
 router.post("/weekly", async (req, res) => {
   const findUser = await User.findOne({
-    where: { address: "0x5c87082b90ED0aBAd05f2654Cd1651FD6165cd07" },
+    where: { id: 1 },
     attributes: ["weeks"],
   });
 
@@ -423,70 +255,5 @@ router.post("/weekly", async (req, res) => {
   }
   res.json(testArray);
 });
-
-// 2048Game
-// router.post("/2048", async (req, res, next) => {
-//   const { score, account, rare, star } = req.body;
-
-//   let rareSum = 0;
-//   for (let i = 0; i < rare.length; i++) {
-//     rareSum += rare[i];
-//   }
-//   console.log("rareSum", rareSum);
-
-//   let starSum = 0;
-//   for (let i = 0; i < star.length; i++) {
-//     starSum += star[i];
-//   }
-//   console.log("starSum", starSum);
-
-//   try {
-//     const findAddress = await Game.findOne({ where: { address: account } });
-//     const findUser = await User.findOne({
-//       where: { address: account },
-//       attributes: ["address", "nick"],
-//     });
-
-//     if (!findAddress) {
-//       Game.create({
-//         address: findUser.address,
-//         nick: findUser.nick,
-//         puzzlePoint: score,
-//       });
-//     } else {
-//       if (rareSum === 3 && starSum === 3) {
-//         Game.update(
-//           { puzzlePoint: score, nick: findUser.nick },
-//           { where: { address: account } }
-//         );
-//       } else if (rareSum === 5 && starSum === 5) {
-//         Game.update(
-//           { puzzlePoint: score * 1.2, nick: findUser.nick },
-//           { where: { address: account } }
-//         );
-//       } else if (rareSum === 7 && starSum === 7) {
-//         Game.update(
-//           { puzzlePoint: score * 1.3, nick: findUser.nick },
-//           { where: { address: account } }
-//         );
-//       } else if (rareSum === 9 && starSum === 9) {
-//         Game.update(
-//           { puzzlePoint: score * 1.4, nick: findUser.nick },
-//           { where: { address: account } }
-//         );
-//       } else if (rareSum === 11 && starSum === 11) {
-//         Game.update(
-//           { puzzlePoint: score * 1.5, nick: findUser.nick },
-//           { where: { address: account } }
-//         );
-//       }
-//     }
-
-//     res.json({ message: "ok" });
-//   } catch (error) {
-//     console.error(error);
-//     return next(error);
-//   }
-// });
 
 module.exports = router;

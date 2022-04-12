@@ -56,10 +56,7 @@ const Tetris = ({ setShowModal }) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  const [rare, setRare] = useState([]);
-  const [star, setStar] = useState([]);
-  console.log("rare", rare);
-  console.log("star", star);
+  const [myList, setMyList] = useState([]);
 
   useEffect(() => {
     mynftlists();
@@ -77,23 +74,7 @@ const Tetris = ({ setShowModal }) => {
           console.log(error);
         }
       });
-    console.log(lists);
-    if (lists.length >= 3) {
-      setRare(
-        await lists.map((v, i) => {
-          // let intRare = parseInt(v["rare"]);
-          // return intRare;
-          return v["rare"];
-        })
-      );
-      setStar(
-        await lists.map((v, i) => {
-          // let intStar = parseInt(v["star"]);
-          // return intStar;
-          return v["star"];
-        })
-      );
-    }
+    setMyList(lists);
   }
 
   useEffect(() => {
@@ -275,15 +256,42 @@ const Tetris = ({ setShowModal }) => {
     const sendPoint = async () => {
       const data = gameStats.score;
 
-      console.log(gameStats.score);
-      console.log(account);
-
+      function multiply(data) {
+        let rareD;
+        if (myList.filter((v) => v.rare === "5").length >= 3) {
+          rareD = 3;
+        } else if (myList.filter((v) => v.rare === "4").length >= 3) {
+          rareD = 2.5;
+        } else if (myList.filter((v) => v.rare === "3").length >= 3) {
+          rareD = 2;
+        } else if (myList.filter((v) => v.rare === "2").length >= 3) {
+          rareD = 1.5;
+        } else {
+          rareD = 1;
+        }
+        let starD;
+        if (myList.filter((v) => v.star === "5").length >= 3) {
+          starD = 3;
+        } else if (myList.filter((v) => v.star === "4").length >= 3) {
+          starD = 2.5;
+        } else if (myList.filter((v) => v.star === "3").length >= 3) {
+          starD = 2;
+        } else if (myList.filter((v) => v.star === "2").length >= 3) {
+          starD = 1.5;
+        } else if (myList.filter((v) => v.star === "1").length >= 3) {
+          rareD = 1.2;
+        } else {
+          starD = 1;
+        }
+        console.log("point : " + data);
+        console.log("rareD : " + rareD);
+        console.log("starD : " + starD);
+        return data * (starD * rareD);
+      }
       await axios
         .post(`http://localhost:5000/game/tetris`, {
-          data,
-          account,
-          rare,
-          star,
+          data: multiply(data),
+          account: account,
         })
         .then((res) => {
           console.log(res.data);

@@ -11,8 +11,7 @@ export const Overlay = ({ handleReset, score }) => {
     (state) => state.AppState.CreateNFTContract
   );
   const [Loading, setLoading] = useState(true);
-  const [rare, setRare] = useState([]);
-  const [star, setStar] = useState([]);
+  const [myList, setMyList] = useState([]);
 
   useEffect(() => {
     mynftlists();
@@ -30,31 +29,49 @@ export const Overlay = ({ handleReset, score }) => {
           console.log(error);
         }
       });
-    console.log(lists);
-    if (lists.length >= 3) {
-      setRare(
-        await lists.map((v, i) => {
-          // let intRare = parseInt(v["rare"]);
-          // return intRare;
-          return v["rare"];
-        })
-      );
-      setStar(
-        await lists.map((v, i) => {
-          // let intStar = parseInt(v["star"]);
-          // return intStar;
-          return v["star"];
-        })
-      );
-    }
+    setMyList(lists);
   }
 
   const sendPoint = async () => {
-    console.log(score);
-    console.log(account);
+    const point = score;
+    function multiply(point) {
+      let rareD;
+      if (myList.filter((v) => v.rare === "5").length >= 3) {
+        rareD = 3;
+      } else if (myList.filter((v) => v.rare === "4").length >= 3) {
+        rareD = 2.5;
+      } else if (myList.filter((v) => v.rare === "3").length >= 3) {
+        rareD = 2;
+      } else if (myList.filter((v) => v.rare === "2").length >= 3) {
+        rareD = 1.5;
+      } else {
+        rareD = 1;
+      }
+      let starD;
+      if (myList.filter((v) => v.star === "5").length >= 3) {
+        starD = 3;
+      } else if (myList.filter((v) => v.star === "4").length >= 3) {
+        starD = 2.5;
+      } else if (myList.filter((v) => v.star === "3").length >= 3) {
+        starD = 2;
+      } else if (myList.filter((v) => v.star === "2").length >= 3) {
+        starD = 1.5;
+      } else if (myList.filter((v) => v.star === "1").length >= 3) {
+        rareD = 1.2;
+      } else {
+        starD = 1;
+      }
+      console.log("point : " + point);
+      console.log("rareD : " + rareD);
+      console.log("starD : " + starD);
+      return point * (starD * rareD);
+    }
 
     await axios
-      .post(`http://localhost:5000/game/2048`, { score, account, rare, star })
+      .post(`http://localhost:5000/game/2048`, {
+        score: multiply(point),
+        account: account,
+      })
       .then((res) => {
         console.log(res.data);
         alert("점수 등록 완료");
