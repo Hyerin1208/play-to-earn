@@ -87,7 +87,13 @@ router.post("/", async (req, res, next) => {
           );
         });
       }
-      res.json({ message: "ok" });
+
+      const totalclaim = await Ranking.findAll({
+        where: { claim: false },
+        attributes: ["balance"],
+      });
+
+      res.json({ message: "ok", totalclaim: totalclaim });
     } else {
       res.json({ message: "no" });
     }
@@ -117,6 +123,14 @@ router.post("/balance", async (req, res) => {
 router.post("/previous", async (req, res) => {
   const previousRank = await Ranking.findAll();
   res.json(previousRank);
+});
+
+router.post("/test", async (req, res) => {
+  const totalclaim = await Ranking.findAll({
+    where: { claim: false },
+    attributes: ["balance"],
+  });
+  res.json({ totalclaim: totalclaim });
 });
 
 module.exports = router;
