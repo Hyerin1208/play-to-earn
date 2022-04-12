@@ -57,7 +57,7 @@ export const Overlay = ({ handleReset, score }) => {
       } else if (myList.filter((v) => v.star === "2").length >= 3) {
         starD = 1.5;
       } else if (myList.filter((v) => v.star === "1").length >= 3) {
-        rareD = 1.2;
+        starD = 1.2;
       } else {
         starD = 1;
       }
