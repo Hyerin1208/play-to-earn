@@ -32,6 +32,11 @@ module.exports = class Game extends Sequelize.Model {
           type: Sequelize.INTEGER(100),
           allowNull: true,
         },
+        approve: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+          allowNull: false,
+        },
       },
       {
         sequelize,
