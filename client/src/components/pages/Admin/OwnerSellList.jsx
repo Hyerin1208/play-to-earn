@@ -6,13 +6,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import NftCard from "../../ui/templete/NftCard";
+import MySellCard from "../../ui/dashboard/MySellCard";
 
 import "./owner-sellList.css";
 
 import axios from "axios";
 
 import { useSelector } from "react-redux";
+import { FaMeteor } from "react-icons/fa";
 
 const OwnerSellList = () => {
   const [nftArray, setnftArray] = useState([]);
@@ -33,16 +34,13 @@ const OwnerSellList = () => {
     if (CreateNFTContract !== null) {
       const lists = await CreateNFTContract.methods
         .OwnerSelllists()
-        .call(
-          { from: "0xC7E1F2dca144AEDA8ADF4f9093da9aAC18ce7436" },
-          (error) => {
-            if (!error) {
-              console.log("send ok");
-            } else {
-              console.log(error);
-            }
+        .call({ from: Account }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
           }
-        );
+        });
       const result = await Promise.all(
         lists.map(async (i) => {
           const tokenURI = await CreateNFTContract.methods
@@ -52,11 +50,15 @@ const OwnerSellList = () => {
           let item = {
             fileUrl: await meta.image,
             formInput: {
-              price: await meta.price,
+              tokenid: i.tokenId,
+              price: i.price,
+              rare: i.rare,
+              star: i.star,
               name: await meta.name,
               description: await meta.description,
             },
           };
+          console.log(item);
           return item;
         })
       );
@@ -94,17 +96,7 @@ const OwnerSellList = () => {
               return (
                 // <motion.div key={index} className="my-items">
                 <Col key={index} className="my-items">
-                  <NftCard
-                    item={items}
-                    id={items.formInput.tokenid}
-                    onClick={async (e) => {
-                      let tokenid = e.target.getAttribute("id");
-                      await CreateNFTContract.methods.tokenURI(tokenid).call({
-                        from: Account,
-                      });
-                    }}
-                    style={{ height: "200%" }}
-                  ></NftCard>
+                  <MySellCard item={items}></MySellCard>
                 </Col>
               );
             })}
