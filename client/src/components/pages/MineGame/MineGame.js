@@ -94,7 +94,7 @@ function MineGame({ setShowModal }) {
     }
     await axios
       .post(`http://localhost:5000/game/mine`, {
-        runtime: point,
+        runtime: multiply(point),
         account: account,
       })
       .then((res) => {
