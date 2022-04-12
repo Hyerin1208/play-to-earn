@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { Game, User, Ranking, Nfts } = require("../models");
+const { Game, User, Ranking } = require("../models");
 const { Op } = require("sequelize");
 
 // router.post 모음
@@ -70,7 +70,6 @@ router.post("/2048", async (req, res, next) => {
 // MineGame
 router.post("/mine", async (req, res, next) => {
   const { runtime, account } = req.body;
-  const minePoint = (1 / runtime) * 1000;
 
   try {
     const findAddress = await Game.findOne({ where: { address: account } });
@@ -83,7 +82,7 @@ router.post("/mine", async (req, res, next) => {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
-        minePoint: minePoint,
+        minePoint: runtime,
       });
     } else {
       Game.update(
@@ -91,6 +90,7 @@ router.post("/mine", async (req, res, next) => {
         { where: { address: account } }
       );
     }
+
     res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
@@ -138,7 +138,7 @@ router.post("/ranking", async (req, res) => {
   console.log(address);
   const snake = await Game.findAll({
     where: { snakePoint: { [Op.not]: null } },
-    attributes: ["nick", "snakePoint", "address"],
+    attributes: ["nick", "snakePoint", "address", "approve"],
     order: [["snakePoint", "desc"]],
   });
 
@@ -148,6 +148,7 @@ router.post("/ranking", async (req, res) => {
         nick: data.nick,
         address: data.address,
         snakePoint: data.snakePoint,
+        approve: data.approve,
       };
       return form;
     }
@@ -161,7 +162,7 @@ router.post("/ranking", async (req, res) => {
 
   const puzzle = await Game.findAll({
     where: { puzzlePoint: { [Op.not]: null } },
-    attributes: ["nick", "puzzlePoint", "address"],
+    attributes: ["nick", "puzzlePoint", "address", "approve"],
     order: [["puzzlePoint", "desc"]],
   });
 
@@ -171,6 +172,7 @@ router.post("/ranking", async (req, res) => {
         nick: data.nick,
         address: data.address,
         snakePoint: data.puzzlePoint,
+        approve: data.approve,
       };
       return form;
     }
@@ -184,8 +186,8 @@ router.post("/ranking", async (req, res) => {
 
   const mine = await Game.findAll({
     where: { minePoint: { [Op.not]: null } },
-    attributes: ["nick", "minePoint", "address"],
-    order: [["minePoint", "desc"]],
+    attributes: ["nick", "minePoint", "address", "approve"],
+    order: [["minePoint", "ASC"]],
   });
 
   const mineranker = await mine.map((data, i) => {
@@ -194,6 +196,7 @@ router.post("/ranking", async (req, res) => {
         nick: data.nick,
         address: data.address,
         snakePoint: data.minePoint,
+        approve: data.approve,
       };
       return form;
     }
@@ -207,7 +210,7 @@ router.post("/ranking", async (req, res) => {
 
   const tetris = await Game.findAll({
     where: { tetrisPoint: { [Op.not]: null } },
-    attributes: ["nick", "tetrisPoint", "address"],
+    attributes: ["nick", "tetrisPoint", "address", "approve"],
     order: [["tetrisPoint", "desc"]],
   });
 
@@ -217,6 +220,7 @@ router.post("/ranking", async (req, res) => {
         nick: data.nick,
         address: data.address,
         snakePoint: data.tetrisPoint,
+        approve: data.approve,
       };
       return form;
     }
@@ -253,7 +257,23 @@ router.post("/weekly", async (req, res) => {
     });
     testArray.push(await RankingDB);
   }
+  console.log(testArray);
   res.json(testArray);
+});
+
+router.post("/setclaim", async (req, res, next) => {
+  await Game.update(
+    { approve: req.body.claim },
+    { where: { address: req.body.address } }
+  ).then(() => {
+    res.json({ message: "ok" });
+  });
+});
+
+router.post("/getclaim", async (req, res, next) => {
+  const result = await Game.findOne({ where: { address: req.body.address } });
+  console.log(result.approve);
+  res.json({ message: result.approve });
 });
 
 module.exports = router;
