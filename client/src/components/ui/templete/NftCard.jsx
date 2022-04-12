@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./nft-card.css";
+import "../../pages/Admin/owner-sellList.css";
 import Modal from "../templete/Modal";
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
@@ -8,11 +9,12 @@ import { Routes, Route, Link, useParams } from "react-router-dom";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
+import { useSelector } from "react-redux";
 
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
   let params = useParams();
-
+  const [nftArray, setnftArray] = useState([]);
   // const [rating, setRating] = useState(null);
   // const [hover, setHover] = useState(null);
 
@@ -20,21 +22,17 @@ const NftCard = (props) => {
   const [currentValue, setCurrnetValue] = useState(props.item.formInput.star);
   const [hoverValue, setHoverValue] = useState(undefined);
 
-  const handleClick = (value) => {
-    setCurrnetValue(value);
-  };
-
-  const handleMouseOver = (value) => {
-    setHoverValue(value);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverValue(undefined);
-  };
-
-  console.log(props.item.formInput.star);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
 
   useEffect(() => {}, [currentValue]);
+
+  // const account = useSelector((state) => state.AppState.account);
+
+  console.log(nftArray);
+
+  console.log(props.item.formInput.rare);
 
   return (
     <div>

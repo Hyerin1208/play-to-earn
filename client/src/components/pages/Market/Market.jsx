@@ -25,6 +25,8 @@ const Market = () => {
 
   const [data, setData] = useState("");
 
+  console.log(nftArray);
+
   const quantityPageRef = useRef(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [endPosition, setEndPosition] = useState(4);
@@ -88,7 +90,7 @@ const Market = () => {
 
     if (filterValue === "mid") {
       const filterData = sortNfts.filter(
-        (item) => item.currentBid >= 5 && item.currentBid < 10
+        (item) => item.price >= 5 && item.price < 10
       );
       console.log(filterData);
       setData(filterData);
@@ -96,7 +98,7 @@ const Market = () => {
 
     if (filterValue === "low") {
       const filterData = sortNfts.filter(
-        (item) => item.currentBid >= 1 && item.currentBid < 5
+        (item) => item.price >= 1 && item.price < 5
       );
       console.log(filterData);
       setData(filterData);

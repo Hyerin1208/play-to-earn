@@ -7,6 +7,7 @@ import NaimingLogo from "../../../assets/images/naminglogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { updateMyLists } from "../../../redux/actions/index";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const DetailsContainer = styled.div`
   width: 100%;
@@ -82,9 +83,14 @@ const EvoDetails = (props) => {
   const account = useSelector((state) => state.AppState.account);
   const dispatch = useDispatch();
 
+  const [rare, setRare] = useState("");
+  const [star, setStar] = useState("");
+
   useEffect(() => {
     console.log(props);
   }, [props]);
+
+  console.log(CreateNFTContract);
 
   return (
     <DetailsContainer>
@@ -132,6 +138,20 @@ const EvoDetails = (props) => {
                     })
                   );
                   props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
+
+                  console.log(listsForm[props.data.NFTIndex].formInput.rare);
+
+                  axios
+                    .post(`http://localhost:5000/nfts/upgrade`, {
+                      tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
+                      rare: listsForm[props.data.NFTIndex].formInput.rare,
+                      star: listsForm[props.data.NFTIndex].formInput.star,
+                    })
+                    .then((res) => {
+                      setRare(res.data.rare);
+                      setStar(res.data.star);
+                      console.log(res.data.star);
+                    });
                   dispatch(updateMyLists(await listsForm));
                 });
             }

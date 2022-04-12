@@ -27,10 +27,40 @@
 
 .nft-heart__btn i {
   color: antiquewhite;
+  opacity: 0.3;
+  cursor: pointer;
 }
 
-.nft-heart__btn i:hover {
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart__beat:hover {
+  animation: heartbeat 1s infinite;
+  fill: red;
   color: red;
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.nft-heart__btn {
+  background: #3434445b;
+  padding: 10px;
+  margin-right: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.1rem;
 }
 
 .single__nft-seen span {
@@ -55,16 +85,6 @@
 .single__nft-more span {
   color: #fff;
   font-size: 1rem;
-}
-
-.nft-heart__btn {
-  background: #3434445b;
-  padding: 10px;
-  margin-right: 15px;
-  border-radius: 50px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 1.1rem;
 }
 
 .nft-view__btn {
