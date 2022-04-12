@@ -1,27 +1,35 @@
 var express = require("express");
 var router = express.Router();
-const { Game } = require("../models");
+const { Game, User, Ranking } = require("../models");
+const { Op } = require("sequelize");
 
 // router.post 모음
 // SnakeGame
+
 router.post("/snake", async (req, res, next) => {
   const { point, account } = req.body;
-  const findAddress = await Game.findOne({ where: { address: account } });
 
   try {
-    if (!findAddress) {
-      return Game.create({
-        address: account,
-        snakePoint: point,
-      });
-    }
-
-    Game.update({
-      address: account,
-      snakePoint: point,
+    const findAddress = await Game.findOne({ where: { address: account } });
+    const findUser = await User.findOne({
+      where: { address: account },
+      attributes: ["address", "nick"],
     });
 
-    return res.json({ message: "ok" });
+    if (!findAddress) {
+      Game.create({
+        address: findUser.address,
+        nick: findUser.nick,
+        snakePoint: point,
+      });
+    } else {
+      Game.update(
+        { snakePoint: point, nick: findUser.nick },
+        { where: { address: account } }
+      );
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -33,11 +41,26 @@ router.post("/2048", async (req, res, next) => {
   const { score, account } = req.body;
 
   try {
-    Game.create({
-      puzzlePoint: score,
-      address: account,
+    const findAddress = await Game.findOne({ where: { address: account } });
+    const findUser = await User.findOne({
+      where: { address: account },
+      attributes: ["address", "nick"],
     });
-    return res.json({ message: "ok" });
+
+    if (!findAddress) {
+      Game.create({
+        address: findUser.address,
+        nick: findUser.nick,
+        puzzlePoint: score,
+      });
+    } else {
+      Game.update(
+        { puzzlePoint: score, nick: findUser.nick },
+        { where: { address: account } }
+      );
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -49,11 +72,26 @@ router.post("/mine", async (req, res, next) => {
   const { runtime, account } = req.body;
 
   try {
-    Game.create({
-      minePoint: runtime,
-      address: account,
+    const findAddress = await Game.findOne({ where: { address: account } });
+    const findUser = await User.findOne({
+      where: { address: account },
+      attributes: ["address", "nick"],
     });
-    return res.json({ message: "ok" });
+
+    if (!findAddress) {
+      Game.create({
+        address: findUser.address,
+        nick: findUser.nick,
+        minePoint: runtime,
+      });
+    } else {
+      Game.update(
+        { minePoint: runtime, nick: findUser.nick },
+        { where: { address: account } }
+      );
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -63,13 +101,28 @@ router.post("/mine", async (req, res, next) => {
 // TetrisGame
 router.post("/tetris", async (req, res, next) => {
   const { data, account } = req.body;
-  console.log(req.body);
+
   try {
-    Game.create({
-      tetrisPoint: data,
-      address: account,
+    const findAddress = await Game.findOne({ where: { address: account } });
+    const findUser = await User.findOne({
+      where: { address: account },
+      attributes: ["address", "nick"],
     });
-    return res.json({ message: "ok" });
+
+    if (!findAddress) {
+      Game.create({
+        address: findUser.address,
+        nick: findUser.nick,
+        tetrisPoint: data,
+      });
+    } else {
+      Game.update(
+        { tetrisPoint: data, nick: findUser.nick },
+        { where: { address: account } }
+      );
+    }
+
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -77,153 +130,150 @@ router.post("/tetris", async (req, res, next) => {
 });
 
 // router.get 모음
+
 // SnakeGame
-router.get("/snake", async (req, res) => {
-  const users = await Game.findAll({
-    attributes: ["nick", "snakePoint", "address"],
+router.post("/ranking", async (req, res) => {
+  const address = req.body.address;
+  console.log("///////////////////////////////////////");
+  console.log(address);
+  const snake = await Game.findAll({
+    where: { snakePoint: { [Op.not]: null } },
+    attributes: ["nick", "snakePoint", "address", "approve"],
     order: [["snakePoint", "desc"]],
   });
-  const snake = [];
 
-  for (const user of users) {
-    snake.push({
-      nick: user.nick,
-      address: user.address,
-      snakePoint: user.snakePoint,
-    });
-  }
+  const snakeranker = await snake.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.snakePoint,
+        approve: data.approve,
+      };
+      return form;
+    }
+  });
 
-  res.json(snake);
-});
+  const snakeMyRanking = snake.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-// 2048Game
-router.get("/2048", async (req, res) => {
-  const users = await Game.findAll({
-    attributes: ["nick", "puzzlePoint", "address"],
+  const puzzle = await Game.findAll({
+    where: { puzzlePoint: { [Op.not]: null } },
+    attributes: ["nick", "puzzlePoint", "address", "approve"],
     order: [["puzzlePoint", "desc"]],
   });
-  const puzzle = [];
 
-  for (const user of users) {
-    puzzle.push({
-      nick: user.nick,
-      address: user.address,
-      puzzlePoint: user.puzzlePoint,
-    });
-  }
-
-  res.json(puzzle);
-});
-
-// MineGame
-router.get("/mine", async (req, res) => {
-  const users = await Game.findAll({
-    attributes: ["nick", "minePoint", "address"],
-    order: [["minePoint", "asc"]],
+  const puzzleranker = await puzzle.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.puzzlePoint,
+        approve: data.approve,
+      };
+      return form;
+    }
   });
-  const mine = [];
 
-  for (const user of users) {
-    mine.push({
-      nick: user.nick,
-      address: user.address,
-      minePoint: user.minePoint,
-    });
-  }
+  const puzzleMyRanking = puzzle.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
 
-  res.json(mine);
-});
+  const mine = await Game.findAll({
+    where: { minePoint: { [Op.not]: null } },
+    attributes: ["nick", "minePoint", "address", "approve"],
+    order: [["minePoint", "ASC"]],
+  });
 
-// TetrisGame
-router.get("/tetris", async (req, res) => {
-  const users = await Game.findAll({
-    attributes: ["nick", "tetrisPoint", "address"],
+  const mineranker = await mine.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.minePoint,
+        approve: data.approve,
+      };
+      return form;
+    }
+  });
+
+  const mineMyRanking = mine.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
+
+  const tetris = await Game.findAll({
+    where: { tetrisPoint: { [Op.not]: null } },
+    attributes: ["nick", "tetrisPoint", "address", "approve"],
     order: [["tetrisPoint", "desc"]],
   });
-  const tetris = [];
 
-  for (const user of users) {
-    tetris.push({
-      nick: user.nick,
-      address: user.address,
-      tetrisPoint: user.tetrisPoint,
+  const tetrisranker = await tetris.map((data, i) => {
+    if (i < 3) {
+      let form = {
+        nick: data.nick,
+        address: data.address,
+        snakePoint: data.tetrisPoint,
+        approve: data.approve,
+      };
+      return form;
+    }
+  });
+  const tetrisMyRanking = tetris.findIndex((element) => {
+    if (element.address === address) {
+      return true;
+    }
+  });
+
+  res.json({
+    snakeranker: snakeranker,
+    snakeMyRanking: snakeMyRanking + 1,
+    puzzleranker: puzzleranker,
+    puzzleMyRanking: puzzleMyRanking + 1,
+    mineranker: mineranker,
+    mineMyRanking: mineMyRanking + 1,
+    tetrisranker: tetrisranker,
+    tetrisMyRanking: tetrisMyRanking + 1,
+  });
+});
+
+// RankingDB
+router.post("/weekly", async (req, res) => {
+  const findUser = await User.findOne({
+    where: { id: 1 },
+    attributes: ["weeks"],
+  });
+
+  const testArray = [];
+  for (let i = 1; i < findUser.weeks; i++) {
+    const RankingDB = await Ranking.findAll({
+      where: { weeks: i },
     });
+    testArray.push(await RankingDB);
   }
-
-  res.json(tetris);
+  console.log(testArray);
+  res.json(testArray);
 });
 
-// router.put 모음
-// SnakeGame
-router.put("/snake", async (req, res, next) => {
-  const { point, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        snakePoint: point,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
+router.post("/setclaim", async (req, res, next) => {
+  await Game.update(
+    { approve: req.body.claim },
+    { where: { address: req.body.address } }
+  ).then(() => {
+    res.json({ message: "ok" });
+  });
 });
 
-// 2048Game
-router.put("/2048", async (req, res, next) => {
-  const { score, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        puzzlePoint: score,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
-});
-
-// MineGame
-router.put("/mine", async (req, res, next) => {
-  const { runtime, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        minePoint: runtime,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
-});
-
-// TetrisGame
-router.put("/tetris", async (req, res, next) => {
-  const { data, account } = req.body;
-
-  try {
-    Game.update(
-      {
-        tetrisPoint: data,
-      },
-      { where: { address: account } }
-    );
-    return res.json({ message: "sucess" });
-  } catch (err) {
-    console.error(err);
-    return next(error);
-  }
+router.post("/getclaim", async (req, res, next) => {
+  const result = await Game.findOne({ where: { address: req.body.address } });
+  console.log(result.approve);
+  res.json({ message: result.approve });
 });
 
 module.exports = router;

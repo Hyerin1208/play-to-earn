@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import NftCard from "../NftCard";
+import NftCard from "../templete/NftCard";
 
 import "./my-nfts.css";
 
@@ -25,7 +25,7 @@ const MyNfts = ({ setShowModal }) => {
         <span className="close_modal">
           <i className="ri-close-line" onClick={() => setShowModal(false)}></i>
         </span>
-        <h6 className="text-center text-light">My NFTs</h6>
+        <h6 className="text-center text-light">Choose your NFTs</h6>
         <p className="text-center text-light">Buy. Sell. Collect.</p>
 
         <div className="box__myNft">

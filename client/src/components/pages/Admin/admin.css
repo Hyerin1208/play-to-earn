@@ -1,0 +1,33 @@
+.admin__dash {
+  width: 100%;
+  background: linear-gradient(to bottom right, #343434 0% right, #e6e4ff 70%);
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+  margin: 1rem 8rem 1rem 4rem;
+}
+
+.sub__container2 {
+  margin: 0.5rem 0;
+  height: 120%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* margin-bottom: 50px; */
+}
+
+.section1__one {
+  display: flex;
+  justify-content: space-between;
+  height: 21.8%;
+  /* gap: 1rem; */
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.section2__two {
+  display: flex;
+  gap: 2rem;
+  height: 120%;
+  /* margin-bottom: 500px; */
+}

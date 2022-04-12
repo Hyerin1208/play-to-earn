@@ -18,6 +18,7 @@ export const MyWrapper = styled.div`
     top: 50%;
     margin-top: -15px;
   }
+
   .prev-arrow {
     left: -40px;
     width: 0;

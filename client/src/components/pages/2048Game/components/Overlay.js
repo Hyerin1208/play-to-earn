@@ -11,12 +11,6 @@ export const Overlay = ({ handleReset, score }) => {
     console.log(account);
 
     await axios
-      .put(`http://localhost:5000/game/2048`, { score, account })
-      .then((res) => {
-        console.log(res.data);
-      });
-
-    await axios
       .post(`http://localhost:5000/game/2048`, { score, account })
       .then((res) => {
         console.log(res.data);

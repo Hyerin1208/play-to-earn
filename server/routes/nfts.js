@@ -1,32 +1,118 @@
+const { text } = require("body-parser");
 var express = require("express");
 var router = express.Router();
 const Nfts = require("../models/nfts");
 const User = require("../models/user");
+const DB = require("../models");
+const db = require("../models");
+const Likes = DB.sequelize.models.Likes;
 
 router.post("/", async (req, res, next) => {
-  //   Nfts.create({ tokenId: req.body.id });
-  //   User.create({ address: `ad${req.body.id}`, nick: `ad${req.body.id}` });
   const nft = await Nfts.findOne({
-    where: { tokenId: 1 },
+    where: { tokenId: req.body.tokenId },
   });
-  const user = await User.findOne({ where: { address: "ad3" } });
-  console.log(await user);
+  if (!nft) {
+    Nfts.create({
+      tokenId: req.body.tokenId,
+      address: req.body.address,
+      rare: req.body.rare,
+      star: req.body.star,
+    });
+    res.json({ message: "ok" });
+  } else {
+    res.json({ rare: nft.rare, star: nft.star, address: nft.address });
+  }
+});
 
-  await nft.addLiker(user);
+router.post("/upgrade", async (req, res, next) => {
+  try {
+    await Nfts.update(
+      { rare: req.body.rare, star: req.body.star },
+      { where: { tokenId: req.body.tokenId } }
+    );
+    res.json({ rare: req.body.rare, star: req.body.star });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
-  const nfts = await Nfts.findOne({
-    where: { tokenId: 1 },
-    include: [
-      {
-        model: User,
-        attributes: ["id", "address"],
-        as: "Liker",
-      },
-    ],
-  });
-  console.log(await nfts.getDataValue("Liker"));
+router.post("/like", async (req, res, next) => {
+  console.log(req.body.account);
+  if (req.body.account === null) {
+    res.json({ message: "fail" });
+  } else {
+    const nft = await Nfts.findOne({
+      where: { tokenId: req.body.tokenId },
+    });
+    const user = await User.findOne({ where: { address: req.body.account } });
+    console.log(nft);
+    console.log(user);
 
-  res.json({ message: "ok" });
+    const getlike = await Likes.findOne({
+      where: { address: req.body.account },
+    });
+
+    console.log(getlike);
+
+    if (getlike === null) {
+      await nft.addLiker(user);
+      console.log("여기???");
+      await Nfts.update(
+        { likes: nft.likes + 1 },
+        {
+          where: { tokenId: req.body.tokenId },
+        }
+      );
+      res.json({ message: "ok" });
+    } else {
+      await nft.removeLiker(user);
+      await Nfts.update(
+        { likes: nft.likes - 1 },
+        {
+          where: { tokenId: req.body.tokenId },
+        }
+      );
+      res.json({ message: "no" });
+    }
+  }
+});
+
+// total 좋아요 수
+router.post("/likes", async (req, res, next) => {
+  console.log(req.body.account);
+  if (req.body.account === null) {
+    res.json({ message: "fail" });
+    return res.status(404).send("Connect your account");
+  } else {
+    const likes = await Likes.findAll({
+      where: { address: req.body.account },
+    });
+    console.log(likes.length);
+    res.json({ like: likes.length });
+  }
+});
+
+router.post("/views", async (req, res, next) => {
+  try {
+    console.log(req.body.tokenId);
+    const nft = await Nfts.findOne({
+      where: { tokenId: req.body.tokenId },
+    });
+    await Nfts.update(
+      { views: nft.views + 1 },
+      { where: { tokenId: req.body.tokenId } }
+    );
+    res.json({ view: nft.views + 1 });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post("/countoflike", async (req, res, next) => {
+  const count = await Likes.findAll({ where: { tokenId: req.body.tokenId } });
+  res.json({ count: count.length });
 });
 
 module.exports = router;

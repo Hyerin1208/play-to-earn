@@ -11,7 +11,7 @@ import FreeCard from "./FreeCard";
 import axios from "axios";
 
 const FreeItem = (props) => {
-  const [checkItem, setCheckItem] = useState(null);
+  const [checkItem, setCheckItem] = useState(false);
 
   const nfts = useSelector((state) => state);
   console.log(nfts);
@@ -19,27 +19,6 @@ const FreeItem = (props) => {
   const [Loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
-
-  // const fetchNfts = async () => {
-  //   const response = await axios
-  //     .get("http://localhost:5000/user")
-  //     .catch((err) => {
-  //       console.log("Err", err);
-  //     });
-  //   dispatch(response.data);
-  // };
-
-  // useEffect(() => {
-  //   try {
-  //     if (nfts !== null) {
-  //       console.log("실행");
-  //       setnftArray([...nfts].reverse());
-  //       setLoading(null);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
 
   console.log("Nfts :", nfts);
 

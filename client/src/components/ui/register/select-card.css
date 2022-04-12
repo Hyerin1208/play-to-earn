@@ -4,11 +4,11 @@
 }
 
 .select__nft__card {
-  max-width: 280px;
+  max-width: 250px;
   padding: 15px;
   background: #343444;
   border-radius: 10px;
-  min-height: 380px;
+  min-height: 340px;
   box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
   transform-style: preserve-3d;
   transition: all 0.5s ease-in-out;

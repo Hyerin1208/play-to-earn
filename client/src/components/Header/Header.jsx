@@ -1,13 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./header.css";
+import { useCookies } from "react-cookie";
+
+import logoPng from "../../assets/images/logoPng.png";
+
 // 로고 만들어서 아래 넣을예정
 //import logo from "../../assets/images/loader.gif";
 import { Container } from "reactstrap";
 
 import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { updateAccounts, connectFailed } from "../../redux/actions/index";
+import { updateAccounts } from "../../redux/actions/index";
+import axios from "axios";
+import { utils } from "ethers";
+
 const NAV__LINKS = [
   {
     display: "Home",
@@ -30,6 +37,10 @@ const NAV__LINKS = [
     url: "/contact",
   },
   {
+    display: "Evolution",
+    url: "/upgrade",
+  },
+  {
     display: "TestField",
     url: "/test",
   },
@@ -39,11 +50,29 @@ const Header = () => {
   const dispatch = useDispatch();
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const wallet = useSelector((state) => state.AppState.wallet);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const Owner = useSelector((state) => state.AppState.Owner);
+  const isUser = useSelector((state) => state.AppState.isUser);
   const [isDisabled, setDisabled] = useState(false);
-  const [account, setAccount] = useState("연결이 필요합니다.");
+  const [accounts, setAccounts] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
+  const onboarding = useRef();
+
+  const Account = useSelector((state) => state.AppState.account);
+
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberAddress"]);
+
+  useEffect(() => {
+    if (cookies.rememberAddress === undefined) {
+      if (Account !== null) {
+        setCookie("rememberAddress", Account, { maxAge: 30 });
+      }
+    } else {
+      removeCookie("rememberAddress");
+    }
+  }, [Account]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -56,104 +85,129 @@ const Header = () => {
         headerRef.current.classList.remove("header__shrink");
       }
     });
-    return () => {
-      window.removeEventListener("scroll");
-    };
+    // return () => {
+    //     window.removeEventListener("scroll");
+    // };
+  }, []);
+
+  async function checkOwner(account) {
+    if (Owner === account) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
+    }
+  }
+
+  async function MyList(account) {
+    if (CreateNFTContract !== null) {
+      const MyNFTlists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: account });
+      const listsForm = await Promise.all(
+        MyNFTlists.map(async (i) => {
+          const tokenURI = await CreateNFTContract.methods
+            .tokenURI(i.tokenId)
+            .call();
+          const meta = await axios.get(tokenURI).then((res) => res.data);
+          let item = {
+            fileUrl: await meta.image,
+            formInput: {
+              tokenid: i.tokenId,
+              price: i.price,
+              rare: i.rare,
+              star: i.star,
+              name: await meta.name,
+              description: await meta.description,
+            },
+          };
+          return item;
+        })
+      );
+      return await listsForm;
+    } else {
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    if (!onboarding.current) {
+      onboarding.current = new MetaMaskOnboarding();
+    }
   }, []);
 
   useEffect(async () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      if ((await window.ethereum._metamask.isUnlocked()) === true) {
-        console.log("메타있는데 안잠겼지롱~");
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        const account = accounts[0];
+      if ((await window.ethereum.selectedAddress) !== null) {
+        const walletAddress = utils.getAddress(
+          await window.ethereum.selectedAddress
+        );
+        await axios
+          .post("http://127.0.0.1:5000/user/login", { address: walletAddress })
+          .then(async (res) => {
+            if (res.data.nick !== "noname") {
+              setAccounts([walletAddress]);
+            }
+          });
+      }
+    }
+  }, [Owner]);
+
+  useEffect(async () => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      if (accounts.length > 0) {
+        const getAddress = utils.getAddress(accounts[0]);
+        const checkUser = await axios
+          .post("http://127.0.0.1:5000/user/login", { address: getAddress })
+          .then((res) => res.data.nick);
         dispatch(
           updateAccounts({
             wallet: true,
-            accounts: accounts,
-            account: account,
+            account: getAddress,
+            isUser: checkUser === "noname" ? false : true,
+            MyNFTlists: await MyList(getAddress),
           })
         );
-        setAccount(account);
+        await checkOwner(getAddress);
         setDisabled(true);
-
-        await window.ethereum.on("accountsChanged", (accounts) => {
-          console.log(accounts.length);
-          if (accounts.length > 0) {
-            dispatch(
-              updateAccounts({
-                wallet: true,
-                accounts: accounts,
-                account: accounts[0],
-              })
-            );
-            setAccount(accounts[0]);
-            setDisabled(true);
-          } else {
-            dispatch(
-              updateAccounts({
-                wallet: false,
-                accounts: null,
-                account: null,
-              })
-            );
-            setAccount("연결이 필요합니다.");
+        await window.ethereum.on("accountsChanged", async (accounts) => {
+          if (accounts[0] === undefined) {
             setDisabled(false);
+          } else {
+            setAccounts(accounts);
           }
         });
+        // onboarding.current.stopOnboarding();
       } else {
-        console.log("메타있는데 잠김");
-        dispatch(
-          updateAccounts({
-            wallet: false,
-            accounts: null,
-            account: null,
-          })
-        );
+        setIsOwner(false);
         setDisabled(false);
       }
-    } else {
-      dispatch(
-        connectFailed({
-          errorMsg: "메타마스크가 필요합니다.",
-        })
-      );
     }
-    return () => {
-      window.ethereum.off("accountsChanged", () => {
-        dispatch(
-          updateAccounts({
-            wallet: false,
-            accounts: null,
-            account: null,
-          })
-        );
-        setDisabled(false);
-      });
-    };
-  }, [account]);
+  }, [accounts]);
+
+  useEffect(async () => {
+    if (isOwner) {
+      const getAddress = utils.getAddress(accounts[0]);
+      await axios
+        .post("http://127.0.0.1:5000/user/owner", { address: getAddress })
+        .then((res) => console.log(res.data.message));
+    }
+  }, [isOwner]);
 
   const toggleMenu = () => menuRef.current.classList.toggle("active__menu");
 
   async function checkWallet() {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const account = accounts[0];
-      dispatch(
-        updateAccounts({
-          wallet: true,
-          accounts: accounts,
-          account: account,
-        })
-      );
-      setAccount(account);
-      setDisabled(true);
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then((newAccounts) => setAccounts(newAccounts));
     } else {
-      alert("메타마스크 설치하세요");
+      if (
+        window.confirm(
+          "메타마스크 설치가 필요합니다.\n설치페이지로 이동하시겠습니까?"
+        )
+      ) {
+        onboarding.current.startOnboarding();
+      }
     }
   }
 
@@ -167,36 +221,71 @@ const Header = () => {
       </button>
     );
   };
-
   return (
     <header className="header" ref={headerRef}>
       <Container>
         <div className="navigation">
           <div className="logo">
-            <h2>
+            {/* <h2>
               <span>
-                <i className="ri-bear-smile-line">
-                  {/* <img src={logo} alt="loading..." /> */}
-                </i>
+                <i className="ri-bear-smile-line"> */}
+            {/* <img src={logo} alt="loading..." /> */}
+            {/*  </i>
               </span>
               NFTs
-            </h2>
+            </h2> */}
+            <img
+              src={logoPng}
+              alt=""
+              style={{
+                width: "60px",
+                height: "50px",
+                marginLeft: "10%",
+                marginBottom: "10px",
+              }}
+            />
           </div>
 
           <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
             <ul className="nav__list">
-              {NAV__LINKS.map((item, index) => (
-                <li className="nav__item" key={index}>
-                  <NavLink
-                    to={item.url}
-                    className={(navClass) =>
-                      navClass.isActive ? "active" : ""
-                    }
-                  >
-                    {item.display}
-                  </NavLink>
-                </li>
-              ))}
+              {NAV__LINKS.map((item, index) => {
+                if (item.display === "Create") {
+                  return (
+                    <li
+                      className="nav__item"
+                      id={`nav__item__${item.display}`}
+                      hidden={isUser || isOwner ? false : true}
+                      key={index}
+                    >
+                      <NavLink
+                        to={item.url}
+                        className={(navClass) =>
+                          navClass.isActive ? "active" : ""
+                        }
+                      >
+                        {item.display}
+                      </NavLink>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li
+                      className="nav__item"
+                      id={`nav__item__${item.display}`}
+                      key={index}
+                    >
+                      <NavLink
+                        to={item.url}
+                        className={(navClass) =>
+                          navClass.isActive ? "active" : ""
+                        }
+                      >
+                        {item.display}
+                      </NavLink>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </div>
 
@@ -204,16 +293,21 @@ const Header = () => {
             <span className="mobile__menu">
               <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
+            <div className="admin__btn" hidden={!isOwner}>
+              <Link to="/admin">
+                <i className="ri-admin-line"></i>
+              </Link>
+            </div>
 
             {isDisabled === false ? (
               walletButton()
             ) : (
               <div>
                 <div className="mypage__user__icon">
-                  <Link to="/mypage">
+                  <Link to="/mypage" hidden={!isUser}>
                     <i className="ri-user-3-line"></i>
                   </Link>
-                  {account}
+                  {utils.getAddress(accounts[0])}
                 </div>
               </div>
             )}
