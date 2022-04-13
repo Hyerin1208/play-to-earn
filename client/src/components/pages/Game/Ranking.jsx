@@ -97,14 +97,12 @@ const Ranking = () => {
     const result = [];
     for (let i = 0; i < 3; i++) {
       if (form[i] === undefined) {
-        // console.log("위쪽");
         result.push(
           <Fragment key={i}>
             <p>{i + 1}등 : 바로당신의 자리 </p>
           </Fragment>
         );
       } else {
-        // console.log("아래쪽");
         result.push(
           <Fragment key={i}>
             <p>
@@ -124,13 +122,11 @@ const Ranking = () => {
       result.push(<p>{i + 1}주차</p>);
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
-          // console.log("위쪽");
           result.push(<p key={k}> 공석 </p>);
         } else {
-          // console.log("아래쪽");
           result.push(
-            <p style={{ color: "white" }} key={k}>
-              {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
+            <p key={k}>
+              {form[i][k].games} / {form[i][k].rank}등 / {form[i][k].nick}
             </p>
           );
         }
@@ -139,7 +135,6 @@ const Ranking = () => {
     }
     return temp;
   }
-  console.log(weekly !== null ? weeklyRanking(weekly) : false);
 
   return (
     <>
