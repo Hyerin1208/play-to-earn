@@ -38,7 +38,8 @@ const NftSellCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+              <Link to={`/detailes/${props.item.formInput.tokenid}`}>
+                {" "}
                 {props.item.formInput.name}
               </Link>
             </h5>

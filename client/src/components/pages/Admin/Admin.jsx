@@ -47,20 +47,17 @@ const Admin = () => {
       })
       .then(async (res) => {
         if (res.data.message === "ok") {
-          console.log(res.data.totalclaim);
-          const arry = res.data.totalclaim;
+          const arry = await res.data.totalclaim;
+          console.log(arry);
           const result = arry.reduce((sum, element) => {
             return sum + element.balance;
           }, 0);
-          console.log(result);
           const contractbalance = await TokenClaimContract.methods
             .contractbalance()
             .call();
           const sendamount = parseInt(result) - parseInt(contractbalance);
 
           const claimAddress = await TokenClaimContract.options.address;
-          console.log(claimAddress);
-          console.log(sendamount);
           await AmusementArcadeTokenContract.methods
             .transfer(claimAddress, sendamount)
             .send({ from: account, gas: 3000000 });
@@ -110,7 +107,6 @@ const Admin = () => {
                       const contractbalance = await TokenClaimContract.methods
                         .contractbalance()
                         .call();
-                      console.log(contractbalance);
                     }}
                   >
                     버버버버버

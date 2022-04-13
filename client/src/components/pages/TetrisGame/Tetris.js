@@ -6,6 +6,8 @@ import React, {
   useCallback,
 } from "react";
 
+import ReactLoaing from "react-loading";
+
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "./constants";
 
 import { renderStartBackground } from "./js/Render";
@@ -14,7 +16,7 @@ import { Game } from "./js/Game.js";
 import Settings from "./Settings";
 import "./styles/Tetris.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 let sirtet;
 
@@ -48,12 +50,34 @@ const Tetris = ({ setShowModal }) => {
   const [countdownText, setCountdownText] = useState("");
   const [showSettings, setShowSettings] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [Loading, setLoading] = useState(true);
 
   const account = useSelector((state) => state.AppState.account);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const [myList, setMyList] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
+    mynftlists();
+    setLoading(false);
+  }, [CreateNFTContract]);
+
+  // 내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    setMyList(lists);
+  }
+
+  useEffect(() => {
     canvasRef.current.width = CANVAS_WIDTH;
     canvasRef.current.height = CANVAS_HEIGHT;
     const ctx = canvasRef.current.getContext("2d");
@@ -184,42 +208,88 @@ const Tetris = ({ setShowModal }) => {
       backgroundImage ? "animate__animated animate__fadeIn" : ""
     }`;
 
-    return (
-      <div className={overlayClass} style={overlayStyle}>
-        {!showSettings ? (
-          <>
-            <h1 className="display-3">Tetris</h1>
-            <button className="btn btn-primary mb-3" onClick={startGameHandler}>
-              Play
-            </button>
-            <button
-              className="btn btn-outline-light"
-              onClick={showSettingsHandler}
-            >
-              Settings
-            </button>
-          </>
-        ) : (
-          <Settings
-            customization={customization}
-            setCustomization={setCustomization}
-            onHide={hideSettingsHandler}
-            onTestSound={sirtet.playTestSound}
+    if (Loading) {
+      return (
+        <div>
+          잠시만 기다려 주세요
+          <ReactLoaing
+            type={"bars"}
+            color={"purple"}
+            height={375}
+            width={375}
           />
-        )}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className={overlayClass} style={overlayStyle}>
+          {!showSettings ? (
+            <>
+              <h1 className="display-3">Tetris</h1>
+              <button
+                className="btn btn-primary mb-3"
+                onClick={startGameHandler}
+              >
+                Play
+              </button>
+              <button
+                className="btn btn-outline-light"
+                onClick={showSettingsHandler}
+              >
+                Settings
+              </button>
+            </>
+          ) : (
+            <Settings
+              customization={customization}
+              setCustomization={setCustomization}
+              onHide={hideSettingsHandler}
+              onTestSound={sirtet.playTestSound}
+            />
+          )}
+        </div>
+      );
+    }
   }, [gameState, showSettings, backgroundImage, customization]);
 
   const gameOverOverlay = useMemo(() => {
     const sendPoint = async () => {
       const data = gameStats.score;
 
-      console.log(gameStats.score);
-      console.log(account);
-
+      function multiply(data) {
+        let rareD;
+        if (myList.filter((v) => v.rare === "5").length >= 3) {
+          rareD = 3;
+        } else if (myList.filter((v) => v.rare === "4").length >= 3) {
+          rareD = 2.5;
+        } else if (myList.filter((v) => v.rare === "3").length >= 3) {
+          rareD = 2;
+        } else if (myList.filter((v) => v.rare === "2").length >= 3) {
+          rareD = 1.5;
+        } else {
+          rareD = 1;
+        }
+        let starD;
+        if (myList.filter((v) => v.star === "5").length >= 3) {
+          starD = 3;
+        } else if (myList.filter((v) => v.star === "4").length >= 3) {
+          starD = 2.5;
+        } else if (myList.filter((v) => v.star === "3").length >= 3) {
+          starD = 2;
+        } else if (myList.filter((v) => v.star === "2").length >= 3) {
+          starD = 1.5;
+        } else if (myList.filter((v) => v.star === "1").length >= 3) {
+          starD = 1.2;
+        } else {
+          starD = 1;
+        }
+        return data * (starD * rareD);
+      }
       await axios
-        .post(`http://localhost:5000/game/tetris`, { data, account })
+        .post(`http://localhost:5000/game/tetris`, {
+          data: multiply(data),
+          account: account,
+        })
         .then((res) => {
           console.log(res.data);
           alert("점수 등록 완료");

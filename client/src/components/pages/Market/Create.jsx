@@ -74,7 +74,6 @@ const Create = (props) => {
     const url = await uploadToIPFS();
     /* next, create the item */
     const price = parseInt(formInput.price);
-    console.log(Account);
 
     await CreateNFTContract.methods
       .CreateNFTinContract(url, price)
@@ -131,7 +130,6 @@ const Create = (props) => {
               alert("이미 발급된 번호입니다.");
             }
           });
-        console.log(res.events.NFTItemCreated.returnValues.star);
       });
   }
 

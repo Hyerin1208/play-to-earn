@@ -25,14 +25,12 @@ const EvoProfile = (props) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  console.log(props.item);
-  useEffect(() => {
-    console.log(seletedImg);
-  }, [seletedImg]);
+  // useEffect(() => {
+  //   console.log(seletedImg);
+  // }, [seletedImg]);
 
   useEffect(() => {
     try {
-      console.log("실행");
       mynftlists();
       setLoading(false);
     } catch (error) {
@@ -54,7 +52,6 @@ const EvoProfile = (props) => {
             console.log(error);
           }
         });
-      console.log(await lists);
 
       const result = await Promise.all(
         await lists.map(async (i) => {
@@ -76,7 +73,6 @@ const EvoProfile = (props) => {
           return item;
         })
       );
-      console.log(result);
       setnftArray(result);
       setSelectedImg(result[0].fileUrl);
     }
@@ -130,13 +126,11 @@ const EvoProfile = (props) => {
 
                   <div className="img__Container">
                     {nftArray.map((image, index) => (
-                      <Col lg="2" md="4" sm="2">
+                      <Col lg="2" md="4" sm="2" key={index}>
                         <img
-                          key={index}
                           src={image.fileUrl}
                           alt="nfts"
                           onClick={() => {
-                            console.log(image);
                             setSeletedNFT(image);
                             setSelectIndex(index);
                             setSelectTokenId(image.formInput.tokenid);

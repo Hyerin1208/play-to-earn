@@ -58,7 +58,6 @@ const OwnerSellList = () => {
               description: await meta.description,
             },
           };
-          console.log(item);
           return item;
         })
       );

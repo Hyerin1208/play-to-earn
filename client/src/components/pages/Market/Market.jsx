@@ -25,19 +25,20 @@ const Market = () => {
 
   const [data, setData] = useState("");
 
-  console.log(nftArray);
-
   const quantityPageRef = useRef(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [endPosition, setEndPosition] = useState(4);
 
   useEffect(() => {
     if (Selllists !== null) {
-      console.log("실행");
       setnftArray([...Selllists].reverse());
       setLoading(null);
     }
   }, [Selllists]);
+
+  useEffect(() => {
+    console.log(nftArray);
+  }, [nftArray]);
 
   // ============ 페이징 =========================================
 
@@ -66,8 +67,6 @@ const Market = () => {
   // if (pageCount === 1) return null;
   // const pages = _.range(1, pageCount + 1);
 
-  console.log(Selllists);
-
   // ============ 데이터 정렬 (High,MID,LOW Late) ==================
   const handleSort = async (e) => {
     const filterValue = e.target.value;
@@ -80,7 +79,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 10
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
 
@@ -88,7 +86,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 5 && item.formInput.price < 10
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
 
@@ -96,7 +93,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 1 && item.formInput.price < 5
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
   };
@@ -105,11 +101,14 @@ const Market = () => {
   const handleStar = async (e) => {
     const filterValue = e.target.value;
 
+    if (filterValue === "level") {
+      setnftArray([...Selllists].reverse());
+    }
+
     if (filterValue === "one") {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "1"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -117,7 +116,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "2"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -125,7 +123,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "3"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -133,7 +130,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "4"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -141,47 +137,44 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "5"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
   };
 
   // ============ 데이터 정렬 (rare) / 오름&내림차순 ==================
   const handleRare = async (e) => {
-    const filterValue = e.currentTarget.value;
+    const filterValue = e.target.value;
 
     if (filterValue === "rarity") {
       setnftArray([...Selllists].reverse());
     }
 
     if (filterValue === "ascending") {
-      const sortNfts = await Selllists.sort((a, b) => {
-        if (a.fileUrl < b.fileUrl) {
+      setnftArray([]);
+      const sortNFTs = await Selllists.sort(function (a, b) {
+        if (a.formInput.rare < b.formInput.rare) {
           return -1;
-        } else if (a.fileUrl > b.fileUrl) {
+        } else if (a.formInput.rare > b.formInput.rare) {
           return 1;
         } else {
           return 0;
         }
       });
-
-      console.log(sortNfts);
-      setnftArray(sortNfts);
+      setnftArray(sortNFTs);
     }
 
     if (filterValue === "descending") {
-      const sortNfts = await Selllists.sort(function compare(a, b) {
-        if (a.fileUrl > b.fileUrl) {
+      setnftArray([]);
+      const sortNFTs = await Selllists.sort(function (a, b) {
+        if (a.formInput.rare > b.formInput.rare) {
           return -1;
-        } else if (a.fileUrl < b.fileUrl) {
+        } else if (a.formInput.rare < b.formInput.rare) {
           return 1;
         } else {
           return 0;
         }
       });
-
-      console.log(sortNfts);
-      setnftArray(sortNfts);
+      setnftArray(sortNFTs);
     }
   };
 
@@ -205,7 +198,7 @@ const Market = () => {
                   <div className="filter__left">
                     <div className="all__category__filter">
                       <select onChange={(e) => handleStar(e)}>
-                        <option>STAR LEVEL</option>
+                        <option value="level">STAR LEVEL</option>
                         <option value="one">one</option>
                         <option value="two">two</option>
                         <option value="three">three</option>

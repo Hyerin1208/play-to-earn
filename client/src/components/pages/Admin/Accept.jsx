@@ -29,12 +29,10 @@ const Accept = () => {
     const result = await axios
       .post(`http://localhost:5000/game/getclaim`, { address: address })
       .then((res) => res.data.message);
-    console.log(result);
     return await result;
   }
 
   async function setClaim(address, amount) {
-    console.log(amount);
     if (TokenClaimContract !== null) {
       await TokenClaimContract.methods
         .setClaim(address, amount)
@@ -93,7 +91,6 @@ const Accept = () => {
                     });
                   } else {
                     alert("승인이 완료된 유저입니다.");
-                    console.log(e.target);
                     e.target.setAttribute("hidden", "true");
                   }
                 }

@@ -65,7 +65,6 @@ const EvoBackGround = () => {
   // three.js로 무언가를 나타내기 위해서는 scene, camera, renderer가 필요
 
   const raycaster = new THREE.Raycaster();
-  console.log(raycaster);
   // scene 생성하기
   const scene = new THREE.Scene();
   // camera 생성 및 설정하기
@@ -79,26 +78,10 @@ const EvoBackGround = () => {
   // renderer 생성하기
   const renderer = new THREE.WebGLRenderer();
 
-  //   console.log(scene);
-  //   console.log(camera);
-  //   console.log(renderer);
-
   // 렌더링할 구역의 높이와 너비 설정
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(devicePixelRatio);
   document.body.appendChild(renderer.domElement);
-
-  //   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-
-  //   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-
-  //   console.log(boxGeometry);
-  //   console.log(material);
-
-  //   const mesh = new THREE.Mesh(boxGeometry, material);
-  //   console.log(mesh);
-
-  //   scene.add(mesh);
   new OrbitControls(camera, renderer.domElement);
   camera.position.z = 5;
 
@@ -111,15 +94,12 @@ const EvoBackGround = () => {
   const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
   scene.add(planeMesh);
 
-  console.log(planeMesh.geometry.attributes.position.array);
-
   const { array } = planeMesh.geometry.attributes.position;
 
   for (let i = 0; i < array.length; i += 3) {
     const x = array[i];
     const y = array[i + 1];
     const z = array[i + 2];
-    // console.log(array[i]);
 
     array[i + 2] = z + Math.random();
   }
@@ -143,7 +123,6 @@ const EvoBackGround = () => {
 
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObject(planeMesh);
-    console.log(intersects);
   }
 
   animate();
@@ -151,8 +130,6 @@ const EvoBackGround = () => {
   useEffect((event) => {
     mouse.x = (event.clientX / 1024) * 2 - 1;
     mouse.y = -(event.clientY / 800) * 2 + 1;
-
-    console.log(mouse);
   }, []);
 
   return (
