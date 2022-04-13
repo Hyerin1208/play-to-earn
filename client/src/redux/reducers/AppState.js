@@ -55,7 +55,7 @@ export default function (state = initialState, action) {
     case UPDATE_LISTS:
       return {
         ...state,
-        Selllists: [...state.Selllists, action.payload.Selllists],
+        Selllists: action.payload.Selllists,
       };
     case UPDATE_MYLISTS:
       return {

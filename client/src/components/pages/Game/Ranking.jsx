@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import CommonSection from "../../ui/templete/CommonSection";
 import "./ranking.css";
@@ -16,6 +16,7 @@ const Ranking = () => {
   const [timerHours, setTimerHours] = useState();
   const [timerMinutes, setTimerMinutes] = useState();
   const [timerSeconds, setTimerSeconds] = useState();
+  const timerid = useRef(null);
 
   const [isStop, setIsStop] = useState(false);
 
@@ -27,10 +28,7 @@ const Ranking = () => {
   }, []);
 
   useEffect(() => {
-    let interval = setInterval(async () => {
-      //   const count = await axios
-      //     .get(`http://localhost:5000/user/time`)
-      //     .then((res) => res.data);
+    timerid.current = setInterval(async () => {
       const countdownDate = new Date(defaultTime).getTime();
 
       const now = new Date().getTime();
@@ -48,11 +46,10 @@ const Ranking = () => {
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
-      } else {
-        clearInterval(interval);
       }
     }, 1000);
     return () => {
+      clearInterval(timerid.current);
       setIsStop(true);
     };
   }, [defaultTime]);

@@ -36,12 +36,6 @@ const Market = () => {
       console.log("실행");
       setnftArray([...Selllists].reverse());
       setLoading(null);
-      // setPaginatedPosts(
-      //   _(...Selllists)
-      //     .slice(0)
-      //     .take(pageSize)
-      //     .value()
-      // );
     }
   }, [Selllists]);
 

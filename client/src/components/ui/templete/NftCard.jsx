@@ -1,38 +1,26 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./nft-card.css";
 import "../../pages/Admin/owner-sellList.css";
 import Modal from "../templete/Modal";
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
-import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
-import { useSelector } from "react-redux";
 
 const NftCard = (props) => {
   const [showModal, setShowModal] = useState(false);
-  let params = useParams();
-  const [nftArray, setnftArray] = useState([]);
-  // const [rating, setRating] = useState(null);
-  // const [hover, setHover] = useState(null);
 
   const stars = Array(5).fill(1);
-  const [currentValue, setCurrnetValue] = useState(props.item.formInput.star);
-  const [hoverValue, setHoverValue] = useState(undefined);
+  const [testdata, setTestdata] = useState(null);
 
-  const CreateNFTContract = useSelector(
-    (state) => state.AppState.CreateNFTContract
-  );
-
-  useEffect(() => {}, [currentValue]);
+  useEffect(() => {
+    setTestdata(props.item);
+  }, [props]);
 
   // const account = useSelector((state) => state.AppState.account);
-
-  console.log(nftArray);
-
-  console.log(props.item.formInput.rare);
+  console.log(testdata);
 
   return (
     <div>
@@ -63,7 +51,7 @@ const NftCard = (props) => {
               <div className="bid__container">
                 <h6>Current Bid</h6>
                 {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
-                <p>{props.item.formInput.price} ETH</p>
+                <p>{props.item.formInput.price} AAT</p>
                 <Badge pill bg="light" text="dark" className="rare__badge">
                   rare : {props.item.formInput.rare}
                 </Badge>
@@ -85,15 +73,10 @@ const NftCard = (props) => {
                       />
                       <FaStar
                         className="star"
-                        defaultValue={props.item.formInput.star}
+                        defaultValue={ratingValue}
                         key={i}
-                        color={
-                          (hoverValue || currentValue) > i
-                            ? "#ffc107"
-                            : "#e4e5e9"
-                        }
+                        color={ratingValue > i ? "#ffc107" : "#e4e5e9"}
                         size={20}
-                        onChange={() => setCurrnetValue(ratingValue)}
                       />
                     </label>
                   );
@@ -119,7 +102,7 @@ const NftCard = (props) => {
         </div>
       </div>
       <Routes>
-        <Route path="detailes/*" element={<NftDetails item={props.item} />} />
+        <Route path="detailes/*" element={<NftDetails />} />
       </Routes>
     </div>
   );

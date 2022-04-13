@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import "./mysell-card.css";
-// import SellModal from "../templete/SellModal";
+
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
-import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import SellModal from "../templete/SellModal";
 
@@ -12,11 +12,8 @@ import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
 
 const NftSellCard = (props) => {
-  //   let params = useParams();
   const [showModal, setShowModal] = useState(false);
 
-  // const [rating, setRating] = useState(null);
-  // const [hover, setHover] = useState(null);
   const stars = Array(5).fill(1);
   const [currentValue, setCurrnetValue] = useState(props.item.formInput.star);
   const [hoverValue, setHoverValue] = useState(undefined);
@@ -89,15 +86,10 @@ const NftSellCard = (props) => {
                       />
                       <FaStar
                         className="star"
-                        defaultValue={props.item.formInput.star}
+                        defaultValue={ratingValue}
                         key={i}
-                        color={
-                          (hoverValue || currentValue) > i
-                            ? "#ffc107"
-                            : "#e4e5e9"
-                        }
+                        color={ratingValue > i ? "#ffc107" : "#e4e5e9"}
                         size={20}
-                        onChange={() => setCurrnetValue(ratingValue)}
                       />
                     </label>
                   );
