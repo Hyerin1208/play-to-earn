@@ -77,7 +77,7 @@ button {
 }
 .content p {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 }
 .active-content {
   display: block;
