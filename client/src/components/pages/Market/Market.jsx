@@ -25,22 +25,18 @@ const Market = () => {
 
   const [data, setData] = useState("");
 
-  console.log(nftArray);
-
   const quantityPageRef = useRef(4);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [endPosition, setEndPosition] = useState(4);
 
   useEffect(() => {
     if (Selllists !== null) {
-      console.log("실행");
       setnftArray([...Selllists].reverse());
       setLoading(null);
     }
   }, [Selllists]);
 
   useEffect(() => {
-    console.log("어레이바뀔때");
     console.log(nftArray);
   }, [nftArray]);
 
@@ -83,7 +79,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 10
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
 
@@ -91,7 +86,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 5 && item.formInput.price < 10
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
 
@@ -99,7 +93,6 @@ const Market = () => {
       const filterData = await Selllists.filter(
         (item) => item.formInput.price >= 1 && item.formInput.price < 5
       );
-      console.log(filterData);
       setnftArray(filterData);
     }
   };
@@ -116,8 +109,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "1"
       );
-      console.log(filterStar);
-      console.log(typeof filterStar);
       setnftArray(filterStar);
     }
 
@@ -125,7 +116,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "2"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -133,7 +123,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "3"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -141,7 +130,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "4"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
 
@@ -149,7 +137,6 @@ const Market = () => {
       const filterStar = await Selllists.filter(
         (item) => item.formInput.star === "5"
       );
-      console.log(filterStar);
       setnftArray(filterStar);
     }
   };

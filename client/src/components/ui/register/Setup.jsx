@@ -26,18 +26,7 @@ const Setup = () => {
     nick: "Please enter your name using only letters.",
     email: "Enter your E-mail address",
   });
-  console.log(form);
 
-  useEffect(() => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  // const displayInfo = () => {
-  //   console.log(nick + email);
-  // };
   const addSignUp = async () => {
     await axios
       .post("http://localhost:5000/user/register", {
@@ -52,7 +41,6 @@ const Setup = () => {
   };
 
   const [checkItem, setCheckItem] = useState(null);
-  console.log(checkItem);
 
   async function lastBtn() {
     let data = JSON.stringify({
@@ -84,7 +72,6 @@ const Setup = () => {
             price: price,
           })
           .then((res) => {
-            console.log(res.data.message);
             if (res.data.message === "ok") {
               alert("NFT발급 성공");
             } else {

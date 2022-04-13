@@ -157,7 +157,10 @@ const Header = () => {
       if (accounts.length > 0) {
         const getAddress = utils.getAddress(accounts[0]);
         const checkUser = await axios
-          .post("http://127.0.0.1:5000/user/login", { address: getAddress })
+          .post("http://127.0.0.1:5000/user/login", {
+            address: getAddress,
+            owner: Owner,
+          })
           .then((res) => res.data.nick);
         dispatch(
           updateAccounts({
