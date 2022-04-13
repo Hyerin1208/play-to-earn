@@ -5,6 +5,7 @@ import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Clock from "./Clock";
+import Carousel from "react-elastic-carousel";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
@@ -27,37 +28,34 @@ const Ranking = () => {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    let interval = setInterval(async () => {
-      //   const count = await axios
-      //     .get(`http://localhost:5000/user/time`)
-      //     .then((res) => res.data);
-      const countdownDate = new Date(defaultTime).getTime();
+  // useEffect(() => {
+  //   let interval = setInterval(async () => {
+  //     const countdownDate = new Date(defaultTime).getTime();
 
-      const now = new Date().getTime();
-      const distance = countdownDate - now;
+  //     const now = new Date().getTime();
+  //     const distance = countdownDate - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      if (!isStop) {
-        // update timer
-        setTimerDays(days);
-        setTimerHours(hours);
-        setTimerMinutes(minutes);
-        setTimerSeconds(seconds);
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
-    return () => {
-      setIsStop(true);
-      setLoading(false);
-    };
-  }, [defaultTime]);
+  //     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //     const hours = Math.floor(
+  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  //     );
+  //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  //     if (!isStop) {
+  //       // update timer
+  //       setTimerDays(days);
+  //       setTimerHours(hours);
+  //       setTimerMinutes(minutes);
+  //       setTimerSeconds(seconds);
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     setIsStop(true);
+  //     setLoading(false);
+  //   };
+  // }, [defaultTime]);
 
   const toggleTab = (index) => {
     setToggleState(index);
@@ -120,35 +118,28 @@ const Ranking = () => {
   }
 
   function weeklyRanking(form) {
-    const result = [];
+    const temp = [];
     for (let i = 0; i < form.length; i++) {
-      result.push(
-        <Fragment key={i}>
-          <p>{i + 1}주차</p>
-        </Fragment>
-      );
+      const result = [];
+      result.push(<p>{i + 1}주차</p>);
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           // console.log("위쪽");
-          result.push(
-            <Fragment key={k}>
-              <p key={k}> 공석 </p>
-            </Fragment>
-          );
+          result.push(<p key={k}> 공석 </p>);
         } else {
           // console.log("아래쪽");
           result.push(
-            <Fragment key={k}>
-              <p>
-                {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
-              </p>
-            </Fragment>
+            <p style={{ color: "white" }} key={k}>
+              {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
+            </p>
           );
         }
       }
+      temp.push(<div key={i}>{result}</div>);
     }
-    return result;
+    return temp;
   }
+  console.log(weekly !== null ? weeklyRanking(weekly) : false);
 
   return (
     <>
@@ -170,7 +161,7 @@ const Ranking = () => {
                   className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(2)}
                 >
-                  Weekly Ranking
+                  form Ranking
                 </button>
                 <button
                   className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
@@ -228,7 +219,9 @@ const Ranking = () => {
                   <hr />
                   <Container className="my__rank">
                     <div className="ranking__box">
-                      {weekly !== null ? weeklyRanking(weekly) : false}
+                      <Carousel>
+                        {weekly !== null ? weeklyRanking(weekly) : false}
+                      </Carousel>
                     </div>
                   </Container>
                 </div>
