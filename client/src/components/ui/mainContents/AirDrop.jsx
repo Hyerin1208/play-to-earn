@@ -11,7 +11,7 @@ const AirDrop = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const countdownDate = new Date("apr 15, 2022 18:00:00").getTime();
+      const countdownDate = new Date("apr 29, 2022 18:00:00").getTime();
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
