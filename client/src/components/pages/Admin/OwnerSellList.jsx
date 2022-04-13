@@ -62,7 +62,7 @@ const OwnerSellList = () => {
           return item;
         })
       );
-
+      console.log(result);
       setnftArray(result);
     }
   }
