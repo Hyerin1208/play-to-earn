@@ -47,7 +47,8 @@ const Admin = () => {
       })
       .then(async (res) => {
         if (res.data.message === "ok") {
-          const arry = res.data.totalclaim;
+          const arry = await res.data.totalclaim;
+          console.log(arry);
           const result = arry.reduce((sum, element) => {
             return sum + element.balance;
           }, 0);
