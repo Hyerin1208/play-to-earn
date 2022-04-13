@@ -97,10 +97,15 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                  <div type="button" onClick={() => sendRank()}>
-                    Send Ranking
-                  </div>
                   <button
+                    className="sendRank__btn"
+                    type="button"
+                    onClick={() => sendRank()}
+                  >
+                    Send Ranking
+                  </button>
+                  <button
+                    className=""
                     onClick={async () => {
                       const contractbalance = await TokenClaimContract.methods
                         .contractbalance()
