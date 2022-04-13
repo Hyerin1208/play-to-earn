@@ -20,9 +20,10 @@ import { utils } from "ethers";
 
 import axios from "axios";
 
-import { updateAccounts } from "../../../redux/actions/index";
+import { updateLists } from "../../../redux/actions/index";
 
 const Evolution = (props) => {
+  const dispatch = useDispatch();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
@@ -53,18 +54,13 @@ const Evolution = (props) => {
   const [NFTId, setNFTId] = useState(null);
 
   const stars = Array(5).fill(1);
-  const [currentValue, setCurrnetValue] = useState("");
-  const [hoverValue, setHoverValue] = useState("");
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
 
-  useEffect(async () => {
+  useEffect(() => {
     setLoading(null);
   }, []);
-
-  useEffect(async () => {
-    console.log(beforeEvo);
-  }, [beforeEvo]);
-
-  console.log("star갯수" + afterEvo.formInput.star);
 
   return (
     <Fragment>
@@ -219,11 +215,10 @@ const Evolution = (props) => {
                               />
                               <FaStar
                                 className="star"
-                                defaultValue={afterEvo.formInput.star}
+                                defaultValue={ratingValue}
                                 key={i}
                                 color={ratingValue > i ? "#ffc107" : "#e4e5e9"}
                                 size={20}
-                                onChange={() => setHoverValue(ratingValue)}
                               />
                             </label>
                           );

@@ -17,19 +17,19 @@ module.exports = class Game extends Sequelize.Model {
           unique: true,
         },
         snakePoint: {
-          type: Sequelize.INTEGER(100),
+          type: Sequelize.FLOAT(11),
           allowNull: true,
         },
         puzzlePoint: {
-          type: Sequelize.INTEGER(100),
+          type: Sequelize.FLOAT(11),
           allowNull: true,
         },
         minePoint: {
-          type: Sequelize.INTEGER(100),
+          type: Sequelize.FLOAT(11),
           allowNull: true,
         },
         tetrisPoint: {
-          type: Sequelize.INTEGER(100),
+          type: Sequelize.FLOAT(11),
           allowNull: true,
         },
         approve: {

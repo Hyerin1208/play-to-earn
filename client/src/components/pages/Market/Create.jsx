@@ -74,7 +74,6 @@ const Create = (props) => {
     const url = await uploadToIPFS();
     /* next, create the item */
     const price = parseInt(formInput.price);
-    console.log(Account);
 
     await CreateNFTContract.methods
       .CreateNFTinContract(url, price)
@@ -86,27 +85,42 @@ const Create = (props) => {
         }
       })
       .then(async (res) => {
-        let item = {
-          fileUrl: fileUrl,
-          formInput: {
-            tokenId: res.events.NFTItemCreated.returnValues.tokenId,
-            price: formInput.price,
-            address: Account,
-            rare: res.events.NFTItemCreated.returnValues.rare,
-            star: res.events.NFTItemCreated.returnValues.star,
-            name: formInput.name,
-            description: formInput.description,
-          },
-        };
-        if (res.events.NFTItemCreated.returnValues.sell)
-          dispatch(updateLists({ Selllists: item }));
+        const lists = await CreateNFTContract.methods.Selllists().call();
+
+        const listsForm = await Promise.all(
+          lists.map(async (i) => {
+            const tokenURI = await CreateNFTContract.methods
+              .tokenURI(i.tokenId)
+              .call();
+            const meta = await axios.get(tokenURI).then((res) => res.data);
+            let item = {
+              fileUrl: await meta.image,
+              formInput: {
+                tokenId: i.tokenId,
+                price: i.price,
+                star: i.star,
+                rare: i.rare,
+                name: await meta.name,
+                description: await meta.description,
+              },
+            };
+            return item;
+          })
+        );
+        dispatch(
+          updateLists({
+            Selllists: listsForm,
+          })
+        );
 
         await axios
           .post(`http://localhost:5000/nfts`, {
             tokenId: res.events.NFTItemCreated.returnValues.tokenId,
             address: Account,
-            rare: res.events.NFTItemCreated.returnValues.rare,
-            star: res.events.NFTItemCreated.returnValues.star,
+            img: fileUrl,
+            name: formInput.name,
+            description: formInput.description,
+            price: formInput.price,
           })
           .then((res) => {
             console.log(res.data.message);
@@ -116,7 +130,6 @@ const Create = (props) => {
               alert("이미 발급된 번호입니다.");
             }
           });
-        console.log(res.events.NFTItemCreated.returnValues.star);
       });
   }
 

@@ -15,6 +15,12 @@ const Admin = () => {
   const [error, setError] = useState(null);
 
   const account = useSelector((state) => state.AppState.account);
+  const AmusementArcadeTokenContract = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
+  );
+  const TokenClaimContract = useSelector(
+    (state) => state.AppState.TokenClaimContract
+  );
 
   const [rankingDB, setRankingDB] = useState(null);
 
@@ -39,8 +45,22 @@ const Admin = () => {
         rankingDB: rankingDB,
         address: account,
       })
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.message === "ok") {
+          const arry = await res.data.totalclaim;
+          console.log(arry);
+          const result = arry.reduce((sum, element) => {
+            return sum + element.balance;
+          }, 0);
+          const contractbalance = await TokenClaimContract.methods
+            .contractbalance()
+            .call();
+          const sendamount = parseInt(result) - parseInt(contractbalance);
+
+          const claimAddress = await TokenClaimContract.options.address;
+          await AmusementArcadeTokenContract.methods
+            .transfer(claimAddress, sendamount)
+            .send({ from: account, gas: 3000000 });
           alert("DB 전송 완료");
           window.location.reload();
         } else {
@@ -77,6 +97,15 @@ const Admin = () => {
                   <div type="button" onClick={() => sendRank()}>
                     Send Ranking
                   </div>
+                  <button
+                    onClick={async () => {
+                      const contractbalance = await TokenClaimContract.methods
+                        .contractbalance()
+                        .call();
+                    }}
+                  >
+                    버버버버버
+                  </button>
                 </Col>
                 <Col xs="8">
                   <Accept />

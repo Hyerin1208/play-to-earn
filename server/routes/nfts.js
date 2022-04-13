@@ -15,22 +15,35 @@ router.post("/", async (req, res, next) => {
     Nfts.create({
       tokenId: req.body.tokenId,
       address: req.body.address,
-      rare: req.body.rare,
-      star: req.body.star,
+      img: req.body.img,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
     });
     res.json({ message: "ok" });
   } else {
-    res.json({ rare: nft.rare, star: nft.star, address: nft.address });
+    res.json({
+      address: nft.address,
+      img: nft.img,
+      name: nft.name,
+      description: nft.description,
+      price: nft.price,
+      rare: nft.rare,
+      star: nft.star,
+      likes: nft.likes,
+      views: nft.views,
+    });
   }
 });
 
 router.post("/upgrade", async (req, res, next) => {
+  console.log(req.body.tokenId);
   try {
     await Nfts.update(
       { rare: req.body.rare, star: req.body.star },
       { where: { tokenId: req.body.tokenId } }
     );
-    res.json({ rare: req.body.rare, star: req.body.star });
+    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     next(error);

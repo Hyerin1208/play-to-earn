@@ -3,11 +3,9 @@ import styled from "styled-components";
 
 import { Marginer } from "./Marginer";
 
-import NaimingLogo from "../../../assets/images/naminglogo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { updateMyLists } from "../../../redux/actions/index";
+import { updateMyLists, updateLists } from "../../../redux/actions/index";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const DetailsContainer = styled.div`
   width: 100%;
@@ -74,23 +72,46 @@ const OurLogo = styled.div`
 `;
 
 const EvoDetails = (props) => {
-  const [autoChange, setAutoChange] = useState(false);
-  const [changeCard, setChangeCard] = useState(false);
-  const [tokenId, setTokenId] = useState(null);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
   const account = useSelector((state) => state.AppState.account);
   const dispatch = useDispatch();
-
-  const [rare, setRare] = useState("");
-  const [star, setStar] = useState("");
+  const [isEvo, setIsEvo] = useState(false);
 
   useEffect(() => {
-    console.log(props);
-  }, [props]);
+    return async () => {
+      if (isEvo) {
+        const lists = await CreateNFTContract.methods.Selllists().call();
 
-  console.log(CreateNFTContract);
+        const listsForm = await Promise.all(
+          lists.map(async (i) => {
+            const tokenURI = await CreateNFTContract.methods
+              .tokenURI(i.tokenId)
+              .call();
+            const meta = await axios.get(tokenURI).then((res) => res.data);
+            let item = {
+              fileUrl: await meta.image,
+              formInput: {
+                tokenId: i.tokenId,
+                price: i.price,
+                star: i.star,
+                rare: i.rare,
+                name: await meta.name,
+                description: await meta.description,
+              },
+            };
+            return item;
+          })
+        );
+        dispatch(
+          updateLists({
+            Selllists: listsForm,
+          })
+        );
+      }
+    };
+  }, [isEvo]);
 
   return (
     <DetailsContainer>
@@ -139,8 +160,6 @@ const EvoDetails = (props) => {
                   );
                   props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
 
-                  console.log(listsForm[props.data.NFTIndex].formInput.rare);
-
                   axios
                     .post(`http://localhost:5000/nfts/upgrade`, {
                       tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
@@ -148,12 +167,10 @@ const EvoDetails = (props) => {
                       star: listsForm[props.data.NFTIndex].formInput.star,
                     })
                     .then((res) => {
-                      setRare(res.data.rare);
-                      setStar(res.data.star);
-                      console.log(res.data.star);
+                      console.log(res.data.message);
                     });
-                  console.log(await listsForm);
                   dispatch(updateMyLists({ MyNFTlists: await listsForm }));
+                  setIsEvo(true);
                 });
             }
           }}

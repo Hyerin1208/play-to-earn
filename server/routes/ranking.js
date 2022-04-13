@@ -14,7 +14,7 @@ router.post("/", async (req, res, next) => {
   console.log(checkApprove.length);
   try {
     if (checkApprove.length === 0) {
-      rankingDB.mineranker
+      await rankingDB.mineranker
         .filter((v, i) => {
           return i < 3;
         })
@@ -28,7 +28,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
-      rankingDB.snakeranker
+      await rankingDB.snakeranker
         .filter((v, i) => {
           return i < 3;
         })
@@ -42,7 +42,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
-      rankingDB.puzzleranker
+      await rankingDB.puzzleranker
         .filter((v, i) => {
           return i < 3;
         })
@@ -56,7 +56,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
-      rankingDB.tetrisranker
+      await rankingDB.tetrisranker
         .filter((v, i) => {
           return i < 3;
         })
@@ -74,20 +74,27 @@ router.post("/", async (req, res, next) => {
         User.update(
           { weeks: findUser.weeks + 1 },
           { where: { address: address } }
-        ).then(async () => {
-          await Game.update(
-            {
-              snakePoint: null,
-              puzzlePoint: null,
-              tetrisPoint: null,
-              snakePoint: null,
-              approve: false,
-            },
-            { where: {} }
-          );
-        });
+        )
+          .then(async () => {
+            await Game.update(
+              {
+                snakePoint: null,
+                puzzlePoint: null,
+                tetrisPoint: null,
+                snakePoint: null,
+                approve: false,
+              },
+              { where: {} }
+            );
+          })
+          .then(async () => {
+            const totalclaim = await Ranking.findAll({
+              where: { claim: false },
+              attributes: ["balance"],
+            });
+            res.json({ message: "ok", totalclaim: totalclaim });
+          });
       }
-      res.json({ message: "ok" });
     } else {
       res.json({ message: "no" });
     }
@@ -117,6 +124,15 @@ router.post("/balance", async (req, res) => {
 router.post("/previous", async (req, res) => {
   const previousRank = await Ranking.findAll();
   res.json(previousRank);
+});
+
+router.post("/sendbalance", async (req, res) => {
+  const totalclaim = await Ranking.findAll({
+    where: { claim: false },
+    attributes: ["balance"],
+  });
+  console.log(totalclaim);
+  res.json({ totalclaim: totalclaim });
 });
 
 module.exports = router;

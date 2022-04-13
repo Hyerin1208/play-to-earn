@@ -58,11 +58,10 @@ const OwnerSellList = () => {
               description: await meta.description,
             },
           };
-          console.log(item);
           return item;
         })
       );
-
+      console.log(result);
       setnftArray(result);
     }
   }

@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import CommonSection from "../../ui/templete/CommonSection";
 import "./ranking.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Clock from "./Clock";
+import Carousel from "react-elastic-carousel";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ const Ranking = () => {
   const [timerHours, setTimerHours] = useState();
   const [timerMinutes, setTimerMinutes] = useState();
   const [timerSeconds, setTimerSeconds] = useState();
+  const timerid = useRef(null);
 
   const [isStop, setIsStop] = useState(false);
 
@@ -24,13 +26,11 @@ const Ranking = () => {
       .get(`http://localhost:5000/user/time`)
       .then((res) => res.data);
     setdefaultTime(parseInt(count.count));
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    let interval = setInterval(async () => {
-      //   const count = await axios
-      //     .get(`http://localhost:5000/user/time`)
-      //     .then((res) => res.data);
+    timerid.current = setInterval(async () => {
       const countdownDate = new Date(defaultTime).getTime();
 
       const now = new Date().getTime();
@@ -48,11 +48,10 @@ const Ranking = () => {
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
-      } else {
-        clearInterval(interval);
       }
     }, 1000);
     return () => {
+      clearInterval(timerid.current);
       setIsStop(true);
     };
   }, [defaultTime]);
@@ -90,23 +89,22 @@ const Ranking = () => {
       .catch((error) => {
         setError(error);
       });
+    setLoading(false);
   }, [account]);
 
   function RankingListForm(form) {
     const result = [];
     for (let i = 0; i < 3; i++) {
       if (form[i] === undefined) {
-        // console.log("위쪽");
         result.push(
-          <Fragment>
-            <p key={i}>{i + 1}등 : 바로당신의 자리 </p>
+          <Fragment key={i}>
+            <p>{i + 1}등 : 바로당신의 자리 </p>
           </Fragment>
         );
       } else {
-        // console.log("아래쪽");
         result.push(
-          <Fragment>
-            <p key={i}>
+          <Fragment key={i}>
+            <p>
               {i + 1}등 : {form[i].nick}
             </p>
           </Fragment>
@@ -117,34 +115,24 @@ const Ranking = () => {
   }
 
   function weeklyRanking(form) {
-    const result = [];
+    const temp = [];
     for (let i = 0; i < form.length; i++) {
-      result.push(
-        <Fragment>
-          <p key={i}>{i + 1}주차</p>
-        </Fragment>
-      );
+      const result = [];
+      result.push(<p>{i + 1}주차</p>);
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
-          // console.log("위쪽");
-          result.push(
-            <Fragment>
-              <p key={k}> 공석 </p>
-            </Fragment>
-          );
+          result.push(<p key={k}> 공석 </p>);
         } else {
-          // console.log("아래쪽");
           result.push(
-            <Fragment>
-              <p key={k}>
-                {form[i][k].games} / {form[i][k].rank}위 / {form[i][k].nick}
-              </p>
-            </Fragment>
+            <p key={k}>
+              {form[i][k].games} / {form[i][k].rank}등 / {form[i][k].nick}
+            </p>
           );
         }
       }
+      temp.push(<div key={i}>{result}</div>);
     }
-    return result;
+    return temp;
   }
 
   return (
@@ -167,7 +155,7 @@ const Ranking = () => {
                   className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(2)}
                 >
-                  Weekly Ranking
+                  form Ranking
                 </button>
                 <button
                   className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
@@ -225,7 +213,9 @@ const Ranking = () => {
                   <hr />
                   <Container className="my__rank">
                     <div className="ranking__box">
-                      {weekly !== null ? weeklyRanking(weekly) : false}
+                      <Carousel>
+                        {weekly !== null ? weeklyRanking(weekly) : false}
+                      </Carousel>
                     </div>
                   </Container>
                 </div>

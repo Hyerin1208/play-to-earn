@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import "./mysell-card.css";
-// import SellModal from "../templete/SellModal";
+
 import { Col, Row } from "reactstrap";
 import NftDetails from "../../pages/Market/NftDetails";
-import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import SellModal from "../templete/SellModal";
 
@@ -12,30 +12,21 @@ import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
 
 const NftSellCard = (props) => {
-  //   let params = useParams();
   const [showModal, setShowModal] = useState(false);
 
-  // const [rating, setRating] = useState(null);
-  // const [hover, setHover] = useState(null);
   const stars = Array(5).fill(1);
-  const [currentValue, setCurrnetValue] = useState(props.item.formInput.star);
-  const [hoverValue, setHoverValue] = useState(undefined);
 
-  const handleClick = (value) => {
-    setCurrnetValue(value);
-  };
-
-  const handleMouseOver = (value) => {
-    setHoverValue(value);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverValue(undefined);
-  };
+  const [testdata, setTestdata] = useState(null);
 
   console.log(props.item.formInput.star);
 
-  useEffect(() => {}, [currentValue]);
+  useEffect(() => {
+    setTestdata(props.item);
+  }, [props]);
+
+  console.log(testdata);
+
+  console.log(props.item.formInput);
 
   return (
     <div>
@@ -47,7 +38,7 @@ const NftSellCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+              <Link to={`/detailes/${props.item.formInput.tokenid}`}>
                 {" "}
                 {props.item.formInput.name}
               </Link>
@@ -89,15 +80,10 @@ const NftSellCard = (props) => {
                       />
                       <FaStar
                         className="star"
-                        defaultValue={props.item.formInput.star}
+                        defaultValue={ratingValue}
                         key={i}
-                        color={
-                          (hoverValue || currentValue) > i
-                            ? "#ffc107"
-                            : "#e4e5e9"
-                        }
+                        color={ratingValue > i ? "#ffc107" : "#e4e5e9"}
                         size={20}
-                        onChange={() => setCurrnetValue(ratingValue)}
                       />
                     </label>
                   );
@@ -115,7 +101,7 @@ const NftSellCard = (props) => {
             </button>
           </div>
           <span className="view__link">
-            <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+            <Link to={`/detailes/${props.item.formInput.tokenid}`}>
               View More
             </Link>
           </span>
