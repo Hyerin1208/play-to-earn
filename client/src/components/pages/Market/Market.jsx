@@ -161,12 +161,14 @@ const Market = () => {
     }
 
     if (filterValue === "ascending") {
-      const sortNfts = await Selllists.sort(function compare(a, b) {
-        return b.formInput.rare === a.formInput.rare
-          ? 0
-          : b.formInput.rare > a.formInput.rare
-          ? -1
-          : 1;
+      const sortNfts = await Selllists.sort((a, b) => {
+        if (a.fileUrl < b.fileUrl) {
+          return -1;
+        } else if (a.fileUrl > b.fileUrl) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
 
       console.log(sortNfts);
@@ -175,18 +177,18 @@ const Market = () => {
 
     if (filterValue === "descending") {
       const sortNfts = await Selllists.sort(function compare(a, b) {
-        return b.formInput.rare === a.formInput.rare
-          ? 0
-          : b.formInput.rare > a.formInput.rare
-          ? -1
-          : 1;
+        if (a.fileUrl > b.fileUrl) {
+          return -1;
+        } else if (a.fileUrl < b.fileUrl) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
 
       console.log(sortNfts);
       setnftArray(sortNfts);
     }
-
-    return;
   };
 
   if (Loading) {
