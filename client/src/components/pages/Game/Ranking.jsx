@@ -118,7 +118,7 @@ const Ranking = () => {
     const temp = [];
     for (let i = 0; i < form.length; i++) {
       const result = [];
-      result.push(<p>{i + 1}주차</p>);
+      result.push(<p key={i + "-week"}>{i + 1}주차</p>);
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           result.push(<p key={k}> 공석 </p>);
