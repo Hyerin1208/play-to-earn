@@ -97,15 +97,6 @@ const Admin = () => {
                   <div type="button" onClick={() => sendRank()}>
                     Send Ranking
                   </div>
-                  <button
-                    onClick={async () => {
-                      const contractbalance = await TokenClaimContract.methods
-                        .contractbalance()
-                        .call();
-                    }}
-                  >
-                    버버버버버
-                  </button>
                 </Col>
                 <Col xs="8">
                   <Accept />
