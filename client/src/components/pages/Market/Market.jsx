@@ -7,7 +7,6 @@ import CommonSection from "../../ui/templete/CommonSection";
 import NftCard from "../../ui/templete/NftCard";
 
 import { Container, Row, Col } from "reactstrap";
-import { NFT__DATA } from "../../../assets/data/data";
 
 import "./market.css";
 import { useSelector } from "react-redux";
@@ -21,6 +20,7 @@ const Market = () => {
   const [Loading, setLoading] = useState(true);
 
   const [nftArray, setnftArray] = useState([]);
+
   const [seletedPrice, setSeletedPrice] = useState(null);
 
   const [data, setData] = useState("");
@@ -39,13 +39,7 @@ const Market = () => {
     }
   }, [Selllists]);
 
-  const sortNfts = nftArray.map((price) => {
-    console.log(price.formInput.price);
-    return price.formInput.price;
-  });
-
-  console.log(Selllists);
-  console.log(sortNfts);
+  // ============ 페이징 =========================================
 
   const handlePagination = (index) => {
     setEndPosition((index + 1) * quantityPageRef.current);
@@ -72,31 +66,121 @@ const Market = () => {
   // if (pageCount === 1) return null;
   // const pages = _.range(1, pageCount + 1);
 
+  console.log(Selllists);
+
   // ============ 데이터 정렬 (High,MID,LOW Late) ==================
-  const handleSort = (e) => {
+  const handleSort = async (e) => {
     const filterValue = e.target.value;
 
+    if (filterValue === "sort") {
+      setnftArray([...Selllists].reverse());
+    }
+
     if (filterValue === "high") {
-      const filterData = sortNfts.filter((item) => item.price >= 10);
+      const filterData = await Selllists.filter(
+        (item) => item.formInput.price >= 10
+      );
       console.log(filterData);
-      setData(filterData);
+      setnftArray(filterData);
     }
 
     if (filterValue === "mid") {
-      const filterData = sortNfts.filter(
-        (item) => item.price >= 5 && item.price < 10
+      const filterData = await Selllists.filter(
+        (item) => item.formInput.price >= 5 && item.formInput.price < 10
       );
       console.log(filterData);
-      setData(filterData);
+      setnftArray(filterData);
     }
 
     if (filterValue === "low") {
-      const filterData = sortNfts.filter(
-        (item) => item.price >= 1 && item.price < 5
+      const filterData = await Selllists.filter(
+        (item) => item.formInput.price >= 1 && item.formInput.price < 5
       );
       console.log(filterData);
-      setData(filterData);
+      setnftArray(filterData);
     }
+  };
+
+  // ============ 데이터 정렬 (star) ==================
+  const handleStar = async (e) => {
+    const filterValue = e.target.value;
+
+    if (filterValue === "one") {
+      const filterStar = await Selllists.filter(
+        (item) => item.formInput.star === "1"
+      );
+      console.log(filterStar);
+      setnftArray(filterStar);
+    }
+
+    if (filterValue === "two") {
+      const filterStar = await Selllists.filter(
+        (item) => item.formInput.star === "2"
+      );
+      console.log(filterStar);
+      setnftArray(filterStar);
+    }
+
+    if (filterValue === "three") {
+      const filterStar = await Selllists.filter(
+        (item) => item.formInput.star === "3"
+      );
+      console.log(filterStar);
+      setnftArray(filterStar);
+    }
+
+    if (filterValue === "four") {
+      const filterStar = await Selllists.filter(
+        (item) => item.formInput.star === "4"
+      );
+      console.log(filterStar);
+      setnftArray(filterStar);
+    }
+
+    if (filterValue === "five") {
+      const filterStar = await Selllists.filter(
+        (item) => item.formInput.star === "5"
+      );
+      console.log(filterStar);
+      setnftArray(filterStar);
+    }
+  };
+
+  // ============ 데이터 정렬 (rare) / 오름&내림차순 ==================
+  const handleRare = async (e) => {
+    const filterValue = e.currentTarget.value;
+
+    if (filterValue === "rarity") {
+      setnftArray([...Selllists].reverse());
+    }
+
+    if (filterValue === "ascending") {
+      const sortNfts = await Selllists.sort(function compare(a, b) {
+        return b.formInput.rare === a.formInput.rare
+          ? 0
+          : b.formInput.rare > a.formInput.rare
+          ? -1
+          : 1;
+      });
+
+      console.log(sortNfts);
+      setnftArray(sortNfts);
+    }
+
+    if (filterValue === "descending") {
+      const sortNfts = await Selllists.sort(function compare(a, b) {
+        return b.formInput.rare === a.formInput.rare
+          ? 0
+          : b.formInput.rare > a.formInput.rare
+          ? -1
+          : 1;
+      });
+
+      console.log(sortNfts);
+      setnftArray(sortNfts);
+    }
+
+    return;
   };
 
   if (Loading) {
@@ -118,7 +202,7 @@ const Market = () => {
                 <div className="market__product__filter">
                   <div className="filter__left">
                     <div className="all__category__filter">
-                      <select>
+                      <select onChange={(e) => handleStar(e)}>
                         <option>STAR LEVEL</option>
                         <option value="one">one</option>
                         <option value="two">two</option>
@@ -128,20 +212,22 @@ const Market = () => {
                       </select>
                     </div>
                     <div className="all__items__filter">
-                      <select>
-                        <option>All Rarity</option>
-                        <option value="high">High</option>
-                        <option value="low">Low</option>
+                      <select onChange={(e) => handleRare(e)}>
+                        <option value="rarity">All Rarity</option>
+                        {/* 오름차순 */}
+                        <option value="ascending">Ascending</option>
+                        {/* 내림차순 */}
+                        <option value="descending">Descending</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="filter__right">
-                    <select onChange={handleSort}>
-                      <option>Sort By</option>
-                      <option value="high">High Rate</option>
-                      <option value="mid">Mid Rate</option>
-                      <option value="low">Low Rate</option>
+                    <select onChange={(e) => handleSort(e)}>
+                      <option value="sort">Sort By</option>
+                      <option value="high">High Rate [10~]</option>
+                      <option value="mid">Mid Rate [5~10]</option>
+                      <option value="low">Low Rate [1~5]</option>
                     </select>
                   </div>
                 </div>
