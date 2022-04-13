@@ -25,7 +25,13 @@ const createAccount = () => {
                   backgroundColor: "black",
                 }}
               >
-                <Card.Header>Install Wallet</Card.Header>
+                <Card.Header>
+                  {" "}
+                  <button className="singleNfts-btn">
+                    <i className="ri-wallet-3-line"></i>
+                    <Link to="/wallet">Connect your wallet</Link>
+                  </button>
+                </Card.Header>
                 <Row>
                   <Col>
                     <Card.Img
@@ -47,10 +53,12 @@ const createAccount = () => {
                     />
                   </Col>
                 </Row>
-                <div className="account__desc">
-                  <p>Access to "" and bind your wallet</p>
-                  <span>Use BNB to buy character</span>
-                </div>
+                <Col>
+                  <div className="account__desc">
+                    <p>Access to link and bind your wallet</p>
+                    <span>Use BNB to buy character</span>
+                  </div>
+                </Col>
               </Card>
             </div>
           </Col>
