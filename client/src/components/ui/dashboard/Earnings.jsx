@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./earning.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 const Earnings = () => {
   const [token, setToken] = useState("00.00");
