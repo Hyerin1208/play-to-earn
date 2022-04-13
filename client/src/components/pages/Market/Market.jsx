@@ -43,7 +43,7 @@ const Market = () => {
       //     .value()
       // );
     }
-  }, []);
+  }, [Selllists]);
 
   // ============ 페이징 =========================================
 
@@ -154,27 +154,39 @@ const Market = () => {
 
   // ============ 데이터 정렬 (rare) / 오름&내림차순 ==================
   const handleRare = async (e) => {
-    const filterRare = e.target.value;
+    const filterValue = e.currentTarget.value;
 
-    if (filterRare === "ascending") {
-      const sortNfts = await Selllists.map((item) => {
-        console.log(item.formInput.rare);
-        return item.formInput.rare;
-      });
-      const filterRare = await sortNfts.sort(function compare(a, b) {
-        return a - b;
-      });
-      console.log(filterRare);
-      setnftArray(filterRare);
+    if (filterValue === "rarity") {
+      setnftArray([...Selllists].reverse());
     }
 
-    // if (filterRare === "descending") {
-    //   const filterRare = await sortNfts.sort(function compare(a, b) {
-    //     return b - a;
-    //   });
-    //   console.log(filterRare);
-    //   setnftArray(filterRare);
-    // }
+    if (filterValue === "ascending") {
+      const sortNfts = await Selllists.sort(function compare(a, b) {
+        return b.formInput.rare === a.formInput.rare
+          ? 0
+          : b.formInput.rare > a.formInput.rare
+          ? -1
+          : 1;
+      });
+
+      console.log(sortNfts);
+      setnftArray(sortNfts);
+    }
+
+    if (filterValue === "descending") {
+      const sortNfts = await Selllists.sort(function compare(a, b) {
+        return b.formInput.rare === a.formInput.rare
+          ? 0
+          : b.formInput.rare > a.formInput.rare
+          ? -1
+          : 1;
+      });
+
+      console.log(sortNfts);
+      setnftArray(sortNfts);
+    }
+
+    return;
   };
 
   if (Loading) {
@@ -207,7 +219,7 @@ const Market = () => {
                     </div>
                     <div className="all__items__filter">
                       <select onChange={(e) => handleRare(e)}>
-                        <option>All Rarity</option>
+                        <option value="rarity">All Rarity</option>
                         {/* 오름차순 */}
                         <option value="ascending">Ascending</option>
                         {/* 내림차순 */}
