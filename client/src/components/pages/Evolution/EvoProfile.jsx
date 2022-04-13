@@ -130,9 +130,8 @@ const EvoProfile = (props) => {
 
                   <div className="img__Container">
                     {nftArray.map((image, index) => (
-                      <Col lg="2" md="4" sm="2">
+                      <Col lg="2" md="4" sm="2" key={index}>
                         <img
-                          key={index}
                           src={image.fileUrl}
                           alt="nfts"
                           onClick={() => {
