@@ -5,15 +5,16 @@ module.exports = class History extends Sequelize.Model {
         return super.init(
             {
                 tokenId: {
-                    type: Sequelize.INTEGER(200),
+                    type: Sequelize.STRING(200),
                     allowNull: false,
+                    unique: true,
                 },
                 from: {
                     type: Sequelize.STRING(200),
                     allowNull: true,
                 },
                 to: {
-                    type: Sequelize.INTEGER(200),
+                    type: Sequelize.STRING(200),
                     allowNull: false,
                     defaultValue: 0,
                 },

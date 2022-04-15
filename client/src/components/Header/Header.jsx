@@ -95,7 +95,7 @@ const Header = () => {
     }
 
     async function MyList(account) {
-        if (CreateNFTContract !== null) {
+        if (CreateNFTContract !== null && CreateNFTContract !== "dismatch") {
             const MyNFTlists = await CreateNFTContract.methods.MyNFTlists().call({ from: account });
             const listsForm = await Promise.all(
                 MyNFTlists.map(async (i) => {
@@ -122,7 +122,7 @@ const Header = () => {
     }
 
     async function checkMyBalance(account) {
-        if (TokenClaimContract !== null) {
+        if (TokenClaimContract !== null && TokenClaimContract !== "dismatch") {
             const Mybalance = await TokenClaimContract.methods.mybalance().call({ from: account });
 
             return await Mybalance;
@@ -180,6 +180,7 @@ const Header = () => {
                     }
                 });
                 // onboarding.current.stopOnboarding();
+                await window.ethereum.on("chainChanged", (_chainId) => window.location.reload());
             } else {
                 setIsOwner(false);
                 setDisabled(false);
@@ -244,9 +245,19 @@ const Header = () => {
                     <div className="nav__menu" ref={menuRef} onClick={toggleMenu}>
                         <ul className="nav__list">
                             {NAV__LINKS.map((item, index) => {
-                                if (item.display === "Create") {
+                                if (item.display === "Create" || item.display === "Evolution") {
                                     return (
-                                        <li className="nav__item" id={`nav__item__${item.display}`} hidden={isUser || isOwner ? false : true} key={index}>
+                                        <li
+                                            className="nav__item"
+                                            id={`nav__item__${item.display}`}
+                                            hidden={isUser || isOwner ? false : true}
+                                            key={index}
+                                            onClick={() => {
+                                                if (CreateNFTContract === null || CreateNFTContract === "dismatch") {
+                                                    alert("접속네트워크를 확인하세요\n테스트넷 접속 필요");
+                                                }
+                                            }}
+                                        >
                                             <NavLink to={item.url} className={(navClass) => (navClass.isActive ? "active" : "")}>
                                                 {item.display}
                                             </NavLink>
