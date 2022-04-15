@@ -84,7 +84,16 @@ const Ranking = () => {
       .post(`http://localhost:5000/game/weekly`)
       .then((response) => {
         const data = response.data;
-        setWeekly(data);
+        const sortData = data.map((v, i) => {
+          const test = v.sort((a, b) => {
+            if (a.games > b.games) return 1;
+            if (a.games < b.games) return -1;
+            if (a.rank < b.rank) return -1;
+            if (a.rank > b.rank) return 1;
+          });
+          return test;
+        });
+        setWeekly(sortData);
       })
       .catch((error) => {
         setError(error);
