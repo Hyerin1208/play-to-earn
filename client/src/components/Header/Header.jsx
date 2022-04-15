@@ -41,10 +41,10 @@ const NAV__LINKS = [
     url: "/upgrade",
   },
   /* 잠시 주석 */
-  // {
-  //     display: "TestField",
-  //     url: "/test",
-  // },
+  {
+    display: "TestField",
+    url: "/test",
+  },
 ];
 
 const Header = () => {
