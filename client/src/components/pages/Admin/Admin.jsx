@@ -94,9 +94,13 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                  <div type="button" onClick={() => sendRank()}>
+                  <button
+                    className="sendRank__btn"
+                    type="button"
+                    onClick={() => sendRank()}
+                  >
                     Send Ranking
-                  </div>
+                  </button>
                 </Col>
                 <Col xs="8">
                   <Accept />

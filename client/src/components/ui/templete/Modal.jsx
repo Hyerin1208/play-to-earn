@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactLoaing from "react-loading";
 import "./modal.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Modal = (props) => {
   const [Loading, setLoading] = useState(true);
-  const Account = useSelector((state) => state.AppState.account);
+  let params = useParams();
+
+  const account = useSelector((state) => state.AppState.account);
+
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+  // const card_id = params.card_id;
+  // const owner = CreateNFTContract.methods.ownerOf(card_id).call();
+  // console.log(owner);
 
   useEffect(async () => {
     setLoading(null);
@@ -21,17 +29,44 @@ const Modal = (props) => {
     } else {
       await CreateNFTContract.methods
         .getNFTItem(tokenId)
-        .send({ from: Account, gas: 3000000, value: price }, (error) => {
+        .send({ from: account, gas: 3000000, value: price }, (error) => {
           if (!error) {
             console.log("send ok");
           } else {
             console.log(error);
           }
+        })
+        .then(async (res) => {
+          console.log(res.events.Transfer.returnValues.tokenId);
+          console.log(res.events.Transfer.returnValues.from);
+          console.log(res.events.Transfer.returnValues.to);
+          await axios
+            .post(`http://localhost:5000/history`, {
+              tokenId: res.events.Transfer.returnValues.tokenId,
+              from: res.events.Transfer.returnValues.from,
+              to: res.events.Transfer.returnValues.to,
+              // date: new Date().getTime(),
+            })
+            .then((res) => {
+              console.log(res.data.message);
+              if (res.data.message === "ok") {
+                console.log(res.data.message);
+              } else {
+                console.log(res.data.message);
+              }
+            });
         });
-      window.location.reload();
+
+      // window.location.reload();
       setLoading(false);
     }
   }
+
+  // const sendHistory = async (tokenId) => {
+  //   console.log("여기");
+  //   // console.log(new Date().getTime());
+
+  // };
 
   if (Loading) {
     return (
@@ -43,7 +78,6 @@ const Modal = (props) => {
   } else {
     return (
       <div className="modal__wrapper">
-        return (
         <div className="single__modal">
           <span className="close__modal">
             <i

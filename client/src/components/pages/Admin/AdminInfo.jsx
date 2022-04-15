@@ -7,12 +7,12 @@ const AdminInfo = () => {
   const [tokenAmount, setTokenAmount] = useState("");
   return (
     <div className="InfoA__card">
-      <div className="carousel__box">
+      <div className="carousel0__box">
         <Carousel itemsToShow={1}>
           <div className="carousel__card" numbers="1">
             <div className="card__content">
               <div className="InfoA__chart">
-                <i className="ri-pie-chart-box-line"></i>
+                <i className="ri-bar-chart-box-line"></i>
               </div>
               <div className="earing__text">
                 <div className="token__mybox">{tokenAmount}token</div>
@@ -43,8 +43,13 @@ const AdminInfo = () => {
             </div>
           </div>
           <div className="carousel__card" numbers="4">
-            <div className="token__mybox">nfts</div>
-            <div className="token__mydesc">발행한 nfts 수</div>
+            <div className="card__content">
+              <div className="InfoA__chart">
+                <i className="ri-pie-chart-box-line"></i>
+              </div>
+              <div className="token__mybox">nfts</div>
+              <div className="token__mydesc">발행한 nfts 수</div>
+            </div>
           </div>
         </Carousel>
       </div>
