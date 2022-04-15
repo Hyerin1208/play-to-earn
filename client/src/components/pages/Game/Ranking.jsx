@@ -125,7 +125,7 @@ const Ranking = () => {
         } else {
           result.push(
             <p key={k}>
-              {form[i][k].games} <br /> {form[i][k].rank}등 : {form[i][k].nick}
+              {form[i][k].games} {form[i][k].rank}등 : {form[i][k].nick}
             </p>
           );
         }
