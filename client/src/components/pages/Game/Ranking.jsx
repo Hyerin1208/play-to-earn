@@ -125,7 +125,7 @@ const Ranking = () => {
         } else {
           result.push(
             <p key={k}>
-              {form[i][k].games} / {form[i][k].rank}등 / {form[i][k].nick}
+              {form[i][k].games} <br /> {form[i][k].rank}등 : {form[i][k].nick}
             </p>
           );
         }
@@ -155,7 +155,7 @@ const Ranking = () => {
                   className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
                   onClick={() => toggleTab(2)}
                 >
-                  form Ranking
+                  Weekly Ranking
                 </button>
                 <button
                   className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
