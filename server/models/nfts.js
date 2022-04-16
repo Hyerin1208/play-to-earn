@@ -81,9 +81,9 @@ module.exports = class Nfts extends Sequelize.Model {
       sourceKey: "tokenId",
       targetKey: "address",
     });
-    db.Nfts.hasMany(db.History, {
-      foreignKey: "tokenId",
-      sourceKey: "tokenId",
-    });
+    // db.Nfts.hasMany(db.History, {
+    //   foreignKey: "tokenId",
+    //   sourceKey: "tokenId",
+    // });
   }
 };

@@ -31,9 +31,12 @@ const NftDetails = (props) => {
   const stars = Array(5).fill(1);
 
   const [NFTData, setNFTData] = useState("");
+  const [history, setHistory] = useState("");
 
   let params = useParams();
   const card_id = params.card_id;
+
+  console.log(history);
 
   const sendLike = async () => {
     await axios
@@ -75,6 +78,19 @@ const NftDetails = (props) => {
         setLike(res.data.likes);
         setView(res.data.views);
         setNFTData(res.data);
+      });
+  }, []);
+
+  useEffect(async () => {
+    console.log(card_id);
+    await axios
+      .post(`http://localhost:5000/history/info`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        setHistory(res.data.info);
       });
   }, []);
 
@@ -217,7 +233,7 @@ const NftDetails = (props) => {
                                 wordWrap: "break-word",
                               }}
                             >
-                              {NFTData.address}
+                              {history}
                             </td>
                             {/* 누구에게 */}
                             <td>address</td>

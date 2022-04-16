@@ -11,6 +11,7 @@ const SellModal = (props) => {
   );
 
   const [form, setForm] = useState({
+    tokenId: props.item.formInput.tokenid,
     price: props.item.formInput.price,
   });
   //   console.log(form.bid);
@@ -18,6 +19,9 @@ const SellModal = (props) => {
   useEffect(async () => {
     setLoading(null);
   }, [CreateNFTContract]);
+
+  console.log(props.item.formInput.tokenid);
+  console.log(form.price);
 
   //nft 판매
   async function sellnft(tokenId, price) {
@@ -40,8 +44,6 @@ const SellModal = (props) => {
       setLoading(false);
     }
   }
-  console.log(props.item.formInput.tokenId);
-  console.log(form.price);
 
   if (Loading) {
     return (
@@ -86,7 +88,7 @@ const SellModal = (props) => {
           <button
             className="place__bid-btn"
             onClick={async () => {
-              await sellnft(props.item.formInput.tokenId, form.price);
+              await sellnft(form.tokenId, form.price);
             }}
           >
             Sell Now

@@ -37,7 +37,7 @@ const Modal = (props) => {
           }
         })
         .then(async (res) => {
-          console.log(res.events.Transfer.returnValues.tokenId);
+          console.log(typeof res.events.Transfer.returnValues.tokenId);
           console.log(res.events.Transfer.returnValues.from);
           console.log(res.events.Transfer.returnValues.to);
           await axios

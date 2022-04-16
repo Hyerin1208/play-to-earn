@@ -11,16 +11,41 @@ router.post("/", async (req, res, next) => {
   console.log(req.body.to);
 
   await History.create({
-    tokneId: req.body.tokenId,
+    tokenId: req.body.tokenId,
     from: req.body.from,
     to: req.body.to,
-  });
-  // .then(() => {
-  res.json({ message: "ok" });
-  // })
-  // .catch((err) => {
-  //   res.json({ message: "no" });
-  // });
+  })
+    .then(() => {
+      res.json({ message: "ok" });
+    })
+    .catch((error) => {
+      console.error(error);
+      next(error);
+    });
+});
+
+router.post("/info", async (req, res, next) => {
+  //   try {
+  //     console.log(req.body.tokenId);
+  //     const info = await History.findAll({
+  //       where: { tokenId: req.body.tokenId },
+  //     });
+  //     res.json({ from: info.from, to: info.to });
+  //   } catch (error) {
+  //     console.error(error);
+  //     next(error);
+  //   }
+
+  if (req.body.tokenId === null) {
+    res.json({ message: "fail" });
+    return res.status(404).send("Connect your account");
+  } else {
+    const info = await History.findAll({
+      where: { tokenId: req.body.tokenId },
+    });
+    console.log(info);
+    res.json({ from: info.from, to: info.to });
+  }
 });
 
 module.exports = router;

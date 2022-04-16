@@ -5,7 +5,7 @@ module.exports = class History extends Sequelize.Model {
     return super.init(
       {
         tokenId: {
-          type: Sequelize.INTEGER(200),
+          type: Sequelize.STRING(200),
           allowNull: false,
         },
         from: {
@@ -13,7 +13,7 @@ module.exports = class History extends Sequelize.Model {
           allowNull: true,
         },
         to: {
-          type: Sequelize.INTEGER(200),
+          type: Sequelize.STRING(200),
           allowNull: false,
           defaultValue: 0,
         },
@@ -37,9 +37,9 @@ module.exports = class History extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.History.belongsTo(db.Nfts, {
-      foreignKey: "tokenId",
-      targetKey: "tokenId",
-    });
+    // db.History.belongsTo(db.Nfts, {
+    //   foreignKey: "tokenId",
+    //   targetKey: "tokenId",
+    // });
   }
 };
