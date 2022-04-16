@@ -14,59 +14,38 @@ const SellModal = (props) => {
   );
 
   const [form, setForm] = useState({
-    tokenId: props.item.formInput.tokenid,
-    price: props.item.formInput.price,
+    tokenId: Number(props.item.formInput.tokenid),
+    price: Number(props.item.formInput.price),
   });
-  //   console.log(form.bid);
 
   useEffect(async () => {
     setLoading(null);
   }, [CreateNFTContract]);
-
-  console.log(form);
-  console.log(props.item.formInput.tokenid);
-  console.log(form.price);
 
   //nft 판매
   async function sellnft(tokenId, price) {
     if (CreateNFTContract === null) {
       setLoading(true);
     } else {
-      console.log(tokenId);
-      console.log(price);
-      console.log(Account);
-      await CreateNFTContract.methods
-        .sellMyNFTItem(tokenId, price)
-        .send({ from: Account, gas: 3000000, value: price }, (error) => {
-          if (!error) {
-            console.log("send ok");
-          } else {
-            console.log(error);
-          }
-        })
-        .then(async (res) => {
-          console.log(typeof res.events.Transfer.returnValues.tokenId);
-          console.log(res.events.Transfer.returnValues.from);
-          console.log(res.events.Transfer.returnValues.to);
-          await axios
-            .post(`http://localhost:5000/history`, {
-              tokenId: res.events.Transfer.returnValues.tokenId,
-              from: res.events.Transfer.returnValues.from,
-              to: res.events.Transfer.returnValues.to,
-              // date: new Date().getTime(),
-            })
-            .then((res) => {
-              console.log(res.data.message);
-              if (res.data.message === "ok") {
-                console.log(res.data.message);
-              } else {
-                console.log(res.data.message);
-              }
-            });
-        });
-
-      window.location.reload();
-      setLoading(false);
+      // // const form = {
+      // //   tokenId: Number(props.item.formInput.tokenid),
+      // //   price: Number(props.item.formInput.price),
+      // // };
+      // console.log(form.tokenId);
+      // console.log(form.price);
+      // await CreateNFTContract.methods
+      //   .sellMyNFTItem(form.tokenId, form.price)
+      //   .send({ from: Account, gas: 3000000 }, (error) => {
+      //     if (!error) {
+      //       console.log("send ok");
+      //     } else {
+      //       console.log(error);
+      //     }
+      //   })
+      //   .then(() => {
+      //     window.location.reload();
+      //     setLoading(false);
+      //   });
     }
   }
   if (Loading) {
@@ -99,7 +78,9 @@ const SellModal = (props) => {
                 <input
                   type="number"
                   placeholder="00 . 00 ETH"
-                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, price: Number(e.target.value) })
+                  }
                 />
               </div>
             </div>

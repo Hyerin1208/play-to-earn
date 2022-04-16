@@ -104,7 +104,7 @@ const MySellList = () => {
                   <Col key={index} className="my-items">
                     <NftSellCard
                       item={items}
-                      id={items.formInput.tokenid}
+                      // id={items.formInput.tokenid}
                       onClick={async (e) => {
                         let tokenid = e.target.getAttribute("id");
                         await CreateNFTContract.methods.tokenURI(tokenid).call({
