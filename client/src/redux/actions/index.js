@@ -170,9 +170,9 @@ export function getWeb3() {
             } else {
                 dispatch(
                     callContract({
-                        CreateNFTContract: null,
-                        AmusementArcadeTokenContract: null,
-                        TokenClaimContract: null,
+                        CreateNFTContract: "dismatch",
+                        AmusementArcadeTokenContract: "dismatch",
+                        TokenClaimContract: "dismatch",
                     })
                 );
             }
