@@ -31,12 +31,10 @@ const NftDetails = (props) => {
   const stars = Array(5).fill(1);
 
   const [NFTData, setNFTData] = useState("");
-  const [nftHistory, setNftHistory] = useState("");
+  const [nftHistory, setNftHistory] = useState([]);
 
   let params = useParams();
   const card_id = params.card_id;
-
-  console.log(nftHistory);
 
   const sendLike = async () => {
     await axios
@@ -90,9 +88,13 @@ const NftDetails = (props) => {
       .then((res) => {
         console.log(res.data);
         setLoading(false);
+        // if (Loading == false && nftHistory !== null) {
         setNftHistory(res.data);
+        // }
       });
   }, []);
+
+  console.log(nftHistory);
 
   function Loadingfunc(Loading) {
     if (Loading) {
@@ -222,43 +224,45 @@ const NftDetails = (props) => {
                           </tr>
                         </thead>
                         <tbody>
-                          {/* {nftHistory.map((item, index) => (
-                            <tr key={item + index}>
-                              <td
-                                width="35%"
-                                style={{
-                                  overflow: "hidden",
-                                  extOverflow: "ellipsis",
-                                  whiteSpace: "wrap",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                {item.from}
-                              </td>
-                              <td
-                                width="35%"
-                                style={{
-                                  overflow: "hidden",
-                                  extOverflow: "ellipsis",
-                                  whiteSpace: "wrap",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                {item.to}
-                              </td>
-                              <td
-                                width="30%"
-                                style={{
-                                  overflow: "hidden",
-                                  extOverflow: "ellipsis",
-                                  whiteSpace: "wrap",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                {item.createdAt}
-                              </td>
-                            </tr>
-                          ))} */}
+                          {nftHistory.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.from}
+                                </td>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.to}
+                                </td>
+                                <td
+                                  width="30%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.createdAt}
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </div>

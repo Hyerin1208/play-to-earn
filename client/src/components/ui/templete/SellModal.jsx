@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactLoaing from "react-loading";
+
+import axios from "axios";
+
 import "./sell-modal.css";
 
 const SellModal = (props) => {
@@ -20,12 +23,13 @@ const SellModal = (props) => {
     setLoading(null);
   }, [CreateNFTContract]);
 
+  console.log(form);
   console.log(props.item.formInput.tokenid);
   console.log(form.price);
 
   //nft 판매
   async function sellnft(tokenId, price) {
-    if (CreateNFTContract.methods === null) {
+    if (CreateNFTContract === null) {
       setLoading(true);
     } else {
       console.log(tokenId);
@@ -39,12 +43,32 @@ const SellModal = (props) => {
           } else {
             console.log(error);
           }
+        })
+        .then(async (res) => {
+          console.log(typeof res.events.Transfer.returnValues.tokenId);
+          console.log(res.events.Transfer.returnValues.from);
+          console.log(res.events.Transfer.returnValues.to);
+          await axios
+            .post(`http://localhost:5000/history`, {
+              tokenId: res.events.Transfer.returnValues.tokenId,
+              from: res.events.Transfer.returnValues.from,
+              to: res.events.Transfer.returnValues.to,
+              // date: new Date().getTime(),
+            })
+            .then((res) => {
+              console.log(res.data.message);
+              if (res.data.message === "ok") {
+                console.log(res.data.message);
+              } else {
+                console.log(res.data.message);
+              }
+            });
         });
+
       window.location.reload();
       setLoading(false);
     }
   }
-
   if (Loading) {
     return (
       <div>
