@@ -236,7 +236,8 @@ const NftDetails = (props) => {
                                     wordWrap: "break-word",
                                   }}
                                 >
-                                  {item.from}
+                                  {item.from.slice(0, 7)}...
+                                  {item.from.slice(35)}
                                 </td>
                                 <td
                                   width="35%"
@@ -247,7 +248,8 @@ const NftDetails = (props) => {
                                     wordWrap: "break-word",
                                   }}
                                 >
-                                  {item.to}
+                                  {item.to.slice(0, 7)}...
+                                  {item.to.slice(35)}
                                 </td>
                                 <td
                                   width="30%"

@@ -51,13 +51,14 @@ const MainContent = () => {
                   <MySlick />
                 </MyWrapper>
               </div>
+              <br />
+              <br />
+
               {/* 내가 만든 NFTs */}
               <h4>SellList</h4>
               <br />
               <div className="section__two">
-                <MyWrapper>
-                  <MySellList />
-                </MyWrapper>
+                <MyWrapper>{/* <MySellList /> */}</MyWrapper>
               </div>
             </Row>
           </div>

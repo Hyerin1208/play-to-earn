@@ -27,25 +27,25 @@ const SellModal = (props) => {
     if (CreateNFTContract === null) {
       setLoading(true);
     } else {
-      // // const form = {
-      // //   tokenId: Number(props.item.formInput.tokenid),
-      // //   price: Number(props.item.formInput.price),
-      // // };
-      // console.log(form.tokenId);
-      // console.log(form.price);
-      // await CreateNFTContract.methods
-      //   .sellMyNFTItem(form.tokenId, form.price)
-      //   .send({ from: Account, gas: 3000000 }, (error) => {
-      //     if (!error) {
-      //       console.log("send ok");
-      //     } else {
-      //       console.log(error);
-      //     }
-      //   })
-      //   .then(() => {
-      //     window.location.reload();
-      //     setLoading(false);
-      //   });
+      // const form = {
+      //   tokenId: Number(props.item.formInput.tokenid),
+      //   price: Number(props.item.formInput.price),
+      // };
+      console.log(tokenId);
+      console.log(price);
+      await CreateNFTContract.methods
+        .sellMyNFTItem(form.tokenId, form.price)
+        .send({ from: Account, gas: 3000000 }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
+          }
+        })
+        .then(() => {
+          window.location.reload();
+          setLoading(false);
+        });
     }
   }
   if (Loading) {
