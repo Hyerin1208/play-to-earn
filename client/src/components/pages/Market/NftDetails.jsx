@@ -31,12 +31,12 @@ const NftDetails = (props) => {
   const stars = Array(5).fill(1);
 
   const [NFTData, setNFTData] = useState("");
-  const [history, setHistory] = useState("");
+  const [nftHistory, setNftHistory] = useState("");
 
   let params = useParams();
   const card_id = params.card_id;
 
-  console.log(history);
+  console.log(nftHistory);
 
   const sendLike = async () => {
     await axios
@@ -90,7 +90,7 @@ const NftDetails = (props) => {
       .then((res) => {
         console.log(res.data);
         setLoading(false);
-        setHistory(res.data.info);
+        setNftHistory(res.data);
       });
   }, []);
 
@@ -222,24 +222,43 @@ const NftDetails = (props) => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            {/* 누구에서 */}
-                            <td
-                              width="30%"
-                              style={{
-                                overflow: "hidden",
-                                extOverflow: "ellipsis",
-                                whiteSpace: "wrap",
-                                wordWrap: "break-word",
-                              }}
-                            >
-                              {history}
-                            </td>
-                            {/* 누구에게 */}
-                            <td>address</td>
-                            {/* 언제 거래됏는지 날짜*/}
-                            <td>2022-00-00</td>
-                          </tr>
+                          {/* {nftHistory.map((item, index) => (
+                            <tr key={item + index}>
+                              <td
+                                width="35%"
+                                style={{
+                                  overflow: "hidden",
+                                  extOverflow: "ellipsis",
+                                  whiteSpace: "wrap",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                {item.from}
+                              </td>
+                              <td
+                                width="35%"
+                                style={{
+                                  overflow: "hidden",
+                                  extOverflow: "ellipsis",
+                                  whiteSpace: "wrap",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                {item.to}
+                              </td>
+                              <td
+                                width="30%"
+                                style={{
+                                  overflow: "hidden",
+                                  extOverflow: "ellipsis",
+                                  whiteSpace: "wrap",
+                                  wordWrap: "break-word",
+                                }}
+                              >
+                                {item.createdAt}
+                              </td>
+                            </tr>
+                          ))} */}
                         </tbody>
                       </Table>
                     </div>

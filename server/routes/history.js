@@ -25,26 +25,24 @@ router.post("/", async (req, res, next) => {
 });
 
 router.post("/info", async (req, res, next) => {
-  //   try {
-  //     console.log(req.body.tokenId);
-  //     const info = await History.findAll({
-  //       where: { tokenId: req.body.tokenId },
-  //     });
-  //     res.json({ from: info.from, to: info.to });
-  //   } catch (error) {
-  //     console.error(error);
-  //     next(error);
-  //   }
+  try {
+    console.log(req.body.tokenId);
 
-  if (req.body.tokenId === null) {
-    res.json({ message: "fail" });
-    return res.status(404).send("Connect your account");
-  } else {
-    const info = await History.findAll({
-      where: { tokenId: req.body.tokenId },
-    });
-    console.log(info);
-    res.json({ from: info.from, to: info.to });
+    if (req.body.tokenId === null) {
+      res.json({ message: "fail" });
+      return res.status(404).send("Connect your account");
+    } else {
+      const info = await History.findAll({
+        where: {
+          tokenId: req.body.tokenId,
+        },
+      });
+      console.log(info);
+      res.json(info);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
 });
 
