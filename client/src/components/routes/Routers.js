@@ -18,6 +18,7 @@ import JoinUs from "../ui/register/JoinUs";
 import Admin from "../pages/Admin/Admin";
 import Evolution from "../pages/Evolution/Evolution";
 import Staking from "../pages/Staking/Staking";
+import AdminStk from "../pages/Staking/AdminStk";
 
 const Routers = () => {
   return (
@@ -37,6 +38,7 @@ const Routers = () => {
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/upgrade" element={<Evolution />} />
         <Route path="/staking" element={<Staking />} />
+        <Route path="/aatadmin" element={<AdminStk />} />
         <Route path="/test" element={<Test />} />
         <Route path="/error" element={<Error />} />
       </Routes>

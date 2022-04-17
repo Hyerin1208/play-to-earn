@@ -52,7 +52,6 @@ const MainContent = () => {
                 </MyWrapper>
               </div>
               <br />
-              <br />
 
               {/* 내가 만든 NFTs */}
               <h4>SellList</h4>
