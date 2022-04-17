@@ -84,7 +84,7 @@ const MySellList = () => {
     infinite: false,
   };
 
-  if (Loading) {
+  if (Loading && nftArray[0] === undefined) {
     return (
       <div>
         잠시만 기다려 주세요
@@ -93,7 +93,7 @@ const MySellList = () => {
     );
   } else {
     return (
-      <div className="myselllist__box"></div>
+      <div className="myselllist__box">
         {/* <button onClick={() => mynftlists()}>마이리스트</button> */}
         <div className="slick-arrow">
           <Slider {...settings} style={{ width: 900 }}>
