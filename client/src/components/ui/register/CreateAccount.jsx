@@ -18,11 +18,10 @@ const createAccount = () => {
               <h3>Create Account</h3>
               <h5>Connect to a wallet</h5>
               <Card
-                border="light"
+                className="create__width"
                 style={{
-                  width: "70rem",
                   height: "24rem",
-                  backgroundColor: "black",
+                  // backgroundColor: "black",
                 }}
               >
                 <Card.Header>
@@ -38,20 +37,21 @@ const createAccount = () => {
                       className="create__Account"
                       variant="top"
                       src={walletImg}
+                      style={{ marginLeft: "27%" }}
                     />
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Card.Img
                       className="wallet__pack"
                       variant="top"
                       src={walletPack}
                       style={{
-                        width: "390px",
+                        maxWidth: "390px",
                         height: "200px",
                         marginLeft: "15%",
                       }}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Col>
                   <div className="account__desc">

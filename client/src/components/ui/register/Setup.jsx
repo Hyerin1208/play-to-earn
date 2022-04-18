@@ -91,13 +91,13 @@ const Setup = () => {
               {/* <h5>Join Us</h5> */}
             </div>
           </Col>
-          <Card
+          <div
             border="light"
             style={{
               width: "30rem",
               height: "32rem",
-              backgroundColor: "black",
-              marginBottom: "20px",
+              // backgroundColor: "black",
+              // marginBottom: "20px",
             }}
           >
             <Card.Body>
@@ -110,14 +110,14 @@ const Setup = () => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </div>
           <Col>
-            <Card
+            <div
               border="light"
               style={{
-                width: "40rem",
+                maxwidth: "40rem",
                 height: "22rem",
-                backgroundColor: "black",
+                // backgroundColor: "black",
                 marginBottom: "20px",
                 display: "flex",
                 flexDirection: "column",
@@ -151,20 +151,20 @@ const Setup = () => {
                 >
                   signup
                 </button> */}
+                <button
+                  onClick={async () => {
+                    await lastBtn();
+                    await addSignUp();
+                    // alert("해당 NFT가 발급 되었습니다");
+                    window.location.href = "http://localhost:3000/";
+                  }}
+                  className="welcome__btn"
+                >
+                  Let's Get Started
+                </button>
               </Card.Body>
-            </Card>
+            </div>
             {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
-            <button
-              onClick={async () => {
-                await lastBtn();
-                await addSignUp();
-                // alert("해당 NFT가 발급 되었습니다");
-                window.location.href = "http://localhost:3000/";
-              }}
-              className="welcome__btn"
-            >
-              Let's Get Started
-            </button>
           </Col>
         </Row>
       </Container>
