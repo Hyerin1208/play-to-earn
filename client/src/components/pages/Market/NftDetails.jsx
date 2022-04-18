@@ -31,12 +31,10 @@ const NftDetails = (props) => {
   const stars = Array(5).fill(1);
 
   const [NFTData, setNFTData] = useState("");
-  const [history, setHistory] = useState("");
+  const [nftHistory, setNftHistory] = useState([]);
 
   let params = useParams();
   const card_id = params.card_id;
-
-  console.log(history);
 
   const sendLike = async () => {
     await axios
@@ -90,9 +88,13 @@ const NftDetails = (props) => {
       .then((res) => {
         console.log(res.data);
         setLoading(false);
-        setHistory(res.data.info);
+        // if (Loading == false && nftHistory !== null) {
+        setNftHistory(res.data);
+        // }
       });
   }, []);
+
+  console.log(nftHistory);
 
   function Loadingfunc(Loading) {
     if (Loading) {
@@ -222,24 +224,47 @@ const NftDetails = (props) => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            {/* 누구에서 */}
-                            <td
-                              width="30%"
-                              style={{
-                                overflow: "hidden",
-                                extOverflow: "ellipsis",
-                                whiteSpace: "wrap",
-                                wordWrap: "break-word",
-                              }}
-                            >
-                              {history}
-                            </td>
-                            {/* 누구에게 */}
-                            <td>address</td>
-                            {/* 언제 거래됏는지 날짜*/}
-                            <td>2022-00-00</td>
-                          </tr>
+                          {nftHistory.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.from.slice(0, 7)}...
+                                  {item.from.slice(35)}
+                                </td>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.to.slice(0, 7)}...
+                                  {item.to.slice(35)}
+                                </td>
+                                <td
+                                  width="30%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.createdAt}
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </div>

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Clock from "./Clock";
 import Carousel from "react-elastic-carousel";
+import { Link } from "react-router-dom";
 
 const Ranking = () => {
   const [loading, setLoading] = useState(true);
@@ -291,6 +292,9 @@ const Ranking = () => {
                 timerMinutes={timerMinutes}
                 timerSeconds={timerSeconds}
               />
+              <button className="aat__token" href="/mypage">
+                <Link to={`/mypage`}>Check your AAT Balance</Link>
+              </button>
             </Col>
           </Row>
         </div>

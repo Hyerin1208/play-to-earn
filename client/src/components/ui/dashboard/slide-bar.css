@@ -171,12 +171,18 @@
   height: 24%;
   margin-top: 10%;
   margin-left: 10%;
+  text-decoration: none;
 }
 
 .nav__itemBox span i {
   display: flex;
   color: white;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.edit__icon a {
+  text-decoration: none;
 }
 
 .nav__itemBox h5 {

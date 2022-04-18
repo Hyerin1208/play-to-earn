@@ -43,7 +43,6 @@ const NftSellCard = (props) => {
                 {props.item.formInput.name}
               </Link>
             </h5>
-
             {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
             {/* <div className="creator__info-wrapper">
           <div className="creator__img">
@@ -57,8 +56,7 @@ const NftSellCard = (props) => {
             <Col>
               <div className="bid__container">
                 <h6>Current Bid</h6>
-                {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
-                <p>{props.item.formInput.price} ETH</p>
+                <p>{props.item.formInput.price} AAT</p>
               </div>
               <Badge pill bg="light" text="dark" className="rare__badge">
                 rare : {props.item.formInput.rare}

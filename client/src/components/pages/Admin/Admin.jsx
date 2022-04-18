@@ -9,6 +9,7 @@ import Accept from "./Accept";
 import OwnerSellList from "./OwnerSellList";
 
 import "./admin.css";
+import { Link } from "react-router-dom";
 
 const Admin = () => {
   const [Loading, setLoading] = useState(true);
@@ -94,13 +95,19 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                  <button
-                    className="sendRank__btn"
-                    type="button"
-                    onClick={() => sendRank()}
-                  >
-                    Send Ranking
-                  </button>
+                  <div className="btn__admin">
+                    <button
+                      className="sendRank__btn"
+                      type="button"
+                      onClick={() => sendRank()}
+                    >
+                      Send Ranking
+                    </button>
+                    <button className="staking__btn" type="button" onClick="">
+                      <i className="ri-shield-keyhole-line"></i>
+                      <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link>
+                    </button>
+                  </div>
                 </Col>
                 <Col xs="8">
                   <Accept />

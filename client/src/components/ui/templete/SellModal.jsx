@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactLoaing from "react-loading";
+
+import axios from "axios";
+
 import "./sell-modal.css";
 
 const SellModal = (props) => {
@@ -11,40 +14,40 @@ const SellModal = (props) => {
   );
 
   const [form, setForm] = useState({
-    tokenId: props.item.formInput.tokenid,
-    price: props.item.formInput.price,
+    tokenId: Number(props.item.formInput.tokenid),
+    price: Number(props.item.formInput.price),
   });
-  //   console.log(form.bid);
 
   useEffect(async () => {
     setLoading(null);
   }, [CreateNFTContract]);
 
-  console.log(props.item.formInput.tokenid);
-  console.log(form.price);
-
   //nft 판매
   async function sellnft(tokenId, price) {
-    if (CreateNFTContract.methods === null) {
+    if (CreateNFTContract === null) {
       setLoading(true);
     } else {
+      // const form = {
+      //   tokenId: Number(props.item.formInput.tokenid),
+      //   price: Number(props.item.formInput.price),
+      // };
       console.log(tokenId);
       console.log(price);
-      console.log(Account);
       await CreateNFTContract.methods
-        .sellMyNFTItem(tokenId, price)
-        .send({ from: Account, gas: 3000000, value: price }, (error) => {
+        .sellMyNFTItem(form.tokenId, form.price)
+        .send({ from: Account, gas: 3000000 }, (error) => {
           if (!error) {
             console.log("send ok");
           } else {
             console.log(error);
           }
+        })
+        .then(() => {
+          window.location.reload();
+          setLoading(false);
         });
-      window.location.reload();
-      setLoading(false);
     }
   }
-
   if (Loading) {
     return (
       <div>
@@ -75,7 +78,9 @@ const SellModal = (props) => {
                 <input
                   type="number"
                   placeholder="00 . 00 ETH"
-                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, price: Number(e.target.value) })
+                  }
                 />
               </div>
             </div>
