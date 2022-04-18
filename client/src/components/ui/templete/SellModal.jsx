@@ -14,38 +14,64 @@ const SellModal = (props) => {
   );
 
   const [form, setForm] = useState({
-    tokenId: Number(props.item.formInput.tokenid),
-    price: Number(props.item.formInput.price),
+    tokenId: Number(props.item.tokenId),
+    price: Number(props.item.price),
   });
 
   useEffect(async () => {
     setLoading(null);
-  }, [CreateNFTContract]);
+  }, [CreateNFTContract, Account]);
 
   //nft 판매
   async function sellnft(tokenId, price) {
     if (CreateNFTContract === null) {
       setLoading(true);
     } else {
-      // const form = {
-      //   tokenId: Number(props.item.formInput.tokenid),
-      //   price: Number(props.item.formInput.price),
-      // };
-      console.log(tokenId);
-      console.log(price);
-      await CreateNFTContract.methods
-        .sellMyNFTItem(form.tokenId, form.price)
-        .send({ from: Account, gas: 3000000 }, (error) => {
+      const lists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: Account }, (error) => {
           if (!error) {
             console.log("send ok");
           } else {
             console.log(error);
           }
-        })
-        .then(() => {
-          window.location.reload();
-          setLoading(false);
         });
+      const result = await Promise.all(
+        lists.filter((i) => {
+          if (i.tokenId == tokenId) {
+            return true;
+          }
+        })
+      ).then(async (res) => {
+        if (res[0].sell === false) {
+          await CreateNFTContract.methods
+            .sellMyNFTItem(tokenId, price)
+            .send({ from: Account, gas: 3000000 }, (error) => {
+              if (!error) {
+                console.log("send ok");
+              } else {
+                console.log(error);
+              }
+            })
+            .then(() => {
+              setLoading(false);
+              window.location.reload();
+            });
+        } else {
+          if (window.confirm("팔고있어요 가격 바꿀려구요?")) {
+            alert("바꾸긴했어요...");
+          } else {
+            alert("탁월한 선택@@@@@@");
+          }
+        }
+      });
+      // const result = await Promise.all(
+      //   lists.filter((i) => {
+      //     if (i.tokenId == tokenId) {
+      //       return true;
+      //     }
+      //   })
+      // );
     }
   }
   if (Loading) {
@@ -70,7 +96,7 @@ const SellModal = (props) => {
           <div className="buy__nfts">
             <div className="must__bid">
               <p>You must bid at least</p>
-              <span className="money"> {props.item.formInput.price} ETH</span>
+              <span className="money"> {props.item.price} ETH</span>
             </div>
 
             <div className="must__bid">

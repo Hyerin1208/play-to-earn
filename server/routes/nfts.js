@@ -3,6 +3,7 @@ var express = require("express");
 var router = express.Router();
 const Nfts = require("../models/nfts");
 const User = require("../models/user");
+const History = require("../models/history");
 const DB = require("../models");
 const db = require("../models");
 const Likes = DB.sequelize.models.Likes;
@@ -19,8 +20,14 @@ router.post("/", async (req, res, next) => {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
+    }).then(() => {
+      History.create({
+        tokenId: req.body.tokenId,
+        from: req.body.contractAddress,
+        to: req.body.address,
+      });
+      res.json({ message: "ok" });
     });
-    res.json({ message: "ok" });
   } else {
     res.json({
       address: nft.address,

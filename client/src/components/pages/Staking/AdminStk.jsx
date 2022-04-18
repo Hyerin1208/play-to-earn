@@ -182,7 +182,7 @@ const AdminStk = () => {
               <h4>Duration (in days)</h4>
               <input
                 type="number"
-                placeholder="Amount"
+                placeholder="Days"
                 // value={input}
                 name="number"
                 className="stake__input"

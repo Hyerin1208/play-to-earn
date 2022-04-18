@@ -129,7 +129,15 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{NFTData.name}</h2>
                   </div>
-                  <div className="owner__address__box">
+                  <div
+                    className="owner__address__box"
+                    value={NFTData.address}
+                    onClick={(e) => {
+                      window.open(
+                        `https://testnet.bscscan.com/address/${e.target.value}`
+                      );
+                    }}
+                  >
                     owner : {NFTData.address}
                   </div>
 

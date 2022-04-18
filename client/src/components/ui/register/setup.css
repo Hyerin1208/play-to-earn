@@ -8,7 +8,7 @@
 .welcome__form input {
   font-style: 20px;
   padding-left: 10px;
-  width: 100%;
+  max-width: 80%;
   height: 45px;
   padding: 7px 25px;
   color: #fff;
@@ -21,10 +21,10 @@
 }
 
 .welcome__btn {
-  width: 200px;
+  max-width: 250px !important;
   height: 50px;
   justify-content: center;
-  margin-left: 34%;
+  margin-left: 30%;
   margin: 1rem;
   color: white;
   font: bold;
@@ -57,4 +57,10 @@
   transform: scale(1.2);
   border: none;
   color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .buy__init {
+    width: 600px;
+  }
 }

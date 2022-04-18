@@ -15,8 +15,13 @@ router.post("/", async (req, res, next) => {
     from: req.body.from,
     to: req.body.to,
   })
-    .then(() => {
-      res.json({ message: "ok" });
+    .then(async () => {
+      await Nfts.update(
+        { address: req.body.to },
+        { where: { tokenId: req.body.tokenId } }
+      ).then(() => {
+        res.json({ message: "ok" });
+      });
     })
     .catch((error) => {
       console.error(error);
