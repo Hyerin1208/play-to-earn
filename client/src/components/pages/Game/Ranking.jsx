@@ -128,13 +128,17 @@ const Ranking = () => {
     const temp = [];
     for (let i = 0; i < form.length; i++) {
       const result = [];
-      result.push(<p key={i + "week"}>{i + 1}주차</p>);
+      result.push(
+        <p key={i + "week"}>
+          <li>{i + 1}주차</li>
+        </p>
+      );
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           result.push(<p key={k}> 공석 </p>);
         } else {
           result.push(
-            <p key={k}>
+            <p key={k} className="weekly">
               {form[i][k].games} {form[i][k].rank}등 : {form[i][k].nick}
             </p>
           );
@@ -224,7 +228,9 @@ const Ranking = () => {
                   <Container className="my__rank">
                     <div className="ranking__box">
                       <Carousel>
-                        {weekly !== null ? weeklyRanking(weekly) : false}
+                        <ul>
+                          {weekly !== null ? weeklyRanking(weekly) : false}
+                        </ul>
                       </Carousel>
                     </div>
                   </Container>
