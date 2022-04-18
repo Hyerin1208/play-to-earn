@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import "./select-card.css";
 
 const SelectCard = (props) => {
-  // console.log(props);
   return (
     <div>
       <div className="select__nft__card">
@@ -21,11 +20,6 @@ const SelectCard = (props) => {
               <div className="select__nft__info">
                 <div className="nick_box">{props.item.form.nick}</div>
                 <div className="email_box">{props.item.form.email}</div>
-                {/* <input
-                  className="email_box"
-                  readOnly
-                  value={props.item.form.email}
-                ></input> */}
               </div>
             </div>
           </div>

@@ -11,7 +11,6 @@ router.post("/", async (req, res, next) => {
     attributes: ["address", "weeks"],
   });
   const checkApprove = await Game.findAll({ where: { approve: false } });
-  console.log(checkApprove.length);
   try {
     if (checkApprove.length === 0) {
       await rankingDB.mineranker
@@ -131,7 +130,6 @@ router.post("/sendbalance", async (req, res) => {
     where: { claim: false },
     attributes: ["balance"],
   });
-  console.log(totalclaim);
   res.json({ totalclaim: totalclaim });
 });
 

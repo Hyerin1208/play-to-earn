@@ -36,10 +36,6 @@ const Market = () => {
     }
   }, [Selllists]);
 
-  useEffect(() => {
-    console.log(nftArray);
-  }, [nftArray]);
-
   // ============ 페이징 =========================================
 
   const handlePagination = (index) => {

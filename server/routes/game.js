@@ -134,8 +134,6 @@ router.post("/tetris", async (req, res, next) => {
 // SnakeGame
 router.post("/ranking", async (req, res) => {
   const address = req.body.address;
-  console.log("///////////////////////////////////////");
-  console.log(address);
   const snake = await Game.findAll({
     where: { snakePoint: { [Op.not]: null } },
     attributes: ["nick", "snakePoint", "address", "approve"],
@@ -257,7 +255,6 @@ router.post("/weekly", async (req, res) => {
     });
     testArray.push(await RankingDB);
   }
-  console.log(testArray);
   res.json(testArray);
 });
 
@@ -272,7 +269,6 @@ router.post("/setclaim", async (req, res, next) => {
 
 router.post("/getclaim", async (req, res, next) => {
   const result = await Game.findOne({ where: { address: req.body.address } });
-  console.log(result.approve);
   res.json({ message: result.approve });
 });
 

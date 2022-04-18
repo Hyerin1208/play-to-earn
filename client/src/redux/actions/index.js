@@ -158,9 +158,7 @@ export function getWeb3() {
     try {
       const web3js = new Web3(Web3.givenProvider);
       const givenNetworkId = await web3js.eth.net.getId();
-      console.log(givenNetworkId);
       const networkId = Object.keys(CreateNFT.networks)[0];
-      console.log(networkId);
       if (parseInt(givenNetworkId) === parseInt(networkId)) {
         const networkData_NFT = CreateNFT.networks[givenNetworkId];
         const networkData_Token = AmusementArcadeToken.networks[givenNetworkId];

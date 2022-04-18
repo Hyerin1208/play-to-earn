@@ -71,7 +71,6 @@ const MySellList = () => {
       );
 
       setnftArray(result);
-      console.log(result);
     }
   }
 
@@ -102,7 +101,6 @@ const MySellList = () => {
           <Slider {...settings} style={{ width: 900 }}>
             {nftArray[0] !== undefined ? (
               nftArray.map((items, index) => {
-                console.log(items);
                 return (
                   // <motion.div key={index} className="my-items">
                   // <Col key={index} className="my-items">

@@ -37,15 +37,8 @@ const Create = (props) => {
   );
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    if (AAT !== null) {
-      console.log(AAT.options.address);
-    }
-  }, [AAT]);
-
   async function onChange(e) {
     const file = e.target.files[0];
-    console.log(file);
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
@@ -131,7 +124,6 @@ const Create = (props) => {
             contractAddress: AAT.options.address,
           })
           .then((res) => {
-            console.log(res.data.message);
             if (res.data.message === "ok") {
               alert("NFT발급 성공");
             } else {
