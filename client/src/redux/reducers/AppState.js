@@ -75,7 +75,11 @@ export default function (state = initialState, action) {
     case MY_MODAL:
       return {
         ...state,
-        MyModal: action.payload.MyModal,
+        MyModal: {
+          MyModal: action.payload.MyModal,
+          tokenId: action.payload.tokenId,
+          price: action.payload.price,
+        },
       };
     default:
       return state;
