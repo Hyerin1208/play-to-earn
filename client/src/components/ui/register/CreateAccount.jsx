@@ -17,13 +17,14 @@ const createAccount = () => {
             <div className="free__list__top">
               <h3>Create Account</h3>
               <h5>Connect to a wallet</h5>
-              <Card
-                className="create__width"
-                style={{
-                  height: "24rem",
-                  // backgroundColor: "black",
-                }}
-              >
+              <Card.Img
+                className="create__Account"
+                variant="top"
+                src={walletImg}
+                style={{ marginLeft: "27%", backgroundColor: "black" }}
+              />
+
+              <Col>
                 <Card.Header>
                   {" "}
                   <button className="singleNfts-btn">
@@ -31,35 +32,11 @@ const createAccount = () => {
                     <Link to="/wallet">Connect your wallet</Link>
                   </button>
                 </Card.Header>
-                <Row>
-                  <Col>
-                    <Card.Img
-                      className="create__Account"
-                      variant="top"
-                      src={walletImg}
-                      style={{ marginLeft: "27%" }}
-                    />
-                  </Col>
-                  {/* <Col>
-                    <Card.Img
-                      className="wallet__pack"
-                      variant="top"
-                      src={walletPack}
-                      style={{
-                        maxWidth: "390px",
-                        height: "200px",
-                        marginLeft: "15%",
-                      }}
-                    />
-                  </Col> */}
-                </Row>
-                <Col>
-                  <div className="account__desc">
-                    <p>Access to link and bind your wallet</p>
-                    <span>Use BNB to buy character</span>
-                  </div>
-                </Col>
-              </Card>
+                <div className="account__desc">
+                  <p>Access to link and bind your wallet</p>
+                  <span>Use BNB to buy character</span>
+                </div>
+              </Col>
             </div>
           </Col>
         </Row>
