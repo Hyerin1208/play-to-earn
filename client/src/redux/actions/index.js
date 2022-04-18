@@ -74,12 +74,14 @@ export const updateMyLists = (payload) => {
     payload: payload,
   };
 };
+
 export const updateMyBalance = (payload) => {
   return {
     type: UPDATE_MYBALANCE,
     payload: payload,
   };
 };
+
 export const mymodal = (payload) => {
   return {
     type: MY_MODAL,

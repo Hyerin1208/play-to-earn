@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { mymodal } from "../../../redux/actions";
 
 const NftSellCard = (props) => {
-  const [showModal, setShowModal] = useState(false);
   const MyModal = useSelector((state) => state.AppState.MyModal);
   const dispatch = useDispatch();
 
@@ -100,7 +99,13 @@ const NftSellCard = (props) => {
             <button
               className="sell__btn"
               onClick={() => {
-                dispatch(mymodal({ MyModal: true }));
+                dispatch(
+                  mymodal({
+                    MyModal: true,
+                    tokenId: Number(props.item.formInput.tokenid),
+                    price: Number(props.item.formInput.price),
+                  })
+                );
               }}
             >
               {/* <button className="sell__btn" onClick={() => setShowModal(true)}> */}
@@ -115,7 +120,7 @@ const NftSellCard = (props) => {
           </span>
         </div>
       </div>
-      {showModal && <SellModal item={props.item} setShowModal={setShowModal} />}
+
       <Routes>
         <Route path="detailes/*" element={<NftDetails item={props.item} />} />
       </Routes>
