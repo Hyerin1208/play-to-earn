@@ -49,7 +49,6 @@ const SideBar = () => {
     await axios
       .post(`http://localhost:5000/ranking`, { claim, account })
       .then((res) => {
-        console.log(res.data);
         alert("토큰 클레임 완료");
       });
   };
@@ -113,7 +112,6 @@ const SideBar = () => {
       .post(`http://localhost:5000/ranking/balance`, { address: account })
       .then((response) => {
         const data = response.data;
-        console.log(data);
         const balanceData = data.map((v, i) => {
           return v.balance;
         });

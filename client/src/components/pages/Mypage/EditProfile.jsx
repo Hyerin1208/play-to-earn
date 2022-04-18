@@ -37,7 +37,6 @@ const EditProfile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setPic(data.url.toString());
         })
         .catch((err) => {

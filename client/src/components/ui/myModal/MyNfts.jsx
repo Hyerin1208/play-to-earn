@@ -9,16 +9,6 @@ import { NFT__DATA } from "../../../assets/data/data";
 const MyNfts = ({ setShowModal }) => {
   const [seletedImg, setSelectedImg] = useState(NFT__DATA[0]);
 
-  // const handleSeleted = () => {
-  //   setSelectedImg((prevImage) => [...prevImage]);
-  // };
-
-  useEffect(() => {
-    console.log("update");
-  }, [seletedImg]);
-
-  // console.log(seletedImg.imgUrl);
-
   return (
     <div className="nft_wrapper">
       <div className="single_modal">

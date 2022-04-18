@@ -19,9 +19,6 @@ const NftCard = (props) => {
     setTestdata(props.item);
   }, [props]);
 
-  // const account = useSelector((state) => state.AppState.account);
-  console.log(testdata);
-
   return (
     <div>
       <div className="single__nft__card">

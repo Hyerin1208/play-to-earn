@@ -43,7 +43,6 @@ const NftDetails = (props) => {
         account: account,
       })
       .then((res) => {
-        console.log(res.data.message);
         if (res.data.message === "ok") {
           setLike(like + 1);
           alert("좋아요 등록 완료");
@@ -59,19 +58,16 @@ const NftDetails = (props) => {
         tokenId: card_id,
       })
       .then((res) => {
-        console.log(res.data.view);
         setView(res.data.view);
       });
   }, []);
 
   useEffect(async () => {
-    console.log(card_id);
     await axios
       .post(`http://localhost:5000/nfts`, {
         tokenId: card_id,
       })
       .then((res) => {
-        console.log(res.data);
         setLoading(false);
         setLike(res.data.likes);
         setView(res.data.views);
@@ -80,21 +76,17 @@ const NftDetails = (props) => {
   }, []);
 
   useEffect(async () => {
-    console.log(card_id);
     await axios
       .post(`http://localhost:5000/history/info`, {
         tokenId: card_id,
       })
       .then((res) => {
-        console.log(res.data);
         setLoading(false);
         // if (Loading == false && nftHistory !== null) {
         setNftHistory(res.data);
         // }
       });
   }, []);
-
-  console.log(nftHistory);
 
   function Loadingfunc(Loading) {
     if (Loading) {
@@ -129,7 +121,15 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{NFTData.name}</h2>
                   </div>
-                  <div className="owner__address__box">
+                  <div
+                    className="owner__address__box"
+                    value={NFTData.address}
+                    onClick={(e) => {
+                      window.open(
+                        `https://testnet.bscscan.com/address/${e.target.value}`
+                      );
+                    }}
+                  >
                     owner : {NFTData.address}
                   </div>
 
