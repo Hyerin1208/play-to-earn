@@ -79,9 +79,17 @@ const SideBar = () => {
         .gettoken()
         .send({ from: account, gas: 3000000 })
         .then(async () => {
-          dispatch(
-            updateMyBalance({ Mybalance: await checkMyBalance(account) })
-          );
+          await axios
+            .post("http://127.0.0.1:5000/ranking/updateclaim", {
+              address: account,
+            })
+            .then(async (res) => {
+              if (res.data.message === "ok") {
+                dispatch(
+                  updateMyBalance({ Mybalance: await checkMyBalance(account) })
+                );
+              }
+            });
         });
     } else {
       alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");

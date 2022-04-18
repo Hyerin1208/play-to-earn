@@ -102,7 +102,7 @@ const Admin = () => {
                     >
                       Send Ranking
                     </button>
-                    <button className="staking__btn" type="button" onClick="">
+                    <button className="staking__btn" type="button">
                       <i className="ri-shield-keyhole-line"></i>
                       <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link>
                     </button>

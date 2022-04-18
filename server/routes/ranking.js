@@ -127,10 +127,19 @@ router.post("/previous", async (req, res) => {
 
 router.post("/sendbalance", async (req, res) => {
   const totalclaim = await Ranking.findAll({
-    where: { claim: false },
+    where: { claim: true },
     attributes: ["balance"],
   });
   res.json({ totalclaim: totalclaim });
+});
+
+router.post("/updateclaim", async (req, res) => {
+  const address = req.body.address;
+  await Ranking.update({ claim: true }, { where: { address: address } }).then(
+    () => {
+      res.json({ message: "ok" });
+    }
+  );
 });
 
 module.exports = router;
