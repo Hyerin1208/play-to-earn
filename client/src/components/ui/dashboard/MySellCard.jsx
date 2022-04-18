@@ -10,9 +10,13 @@ import SellModal from "../templete/SellModal";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
+import { useDispatch, useSelector } from "react-redux";
+import { mymodal } from "../../../redux/actions";
 
 const NftSellCard = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const MyModal = useSelector((state) => state.AppState.MyModal);
+  const dispatch = useDispatch();
 
   const stars = Array(5).fill(1);
 
@@ -93,7 +97,13 @@ const NftSellCard = (props) => {
 
         <div className="bid__box">
           <div className="sell__box">
-            <button className="sell__btn" onClick={() => setShowModal(true)}>
+            <button
+              className="sell__btn"
+              onClick={() => {
+                dispatch(mymodal({ MyModal: true }));
+              }}
+            >
+              {/* <button className="sell__btn" onClick={() => setShowModal(true)}> */}
               <i className="ri-price-tag-3-line"></i>
               Sell
             </button>

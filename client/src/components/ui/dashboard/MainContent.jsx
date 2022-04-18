@@ -10,10 +10,16 @@ import MyRanking from "./MyRanking";
 import MySlick from "./MySlick";
 import MySellList from "./MySellList";
 import { MyWrapper } from "./MyWrapper"; // slick css
+import { useSelector } from "react-redux";
 
 const MainContent = () => {
   const [Loading, setLoading] = useState(true);
+  const [modal, setmodal] = useState(true);
+  const MyModal = useSelector((state) => state.AppState.MyModal);
 
+  useEffect(() => {
+    setmodal(MyModal);
+  }, [MyModal]);
   useEffect(() => {
     setLoading(null);
   }, []);
@@ -57,7 +63,9 @@ const MainContent = () => {
               <h4>SellList</h4>
               <br />
               <div className="section__two">
-                <MyWrapper>{/* <MySellList /> */}</MyWrapper>
+                <MyWrapper>
+                  <MySellList />
+                </MyWrapper>
               </div>
             </Row>
           </div>

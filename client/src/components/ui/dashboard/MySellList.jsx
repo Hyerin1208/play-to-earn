@@ -44,27 +44,30 @@ const MySellList = () => {
         });
 
       const result = await Promise.all(
-        lists.map(async (i) => {
-          const tokenURI = await CreateNFTContract.methods
-            .tokenURI(i.tokenId)
-            .call({ from: Account });
-          const meta = await axios.get(tokenURI).then((res) => res.data);
-          let item = {
-            fileUrl: await meta.image,
-            formInput: {
-              tokenid: i.tokenId,
-              price: i.price,
-              rare: i.rare,
-              star: i.star,
-              name: await meta.name,
-              description: await meta.description,
-            },
-          };
-          console.log(i.sell);
-          if (i.sell === true) {
+        lists
+          .filter((i) => {
+            if (i.sell === true) {
+              return i;
+            }
+          })
+          .map(async (i) => {
+            const tokenURI = await CreateNFTContract.methods
+              .tokenURI(i.tokenId)
+              .call({ from: Account });
+            const meta = await axios.get(tokenURI).then((res) => res.data);
+            let item = {
+              fileUrl: await meta.image,
+              formInput: {
+                tokenid: i.tokenId,
+                price: i.price,
+                rare: i.rare,
+                star: i.star,
+                name: await meta.name,
+                description: await meta.description,
+              },
+            };
             return item;
-          }
-        })
+          })
       );
 
       setnftArray(result);
@@ -84,7 +87,7 @@ const MySellList = () => {
     infinite: false,
   };
 
-  if (Loading && nftArray[0] === undefined) {
+  if (Loading) {
     return (
       <div>
         잠시만 기다려 주세요
@@ -99,20 +102,22 @@ const MySellList = () => {
           <Slider {...settings} style={{ width: 900 }}>
             {nftArray[0] !== undefined ? (
               nftArray.map((items, index) => {
+                console.log(items);
                 return (
                   // <motion.div key={index} className="my-items">
-                  <Col key={index} className="my-items">
-                    <NftSellCard
-                      item={items}
-                      id={items.formInput.tokenid}
-                      onClick={async (e) => {
-                        let tokenid = e.target.getAttribute("id");
-                        await CreateNFTContract.methods.tokenURI(tokenid).call({
-                          from: Account,
-                        });
-                      }}
-                    ></NftSellCard>
-                  </Col>
+                  // <Col key={index} className="my-items">
+                  <NftSellCard
+                    key={index}
+                    item={items}
+                    id={items.formInput.tokenid}
+                    onClick={async (e) => {
+                      let tokenid = e.target.getAttribute("id");
+                      await CreateNFTContract.methods.tokenURI(tokenid).call({
+                        from: Account,
+                      });
+                    }}
+                  ></NftSellCard>
+                  // </Col>
                 );
               })
             ) : (

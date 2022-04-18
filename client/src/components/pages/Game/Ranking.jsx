@@ -85,7 +85,16 @@ const Ranking = () => {
       .post(`http://localhost:5000/game/weekly`)
       .then((response) => {
         const data = response.data;
-        setWeekly(data);
+        const sortData = data.map((v, i) => {
+          const test = v.sort((a, b) => {
+            if (a.games > b.games) return 1;
+            if (a.games < b.games) return -1;
+            if (a.rank < b.rank) return -1;
+            if (a.rank > b.rank) return 1;
+          });
+          return test;
+        });
+        setWeekly(sortData);
       })
       .catch((error) => {
         setError(error);
@@ -119,14 +128,14 @@ const Ranking = () => {
     const temp = [];
     for (let i = 0; i < form.length; i++) {
       const result = [];
-      result.push(<p key={i + "-week"}>{i + 1}주차</p>);
+      result.push(<p key={i + "week"}>{i + 1}주차</p>);
       for (let k = 0; k < form[i].length; k++) {
         if (form[i][k] === undefined) {
           result.push(<p key={k}> 공석 </p>);
         } else {
           result.push(
             <p key={k}>
-              {form[i][k].games} / {form[i][k].rank}등 / {form[i][k].nick}
+              {form[i][k].games} {form[i][k].rank}등 : {form[i][k].nick}
             </p>
           );
         }

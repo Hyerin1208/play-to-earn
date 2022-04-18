@@ -27,25 +27,44 @@ const SellModal = (props) => {
     if (CreateNFTContract === null) {
       setLoading(true);
     } else {
-      // const form = {
-      //   tokenId: Number(props.item.formInput.tokenid),
-      //   price: Number(props.item.formInput.price),
-      // };
-      console.log(tokenId);
-      console.log(price);
-      await CreateNFTContract.methods
-        .sellMyNFTItem(form.tokenId, form.price)
-        .send({ from: Account, gas: 3000000 }, (error) => {
+      const lists = await CreateNFTContract.methods
+        .MyNFTlists()
+        .call({ from: Account }, (error) => {
           if (!error) {
             console.log("send ok");
           } else {
             console.log(error);
           }
-        })
-        .then(() => {
-          window.location.reload();
-          setLoading(false);
         });
+      const result = await Promise.all(
+        lists.filter((i) => {
+          if (i.tokenId == tokenId) {
+            return;
+          }
+        })
+      );
+
+      if (result.sell === false) {
+        await CreateNFTContract.methods
+          .sellMyNFTItem(tokenId, price)
+          .send({ from: Account, gas: 3000000 }, (error) => {
+            if (!error) {
+              console.log("send ok");
+            } else {
+              console.log(error);
+            }
+          })
+          .then(() => {
+            setLoading(false);
+            window.location.reload();
+          });
+      } else {
+        if (window.confirm("팔고있어요 가격 바꿀려구요?")) {
+          alert("바꾸긴했어요...");
+        } else {
+          alert("탁월한 선택@@@@@@");
+        }
+      }
     }
   }
   if (Loading) {
