@@ -4,7 +4,6 @@ import "./earning.css";
 import axios from "axios";
 
 const Earnings = () => {
-  const [token, setToken] = useState("00.00");
   const Mybalance = useSelector((state) => state.AppState.Mybalance);
   return (
     <div className="earning__card">

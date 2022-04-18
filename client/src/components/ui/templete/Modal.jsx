@@ -14,9 +14,6 @@ const Modal = (props) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  // const card_id = params.card_id;
-  // const owner = CreateNFTContract.methods.ownerOf(card_id).call();
-  // console.log(owner);
 
   useEffect(async () => {
     setLoading(null);
@@ -37,9 +34,6 @@ const Modal = (props) => {
           }
         })
         .then(async (res) => {
-          console.log(typeof res.events.Transfer.returnValues.tokenId);
-          console.log(res.events.Transfer.returnValues.from);
-          console.log(res.events.Transfer.returnValues.to);
           await axios
             .post(`http://localhost:5000/history`, {
               tokenId: res.events.Transfer.returnValues.tokenId,
@@ -61,12 +55,6 @@ const Modal = (props) => {
       setLoading(false);
     }
   }
-
-  // const sendHistory = async (tokenId) => {
-  //   console.log("여기");
-  //   // console.log(new Date().getTime());
-
-  // };
 
   if (Loading) {
     return (

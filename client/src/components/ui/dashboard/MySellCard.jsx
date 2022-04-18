@@ -21,15 +21,9 @@ const NftSellCard = (props) => {
 
   const [testdata, setTestdata] = useState(null);
 
-  console.log(props.item.formInput.star);
-
   useEffect(() => {
     setTestdata(props.item);
   }, [props]);
-
-  console.log(testdata);
-
-  console.log(props.item.formInput);
 
   return (
     <div>

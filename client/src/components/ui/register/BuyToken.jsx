@@ -25,7 +25,7 @@ const BuyToken = () => {
               border="light"
               style={{
                 maxWidth: "20rem",
-                height: "26rem",
+                height: "24rem",
                 backgroundColor: "black",
                 marginBottom: "20px",
                 display: "flex",

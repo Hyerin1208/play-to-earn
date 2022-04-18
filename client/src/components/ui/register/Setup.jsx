@@ -95,7 +95,7 @@ const Setup = () => {
             border="light"
             style={{
               width: "30rem",
-              height: "32rem",
+              height: "27rem",
               // backgroundColor: "black",
               // marginBottom: "20px",
             }}
