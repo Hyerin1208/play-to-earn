@@ -108,6 +108,7 @@ const Admin = () => {
                     </button>
                   </div>
                 </Col>
+                <Col xs="1"></Col>
                 <Col xs="8">
                   <Accept />
                 </Col>
