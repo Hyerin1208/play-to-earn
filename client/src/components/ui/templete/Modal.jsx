@@ -28,7 +28,7 @@ const Modal = (props) => {
       setLoading(true);
     } else {
       await CreateNFTContract.methods
-        .getNFTItem(tokenId)
+        .getNFTItem(parseInt(tokenId))
         .send({ from: account, gas: 3000000, value: price }, (error) => {
           if (!error) {
             console.log("send ok");
