@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "reactstrap";
+import { Card, CardText, CardTitle, Col, Container, Row } from "reactstrap";
+import { DragDropContext } from "react-beautiful-dnd";
+
+import { Pie } from "@visx/shape";
+import { Group } from "@visx/group";
+import { Text } from "@visx/text";
 
 import "./staking.css";
+
+// 아래는 임시데이터
+const coins = [
+  { id: 1, symbol: "STAKE", amount: 200, color: "#ffbeff", inAAT: 1.48 },
+  { id: 2, symbol: "AAT", amount: 5, color: "#c4dcff", inAAT: 37.6 },
+  { id: 3, symbol: "STAKE", amount: 0.005, color: "#b080fd", inAAT: 37363 },
+];
 
 const Staking = () => {
   const [input, setInput] = useState("");
@@ -40,10 +52,118 @@ const Staking = () => {
     };
   }, []);
 
+  const [active, setActive] = useState(null);
+  const width = 280;
+  const half = width / 2;
+
   return (
     <Container>
       <Row>
-        <Col>
+        <Col sm="3">
+          <main className="main__stake">
+            <svg width={width} height={width}>
+              <Group top={half} left={half}>
+                <Pie
+                  data={coins}
+                  pieValue={(data) => data.amount * data.inAAT}
+                  outerRadius={half}
+                  innerRadius={({ data }) => {
+                    const size =
+                      active && active.symbol == data.symbol ? 12 : 8;
+                    return half - size;
+                  }}
+                  padAngle={0.01}
+                >
+                  {(pie) => {
+                    return pie.arcs.map((arc) => {
+                      return (
+                        <g
+                          key={arc.data.symbol}
+                          onMouseEnter={() => setActive(arc.data)}
+                          onMouseLeave={() => setActive(null)}
+                        >
+                          <path d={pie.path(arc)} fill={arc.data.color}></path>
+                        </g>
+                      );
+                    });
+                  }}
+                </Pie>
+
+                {active ? (
+                  <>
+                    <Text
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize={40}
+                      dy={-20}
+                    >
+                      {`${Math.floor(active.amount * active.inAAT)}`}
+                    </Text>
+
+                    <Text
+                      textAnchor="middle"
+                      fill={active.color}
+                      fontSize={20}
+                      dy={20}
+                    >
+                      {`${active.amount} ${active.symbol}`}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    <Text
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize={40}
+                      dy={-20}
+                    >
+                      {`${Math.floor(
+                        coins.reduce(
+                          (acc, coin) => acc + coin.amount * coin.inAAT,
+                          0
+                        )
+                      )}`}
+                    </Text>
+
+                    <Text textAnchor="middle" fill="#aaa" fontSize={20} dy={20}>
+                      {`Your token balance`}
+                    </Text>
+                  </>
+                )}
+              </Group>
+            </svg>
+          </main>
+          <form className="widget__form">
+            <div className="widget__card">
+              <CardTitle tag="h5" className="widget__title">
+                <i className="ri-arrow-down-line"></i>
+                Total deposited
+              </CardTitle>
+              <CardText className="widget__text" tag="h5">
+                0.0 STAKE
+              </CardText>
+            </div>
+            <div className="widget__card">
+              <CardTitle tag="h5" className="widget__title">
+                <i className="ri-money-dollar-circle-line"></i>
+                STAKE/AAT
+              </CardTitle>
+              <CardText className="widget__text" tag="h5">
+                0.0 AAT
+              </CardText>
+            </div>
+            <div className="widget__card">
+              <CardTitle tag="h5" className="widget__title">
+                <i className="ri-arrow-down-line"></i>
+                Total accrued emission
+              </CardTitle>
+              <CardText className="widget__text" tag="h5">
+                0.0 STAKE
+              </CardText>
+            </div>
+          </form>
+        </Col>
+        <Col sm="8">
           <form className="stake__form">
             <h5>Time Left</h5>
             <div className="timer__container">
