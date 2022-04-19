@@ -8,10 +8,12 @@ const AirDrop = () => {
   const [timerMinutes, setTimerMinutes] = useState("00");
   const [timerSeconds, setTimerSeconds] = useState("00");
   const [isStop, setIsStop] = useState(false);
+  const timerid = useRef(null);
+  const defaultTime = new Date("apr 29, 2022 18:00:00");
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      const countdownDate = new Date("apr 29, 2022 18:00:00").getTime();
+    timerid.current = setInterval(async () => {
+      const countdownDate = new Date(defaultTime).getTime();
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -28,14 +30,13 @@ const AirDrop = () => {
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
-      } else {
-        clearInterval(interval);
       }
     }, 1000);
     return () => {
+      clearInterval(timerid.current);
       setIsStop(true);
     };
-  }, []);
+  }, [defaultTime]);
 
   return (
     <>
