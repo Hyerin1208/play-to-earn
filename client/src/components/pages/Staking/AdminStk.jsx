@@ -150,7 +150,7 @@ const AdminStk = () => {
                   name="number"
                   className="stake__input"
                 />
-                <button className="stake__btn">Untake</button>
+                <button className="stake__btn">UnStake</button>
               </li>
               <li>
                 <br />
