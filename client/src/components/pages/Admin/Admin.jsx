@@ -41,10 +41,20 @@ const Admin = () => {
   }, [account]);
 
   const sendRank = async () => {
+    const arry = ["mineranker", "snakeranker", "puzzleranker", "tetrisranker"];
+    let temp = [];
+    for (let i = 0; i < arry.length; i++) {
+      if (rankingDB[arry[i]].length !== 0) {
+        for (let k = 0; k < rankingDB[arry[i]].length; k++) {
+          temp.push(rankingDB[arry[i]][k].address);
+        }
+      }
+    }
     await axios
       .post(`http://localhost:5000/ranking`, {
         rankingDB: rankingDB,
-        address: account,
+        address: temp,
+        owner: account,
       })
       .then(async (res) => {
         if (res.data.message === "ok") {
@@ -102,13 +112,12 @@ const Admin = () => {
                     >
                       Send Ranking
                     </button>
-                    <button className="staking__btn" type="button" onClick="">
+                    <button className="staking__btn" type="button">
                       <i className="ri-shield-keyhole-line"></i>
                       <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link>
                     </button>
                   </div>
                 </Col>
-                <Col xs="1"></Col>
                 <Col xs="8">
                   <Accept />
                 </Col>
