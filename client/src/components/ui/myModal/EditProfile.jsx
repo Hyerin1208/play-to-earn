@@ -34,6 +34,7 @@ const EditProfile = (props) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      window.location.href = "/error";
     }
   }, []);
 

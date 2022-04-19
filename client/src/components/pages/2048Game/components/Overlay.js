@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
+import Error404 from "../../../ui/templete/Error404";
+
 export const Overlay = ({ handleReset, score }) => {
   const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -26,6 +28,7 @@ export const Overlay = ({ handleReset, score }) => {
         if (!error) {
           console.log("send ok");
         } else {
+          window.location.href = "/error";
           console.log(error);
         }
       });

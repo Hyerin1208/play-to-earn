@@ -10,10 +10,11 @@ import OwnerSellList from "./OwnerSellList";
 
 import "./admin.css";
 import { Link } from "react-router-dom";
+import Error404 from "../../ui/templete/Error404";
 
 const Admin = () => {
   const [Loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("/404-not-found");
 
   const account = useSelector((state) => state.AppState.account);
   const AmusementArcadeTokenContract = useSelector(
@@ -35,6 +36,7 @@ const Admin = () => {
         })
         .catch((error) => {
           setError(error);
+          window.location.href = "/error";
         });
     }
     setLoading(false);
