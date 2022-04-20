@@ -9,6 +9,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import Portis from "@portis/web3";
+import Fortmatic from "fortmatic";
 
 import { updateAccounts, changeChainid } from "../../redux/actions/index";
 import axios from "axios";
@@ -46,10 +48,23 @@ const NAV__LINKS = [
 ];
 
 const providerOptions = {
+  portis: {
+    package: Portis,
+    options: {
+      id: process.env.PORTIS_ID,
+    },
+  },
   walletconnect: {
     package: WalletConnectProvider,
     options: {
       infuraId: "5bd970f2bf6047318bda7b13eb3c24ce",
+    },
+  },
+  fortmatic: {
+    package: Fortmatic,
+    options: {
+      // Mikko's TESTNET api key
+      key: "pk_test_391E26A3B43A3350",
     },
   },
 };
