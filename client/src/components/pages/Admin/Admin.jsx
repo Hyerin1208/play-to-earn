@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import ReactLoaing from "react-loading";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AdminInfo from "./AdminInfo";
 import Accept from "./Accept";
@@ -11,6 +11,7 @@ import OwnerSellList from "./OwnerSellList";
 import "./admin.css";
 import { Link } from "react-router-dom";
 import Error404 from "../../ui/templete/Error404";
+import { setTimer } from "../../../redux/actions/index";
 
 const Admin = () => {
   const [Loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ const Admin = () => {
   );
 
   const [rankingDB, setRankingDB] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (account !== null) {
@@ -61,20 +63,26 @@ const Admin = () => {
       .then(async (res) => {
         if (res.data.message === "ok") {
           const arry = await res.data.totalclaim;
+          const timer = await res.data.count;
+
           const result = arry.reduce((sum, element) => {
             return sum + element.balance;
           }, 0);
           const contractbalance = await TokenClaimContract.methods
             .contractbalance()
             .call();
-          const sendamount = parseInt(result) - parseInt(contractbalance);
+          const sendamount =
+            parseInt(result) * (10 ^ 18) - parseInt(contractbalance);
 
           const claimAddress = await TokenClaimContract.options.address;
           await AmusementArcadeTokenContract.methods
             .transfer(claimAddress, sendamount)
-            .send({ from: account, gas: 3000000 });
-          alert("DB 전송 완료");
-          window.location.reload();
+            .send({ from: account, gas: 3000000 })
+            .then(() => {
+              dispatch(setTimer({ timer: parseInt(timer) }));
+              alert("DB 전송 완료");
+              window.location.reload();
+            });
         } else {
           alert("아직 미승인된 유저가 있습니다.");
         }

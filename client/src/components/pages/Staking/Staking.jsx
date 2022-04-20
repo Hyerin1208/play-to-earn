@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardText, CardTitle, Col, Container, Row } from "reactstrap";
 import { DragDropContext } from "react-beautiful-dnd";
 
@@ -7,6 +7,7 @@ import { Group } from "@visx/group";
 import { Text } from "@visx/text";
 
 import "./staking.css";
+import { useSelector } from "react-redux";
 
 // 아래는 임시데이터
 const coins = [
@@ -17,7 +18,8 @@ const coins = [
 
 const Staking = () => {
   const [input, setInput] = useState("");
-
+  const timerid = useRef(null);
+  const timer = useSelector((state) => state.AppState.timer);
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
@@ -25,8 +27,8 @@ const Staking = () => {
   const [isStop, setIsStop] = useState(false);
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      const countdownDate = new Date("apr 29, 2022 18:00:00").getTime();
+    timerid.current = setInterval(() => {
+      const countdownDate = new Date(timer).getTime();
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -43,14 +45,13 @@ const Staking = () => {
         setTimerHours(hours);
         setTimerMinutes(minutes);
         setTimerSeconds(seconds);
-      } else {
-        clearInterval(interval);
       }
     }, 1000);
     return () => {
+      clearInterval(timerid.current);
       setIsStop(true);
     };
-  }, []);
+  }, [timer]);
 
   const [active, setActive] = useState(null);
   const width = 280;
@@ -75,10 +76,10 @@ const Staking = () => {
                   padAngle={0.01}
                 >
                   {(pie) => {
-                    return pie.arcs.map((arc) => {
+                    return pie.arcs.map((arc, index) => {
                       return (
                         <g
-                          key={arc.data.symbol}
+                          key={arc.data.symbol + index}
                           onMouseEnter={() => setActive(arc.data)}
                           onMouseLeave={() => setActive(null)}
                         >

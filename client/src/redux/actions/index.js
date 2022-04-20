@@ -12,6 +12,7 @@ export const UPDATE_LISTS = "UPDATE_LISTS";
 export const UPDATE_MYLISTS = "UPDATE_MYLISTS";
 export const UPDATE_MYBALANCE = "UPDATE_MYBALANCE";
 export const MY_MODAL = "MY_MODAL";
+export const SET_TIMER = "SET_TIMER";
 
 export const SET_NFTS = "SET_NFTS";
 export const SELECTED_NFT = "SELECTED_NFT";
@@ -89,6 +90,13 @@ export const mymodal = (payload) => {
   };
 };
 
+export const setTimer = (payload) => {
+  return {
+    type: SET_TIMER,
+    payload: payload,
+  };
+};
+
 export function connect() {
   return async (dispatch) => {
     try {
@@ -130,14 +138,19 @@ export function connect() {
                 return item;
               })
             );
-            dispatch(
-              connectSuccess({
-                network: res,
-                Owner: Owner,
-                Selllists: listsForm,
-                errorMsg: "",
-              })
-            );
+            await axios
+              .post("http://127.0.0.1:5000/user/owner", { address: Owner })
+              .then((res) => {
+                dispatch(
+                  connectSuccess({
+                    network: true,
+                    Owner: Owner,
+                    timer: parseInt(res.data.count),
+                    Selllists: listsForm,
+                    errorMsg: "",
+                  })
+                );
+              });
           } else {
             dispatch(connectFailed("접속네트워크를 확인하세요"));
           }
@@ -156,6 +169,7 @@ export function connect() {
 export function getWeb3() {
   return async (dispatch) => {
     try {
+      console.log("프로바이더 변경?");
       const web3js = new Web3(Web3.givenProvider);
       const givenNetworkId = await web3js.eth.net.getId();
       const networkId = Object.keys(CreateNFT.networks)[0];

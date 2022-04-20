@@ -12,8 +12,7 @@ const Ranking = () => {
   const [loading, setLoading] = useState(true);
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
-
-  const [defaultTime, setdefaultTime] = useState();
+  const timer = useSelector((state) => state.AppState.timer);
   const [timerDays, setTimerDays] = useState();
   const [timerHours, setTimerHours] = useState();
   const [timerMinutes, setTimerMinutes] = useState();
@@ -22,17 +21,9 @@ const Ranking = () => {
 
   const [isStop, setIsStop] = useState(false);
 
-  useEffect(async () => {
-    const count = await axios
-      .get(`http://localhost:5000/user/time`)
-      .then((res) => res.data);
-    setdefaultTime(parseInt(count.count));
-    setLoading(false);
-  }, []);
-
   useEffect(() => {
     timerid.current = setInterval(async () => {
-      const countdownDate = new Date(defaultTime).getTime();
+      const countdownDate = new Date(timer).getTime();
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -55,7 +46,7 @@ const Ranking = () => {
       clearInterval(timerid.current);
       setIsStop(true);
     };
-  }, [defaultTime]);
+  }, [timer]);
 
   const toggleTab = (index) => {
     setToggleState(index);
