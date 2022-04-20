@@ -8,6 +8,7 @@ const Game = require("./game");
 const Nfts = require("./nfts");
 const Ranking = require("./ranking");
 const History = require("./history");
+const Staking = require("./staking");
 
 const db = {};
 
@@ -29,17 +30,20 @@ db.Game = Game;
 db.Nfts = Nfts;
 db.Ranking = Ranking;
 db.History = History;
+db.Staking = Staking;
 
 User.init(sequelize);
 Game.init(sequelize);
 Nfts.init(sequelize);
 Ranking.init(sequelize);
 History.init(sequelize);
+Staking.init(sequelize);
 
 User.associate(db);
 Game.associate(db);
 Nfts.associate(db);
 Ranking.associate(db);
 History.associate(db);
+Staking.associate(db);
 
 module.exports = db;

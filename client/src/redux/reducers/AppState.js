@@ -7,6 +7,7 @@ import {
   CALL_CONTRACT,
   UPDATE_MYBALANCE,
   MY_MODAL,
+  SET_TIMER,
 } from "../actions";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   wallet: false,
   account: null,
   Owner: null,
+  timer: 0,
   isUser: false,
   CreateNFTContract: null,
   AmusementArcadeTokenContract: null,
@@ -32,6 +34,7 @@ export default function (state = initialState, action) {
         ...state,
         network: action.payload.network,
         Owner: action.payload.Owner,
+        timer: action.payload.timer,
         Selllists: action.payload.Selllists,
         errorMsg: action.payload.errorMsg,
       };
@@ -80,6 +83,11 @@ export default function (state = initialState, action) {
           tokenId: action.payload.tokenId,
           price: action.payload.price,
         },
+      };
+    case SET_TIMER:
+      return {
+        ...state,
+        timer: action.payload.timer,
       };
     default:
       return state;
