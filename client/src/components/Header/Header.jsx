@@ -526,7 +526,7 @@ const Header = () => {
             {isDisabled === false ? (
               walletButton(isDisabled)
             ) : (
-              <div>
+              <div className="user__logined">
                 <button className="connect_btn" onClick={disconnect}>
                   <span>
                     <i className="ri-wallet-line"></i>
