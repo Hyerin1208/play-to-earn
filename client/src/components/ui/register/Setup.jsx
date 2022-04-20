@@ -18,6 +18,8 @@ const Setup = () => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
 
   const [form, setForm] = useState({
     name: SelectNFT.name,
@@ -51,6 +53,8 @@ const Setup = () => {
   const [checkItem, setCheckItem] = useState(null);
 
   async function lastBtn() {
+    if (chainid === 1337 ? false : networkid === chainid ? false : true)
+      return alert("네트워크 아이디를 확인하세요");
     let data = JSON.stringify({
       name: SelectNFT.name,
       description: SelectNFT.description,

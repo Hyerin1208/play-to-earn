@@ -8,10 +8,13 @@ import {
   UPDATE_MYBALANCE,
   MY_MODAL,
   SET_TIMER,
+  CHANGE_CHAINID,
 } from "../actions";
 
 const initialState = {
   network: false,
+  networkid: false,
+  chainid: false,
   wallet: false,
   account: null,
   Owner: null,
@@ -20,6 +23,7 @@ const initialState = {
   CreateNFTContract: null,
   AmusementArcadeTokenContract: null,
   TokenClaimContract: null,
+  StakingToken: null,
   Selllists: [],
   MyNFTlists: null,
   Mybalance: 0,
@@ -33,10 +37,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         network: action.payload.network,
+        networkid: action.payload.networkid,
         Owner: action.payload.Owner,
         timer: action.payload.timer,
         Selllists: action.payload.Selllists,
         errorMsg: action.payload.errorMsg,
+        CreateNFTContract: action.payload.CreateNFTContract,
+        AmusementArcadeTokenContract:
+          action.payload.AmusementArcadeTokenContract,
+        TokenClaimContract: action.payload.TokenClaimContract,
+        StakingTokenContract: action.payload.StakingTokenContract,
       };
     case CONNECTION_FAILED:
       return {
@@ -54,6 +64,7 @@ export default function (state = initialState, action) {
     case UPDATE_ACCOUNT:
       return {
         ...state,
+        chainid: action.payload.chainid,
         wallet: action.payload.wallet,
         account: action.payload.account,
         isUser: action.payload.isUser,
@@ -88,6 +99,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         timer: action.payload.timer,
+      };
+    case CHANGE_CHAINID:
+      return {
+        ...state,
+        chainid: action.payload.chainid,
       };
     default:
       return state;

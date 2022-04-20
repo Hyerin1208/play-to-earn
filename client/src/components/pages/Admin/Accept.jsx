@@ -8,6 +8,8 @@ import "./accept.css";
 const Accept = () => {
   const [rankingDB, setRankingDB] = useState(null);
   const account = useSelector((state) => state.AppState.account);
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
   const TokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
@@ -34,6 +36,8 @@ const Accept = () => {
 
   async function setClaim(address, amount) {
     if (TokenClaimContract !== null) {
+      if (chainid === 1337 ? false : networkid === chainid ? false : true)
+        return alert("네트워크 아이디를 확인하세요");
       await TokenClaimContract.methods
         .setClaim(address, amount)
         .send({ from: account, gas: 3000000 })
