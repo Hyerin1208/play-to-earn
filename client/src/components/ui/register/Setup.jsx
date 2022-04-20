@@ -85,7 +85,7 @@ const Setup = () => {
     <Fragment>
       <Container className="setup__container">
         <Row>
-          <Col lg="12" className="mb-3">
+          <Col lg="8" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
               {/* <h5>Join Us</h5> */}

@@ -75,6 +75,7 @@ const Ranking = () => {
         })
         .catch((error) => {
           setError(error);
+          window.location.href = "/error";
         });
     }
     setLoading(false);
@@ -98,6 +99,7 @@ const Ranking = () => {
       })
       .catch((error) => {
         setError(error);
+        window.location.href = "/error";
       });
     setLoading(false);
   }, [account]);

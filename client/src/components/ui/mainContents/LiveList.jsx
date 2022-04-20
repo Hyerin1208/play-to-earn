@@ -19,6 +19,7 @@ const LiveList = () => {
       }
     } catch (error) {
       console.log(error);
+      window.location.href = "/error";
     }
   }, [Selllists]);
 

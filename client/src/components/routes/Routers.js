@@ -19,6 +19,7 @@ import Admin from "../pages/Admin/Admin";
 import Evolution from "../pages/Evolution/Evolution";
 import Staking from "../pages/Staking/Staking";
 import AdminStk from "../pages/Staking/AdminStk";
+import Error404 from "../ui/templete/Error404";
 
 const Routers = () => {
   return (
@@ -41,6 +42,7 @@ const Routers = () => {
         <Route path="/aatadmin" element={<AdminStk />} />
         <Route path="/test" element={<Test />} />
         <Route path="/error" element={<Error />} />
+        <Route exact path="/error" component={<Error404 />} />
       </Routes>
     </Fragment>
   );

@@ -12,6 +12,11 @@
   padding-top: 10px;
 }
 
+.main__stake {
+  margin-top: 40px;
+  margin-left: 15%;
+}
+
 .timer__container {
   background-size: contain;
   display: -webkit-box;
@@ -261,4 +266,38 @@
   );
   color: #fff;
   text-transform: capitalize;
+}
+
+.widget__form {
+  /* margin-top: 15%; */
+}
+
+.widget__card {
+  max-width: 400px;
+  height: 107px;
+  padding: 10px;
+  background: #343444;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 24px;
+  margin-left: 20%;
+  margin-bottom: 10px;
+}
+
+.widget__title {
+  font-size: 1.15rem;
+  color: #9b60fbe0;
+}
+
+.widget__title i {
+  font-size: 1.4rem;
+  margin-right: 5%;
+}
+
+.widget__text {
+  margin-top: 20px;
+}
+
+.draggable-list {
+  list-style-type: none;
 }
