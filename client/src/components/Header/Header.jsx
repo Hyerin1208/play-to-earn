@@ -10,7 +10,7 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-import { updateAccounts } from "../../redux/actions/index";
+import { updateAccounts, changeChainid } from "../../redux/actions/index";
 import axios from "axios";
 import { utils } from "ethers";
 
@@ -109,8 +109,10 @@ const Header = () => {
           owner: Owner,
         })
         .then((res) => res.data.nick);
+
       dispatch(
         updateAccounts({
+          chainid: network.chainId,
           wallet: true,
           account: accounts[0],
           isUser: checkUser === "noname" ? false : true,
@@ -189,7 +191,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log(provider);
     if (provider?.on) {
       const handleAccountsChanged = async (accounts) => {
         console.log("accountsChanged", accounts);
@@ -201,9 +202,9 @@ const Header = () => {
               owner: Owner,
             })
             .then((res) => res.data.nick);
-
           dispatch(
             updateAccounts({
+              chainid: parseInt(provider.chainId),
               wallet: true,
               account: getAddress,
               isUser: checkUser === "noname" ? false : true,
@@ -216,16 +217,41 @@ const Header = () => {
           setDisabled(true);
         } else {
           disconnect();
+          dispatch(
+            updateAccounts({
+              chainid: false,
+              wallet: false,
+              account: null,
+              isUser: false,
+              MyNFTlists: null,
+              Mybalance: 0,
+            })
+          );
         }
       };
 
       const handleChainChanged = (_hexChainId) => {
         setChainId(parseInt(_hexChainId));
+        dispatch(
+          changeChainid({
+            chainid: parseInt(_hexChainId),
+          })
+        );
       };
 
       const handleDisconnect = () => {
         console.log("disconnect", error);
         disconnect();
+        dispatch(
+          updateAccounts({
+            chainid: false,
+            wallet: false,
+            account: null,
+            isUser: false,
+            MyNFTlists: null,
+            Mybalance: 0,
+          })
+        );
       };
 
       provider.on("accountsChanged", handleAccountsChanged);
@@ -270,8 +296,10 @@ const Header = () => {
 
   async function checkOwner(account) {
     if (Owner === account) {
+      console.log("오너임");
       setIsOwner(true);
     } else {
+      console.log("유저임");
       setIsOwner(false);
     }
   }
@@ -307,10 +335,12 @@ const Header = () => {
     }
   }
   useEffect(() => {
+    console.log(this);
+
     if (web3Modal.cachedProvider) {
       connectWallet();
     }
-  }, []);
+  }, [Owner]);
 
   async function checkMyBalance(account) {
     if (TokenClaimContract !== null && TokenClaimContract !== "dismatch") {
