@@ -8,14 +8,16 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
-
+import { ethers } from "ethers";
 import { providers } from "ethers";
+import renderAccount from "./renderAccount";
+import providerOptions from "./providerOptions";
 
 import { updateAccounts } from "../../redux/actions/index";
 import axios from "axios";
 import { utils } from "ethers";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const NAV__LINKS = [
   {
@@ -68,32 +70,84 @@ const Header = () => {
   );
 
   const [cookies, setCookie, removeCookie] = useCookies(["rememberAddress"]);
+
+  const [connectedWallet, setConnectedWallet] = useState(false);
   // Web3modal instance
   const web3ModalRef = useRef();
 
   const getSignerOrProvider = async (needSigner = false) => {
     const provider = await web3ModalRef.current.connect();
-    const web3Provider = new provider.web3Provider(provider);
+    const web3Provider = new providers.Web3Provider(provider);
     const { chainId } = await web3Provider.getNetwork();
-    if (chainId !== 4) {
-      alert("Use RINKEEBY NETWORK");
+    console.log(chainId);
+    if (chainId !== 1337) {
+      alert("가나슈가아니에요");
       throw new Error("Change network to Rinkeby");
     }
     if (needSigner) {
       const signer = web3Provider.getSigner();
       return signer;
     }
+    return provider;
+  };
+  useEffect(() => {
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          // Mikko's test key - don't copy as your mileage may vary
+          infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
+        },
+      },
+    };
+
+    web3ModalRef.current = new Web3Modal({
+      cacheProvider: false, // optional
+      providerOptions, // required
+    });
+  }, []);
+
+  const connectWallet = async () => {
+    try {
+      let provider = await Web3Modal.connect();
+    } catch (e) {
+      console.log("Could not get a wallet connection", e);
+      return;
+    }
+
+    // // Subscribe to accounts change
+    // provider.on("accountsChanged", (accounts) => {
+    //   fetchAccountData();
+    // });
+
+    // // Subscribe to chainId change
+    // provider.on("chainChanged", (chainId) => {
+    //   fetchAccountData();
+    // });
+
+    // // Subscribe to networkId change
+    // provider.on("networkChanged", (networkId) => {
+    //   fetchAccountData();
+    // });
+
+    // await refreshAccountData();
+
+    // try {
+    //   await getSignerOrProvider();
+    //   setConnectedWallet(true);
+    // } catch (error) {
+    //   console.log("error", error);
+    // }
   };
 
-  useEffect(() => {
-    web3ModalRef.current = new Web3Modal({
-      network: "rinkeby",
-      theme: "dark",
-      //   cacheProvider: true,
-      providerOptions: {},
-    });
-    console.log("FdFSDf", web3ModalRef.current);
-  }, []);
+  // useEffect(async () => {
+  //   web3ModalRef.current = new Web3Modal({
+  //     network: "rinkeby",
+  //     theme: "dark",
+  //     providerOptions: {},
+  //   });
+  //   console.log("FdFSDf", web3ModalRef.current);
+  // }, []);
 
   useEffect(() => {
     if (cookies.rememberAddress === undefined) {
@@ -350,11 +404,13 @@ const Header = () => {
               })}
             </ul>
           </div>
-
+          {/* web3modal 임시 버튼 */}
           <div className="web3__modal">
             <Button
-              text="Connect to Wallet"
-              onClick={() => console.log("Yes connected")}
+              text="Connect To Wallet"
+              onClick={() => {
+                connectWallet();
+              }}
             />
           </div>
 
