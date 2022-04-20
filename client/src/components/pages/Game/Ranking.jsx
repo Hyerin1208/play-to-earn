@@ -14,10 +14,10 @@ const Ranking = () => {
   const account = useSelector((state) => state.AppState.account);
 
   const [defaultTime, setdefaultTime] = useState();
-  const [timerDays, setTimerDays] = useState();
-  const [timerHours, setTimerHours] = useState();
-  const [timerMinutes, setTimerMinutes] = useState();
-  const [timerSeconds, setTimerSeconds] = useState();
+  const [timerDays, setTimerDays] = useState("00");
+  const [timerHours, setTimerHours] = useState("00");
+  const [timerMinutes, setTimerMinutes] = useState("00");
+  const [timerSeconds, setTimerSeconds] = useState("00");
   const timerid = useRef(null);
 
   const [isStop, setIsStop] = useState(false);
