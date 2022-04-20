@@ -57,6 +57,13 @@ const providerOptions = {
 const web3Modal = new Web3Modal({
   network: "mainnet",
   cacheProvider: true,
+  theme: {
+    background: "rgb(20, 21, 21)",
+    main: "rgb(199, 199, 199)",
+    secondary: "rgb(136, 136, 136)",
+    border: "rgba(195, 195, 195, 0.14)",
+    hover: "rgba(63, 4, 180, 0.452)",
+  },
   providerOptions: providerOptions,
 });
 
