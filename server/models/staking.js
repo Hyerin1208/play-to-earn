@@ -1,29 +1,29 @@
 const Sequelize = require("sequelize");
 
-module.exports = class History extends Sequelize.Model {
+module.exports = class STAKING extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
         tokenId: {
+          type: Sequelize.INTEGER(200),
+          allowNull: false,
+          unique: true,
+        },
+        address: {
           type: Sequelize.STRING(200),
           allowNull: false,
         },
-        from: {
-          type: Sequelize.STRING(200),
-          allowNull: true,
-        },
-        to: {
-          type: Sequelize.STRING(200),
+        reward: {
+          type: Sequelize.INTEGER(200),
           allowNull: false,
-          defaultValue: 0,
         },
       },
       {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "History",
-        tableName: "histories",
+        modelName: "STAKING",
+        tableName: "stakings",
         paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
@@ -31,10 +31,5 @@ module.exports = class History extends Sequelize.Model {
     );
   }
 
-  static associate(db) {
-    // db.History.belongsTo(db.Nfts, {
-    //   foreignKey: "tokenId",
-    //   targetKey: "tokenId",
-    // });
-  }
+  static associate(db) {}
 };

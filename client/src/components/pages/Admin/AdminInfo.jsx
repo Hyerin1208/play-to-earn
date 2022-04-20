@@ -52,9 +52,11 @@ const AdminInfo = () => {
   }, []);
 
   useEffect(async () => {
-    const lists = await CreateNFTContract.methods.totalNFTs().call();
-    setTotalNFT(lists);
-  }, [totalNFT]);
+    if (CreateNFTContract !== null) {
+      const lists = await CreateNFTContract.methods.totalNFTs().call();
+      setTotalNFT(lists);
+    }
+  }, [totalNFT, CreateNFTContract]);
 
   return (
     <div className="InfoA__card">

@@ -124,14 +124,13 @@ router.post("/weeks", async (req, res) => {
 
 // 오너체크
 router.post("/owner", async (req, res, next) => {
-  const { count } = req.body;
   try {
     const newDate = new Date().getTime() + 604800000;
 
     const address = req.body.address;
     const owner = await User.findOne({ where: { address: address } });
     if (owner) {
-      res.json({ message: "운영자 맞아요" });
+      res.json({ message: "운영자 맞아요", count: owner.count });
     } else {
       await User.create({
         address: address,
@@ -140,7 +139,10 @@ router.post("/owner", async (req, res, next) => {
         email: "Owner@gmail.com",
         count: newDate.toString(),
       });
-      res.json({ message: "첫번째 실행으로 운영자 계정만들어요" });
+      res.json({
+        message: "첫번째 실행으로 운영자 계정만들어요",
+        count: newDate.toString(),
+      });
     }
   } catch (err) {
     console.error(err);

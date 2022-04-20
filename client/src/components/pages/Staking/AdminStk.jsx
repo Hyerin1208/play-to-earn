@@ -48,60 +48,60 @@ const AdminStk = () => {
             <h5>Time Left</h5>
             <div className="timer__container">
               <div className="timeleft__box">
-                <div class="countdown-block">
-                  <span class="days time-elem">
-                    <span class="top">{timerDays}</span>
-                    <span class="top-back">
+                <div className="countdown-block">
+                  <span className="days time-elem">
+                    <span className="top">{timerDays}</span>
+                    <span className="top-back">
                       <span>00</span>
                     </span>
-                    <span class="bottom">{timerDays}</span>
-                    <span class="bottom-back">
+                    <span className="bottom">{timerDays}</span>
+                    <span className="bottom-back">
                       <span>00</span>
                     </span>
                   </span>
-                  <span class="title">Days</span>
+                  <span className="title">Days</span>
                 </div>
 
-                <div class="countdown-block">
-                  <span class="hours time-elem">
-                    <span class="top">{timerHours}</span>
-                    <span class="top-back">
+                <div className="countdown-block">
+                  <span className="hours time-elem">
+                    <span className="top">{timerHours}</span>
+                    <span className="top-back">
                       <span>00</span>
                     </span>
-                    <span class="bottom">{timerHours}</span>
-                    <span class="bottom-back">
+                    <span className="bottom">{timerHours}</span>
+                    <span className="bottom-back">
                       <span>00</span>
                     </span>
                   </span>
-                  <span class="title">Hours</span>
+                  <span className="title">Hours</span>
                 </div>
 
-                <div class="countdown-block">
-                  <span class="minutes time-elem">
-                    <span class="top">{timerMinutes}</span>
-                    <span class="top-back">
+                <div className="countdown-block">
+                  <span className="minutes time-elem">
+                    <span className="top">{timerMinutes}</span>
+                    <span className="top-back">
                       <span>00</span>
                     </span>
-                    <span class="bottom">{timerMinutes}</span>
-                    <span class="bottom-back">
+                    <span className="bottom">{timerMinutes}</span>
+                    <span className="bottom-back">
                       <span>00</span>
                     </span>
                   </span>
-                  <span class="title">Minutes</span>
+                  <span className="title">Minutes</span>
                 </div>
 
-                <div class="countdown-block">
-                  <span class="seconds time-elem">
-                    <span class="top">{timerSeconds}</span>
-                    <span class="top-back">
+                <div className="countdown-block">
+                  <span className="seconds time-elem">
+                    <span className="top">{timerSeconds}</span>
+                    <span className="top-back">
                       <span>00</span>
                     </span>
-                    <span class="bottom">{timerSeconds}</span>
-                    <span class="bottom-back">
+                    <span className="bottom">{timerSeconds}</span>
+                    <span className="bottom-back">
                       <span>00</span>
                     </span>
                   </span>
-                  <span class="title">Seconds</span>
+                  <span className="title">Seconds</span>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@ const AdminStk = () => {
                   name="number"
                   className="stake__input"
                 />
-                <button className="stake__btn">Untake</button>
+                <button className="stake__btn">UnStake</button>
               </li>
               <li>
                 <br />

@@ -178,6 +178,11 @@ button {
   padding-right: 1%;
 }
 
+.weekly {
+  /* margin-left: 30%; */
+  text-align: left;
+}
+
 .slide {
   transform: scale(0.2);
   transition: transform 300ms;
@@ -248,4 +253,37 @@ button {
   color: white;
   font-style: none;
   text-decoration: none;
+}
+
+.weekly_w {
+  padding: 0;
+  list-style-type: none;
+  box-sizing: border-box;
+  width: 22em;
+  height: 3em;
+  font-size: 20px;
+  border-radius: 0.5em;
+  margin: 0.5em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+  color: #fff;
+  line-height: 3em;
+  transition: 0.3s;
+  cursor: pointer;
+  margin-left: 17%;
+}
+
+.weekly_w:nth-child(odd) {
+  background: linear-gradient(
+    90deg,
+    hsla(294, 100%, 55%, 1) 0%,
+    rgb(132, 66, 255) 100%
+  );
+  text-align: left;
+  padding-left: 10%;
+  transform: perspective(500px) rotateY(45deg);
+}
+
+.weekly_w:nth-child(odd):hover {
+  transform: perspective(330px) rotateY(45deg);
+  padding-right: 1%;
 }
