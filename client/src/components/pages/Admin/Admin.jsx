@@ -18,6 +18,8 @@ const Admin = () => {
   const [error, setError] = useState("/404-not-found");
 
   const account = useSelector((state) => state.AppState.account);
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
@@ -45,6 +47,8 @@ const Admin = () => {
   }, [account]);
 
   const sendRank = async () => {
+    if (chainid === 1337 ? false : networkid === chainid ? false : true)
+      return alert("네트워크 아이디를 확인하세요");
     const arry = ["mineranker", "snakeranker", "puzzleranker", "tetrisranker"];
     let temp = [];
     for (let i = 0; i < arry.length; i++) {
@@ -64,7 +68,6 @@ const Admin = () => {
         if (res.data.message === "ok") {
           const arry = await res.data.totalclaim;
           const timer = await res.data.count;
-
           const result = arry.reduce((sum, element) => {
             return sum + element.balance;
           }, 0);
