@@ -1,11 +1,9 @@
-const { text } = require("body-parser");
 var express = require("express");
 var router = express.Router();
 const Nfts = require("../models/nfts");
 const User = require("../models/user");
 const History = require("../models/history");
 const DB = require("../models");
-const db = require("../models");
 const Likes = DB.sequelize.models.Likes;
 
 router.post("/", async (req, res, next) => {

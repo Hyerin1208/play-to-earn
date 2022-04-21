@@ -10,13 +10,16 @@ router.post("/", async (req, res, next) => {
     where: { address: owner },
     attributes: ["address", "weeks"],
   });
+
   const checkApprove = await Game.findAll({
     where: { address: address },
     attributes: ["approve"],
   });
+
   const result = await checkApprove.filter((data) => {
     return data.approve === false;
   });
+
   try {
     if (result.length === 0) {
       await rankingDB.mineranker
@@ -33,6 +36,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
+
       await rankingDB.snakeranker
         .filter((v, i) => {
           return i < 3;
@@ -47,6 +51,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
+
       await rankingDB.puzzleranker
         .filter((v, i) => {
           return i < 3;
@@ -61,6 +66,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
+
       await rankingDB.tetrisranker
         .filter((v, i) => {
           return i < 3;
@@ -75,6 +81,7 @@ router.post("/", async (req, res, next) => {
             balance: reward[index],
           });
         });
+
       if (findUser) {
         User.update(
           { weeks: findUser.weeks + 1 },
@@ -120,10 +127,12 @@ router.post("/", async (req, res, next) => {
 
 router.post("/balance", async (req, res) => {
   const { address } = req.body;
+
   const users = await Ranking.findAll({
     where: { address: address },
     attributes: ["address", "balance"],
   });
+
   const balance = [];
 
   for (const user of users) {
