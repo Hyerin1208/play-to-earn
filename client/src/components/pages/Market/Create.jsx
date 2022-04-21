@@ -22,8 +22,6 @@ const Create = (props) => {
   const AAT = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
-  const networkid = useSelector((state) => state.AppState.networkid);
-  const chainid = useSelector((state) => state.AppState.chainid);
   let Navi = useNavigate();
   const [fileUrl, setFileUrl] = useState(defaultImg);
   const [formInput, updateFormInput] = useState({
@@ -73,10 +71,6 @@ const Create = (props) => {
 
   //nft작성
   async function CreateNFT() {
-    console.log(networkid);
-    console.log(chainid);
-    if (chainid === 1337 ? false : networkid === chainid ? false : true)
-      return alert("네트워크 아이디를 확인하세요");
     const url = await uploadToIPFS();
     /* next, create the item */
     const price = parseInt(formInput.price);
@@ -141,22 +135,15 @@ const Create = (props) => {
 
   //nft 판매
   async function sellnft(tokenId, price) {
-    if (CreateNFTContract !== null) {
-      console.log(networkid);
-      console.log(chainid);
-
-      if (chainid === 1337 ? false : networkid === chainid ? false : true)
-        return alert("네트워크 아이디를 확인하세요");
-      await CreateNFTContract.methods
-        .sellMyNFTItem(tokenId, price)
-        .send({ from: Account, gas: 3000000 }, (error) => {
-          if (!error) {
-            console.log("send ok");
-          } else {
-            console.log(error);
-          }
-        });
-    }
+    await CreateNFTContract.methods
+      .sellMyNFTItem(tokenId, price)
+      .send({ from: Account, gas: 3000000 }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
   }
 
   return (

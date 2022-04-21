@@ -17,8 +17,6 @@ const SideBar = () => {
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
-  const networkid = useSelector((state) => state.AppState.networkid);
-  const chainid = useSelector((state) => state.AppState.chainid);
 
   const [balance, setBalance] = useState([]);
 
@@ -77,8 +75,6 @@ const SideBar = () => {
   };
   const gettoken = async () => {
     if (TokenClaimContract !== null) {
-      if (chainid === 1337 ? false : networkid === chainid ? false : true)
-        return alert("네트워크 아이디를 확인하세요");
       await TokenClaimContract.methods
         .gettoken()
         .send({ from: account, gas: 3000000 })
