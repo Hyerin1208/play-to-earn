@@ -11,6 +11,8 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Portis from "@portis/web3";
 import Fortmatic from "fortmatic";
+import ethProvider from "eth-provider";
+import Authereum from "authereum";
 
 import { updateAccounts, changeChainid } from "../../redux/actions/index";
 import axios from "axios";
@@ -66,6 +68,12 @@ const providerOptions = {
       // Mikko's TESTNET api key
       key: "pk_test_391E26A3B43A3350",
     },
+  },
+  frame: {
+    package: ethProvider, // required
+  },
+  authereum: {
+    package: Authereum, // required
   },
 };
 
