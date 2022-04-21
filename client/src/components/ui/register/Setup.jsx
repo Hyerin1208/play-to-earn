@@ -89,33 +89,36 @@ const Setup = () => {
     <Fragment>
       <Container className="setup__container">
         <Row>
-          <Col lg="8" className="mb-3">
+          <Col lg="6" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
               {/* <h5>Join Us</h5> */}
             </div>
+
+            <div
+              border="light"
+              style={
+                {
+                  // width: "30rem",
+                  // height: "27rem",
+                  // backgroundColor: "black",
+                  // marginBottom: "20px",
+                }
+              }
+            >
+              <Card.Body>
+                <Card.Text>It's your CHOICS</Card.Text>
+                <Card.Img variant="top" src="" className="select_char" />
+                <div className="show__box">
+                  <SelectCard
+                    check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
+                    item={{ form }}
+                  />
+                </div>
+              </Card.Body>
+            </div>
           </Col>
-          <div
-            border="light"
-            style={{
-              width: "30rem",
-              height: "27rem",
-              // backgroundColor: "black",
-              // marginBottom: "20px",
-            }}
-          >
-            <Card.Body>
-              <Card.Text>It's your CHOICS</Card.Text>
-              <Card.Img variant="top" src="" className="select_char" />
-              <div className="show__box">
-                <SelectCard
-                  check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
-                  item={{ form }}
-                />
-              </div>
-            </Card.Body>
-          </div>
-          <Col>
+          <Col lg="6">
             <div
               border="light"
               style={{

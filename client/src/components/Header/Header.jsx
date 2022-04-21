@@ -9,6 +9,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 
 import { updateAccounts, changeChainid } from "../../redux/actions/index";
 import axios from "axios";
@@ -52,12 +53,25 @@ const providerOptions = {
       infuraId: "5bd970f2bf6047318bda7b13eb3c24ce",
     },
   },
+  coinbasewallet: {
+    package: CoinbaseWalletSDK, // Required
+    options: {
+      infuraId: "5bd970f2bf6047318bda7b13eb3c24ce", // Required
+    },
+  },
 };
 
 const web3Modal = new Web3Modal({
   network: "mainnet",
   cacheProvider: true,
   providerOptions: providerOptions,
+  theme: {
+    background: "rgb(20, 19, 29)",
+    main: "rgb(199, 199, 199)",
+    secondary: "rgb(136, 136, 136)",
+    border: "rgba(195, 195, 195, 0.14)",
+    hover: "rgba(36, 9, 66, 0.596)",
+  },
 });
 
 const Header = () => {
