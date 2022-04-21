@@ -66,6 +66,9 @@ const providerOptions = {
   },
   binancechainwallet: {
     package: true,
+    options: {
+      infuraId: "5bd970f2bf6047318bda7b13eb3c24ce", // Required
+    },
   },
 };
 
@@ -76,7 +79,7 @@ const providerOptions = {
 // });
 
 const web3Modal = new Web3Modal({
-  network: "mainnet",
+  network: "mainnet" || "binance" || "testnet",
   cacheProvider: true,
   providerOptions: providerOptions,
   theme: {
