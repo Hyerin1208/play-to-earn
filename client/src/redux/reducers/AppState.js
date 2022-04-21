@@ -42,11 +42,6 @@ export default function (state = initialState, action) {
         timer: action.payload.timer,
         Selllists: action.payload.Selllists,
         errorMsg: action.payload.errorMsg,
-        CreateNFTContract: action.payload.CreateNFTContract,
-        AmusementArcadeTokenContract:
-          action.payload.AmusementArcadeTokenContract,
-        TokenClaimContract: action.payload.TokenClaimContract,
-        StakingTokenContract: action.payload.StakingTokenContract,
       };
     case CONNECTION_FAILED:
       return {

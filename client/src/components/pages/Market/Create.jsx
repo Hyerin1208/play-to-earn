@@ -132,6 +132,7 @@ const Create = (props) => {
           .then((res) => {
             if (res.data.message === "ok") {
               alert("NFT발급 성공");
+              Navi("/market");
             } else {
               alert("이미 발급된 번호입니다.");
             }
@@ -260,8 +261,6 @@ const Create = (props) => {
               className="create__btn"
               onClick={async () => {
                 await CreateNFT();
-                Navi("/market");
-                // window.location.href = "http://localhost:3000/market";
               }}
               style={{ marginTop: "20px" }}
             >

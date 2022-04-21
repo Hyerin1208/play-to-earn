@@ -6,11 +6,15 @@ import { ethers } from "ethers";
 import { Container } from "reactstrap";
 
 import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-import { updateAccounts, changeChainid } from "../../redux/actions/index";
+import {
+  updateAccounts,
+  changeChainid,
+  getWeb3,
+} from "../../redux/actions/index";
 import axios from "axios";
 import { utils } from "ethers";
 
@@ -92,36 +96,33 @@ const Header = () => {
   const connectWallet = async () => {
     try {
       const provider = await web3Modal.connect();
-      const library = new ethers.providers.Web3Provider(provider);
-      const accounts = await library.listAccounts();
-      const network = await library.getNetwork();
-      console.log(library);
-      console.log(accounts);
-      console.log(network);
+      dispatch(getWeb3(provider));
+      const accounts = provider["_state"].accounts;
+      const selectAccount = utils.getAddress(accounts[0]);
+      if (accounts) setAccount(selectAccount);
+      const network = parseInt(provider["chainId"]);
       setProvider(provider);
-      setLibrary(library);
-      if (accounts) setAccount(accounts[0]);
-      setChainId(network.chainId);
+      setChainId(network);
 
-      const checkUser = await axios
+      await axios
         .post("http://127.0.0.1:5000/user/login", {
-          address: accounts[0],
+          address: selectAccount,
           owner: Owner,
         })
-        .then((res) => res.data.nick);
-
-      dispatch(
-        updateAccounts({
-          chainid: network.chainId,
-          wallet: true,
-          account: accounts[0],
-          isUser: checkUser === "noname" ? false : true,
-          MyNFTlists: await MyList(accounts[0]),
-          Mybalance: await checkMyBalance(accounts[0]),
-        })
-      );
-      await checkOwner(accounts[0]);
-      setDisabled(true);
+        .then(async (res) => {
+          dispatch(
+            updateAccounts({
+              chainid: network.chainId,
+              wallet: true,
+              account: selectAccount,
+              isUser: res.data.nick === "noname" ? false : true,
+              MyNFTlists: await MyList(selectAccount),
+              Mybalance: await checkMyBalance(selectAccount),
+            })
+          );
+          await checkOwner(selectAccount);
+          setDisabled(true);
+        });
     } catch (error) {
       setError(error);
     }
@@ -187,7 +188,18 @@ const Header = () => {
 
   const disconnect = async () => {
     await web3Modal.clearCachedProvider();
+    console.log(await web3Modal.clearCachedProvider());
     refreshState();
+    dispatch(
+      updateAccounts({
+        chainid: false,
+        wallet: false,
+        account: null,
+        isUser: false,
+        MyNFTlists: null,
+        Mybalance: 0,
+      })
+    );
   };
 
   useEffect(() => {
@@ -296,10 +308,8 @@ const Header = () => {
 
   async function checkOwner(account) {
     if (Owner === account) {
-      console.log("오너임");
       setIsOwner(true);
     } else {
-      console.log("유저임");
       setIsOwner(false);
     }
   }
@@ -335,8 +345,6 @@ const Header = () => {
     }
   }
   useEffect(() => {
-    console.log(this);
-
     if (web3Modal.cachedProvider) {
       connectWallet();
     }
