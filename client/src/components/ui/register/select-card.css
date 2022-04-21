@@ -1,0 +1,113 @@
+.select__nftLabel {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.select__nft__card {
+  max-width: 250px;
+  padding: 15px;
+  background: #343444;
+  border-radius: 10px;
+  min-height: 340px;
+  box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.select__nft__card .front__card,
+.select__nft__card .back__card {
+  /* position: absolute; */
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.select__nft__card .back__card {
+  transform: rotateX(180deg);
+  color: #000;
+  background: #fff;
+}
+
+label:hover .select__nft__card {
+  transform: rotateX(2deg);
+  box-shadow: 0 20px 20px rgba(50, 60, 60, 0.2);
+}
+
+:checked + .select__nft__card {
+  transform: rotateX(180deg);
+}
+
+label:hover :checked + .select__nft__card {
+  transform: rotateX(175deg);
+  box-shadow: 0 20px 20px rgba(255, 255, 255, 0.2);
+}
+
+.select__nft__card:hover {
+  box-shadow: 5px 10px 20px 0px rgba(255, 255, 255, 0.651) !important;
+}
+
+.select__nft__img img {
+  border-radius: 10px;
+  height: 150px;
+  align-items: center;
+  /* transition: ease all 0.3s; */
+}
+
+.select__nft__title {
+  padding: 10px 5px 4px 5px;
+  font-size: 1.2rem;
+  text-align: left !important;
+}
+
+.select__nft__desc p {
+  padding: 4px 5px 4px 5px;
+  font-size: 0.75rem;
+  text-align: left !important;
+}
+
+.pick__nft {
+  margin: 0.3rem;
+  color: #4938ff;
+  font: bold;
+  background-color: #343444;
+  border: 2px solid #4938ff;
+  border-radius: 5px;
+  padding: 0.3rem;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.pick__nft:hover {
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.2);
+  border: none;
+  color: white;
+}
+
+.nick_box {
+  width: 100%;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.email_box {
+  width: 100%;
+  padding: 7px 25px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(221, 221, 221, 0.432);
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

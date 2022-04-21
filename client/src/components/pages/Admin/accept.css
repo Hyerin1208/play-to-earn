@@ -1,0 +1,108 @@
+.admin__card {
+  max-width: 820px;
+  height: 100%;
+  background-color: #343444;
+  padding: 0.7rem 0.8rem;
+  border-radius: 1rem;
+  color: whitesmoke;
+  cursor: pointer;
+  box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
+  transition: 0.4s ease-in-out;
+}
+
+.carousel__con {
+  width: 100%;
+  height: 88%;
+  margin-right: 1rem;
+}
+
+/* .carousel__con {
+  width: 19.5rem;
+  height: 88%;
+  margin-right: 1rem;
+} */
+
+.winner__card {
+  margin: 0.2rem;
+  height: 80%;
+}
+
+.winner__content {
+  margin: 0.2rem;
+  height: 80%;
+}
+
+.winner__chart {
+  display: flex;
+  justify-content: center;
+}
+
+.InfoA__chart i {
+  font-size: 2.5rem;
+}
+
+.token__mydesc {
+  margin-top: -14px;
+}
+
+.token__mybox {
+  font-size: 1.1rem;
+}
+
+.token__mybox p {
+  overflow: scroll;
+  margin-bottom: -10px;
+}
+
+.accept__btn {
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 1px 20px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.accept__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
+
+.winner__box ul li {
+  display: flex;
+}
+
+.winner__box ul li p {
+  list-style: none;
+  font-size: 0.8rem;
+}
+
+.winner__box {
+  display: flex;
+}
+
+.winner__box button {
+  margin: 1px 12px 1px 12px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .admin__card {
+    max-width: 400px;
+  }
+}
+@media only screen and (max-width: 1040px) {
+  .admin__card {
+    margin-left: 40px;
+    max-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .admin__card {
+    max-width: 300px;
+  }
+}

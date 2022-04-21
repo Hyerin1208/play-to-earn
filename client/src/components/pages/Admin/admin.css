@@ -1,0 +1,83 @@
+.admin__dash {
+  width: 100%;
+  background: linear-gradient(to bottom right, #343434 0% right, #e6e4ff 70%);
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+  margin: 1rem 8rem 1rem 4rem;
+}
+
+.sub__container2 {
+  margin: 0.5rem 0;
+  height: 120%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* margin-bottom: 50px; */
+}
+
+.section1__one {
+  display: flex;
+  justify-content: space-between;
+  height: 21.8%;
+  /* gap: 1rem; */
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.section2__two {
+  display: flex;
+  gap: 2rem;
+  height: 120%;
+  /* margin-bottom: 500px; */
+}
+
+.sendRank__btn {
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 5px 20px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+  /* margin-left: 77px; */
+}
+
+.sendRank__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
+
+.btn__admin {
+  margin-top: 12px;
+  display: flex;
+}
+
+.staking__btn {
+  margin-left: 20px;
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 5px 20px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.staking__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
+
+.staking__btn a {
+  text-decoration: none;
+  color: white;
+}
