@@ -22,12 +22,15 @@ const Contact = () => {
       })
       .then((res) => {
         const data = res.data;
-        setNick(data.nick);
-        setEmail(data.email);
-        if (!account || data.nick === undefined || data.email === undefined) {
+        if (account === null) {
+          alert("로그인 후 이용해주세요");
+          window.location.href = "http://localhost:3000/";
+        } else if (data === null) {
           alert("회원가입 후 이용해주세요");
           window.location.href = "http://localhost:3000/";
         }
+        setNick(data.nick);
+        setEmail(data.email);
       });
     setLoading(false);
   }, [account]);
