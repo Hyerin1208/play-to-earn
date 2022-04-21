@@ -1,6 +1,7 @@
 import CreateNFT from "../../contracts/CreateNFT.json";
 import AmusementArcadeToken from "../../contracts/AmusementArcadeToken.json";
 import TokenClaim from "../../contracts/TokenClaim.json";
+import StakingToken from "../../contracts/StakingToken.json";
 import Web3 from "web3";
 import axios from "axios";
 
@@ -10,6 +11,10 @@ export const CALL_CONTRACT = "CALL_CONTRACT";
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
 export const UPDATE_LISTS = "UPDATE_LISTS";
 export const UPDATE_MYLISTS = "UPDATE_MYLISTS";
+export const UPDATE_MYBALANCE = "UPDATE_MYBALANCE";
+export const MY_MODAL = "MY_MODAL";
+export const SET_TIMER = "SET_TIMER";
+export const CHANGE_CHAINID = "CHANGE_CHAINID";
 
 export const SET_NFTS = "SET_NFTS";
 export const SELECTED_NFT = "SELECTED_NFT";
@@ -73,6 +78,34 @@ export const updateMyLists = (payload) => {
   };
 };
 
+export const updateMyBalance = (payload) => {
+  return {
+    type: UPDATE_MYBALANCE,
+    payload: payload,
+  };
+};
+
+export const mymodal = (payload) => {
+  return {
+    type: MY_MODAL,
+    payload: payload,
+  };
+};
+
+export const setTimer = (payload) => {
+  return {
+    type: SET_TIMER,
+    payload: payload,
+  };
+};
+
+export const changeChainid = (payload) => {
+  return {
+    type: CHANGE_CHAINID,
+    payload: payload,
+  };
+};
+
 export function connect() {
   return async (dispatch) => {
     try {
@@ -80,17 +113,41 @@ export function connect() {
       await web3.eth.net
         .isListening()
         .then(async (res) => {
-          const networkId = await web3.eth.net.getId();
-          const networkData_NFT = CreateNFT.networks[networkId];
-          const networkData_Token = AmusementArcadeToken.networks[networkId];
-          const networkData_TokenClaim = TokenClaim.networks[networkId];
-          if (networkData_NFT && networkData_Token) {
+          const givenNetworkId = await web3.eth.net.getId();
+          const networkId = Object.keys(CreateNFT.networks)[0];
+          if (
+            parseInt(givenNetworkId) === parseInt(networkId) &&
+            res === true
+          ) {
+            const networkData_NFT = CreateNFT.networks[networkId];
+            const networkData_Token = AmusementArcadeToken.networks[networkId];
+            const networkData_TokenClaim = TokenClaim.networks[networkId];
+            const networkData_StakingToken = StakingToken.networks[networkId];
             const NFT_abi = CreateNFT.abi;
             const NFT_address = networkData_NFT.address;
             const CreateNFTContract = new web3.eth.Contract(
               NFT_abi,
               NFT_address
             );
+            const Token_abi = AmusementArcadeToken.abi;
+            const Token_address = networkData_Token.address;
+            const AmusementArcadeTokenContract = new web3.eth.Contract(
+              Token_abi,
+              Token_address
+            );
+            const TokenClaim_abi = TokenClaim.abi;
+            const TokenClaim_address = networkData_TokenClaim.address;
+            const TokenClaimContract = new web3.eth.Contract(
+              TokenClaim_abi,
+              TokenClaim_address
+            );
+            const StakingToken_abi = StakingToken.abi;
+            const StakingToken_address = networkData_StakingToken.address;
+            const StakingTokenContract = new web3.eth.Contract(
+              StakingToken_abi,
+              StakingToken_address
+            );
+
             const Owner = await CreateNFTContract.methods.owner().call();
             const lists = await CreateNFTContract.methods.Selllists().call();
 
@@ -114,14 +171,25 @@ export function connect() {
                 return item;
               })
             );
-            dispatch(
-              connectSuccess({
-                network: res,
-                Owner: Owner,
-                Selllists: listsForm,
-                errorMsg: "",
-              })
-            );
+            await axios
+              .post("http://127.0.0.1:5000/user/owner", { address: Owner })
+              .then((res) => {
+                console.log(res.data.count);
+                dispatch(
+                  connectSuccess({
+                    network: true,
+                    networkid: parseInt(givenNetworkId),
+                    Owner: Owner,
+                    timer: parseInt(res.data.count),
+                    Selllists: listsForm,
+                    errorMsg: "",
+                    CreateNFTContract: CreateNFTContract,
+                    AmusementArcadeTokenContract: AmusementArcadeTokenContract,
+                    TokenClaimContract: TokenClaimContract,
+                    StakingTokenContract: StakingTokenContract,
+                  })
+                );
+              });
           } else {
             dispatch(connectFailed("접속네트워크를 확인하세요"));
           }
@@ -137,50 +205,51 @@ export function connect() {
   };
 }
 
-export function getWeb3() {
-  return async (dispatch) => {
-    try {
-      const web3js = new Web3(Web3.givenProvider);
-      const givenNetworkId = await web3js.eth.net.getId();
-      const networkId = Object.keys(CreateNFT.networks)[0];
-      if (parseInt(givenNetworkId) === parseInt(networkId)) {
-        const networkData_NFT = CreateNFT.networks[givenNetworkId];
-        const networkData_Token = AmusementArcadeToken.networks[givenNetworkId];
-        const networkData_TokenClaim = TokenClaim.networks[givenNetworkId];
-        const NFT_abi = CreateNFT.abi;
-        const NFT_address = networkData_NFT.address;
-        const CreateNFTContract = new web3js.eth.Contract(NFT_abi, NFT_address);
-        const Token_abi = AmusementArcadeToken.abi;
-        const Token_address = networkData_Token.address;
-        const AmusementArcadeTokenContract = new web3js.eth.Contract(
-          Token_abi,
-          Token_address
-        );
-        const TokenClaim_abi = TokenClaim.abi;
-        const TokenClaim_address = networkData_TokenClaim.address;
-        const TokenClaimContract = new web3js.eth.Contract(
-          TokenClaim_abi,
-          TokenClaim_address
-        );
-        dispatch(
-          callContract({
-            CreateNFTContract: CreateNFTContract,
-            AmusementArcadeTokenContract: AmusementArcadeTokenContract,
-            TokenClaimContract: TokenClaimContract,
-          })
-        );
-      } else {
-        dispatch(
-          callContract({
-            CreateNFTContract: null,
-            AmusementArcadeTokenContract: null,
-            TokenClaimContract: null,
-          })
-        );
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(connectFailed("에러 확인"));
-    }
-  };
-}
+// export function getWeb3() {
+//   return async (dispatch) => {
+//     try {
+//       console.log("프로바이더 변경?");
+//       const web3js = new Web3(Web3.givenProvider);
+//       const givenNetworkId = await web3js.eth.net.getId();
+//       const networkId = Object.keys(CreateNFT.networks)[0];
+//       if (parseInt(givenNetworkId) === parseInt(networkId)) {
+//         const networkData_NFT = CreateNFT.networks[givenNetworkId];
+//         const networkData_Token = AmusementArcadeToken.networks[givenNetworkId];
+//         const networkData_TokenClaim = TokenClaim.networks[givenNetworkId];
+//         const NFT_abi = CreateNFT.abi;
+//         const NFT_address = networkData_NFT.address;
+//         const CreateNFTContract = new web3js.eth.Contract(NFT_abi, NFT_address);
+//         const Token_abi = AmusementArcadeToken.abi;
+//         const Token_address = networkData_Token.address;
+//         const AmusementArcadeTokenContract = new web3js.eth.Contract(
+//           Token_abi,
+//           Token_address
+//         );
+//         const TokenClaim_abi = TokenClaim.abi;
+//         const TokenClaim_address = networkData_TokenClaim.address;
+//         const TokenClaimContract = new web3js.eth.Contract(
+//           TokenClaim_abi,
+//           TokenClaim_address
+//         );
+//         dispatch(
+//           callContract({
+//             CreateNFTContract: CreateNFTContract,
+//             AmusementArcadeTokenContract: AmusementArcadeTokenContract,
+//             TokenClaimContract: TokenClaimContract,
+//           })
+//         );
+//       } else {
+//         dispatch(
+//           callContract({
+//             CreateNFTContract: "dismatch",
+//             AmusementArcadeTokenContract: "dismatch",
+//             TokenClaimContract: "dismatch",
+//           })
+//         );
+//       }
+//     } catch (error) {
+//       console.log(error);
+//       dispatch(connectFailed("에러 확인"));
+//     }
+//   };
+// }

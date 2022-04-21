@@ -17,6 +17,9 @@ import Error from "../ui/templete/Error404";
 import JoinUs from "../ui/register/JoinUs";
 import Admin from "../pages/Admin/Admin";
 import Evolution from "../pages/Evolution/Evolution";
+import Staking from "../pages/Staking/Staking";
+import AdminStk from "../pages/Staking/AdminStk";
+import Error404 from "../ui/templete/Error404";
 
 const Routers = () => {
   return (
@@ -35,8 +38,11 @@ const Routers = () => {
         <Route path="/game/*" element={<Game />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/upgrade" element={<Evolution />} />
+        <Route path="/staking" element={<Staking />} />
+        <Route path="/aatadmin" element={<AdminStk />} />
         <Route path="/test" element={<Test />} />
         <Route path="/error" element={<Error />} />
+        <Route exact path="/error" component={<Error404 />} />
       </Routes>
     </Fragment>
   );

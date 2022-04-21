@@ -1,13 +1,17 @@
 .InfoA__card {
-  height: 100%;
-  width: 20rem;
-  background-color: #343434;
+  height: 62%;
+  max-width: 22rem;
+  background-color: #343444;
   padding: 0.7rem 0.2rem;
   border-radius: 1rem;
   color: whitesmoke;
   cursor: pointer;
   box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
-  transition: 0ms.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+}
+
+.carousel0__box {
+  /* height: 10px; */
 }
 
 .carousel__box {
@@ -28,4 +32,8 @@
 
 .InfoA__chart i {
   font-size: 2.5rem;
+}
+
+.token__mybox {
+  margin-bottom: 12px;
 }

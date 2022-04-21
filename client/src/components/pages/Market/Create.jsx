@@ -19,6 +19,11 @@ import { useNavigate } from "react-router-dom";
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Create = (props) => {
+  const AAT = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
+  );
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
   let Navi = useNavigate();
   const [fileUrl, setFileUrl] = useState(defaultImg);
   const [formInput, updateFormInput] = useState({
@@ -34,11 +39,8 @@ const Create = (props) => {
   );
   const dispatch = useDispatch();
 
-  useEffect(async () => {}, []);
-
   async function onChange(e) {
     const file = e.target.files[0];
-    console.log(file);
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
@@ -71,6 +73,10 @@ const Create = (props) => {
 
   //nft작성
   async function CreateNFT() {
+    console.log(networkid);
+    console.log(chainid);
+    if (chainid === 1337 ? false : networkid === chainid ? false : true)
+      return alert("네트워크 아이디를 확인하세요");
     const url = await uploadToIPFS();
     /* next, create the item */
     const price = parseInt(formInput.price);
@@ -121,9 +127,9 @@ const Create = (props) => {
             name: formInput.name,
             description: formInput.description,
             price: formInput.price,
+            contractAddress: AAT.options.address,
           })
           .then((res) => {
-            console.log(res.data.message);
             if (res.data.message === "ok") {
               alert("NFT발급 성공");
             } else {
@@ -135,15 +141,22 @@ const Create = (props) => {
 
   //nft 판매
   async function sellnft(tokenId, price) {
-    await CreateNFTContract.methods
-      .sellMyNFTItem(tokenId, price)
-      .send({ from: Account, gas: 3000000 }, (error) => {
-        if (!error) {
-          console.log("send ok");
-        } else {
-          console.log(error);
-        }
-      });
+    if (CreateNFTContract !== null) {
+      console.log(networkid);
+      console.log(chainid);
+
+      if (chainid === 1337 ? false : networkid === chainid ? false : true)
+        return alert("네트워크 아이디를 확인하세요");
+      await CreateNFTContract.methods
+        .sellMyNFTItem(tokenId, price)
+        .send({ from: Account, gas: 3000000 }, (error) => {
+          if (!error) {
+            console.log("send ok");
+          } else {
+            console.log(error);
+          }
+        });
+    }
   }
 
   return (

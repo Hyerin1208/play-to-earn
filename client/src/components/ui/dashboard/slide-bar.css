@@ -80,7 +80,7 @@
 }
 
 .my__Badge {
-  width: 140px;
+  width: 200px;
   height: 40px;
 }
 
@@ -102,8 +102,8 @@
   color: white;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  margin-left: 4%;
+  margin-top: 20px;
+  margin-left: 15%;
   box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.445);
 }
 
@@ -171,12 +171,18 @@
   height: 24%;
   margin-top: 10%;
   margin-left: 10%;
+  text-decoration: none;
 }
 
 .nav__itemBox span i {
   display: flex;
   color: white;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.edit__icon a {
+  text-decoration: none;
 }
 
 .nav__itemBox h5 {
@@ -299,6 +305,10 @@
     z-index: 444;
     color: #ffffff;
   }
+
+  .pfp__iamge {
+    margin-top: -18px !important;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -311,6 +321,10 @@
     background-color: #5242fc8c;
     z-index: 444;
     color: #ffffff;
+  }
+
+  .pfp__iamge {
+    margin-top: -18px !important;
   }
 }
 

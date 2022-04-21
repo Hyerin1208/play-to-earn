@@ -291,7 +291,6 @@ const Tetris = ({ setShowModal }) => {
           account: account,
         })
         .then((res) => {
-          console.log(res.data);
           alert("점수 등록 완료");
         });
     };

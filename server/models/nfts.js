@@ -49,20 +49,10 @@ module.exports = class Nfts extends Sequelize.Model {
           allowNull: false,
           defaultValue: 1,
         },
-        createdAt: {
-          type: Sequelize.DATEONLY,
-          allowNull: false,
-          defaultValue: Sequelize.NOW,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.NOW,
-        },
       },
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         underscored: false,
         modelName: "Nft",
         tableName: "nfts",
@@ -81,9 +71,9 @@ module.exports = class Nfts extends Sequelize.Model {
       sourceKey: "tokenId",
       targetKey: "address",
     });
-    db.Nfts.hasMany(db.History, {
-      foreignKey: "tokenId",
-      sourceKey: "tokenId",
-    });
+    // db.Nfts.hasMany(db.History, {
+    //   foreignKey: "tokenId",
+    //   sourceKey: "tokenId",
+    // });
   }
 };

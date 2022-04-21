@@ -31,3 +31,53 @@
   height: 120%;
   /* margin-bottom: 500px; */
 }
+
+.sendRank__btn {
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 5px 20px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+  /* margin-left: 77px; */
+}
+
+.sendRank__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
+
+.btn__admin {
+  margin-top: 12px;
+  display: flex;
+}
+
+.staking__btn {
+  margin-left: 20px;
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 5px 20px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 1rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.staking__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
+
+.staking__btn a {
+  text-decoration: none;
+  color: white;
+}

@@ -31,6 +31,7 @@ const NftDetails = (props) => {
   const stars = Array(5).fill(1);
 
   const [NFTData, setNFTData] = useState("");
+  const [nftHistory, setNftHistory] = useState([]);
 
   let params = useParams();
   const card_id = params.card_id;
@@ -42,7 +43,6 @@ const NftDetails = (props) => {
         account: account,
       })
       .then((res) => {
-        console.log(res.data.message);
         if (res.data.message === "ok") {
           setLike(like + 1);
           alert("좋아요 등록 완료");
@@ -58,23 +58,33 @@ const NftDetails = (props) => {
         tokenId: card_id,
       })
       .then((res) => {
-        console.log(res.data.view);
         setView(res.data.view);
       });
   }, []);
 
   useEffect(async () => {
-    console.log(card_id);
     await axios
       .post(`http://localhost:5000/nfts`, {
         tokenId: card_id,
       })
       .then((res) => {
-        console.log(res.data);
         setLoading(false);
         setLike(res.data.likes);
         setView(res.data.views);
         setNFTData(res.data);
+      });
+  }, []);
+
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/history/info`, {
+        tokenId: card_id,
+      })
+      .then((res) => {
+        setLoading(false);
+        // if (Loading == false && nftHistory !== null) {
+        setNftHistory(res.data);
+        // }
       });
   }, []);
 
@@ -111,7 +121,15 @@ const NftDetails = (props) => {
                   <div className="single__nft__content">
                     <h2>{NFTData.name}</h2>
                   </div>
-                  <div className="owner__address__box">
+                  <div
+                    className="owner__address__box"
+                    value={NFTData.address}
+                    onClick={(e) => {
+                      window.open(
+                        `https://testnet.bscscan.com/address/${e.target.value}`
+                      );
+                    }}
+                  >
                     owner : {NFTData.address}
                   </div>
 
@@ -206,24 +224,47 @@ const NftDetails = (props) => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            {/* 누구에서 */}
-                            <td
-                              width="30%"
-                              style={{
-                                overflow: "hidden",
-                                extOverflow: "ellipsis",
-                                whiteSpace: "wrap",
-                                wordWrap: "break-word",
-                              }}
-                            >
-                              {NFTData.address}
-                            </td>
-                            {/* 누구에게 */}
-                            <td>address</td>
-                            {/* 언제 거래됏는지 날짜*/}
-                            <td>2022-00-00</td>
-                          </tr>
+                          {nftHistory.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.from.slice(0, 7)}...
+                                  {item.from.slice(35)}
+                                </td>
+                                <td
+                                  width="35%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.to.slice(0, 7)}...
+                                  {item.to.slice(35)}
+                                </td>
+                                <td
+                                  width="30%"
+                                  style={{
+                                    overflow: "hidden",
+                                    extOverflow: "ellipsis",
+                                    whiteSpace: "wrap",
+                                    wordWrap: "break-word",
+                                  }}
+                                >
+                                  {item.createdAt}
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </div>

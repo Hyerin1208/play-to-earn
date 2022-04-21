@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Nav, NavItem, Table } from "reactstrap";
 import EditProfile from "../myModal/EditProfile";
-import pfpImg from "../../../assets/images/img.jpg";
-import ReactLoaing from "react-loading";
 import Badge from "react-bootstrap/Badge";
-
+import ReactLoaing from "react-loading";
 import axios from "axios";
-
 import "./slide-bar.css";
-import { useSelector } from "react-redux";
-import sum from "lodash/sum";
+
+import { useDispatch, useSelector } from "react-redux";
+import { updateMyBalance } from "../../../redux/actions/index";
 
 const SideBar = () => {
   const [nickname, setNicName] = useState([]);
@@ -20,6 +17,8 @@ const SideBar = () => {
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
 
   const [balance, setBalance] = useState([]);
 
@@ -34,12 +33,24 @@ const SideBar = () => {
   );
 
   const [EditProfileModal, setEditProfileModal] = useState(false);
+  const dispatch = useDispatch();
+
+  async function checkMyBalance(account) {
+    if (TokenClaimContract !== null) {
+      const Mybalance = await TokenClaimContract.methods
+        .mybalance()
+        .call({ from: account });
+
+      return await Mybalance;
+    } else {
+      return 0;
+    }
+  }
 
   const claimToken = async () => {
     await axios
       .post(`http://localhost:5000/ranking`, { claim, account })
       .then((res) => {
-        console.log(res.data);
         alert("토큰 클레임 완료");
       });
   };
@@ -66,9 +77,24 @@ const SideBar = () => {
   };
   const gettoken = async () => {
     if (TokenClaimContract !== null) {
+      if (chainid === 1337 ? false : networkid === chainid ? false : true)
+        return alert("네트워크 아이디를 확인하세요");
       await TokenClaimContract.methods
         .gettoken()
-        .send({ from: account, gas: 3000000 });
+        .send({ from: account, gas: 3000000 })
+        .then(async () => {
+          await axios
+            .post("http://127.0.0.1:5000/ranking/updateclaim", {
+              address: account,
+            })
+            .then(async (res) => {
+              if (res.data.message === "ok") {
+                dispatch(
+                  updateMyBalance({ Mybalance: await checkMyBalance(account) })
+                );
+              }
+            });
+        });
     } else {
       alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
     }
@@ -87,6 +113,7 @@ const SideBar = () => {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/error";
         });
 
       setLoading(null);
@@ -98,7 +125,6 @@ const SideBar = () => {
       .post(`http://localhost:5000/ranking/balance`, { address: account })
       .then((response) => {
         const data = response.data;
-        console.log(data);
         const balanceData = data.map((v, i) => {
           return v.balance;
         });
@@ -106,14 +132,11 @@ const SideBar = () => {
       })
       .catch((error) => {
         setError(error);
+        window.location.href = "/error";
       });
 
     setLoading(null);
   }, []);
-
-  // const updateProfile = async () => {
-  //   await axios.post("http://localhost:5000/user/edit").then();
-  // };
 
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
@@ -133,7 +156,6 @@ const SideBar = () => {
       })
       .catch((err) => {
         console.log(err);
-        // window.location("/error");
       });
   };
 
@@ -255,9 +277,11 @@ const SideBar = () => {
           <div className="nav__itemBox">
             <button className="slide__button">
               <span className="edit__icon">
-                <i className="ri-edit-2-line">
-                  <h5>Edit Profile</h5>
-                </i>
+                <Link to={`/staking`}>
+                  <i className="ri-stack-line">
+                    <h5>Staking</h5>
+                  </i>
+                </Link>
               </span>
             </button>
 

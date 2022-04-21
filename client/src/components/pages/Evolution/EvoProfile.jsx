@@ -25,9 +25,6 @@ const EvoProfile = (props) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-  // useEffect(() => {
-  //   console.log(seletedImg);
-  // }, [seletedImg]);
 
   useEffect(() => {
     try {
@@ -35,6 +32,7 @@ const EvoProfile = (props) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      window.location.href = "/error";
     }
   }, []);
 

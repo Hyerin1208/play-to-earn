@@ -18,6 +18,8 @@ const Setup = () => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
+  const networkid = useSelector((state) => state.AppState.networkid);
+  const chainid = useSelector((state) => state.AppState.chainid);
 
   const [form, setForm] = useState({
     name: SelectNFT.name,
@@ -28,21 +30,31 @@ const Setup = () => {
   });
 
   const addSignUp = async () => {
-    await axios
-      .post("http://localhost:5000/user/register", {
-        address: account,
-        nick: form.nick,
-        email: form.email,
-        image: SelectNFT.image,
-      })
-      .then(() => {
-        console.log("success");
-      });
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(form.email)) {
+      alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
+    } else {
+      await axios
+        .post("http://localhost:5000/user/register", {
+          address: account,
+          nick: form.nick,
+          email: form.email,
+          image: SelectNFT.image,
+        })
+        .then(() => {
+          console.log("success");
+        });
+      await lastBtn();
+      window.location.href = "http://localhost:3000/";
+    }
   };
 
   const [checkItem, setCheckItem] = useState(null);
 
   async function lastBtn() {
+    if (chainid === 1337 ? false : networkid === chainid ? false : true)
+      return alert("네트워크 아이디를 확인하세요");
     let data = JSON.stringify({
       name: SelectNFT.name,
       description: SelectNFT.description,
@@ -85,19 +97,16 @@ const Setup = () => {
     <Fragment>
       <Container className="setup__container">
         <Row>
-          <Col lg="12" className="mb-3">
+          <Col lg="8" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
-              {/* <h5>Join Us</h5> */}
             </div>
           </Col>
-          <Card
+          <div
             border="light"
             style={{
               width: "30rem",
-              height: "32rem",
-              backgroundColor: "black",
-              marginBottom: "20px",
+              height: "27rem",
             }}
           >
             <Card.Body>
@@ -110,14 +119,13 @@ const Setup = () => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </div>
           <Col>
-            <Card
+            <div
               border="light"
               style={{
-                width: "40rem",
+                maxwidth: "40rem",
                 height: "22rem",
-                backgroundColor: "black",
                 marginBottom: "20px",
                 display: "flex",
                 flexDirection: "column",
@@ -143,28 +151,19 @@ const Setup = () => {
                   />
                 </div>
                 <br />
-
-                {/* <button
-                  className="show__btn"
-                  onClick={() => addSignUp()}
-                  style={{ width: "120px" }}
+                <button
+                  onClick={async () => {
+                    await addSignUp();
+                    // await lastBtn();
+                    // alert("해당 NFT가 발급 되었습니다");
+                    // window.location.href = "http://localhost:3000/";
+                  }}
+                  className="welcome__btn"
                 >
-                  signup
-                </button> */}
+                  Let's Get Started
+                </button>
               </Card.Body>
-            </Card>
-            {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
-            <button
-              onClick={async () => {
-                await lastBtn();
-                await addSignUp();
-                // alert("해당 NFT가 발급 되었습니다");
-                window.location.href = "http://localhost:3000/";
-              }}
-              className="welcome__btn"
-            >
-              Let's Get Started
-            </button>
+            </div>
           </Col>
         </Row>
       </Container>
