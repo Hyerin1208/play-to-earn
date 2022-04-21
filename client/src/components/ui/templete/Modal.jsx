@@ -30,13 +30,16 @@ const Modal = (props) => {
         return alert("네트워크 아이디를 확인하세요");
       await CreateNFTContract.methods
         .getNFTItem(parseInt(tokenId))
-        .send({ from: account, gas: 3000000, value: price }, (error) => {
-          if (!error) {
-            console.log("send ok");
-          } else {
-            console.log(error);
+        .send(
+          { from: account, gas: 3000000, value: (parseInt(price) * 10) ^ 18 },
+          (error) => {
+            if (!error) {
+              console.log("send ok");
+            } else {
+              console.log(error);
+            }
           }
-        })
+        )
         .then(async (res) => {
           await axios
             .post(`http://localhost:5000/history`, {

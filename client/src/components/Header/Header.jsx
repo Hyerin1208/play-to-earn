@@ -111,15 +111,16 @@ const Header = () => {
   const connectWallet = async () => {
     try {
       const provider = await web3Modal.connect();
-      console.log(provider);
+      const library = new ethers.providers.Web3Provider(provider);
+      const accounts = await library.listAccounts();
+      const network = await library.getNetwork();
       dispatch(getWeb3(provider));
-      const accounts = provider["_state"].accounts;
+      console.log(network);
       const selectAccount = utils.getAddress(accounts[0]);
-      if (accounts) setAccount(selectAccount);
-      const network = parseInt(provider["chainId"]);
+      if (accounts) setAccount(accounts);
       setProvider(provider);
+      setLibrary(library);
       setChainId(network);
-
       await axios
         .post("http://127.0.0.1:5000/user/login", {
           address: selectAccount,
@@ -177,25 +178,26 @@ const Header = () => {
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
-          const checkUser = await axios
+          await axios
             .post("http://127.0.0.1:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
-            .then((res) => res.data.nick);
-          dispatch(
-            updateAccounts({
-              chainid: parseInt(provider.chainId),
-              wallet: true,
-              account: getAddress,
-              isUser: checkUser === "noname" ? false : true,
-              MyNFTlists: await MyList(getAddress),
-              Mybalance: await checkMyBalance(getAddress),
-            })
-          );
-          await checkOwner(getAddress);
-          setAccount(getAddress);
-          setDisabled(true);
+            .then(async (res) => {
+              dispatch(
+                updateAccounts({
+                  chainid: parseInt(provider["chainId"]),
+                  wallet: true,
+                  account: getAddress,
+                  isUser: res.data.nick === "noname" ? false : true,
+                  MyNFTlists: await MyList(getAddress),
+                  Mybalance: await checkMyBalance(getAddress),
+                })
+              );
+              await checkOwner(getAddress);
+              setAccount(getAddress);
+              setDisabled(true);
+            });
         } else {
           disconnect();
           dispatch(
@@ -314,8 +316,7 @@ const Header = () => {
       const Mybalance = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
-
-      return await Mybalance;
+      return utils.formatUnits(await Mybalance, 18);
     } else {
       return 0;
     }

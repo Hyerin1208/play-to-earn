@@ -3,6 +3,7 @@ import { Col, Container, Row } from "reactstrap";
 import ReactLoaing from "react-loading";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { utils } from "ethers";
 
 import AdminInfo from "./AdminInfo";
 import Accept from "./Accept";
@@ -74,12 +75,11 @@ const Admin = () => {
           const contractbalance = await TokenClaimContract.methods
             .contractbalance()
             .call();
-          const sendamount =
-            parseInt(result) * (10 ^ 18) - parseInt(contractbalance);
+          const sendamount = parseInt(result) - parseInt(contractbalance);
 
           const claimAddress = await TokenClaimContract.options.address;
           await AmusementArcadeTokenContract.methods
-            .transfer(claimAddress, sendamount)
+            .transfer(claimAddress, utils.parseUnits(sendamount.toString(), 18))
             .send({ from: account, gas: 3000000 })
             .then(() => {
               dispatch(setTimer({ timer: parseInt(timer) }));

@@ -5,8 +5,13 @@ import "./AmusementArcadeToken.sol";
 import "./CreateNFT.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "hardhat/console.sol";
 
 contract StakingToken is Ownable, ReentrancyGuard {
+        using Counters for Counters.Counter;
+    Counters.Counter private _StakerIds;
+
     // using SafeERC20 for IERC20;
 
     // Interfaces for ERC20 and ERC721
@@ -15,6 +20,7 @@ contract StakingToken is Ownable, ReentrancyGuard {
 
     // Staker info
     struct Staker {
+        address stakerAddress;
         // Amount of ERC721 Tokens staked
         uint256 amountStaked;
         // Last time of details update for this User
@@ -29,10 +35,10 @@ contract StakingToken is Ownable, ReentrancyGuard {
     uint256 private rewardsPerHour = 100000;
 
     // Mapping of User Address to Staker info
-    mapping(address => Staker) public stakers;
-    // Mapping of Token Id to staker. Made for the SC to remeber
-    // who to send back the ERC721 Token to.
-    mapping(uint256 => address) public stakerAddress;
+    mapping(uint256 => Staker) private stakers;
+        mapping(address => uint256) private StakerId;
+        mapping(address => bool) private approve;
+
 
     // Constructor function
     constructor(CreateNFT _nftCollection, AmusementArcadeToken _rewardsToken) {
@@ -45,43 +51,49 @@ contract StakingToken is Ownable, ReentrancyGuard {
     // increment the amountStaked and map msg.sender to the Token Id of the staked
     // Token to later send back on withdrawal. Finally give timeOfLastUpdate the
     // value of now.
-    function stake(uint256[] calldata _tokenIds) external nonReentrant {
-        if (stakers[msg.sender].amountStaked > 0) {
+
+
+modifier checkNFT() {
+    require(nftCollection.balanceOf(msg.sender)!=0);
+    _;
+}
+
+
+    function stake(uint256 _amount) external checkNFT nonReentrant {
+        require(_amount>= 500 ether);
+                      _StakerIds.increment();
+      uint256 makeStakerId = _StakerIds.current();
+        if(StakerId[msg.sender]==0){
+StakerId[msg.sender] = makeStakerId;
+        }
+        if (stakers[StakerId[msg.sender]].amountStaked > 0) {
+            uint256 newAmount = stakers[StakerId[msg.sender]].amountStaked +_amount;
+            stakers[StakerId[msg.sender]].amountStaked = newAmount;
             uint256 rewards = calculateRewards(msg.sender);
-            stakers[msg.sender].unclaimedRewards += rewards;
+            stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
+            stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+        } else {
+            stakers[StakerId[msg.sender]].stakerAddress = msg.sender;
+        stakers[StakerId[msg.sender]].amountStaked += _amount;
+        stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+        stakers[StakerId[msg.sender]].unclaimedRewards = 0;
         }
-        uint256 len = _tokenIds.length;
-        for (uint256 i; i < len; ++i) {
-            require(
-                nftCollection.ownerOf(_tokenIds[i]) == msg.sender,
-                "Can't stake tokens you don't own!"
-            );
-            nftCollection.transferFrom(msg.sender, address(this), _tokenIds[i]);
-            stakerAddress[_tokenIds[i]] = msg.sender;
-        }
-        stakers[msg.sender].amountStaked += len;
-        stakers[msg.sender].timeOfLastUpdate = block.timestamp;
     }
 
     // Check if user has any ERC721 Tokens Staked and if he tried to withdraw,
     // calculate the rewards and store them in the unclaimedRewards and for each
     // ERC721 Token in param: check if msg.sender is the original staker, decrement
     // the amountStaked of the user and transfer the ERC721 token back to them.
-    function withdraw(uint256[] calldata _tokenIds) external nonReentrant {
+    function withdraw(uint256 _amount) external nonReentrant {
+        require(StakerId[msg.sender]!=0);
         require(
-            stakers[msg.sender].amountStaked > 0,
+            stakers[StakerId[msg.sender]].amountStaked > 0,
             "You have no tokens staked"
         );
         uint256 rewards = calculateRewards(msg.sender);
-        stakers[msg.sender].unclaimedRewards += rewards;
-        uint256 len = _tokenIds.length;
-        for (uint256 i; i < len; ++i) {
-            require(stakerAddress[_tokenIds[i]] == msg.sender);
-            stakerAddress[_tokenIds[i]] == address(0);
-            nftCollection.transferFrom(address(this), msg.sender, _tokenIds[i]);
-        }
-        stakers[msg.sender].amountStaked -= len;
-        stakers[msg.sender].timeOfLastUpdate = block.timestamp;
+        stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
+        stakers[StakerId[msg.sender]].amountStaked -= _amount;
+        stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
     }
 
     // Calculate rewards for the msg.sender, check if there are any rewards
@@ -89,25 +101,31 @@ contract StakingToken is Ownable, ReentrancyGuard {
     // to the user.
 
     function claimRewards() external {
-        uint256 rewards = stakers[msg.sender].unclaimedRewards;
+        uint256 rewards = stakers[StakerId[msg.sender]].unclaimedRewards;
         // uint256 rewards = calculateRewards(msg.sender) +
         //     stakers[msg.sender].unclaimedRewards;
         require(rewards > 0, "You have no rewards to claim");
-        stakers[msg.sender].timeOfLastUpdate = block.timestamp;
-        stakers[msg.sender].unclaimedRewards = 0;
+        require(approve[msg.sender]==true,"not approve");
+        stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+        stakers[StakerId[msg.sender]].unclaimedRewards = 0;
         rewardsToken.transfer(msg.sender, rewards);
     }
+
+function findStakerId(address _userAddress) public view onlyOwner returns(uint256){
+    return StakerId[_userAddress];
+}
+
     
-function resettimer (uint256[] calldata _stakers) public returns(bool){
-uint256 len = _stakers.length;
-for(uint256 i; i < len; ++i){
-    address checkaddress = stakerAddress[_stakers[i]];
+function resettimer (uint256[] calldata _stakerIds) public returns(bool){
+uint256 len = _stakerIds.length;
+for(uint256 i=0; i < len; i++){
+    Staker memory checkstakers = stakers[_stakerIds[i]];
             require(
-            stakers[checkaddress].amountStaked > 0,
+            checkstakers.amountStaked > 0,
             "You have no tokens staked");
-                    uint256 rewards = calculateRewards(checkaddress);
-        stakers[checkaddress].unclaimedRewards += rewards;
-        stakers[checkaddress].timeOfLastUpdate = block.timestamp; 
+                    uint256 rewards = calculateRewards(checkstakers.stakerAddress);
+        stakers[_stakerIds[i]].unclaimedRewards += rewards;
+        stakers[_stakerIds[i]].timeOfLastUpdate = block.timestamp; 
 }
     return true;
 }
@@ -127,12 +145,13 @@ for(uint256 i; i < len; ++i){
         view
         returns (uint256 _tokensStaked, uint256 _availableRewards)
     {
-        return (stakers[_user].amountStaked, availableRewards(_user));
+        return (stakers[StakerId[_user]].amountStaked, availableRewards(_user));
     }
 
     function availableRewards(address _user) internal view returns (uint256) {
-        require(stakers[_user].amountStaked > 0, "User has no tokens staked");
-        uint256 _rewards = stakers[_user].unclaimedRewards +
+                require(StakerId[_user]!=0);
+        require(stakers[StakerId[_user]].amountStaked > 0, "User has no tokens staked");
+        uint256 _rewards = stakers[StakerId[_user]].unclaimedRewards +
             calculateRewards(_user);
         return _rewards;
     }
@@ -149,9 +168,6 @@ for(uint256 i; i < len; ++i){
         view
         returns (uint256 _rewards)
     {
-        return (((
-            ((block.timestamp - stakers[_staker].timeOfLastUpdate) *
-                stakers[msg.sender].amountStaked)
-        ) * rewardsPerHour) / 3600);
+        return (((stakers[StakerId[_staker]].amountStaked/100)/86400)*(block.timestamp - stakers[StakerId[_staker]].timeOfLastUpdate));
     }
 }

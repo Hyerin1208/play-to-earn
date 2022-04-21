@@ -247,14 +247,17 @@ const Staking = () => {
             <hr />
             <ul>
               <li>
-                <span>Available AATtoken balance to stake : </span>
+                <span>Available NFT balance to stake : </span>
                 <br />
                 <input
-                  type="number"
-                  placeholder="Amount"
-                  // value={input}
-                  name="number"
+                  type="text"
+                  placeholder="input your NFT tokenid ex) 1,2,3"
                   className="stake__input"
+                  onChange={(e) => {
+                    const result = e.currentTarget.value
+                      .split(",")
+                      .map((data) => parseInt(data));
+                  }}
                 />
                 <button className="stake__btn" type="submit">
                   Stake
