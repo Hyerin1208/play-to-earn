@@ -30,16 +30,24 @@ const Setup = () => {
   });
 
   const addSignUp = async () => {
-    await axios
-      .post("http://localhost:5000/user/register", {
-        address: account,
-        nick: form.nick,
-        email: form.email,
-        image: SelectNFT.image,
-      })
-      .then(() => {
-        console.log("success");
-      });
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(form.email)) {
+      alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
+    } else {
+      await axios
+        .post("http://localhost:5000/user/register", {
+          address: account,
+          nick: form.nick,
+          email: form.email,
+          image: SelectNFT.image,
+        })
+        .then(() => {
+          console.log("success");
+        });
+      await lastBtn();
+      window.location.href = "http://localhost:3000/";
+    }
   };
 
   const [checkItem, setCheckItem] = useState(null);
@@ -92,7 +100,6 @@ const Setup = () => {
           <Col lg="8" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
-              {/* <h5>Join Us</h5> */}
             </div>
           </Col>
           <div
@@ -100,8 +107,6 @@ const Setup = () => {
             style={{
               width: "30rem",
               height: "27rem",
-              // backgroundColor: "black",
-              // marginBottom: "20px",
             }}
           >
             <Card.Body>
@@ -121,7 +126,6 @@ const Setup = () => {
               style={{
                 maxwidth: "40rem",
                 height: "22rem",
-                // backgroundColor: "black",
                 marginBottom: "20px",
                 display: "flex",
                 flexDirection: "column",
@@ -147,20 +151,12 @@ const Setup = () => {
                   />
                 </div>
                 <br />
-
-                {/* <button
-                  className="show__btn"
-                  onClick={() => addSignUp()}
-                  style={{ width: "120px" }}
-                >
-                  signup
-                </button> */}
                 <button
                   onClick={async () => {
-                    await lastBtn();
                     await addSignUp();
+                    // await lastBtn();
                     // alert("해당 NFT가 발급 되었습니다");
-                    window.location.href = "http://localhost:3000/";
+                    // window.location.href = "http://localhost:3000/";
                   }}
                   className="welcome__btn"
                 >
@@ -168,7 +164,6 @@ const Setup = () => {
                 </button>
               </Card.Body>
             </div>
-            {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
           </Col>
         </Row>
       </Container>

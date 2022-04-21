@@ -4,10 +4,10 @@ import "./airdrop.css";
 
 const AirDrop = () => {
   const [loading, setLoading] = useState(true);
-  const [timerDays, setTimerDays] = useState();
-  const [timerHours, setTimerHours] = useState();
-  const [timerMinutes, setTimerMinutes] = useState();
-  const [timerSeconds, setTimerSeconds] = useState();
+  const [timerDays, setTimerDays] = useState("00");
+  const [timerHours, setTimerHours] = useState("00");
+  const [timerMinutes, setTimerMinutes] = useState("00");
+  const [timerSeconds, setTimerSeconds] = useState("00");
   const [isStop, setIsStop] = useState(false);
   const [defaultTime, setdefaultTime] = useState();
   const timerid = useRef(null);
@@ -20,7 +20,7 @@ const AirDrop = () => {
 
   useEffect(() => {
     timerid.current = setInterval(() => {
-      const countdownDate = new Date(defaultTime).getTime();
+      const countdownDate = defaultTime;
 
       const now = new Date().getTime();
       const distance = countdownDate - now;
