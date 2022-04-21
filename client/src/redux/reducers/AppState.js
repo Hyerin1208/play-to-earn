@@ -55,6 +55,7 @@ export default function (state = initialState, action) {
         AmusementArcadeTokenContract:
           action.payload.AmusementArcadeTokenContract,
         TokenClaimContract: action.payload.TokenClaimContract,
+        StakingTokenContract: action.payload.StakingTokenContract,
       };
     case UPDATE_ACCOUNT:
       return {
