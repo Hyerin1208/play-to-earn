@@ -24,6 +24,10 @@ const Contact = () => {
         const data = res.data;
         setNick(data.nick);
         setEmail(data.email);
+        if (!account || data.nick === undefined || data.email === undefined) {
+          alert("회원가입 후 이용해주세요");
+          window.location.href = "http://localhost:3000/";
+        }
       });
     setLoading(false);
   }, [account]);
