@@ -3,22 +3,17 @@ var router = express.Router();
 const { Ranking, User, Game } = require("../models");
 
 router.post("/", async (req, res, next) => {
-  const { rankingDB, address, owner } = req.body;
+  const { rankingDB, address } = req.body;
   const reward = [1000, 600, 400];
 
   const findUser = await User.findOne({
-    where: { address: owner },
+    where: { address: address },
     attributes: ["address", "weeks"],
   });
-  const checkApprove = await Game.findAll({
-    where: { address: address },
-    attributes: ["approve"],
-  });
-  const result = await checkApprove.filter((data) => {
-    return data.approve === false;
-  });
+  const checkApprove = await Game.findAll({ where: { approve: false } });
+  console.log(checkApprove.length);
   try {
-    if (result.length === 0) {
+    if (checkApprove.length === 0) {
       await rankingDB.mineranker
         .filter((v, i) => {
           return i < 3;
@@ -97,16 +92,7 @@ router.post("/", async (req, res, next) => {
               where: { claim: false },
               attributes: ["balance"],
             });
-            const newDate = new Date().getTime() + 604800000;
-            await User.update(
-              { count: newDate.toString() },
-              { where: { address: owner } }
-            );
-            res.json({
-              message: "ok",
-              totalclaim: totalclaim,
-              count: newDate.toString(),
-            });
+            res.json({ message: "ok", totalclaim: totalclaim });
           });
       }
     } else {
@@ -142,19 +128,11 @@ router.post("/previous", async (req, res) => {
 
 router.post("/sendbalance", async (req, res) => {
   const totalclaim = await Ranking.findAll({
-    where: { claim: true },
+    where: { claim: false },
     attributes: ["balance"],
   });
+  console.log(totalclaim);
   res.json({ totalclaim: totalclaim });
-});
-
-router.post("/updateclaim", async (req, res) => {
-  const address = req.body.address;
-  await Ranking.update({ claim: true }, { where: { address: address } }).then(
-    () => {
-      res.json({ message: "ok" });
-    }
-  );
 });
 
 module.exports = router;

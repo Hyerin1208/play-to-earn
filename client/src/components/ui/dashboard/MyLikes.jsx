@@ -16,6 +16,8 @@ const MyLikes = () => {
       })
       .then((res) => {
         setLiked(res.data.like);
+        console.log(res.data.like);
+        // alert("liked data 불러오기OK");
       });
   };
 

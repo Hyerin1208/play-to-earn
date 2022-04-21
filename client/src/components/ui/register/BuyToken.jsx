@@ -20,18 +20,16 @@ const BuyToken = () => {
             </div>
           </Col>
           <Col lg="4">
-            <div
-              className="wallet__init"
+            <Card
               border="light"
               style={{
-                maxWidth: "20rem",
+                width: "19rem",
                 height: "24rem",
                 backgroundColor: "black",
                 marginBottom: "20px",
-                display: "flex",
               }}
             >
-              {/* <Card.Header>Install Wallet</Card.Header> */}
+              <Card.Header>Install Wallet</Card.Header>
               <Card.Body>
                 <Card.Title>Download & Setup</Card.Title>
                 <div className="meta_hover">
@@ -52,17 +50,15 @@ const BuyToken = () => {
                   3.Purchase NFT
                 </span>
               </Card.Body>
-            </div>
+            </Card>
           </Col>
           <Col lg="8">
-            <div
-              className="buy__init"
+            <Card
               border="light"
               style={{
-                maxWidth: "100rem !important",
+                width: "47rem",
                 height: "24rem",
                 backgroundColor: "black",
-                display: "flex",
               }}
             >
               <Card.Header>Buy BNB</Card.Header>
@@ -95,7 +91,7 @@ const BuyToken = () => {
                   </Col>
                 </Row>
               </Card.Body>
-            </div>
+            </Card>
           </Col>
         </Row>
       </Container>

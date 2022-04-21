@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #14141fdc;
+  background: #14141fc4;
   z-index: 444444;
 }
 
@@ -20,7 +20,6 @@
   padding: 30px;
   z-index: 555555 !important;
   cursor: pointer;
-  margin-left: 25%;
 }
 
 .single__modal h6 {

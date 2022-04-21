@@ -131,10 +131,6 @@
   margin: 10px;
 }
 
-.user__logined .mypage__user__icon {
-  margin-bottom: 50px;
-}
-
 @media only screen and (max-width: 1024px) {
   .nav__right {
     margin-right: 50px;

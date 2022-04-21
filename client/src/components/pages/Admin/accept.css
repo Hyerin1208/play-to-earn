@@ -1,13 +1,12 @@
 .admin__card {
-  max-width: 820px;
   height: 100%;
-  background-color: #343444;
-  padding: 0.7rem 0.8rem;
+  background-color: #343434;
+  padding: 0.7rem 0.2rem;
   border-radius: 1rem;
   color: whitesmoke;
   cursor: pointer;
   box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
-  transition: 0.4s ease-in-out;
+  transition: 0ms.4s ease-in-out;
 }
 
 .carousel__con {
@@ -41,17 +40,8 @@
   font-size: 2.5rem;
 }
 
-.token__mydesc {
-  margin-top: -14px;
-}
-
 .token__mybox {
-  font-size: 1.1rem;
-}
-
-.token__mybox p {
-  overflow: scroll;
-  margin-bottom: -10px;
+  font-size: 1.2rem;
 }
 
 .accept__btn {
@@ -87,22 +77,4 @@
 
 .winner__box button {
   margin: 1px 12px 1px 12px;
-}
-
-@media only screen and (max-width: 1024px) {
-  .admin__card {
-    max-width: 400px;
-  }
-}
-@media only screen and (max-width: 1040px) {
-  .admin__card {
-    margin-left: 40px;
-    max-width: 400px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .admin__card {
-    max-width: 300px;
-  }
 }

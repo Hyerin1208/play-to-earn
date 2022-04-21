@@ -10,9 +10,12 @@ export const CALL_CONTRACT = "CALL_CONTRACT";
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT";
 export const UPDATE_LISTS = "UPDATE_LISTS";
 export const UPDATE_MYLISTS = "UPDATE_MYLISTS";
+<<<<<<< HEAD
 export const UPDATE_MYBALANCE = "UPDATE_MYBALANCE";
 export const MY_MODAL = "MY_MODAL";
 export const SET_TIMER = "SET_TIMER";
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
 
 export const SET_NFTS = "SET_NFTS";
 export const SELECTED_NFT = "SELECTED_NFT";
@@ -76,6 +79,7 @@ export const updateMyLists = (payload) => {
   };
 };
 
+<<<<<<< HEAD
 export const updateMyBalance = (payload) => {
   return {
     type: UPDATE_MYBALANCE,
@@ -97,6 +101,8 @@ export const setTimer = (payload) => {
   };
 };
 
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
 export function connect() {
   return async (dispatch) => {
     try {
@@ -138,6 +144,7 @@ export function connect() {
                 return item;
               })
             );
+<<<<<<< HEAD
             await axios
               .post("http://127.0.0.1:5000/user/owner", { address: Owner })
               .then((res) => {
@@ -151,6 +158,16 @@ export function connect() {
                   })
                 );
               });
+=======
+            dispatch(
+              connectSuccess({
+                network: res,
+                Owner: Owner,
+                Selllists: listsForm,
+                errorMsg: "",
+              })
+            );
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
           } else {
             dispatch(connectFailed("접속네트워크를 확인하세요"));
           }
@@ -169,7 +186,10 @@ export function connect() {
 export function getWeb3() {
   return async (dispatch) => {
     try {
+<<<<<<< HEAD
       console.log("프로바이더 변경?");
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
       const web3js = new Web3(Web3.givenProvider);
       const givenNetworkId = await web3js.eth.net.getId();
       const networkId = Object.keys(CreateNFT.networks)[0];
@@ -202,9 +222,15 @@ export function getWeb3() {
       } else {
         dispatch(
           callContract({
+<<<<<<< HEAD
             CreateNFTContract: "dismatch",
             AmusementArcadeTokenContract: "dismatch",
             TokenClaimContract: "dismatch",
+=======
+            CreateNFTContract: null,
+            AmusementArcadeTokenContract: null,
+            TokenClaimContract: null,
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
           })
         );
       }

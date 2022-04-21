@@ -18,6 +18,7 @@ const MyRanking = () => {
         .post(`http://localhost:5000/game/ranking`, { address: account })
         .then((response) => {
           const data = response.data;
+          console.log(data);
           setRankingDB(data);
         });
 

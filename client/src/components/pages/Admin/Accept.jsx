@@ -57,14 +57,13 @@ const Accept = () => {
   }
 
   function changeCost(index) {
-    const dec = 10 ^ 18;
     switch (index) {
       case 0:
-        return 1000 * dec;
+        return 1000;
       case 1:
-        return 600 * dec;
+        return 600;
       case 2:
-        return 400 * dec;
+        return 400;
     }
   }
 

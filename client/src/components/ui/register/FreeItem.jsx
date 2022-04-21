@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
@@ -7,8 +8,19 @@ import { FREE__ITEMS } from "../../../assets/data/freeNft";
 import "./free-item.css";
 import FreeCard from "./FreeCard";
 
-const FreeItem = () => {
+import axios from "axios";
+
+const FreeItem = (props) => {
   const [checkItem, setCheckItem] = useState(false);
+
+  const nfts = useSelector((state) => state);
+  console.log(nfts);
+  const [nftArray, setnftArray] = useState([]);
+  const [Loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  console.log("Nfts :", nfts);
 
   return (
     <div>

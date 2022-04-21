@@ -10,8 +10,7 @@ const FreeCard = (props) => {
 
   const dispatch = useDispatch();
 
-  async function btn(id) {
-    setCheckItem(id);
+  async function btn() {
     dispatch(
       setNfts({
         name: title,
@@ -29,10 +28,11 @@ const FreeCard = (props) => {
         <input
           className="item__choice"
           type="checkbox"
-          readOnly
           checked={
             parseInt(checkItem) === parseInt(props.item.id) ? true : false
           }
+          onChange={() => setCheckItem(props.item.id)}
+          value={props.item.id}
         />
 
         <div className="front__card">
@@ -44,7 +44,7 @@ const FreeCard = (props) => {
             <div className="free__nft__desc">
               <p>{desc}</p>
             </div>
-            <button className="pick__nft" onClick={() => btn(props.item.id)}>
+            <button className="pick__nft" onClick={() => btn()}>
               Pick Me
             </button>
           </div>

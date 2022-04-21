@@ -28,24 +28,16 @@ const Setup = () => {
   });
 
   const addSignUp = async () => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(form.email)) {
-      alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
-    } else {
-      await axios
-        .post("http://localhost:5000/user/register", {
-          address: account,
-          nick: form.nick,
-          email: form.email,
-          image: SelectNFT.image,
-        })
-        .then(() => {
-          console.log("success");
-        });
-      await lastBtn();
-      window.location.href = "http://localhost:3000/";
-    }
+    await axios
+      .post("http://localhost:5000/user/register", {
+        address: account,
+        nick: form.nick,
+        email: form.email,
+        image: SelectNFT.image,
+      })
+      .then(() => {
+        console.log("success");
+      });
   };
 
   const [checkItem, setCheckItem] = useState(null);
@@ -93,16 +85,19 @@ const Setup = () => {
     <Fragment>
       <Container className="setup__container">
         <Row>
-          <Col lg="8" className="mb-3">
+          <Col lg="12" className="mb-3">
             <div className="free__list__top">
               <h3>User Registeration</h3>
+              {/* <h5>Join Us</h5> */}
             </div>
           </Col>
-          <div
+          <Card
             border="light"
             style={{
               width: "30rem",
-              height: "27rem",
+              height: "32rem",
+              backgroundColor: "black",
+              marginBottom: "20px",
             }}
           >
             <Card.Body>
@@ -115,13 +110,14 @@ const Setup = () => {
                 />
               </div>
             </Card.Body>
-          </div>
+          </Card>
           <Col>
-            <div
+            <Card
               border="light"
               style={{
-                maxwidth: "40rem",
+                width: "40rem",
                 height: "22rem",
+                backgroundColor: "black",
                 marginBottom: "20px",
                 display: "flex",
                 flexDirection: "column",
@@ -147,19 +143,28 @@ const Setup = () => {
                   />
                 </div>
                 <br />
-                <button
-                  onClick={async () => {
-                    await addSignUp();
-                    // await lastBtn();
-                    // alert("해당 NFT가 발급 되었습니다");
-                    // window.location.href = "http://localhost:3000/";
-                  }}
-                  className="welcome__btn"
+
+                {/* <button
+                  className="show__btn"
+                  onClick={() => addSignUp()}
+                  style={{ width: "120px" }}
                 >
-                  Let's Get Started
-                </button>
+                  signup
+                </button> */}
               </Card.Body>
-            </div>
+            </Card>
+            {/*  window.location.href 새로고침을 하지 않으면 에러가 발생 */}
+            <button
+              onClick={async () => {
+                await lastBtn();
+                await addSignUp();
+                // alert("해당 NFT가 발급 되었습니다");
+                window.location.href = "http://localhost:3000/";
+              }}
+              className="welcome__btn"
+            >
+              Let's Get Started
+            </button>
           </Col>
         </Row>
       </Container>

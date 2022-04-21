@@ -10,20 +10,23 @@ import SellModal from "../templete/SellModal";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
-import { useDispatch, useSelector } from "react-redux";
-import { mymodal } from "../../../redux/actions";
 
 const NftSellCard = (props) => {
-  const MyModal = useSelector((state) => state.AppState.MyModal);
-  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   const stars = Array(5).fill(1);
 
   const [testdata, setTestdata] = useState(null);
 
+  console.log(props.item.formInput.star);
+
   useEffect(() => {
     setTestdata(props.item);
   }, [props]);
+
+  console.log(testdata);
+
+  console.log(props.item.formInput);
 
   return (
     <div>
@@ -40,6 +43,7 @@ const NftSellCard = (props) => {
                 {props.item.formInput.name}
               </Link>
             </h5>
+
             {/* 아래는 유저정보 변경시 > 아직 user 가 아닌 관리자만 nft 생성진행중 */}
             {/* <div className="creator__info-wrapper">
           <div className="creator__img">
@@ -53,7 +57,8 @@ const NftSellCard = (props) => {
             <Col>
               <div className="bid__container">
                 <h6>Current Bid</h6>
-                <p>{props.item.formInput.price} AAT</p>
+                {/* 우리만의 토큰이름을 정해서 아래단위 바꾸기 */}
+                <p>{props.item.formInput.price} ETH</p>
               </div>
               <Badge pill bg="light" text="dark" className="rare__badge">
                 rare : {props.item.formInput.rare}
@@ -90,19 +95,7 @@ const NftSellCard = (props) => {
 
         <div className="bid__box">
           <div className="sell__box">
-            <button
-              className="sell__btn"
-              onClick={() => {
-                dispatch(
-                  mymodal({
-                    MyModal: true,
-                    tokenId: Number(props.item.formInput.tokenid),
-                    price: Number(props.item.formInput.price),
-                  })
-                );
-              }}
-            >
-              {/* <button className="sell__btn" onClick={() => setShowModal(true)}> */}
+            <button className="sell__btn" onClick={() => setShowModal(true)}>
               <i className="ri-price-tag-3-line"></i>
               Sell
             </button>
@@ -114,7 +107,7 @@ const NftSellCard = (props) => {
           </span>
         </div>
       </div>
-
+      {showModal && <SellModal item={props.item} setShowModal={setShowModal} />}
       <Routes>
         <Route path="detailes/*" element={<NftDetails item={props.item} />} />
       </Routes>

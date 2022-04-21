@@ -10,18 +10,9 @@ import MyRanking from "./MyRanking";
 import MySlick from "./MySlick";
 import MySellList from "./MySellList";
 import { MyWrapper } from "./MyWrapper"; // slick css
-import { useSelector } from "react-redux";
-import SellModal from "../templete/SellModal";
 
 const MainContent = () => {
-  const [showModal, setShowModal] = useState(false);
-
   const [Loading, setLoading] = useState(true);
-  const MyModal = useSelector((state) => state.AppState.MyModal);
-
-  useEffect(() => {
-    setShowModal(MyModal.MyModal);
-  }, [MyModal]);
 
   useEffect(() => {
     setLoading(null);
@@ -60,8 +51,6 @@ const MainContent = () => {
                   <MySlick />
                 </MyWrapper>
               </div>
-              <br />
-
               {/* 내가 만든 NFTs */}
               <h4>SellList</h4>
               <br />
@@ -73,7 +62,6 @@ const MainContent = () => {
             </Row>
           </div>
         </div>
-        {showModal && <SellModal item={MyModal} setShowModal={setShowModal} />}
       </React.Fragment>
     );
   }

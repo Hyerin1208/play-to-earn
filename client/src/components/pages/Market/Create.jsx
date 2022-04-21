@@ -19,9 +19,12 @@ import { useNavigate } from "react-router-dom";
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Create = (props) => {
+<<<<<<< HEAD
   const AAT = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
   let Navi = useNavigate();
   const [fileUrl, setFileUrl] = useState(defaultImg);
   const [formInput, updateFormInput] = useState({
@@ -37,8 +40,11 @@ const Create = (props) => {
   );
   const dispatch = useDispatch();
 
+  useEffect(async () => {}, []);
+
   async function onChange(e) {
     const file = e.target.files[0];
+    console.log(file);
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
@@ -121,9 +127,9 @@ const Create = (props) => {
             name: formInput.name,
             description: formInput.description,
             price: formInput.price,
-            contractAddress: AAT.options.address,
           })
           .then((res) => {
+            console.log(res.data.message);
             if (res.data.message === "ok") {
               alert("NFT발급 성공");
             } else {

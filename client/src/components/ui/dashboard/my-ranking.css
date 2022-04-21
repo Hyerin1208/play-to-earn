@@ -7,7 +7,7 @@
   color: whitesmoke;
   cursor: pointer;
   box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
-  transition: 0.4s ease-in-out;
+  transition: 0ms.4s ease-in-out;
 }
 
 .carousel__box {

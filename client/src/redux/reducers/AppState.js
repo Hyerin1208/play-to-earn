@@ -5,9 +5,12 @@ import {
   UPDATE_LISTS,
   UPDATE_MYLISTS,
   CALL_CONTRACT,
+<<<<<<< HEAD
   UPDATE_MYBALANCE,
   MY_MODAL,
   SET_TIMER,
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
 } from "../actions";
 
 const initialState = {
@@ -15,15 +18,12 @@ const initialState = {
   wallet: false,
   account: null,
   Owner: null,
-  timer: 0,
   isUser: false,
   CreateNFTContract: null,
   AmusementArcadeTokenContract: null,
   TokenClaimContract: null,
   Selllists: [],
   MyNFTlists: null,
-  Mybalance: 0,
-  MyModal: false,
   errorMsg: null,
 };
 
@@ -34,7 +34,6 @@ export default function (state = initialState, action) {
         ...state,
         network: action.payload.network,
         Owner: action.payload.Owner,
-        timer: action.payload.timer,
         Selllists: action.payload.Selllists,
         errorMsg: action.payload.errorMsg,
       };
@@ -58,7 +57,6 @@ export default function (state = initialState, action) {
         account: action.payload.account,
         isUser: action.payload.isUser,
         MyNFTlists: action.payload.MyNFTlists,
-        Mybalance: action.payload.Mybalance,
       };
     case UPDATE_LISTS:
       return {
@@ -70,6 +68,7 @@ export default function (state = initialState, action) {
         ...state,
         MyNFTlists: action.payload.MyNFTlists,
       };
+<<<<<<< HEAD
     case UPDATE_MYBALANCE:
       return {
         ...state,
@@ -89,6 +88,8 @@ export default function (state = initialState, action) {
         ...state,
         timer: action.payload.timer,
       };
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
     default:
       return state;
   }

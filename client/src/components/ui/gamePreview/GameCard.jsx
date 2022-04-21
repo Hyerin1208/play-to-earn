@@ -27,6 +27,7 @@ const GameCard = (props) => {
           .balanceOf(account)
           .call();
         if (mybalance !== 0) {
+          console.log("내 NFT 몇개??? : " + mybalance);
           setShowModal(true);
         } else {
           alert("NFT가 있어야 참여할 수 있습니다.");

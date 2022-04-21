@@ -2,20 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import ReactLoaing from "react-loading";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import AdminInfo from "./AdminInfo";
 import Accept from "./Accept";
 import OwnerSellList from "./OwnerSellList";
 
 import "./admin.css";
-import { Link } from "react-router-dom";
-import Error404 from "../../ui/templete/Error404";
-import { setTimer } from "../../../redux/actions/index";
 
 const Admin = () => {
   const [Loading, setLoading] = useState(true);
-  const [error, setError] = useState("/404-not-found");
+  const [error, setError] = useState(null);
 
   const account = useSelector((state) => state.AppState.account);
   const AmusementArcadeTokenContract = useSelector(
@@ -26,7 +23,6 @@ const Admin = () => {
   );
 
   const [rankingDB, setRankingDB] = useState(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (account !== null) {
@@ -38,13 +34,13 @@ const Admin = () => {
         })
         .catch((error) => {
           setError(error);
-          window.location.href = "/error";
         });
     }
     setLoading(false);
   }, [account]);
 
   const sendRank = async () => {
+<<<<<<< HEAD
     const arry = ["mineranker", "snakeranker", "puzzleranker", "tetrisranker"];
     let temp = [];
     for (let i = 0; i < arry.length; i++) {
@@ -54,35 +50,36 @@ const Admin = () => {
         }
       }
     }
+=======
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
     await axios
       .post(`http://localhost:5000/ranking`, {
         rankingDB: rankingDB,
-        address: temp,
-        owner: account,
+        address: account,
       })
       .then(async (res) => {
         if (res.data.message === "ok") {
           const arry = await res.data.totalclaim;
+<<<<<<< HEAD
           const timer = await res.data.count;
 
+=======
+          console.log(arry);
+>>>>>>> parent of 033ac8c (Merge pull request #26 from NamingCenter/coolmarvel)
           const result = arry.reduce((sum, element) => {
             return sum + element.balance;
           }, 0);
           const contractbalance = await TokenClaimContract.methods
             .contractbalance()
             .call();
-          const sendamount =
-            parseInt(result) * (10 ^ 18) - parseInt(contractbalance);
+          const sendamount = parseInt(result) - parseInt(contractbalance);
 
           const claimAddress = await TokenClaimContract.options.address;
           await AmusementArcadeTokenContract.methods
             .transfer(claimAddress, sendamount)
-            .send({ from: account, gas: 3000000 })
-            .then(() => {
-              dispatch(setTimer({ timer: parseInt(timer) }));
-              alert("DB 전송 완료");
-              window.location.reload();
-            });
+            .send({ from: account, gas: 3000000 });
+          alert("DB 전송 완료");
+          window.location.reload();
         } else {
           alert("아직 미승인된 유저가 있습니다.");
         }
@@ -114,19 +111,18 @@ const Admin = () => {
               <div className="section1__one">
                 <Col xs="4">
                   <AdminInfo />
-                  <div className="btn__admin">
-                    <button
-                      className="sendRank__btn"
-                      type="button"
-                      onClick={() => sendRank()}
-                    >
-                      Send Ranking
-                    </button>
-                    <button className="staking__btn" type="button">
-                      <i className="ri-shield-keyhole-line"></i>
-                      <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link>
-                    </button>
+                  <div type="button" onClick={() => sendRank()}>
+                    Send Ranking
                   </div>
+                  <button
+                    onClick={async () => {
+                      const contractbalance = await TokenClaimContract.methods
+                        .contractbalance()
+                        .call();
+                    }}
+                  >
+                    버버버버버
+                  </button>
                 </Col>
                 <Col xs="8">
                   <Accept />

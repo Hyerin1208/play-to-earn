@@ -5,6 +5,7 @@ const User = require("../models/user");
 
 // 회원정보 등록
 router.post("/register", async (req, res, next) => {
+  // console.log(req.body);
   const { nick, email, address, image } = req.body;
 
   const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
@@ -17,11 +18,15 @@ router.post("/register", async (req, res, next) => {
     return res.json({ message: "User with email already exists!" });
   }
 
+  console.log("이미지" + image);
+
   const newUser = new User({ nick, email, address, image });
 
   if (image == false) {
+    console.log(1);
     image = "../../client/src/assets/images/img.jpg";
   }
+  console.log(image);
 
   const savedUser = await newUser.save().catch((err) => {
     console.log("Error: ", err);
@@ -43,6 +48,8 @@ router.post("/login", async (req, res, next) => {
       attributes: ["nick", "email", "image"],
     });
 
+    // console.log(users);
+
     if (!users) {
       const login = { nick: "noname", email: "no-email" };
       res.json(login);
@@ -59,6 +66,7 @@ router.post("/login", async (req, res, next) => {
 
 /* 프로필 IMG CREATE, edit */
 router.post("/img", async (req, res) => {
+  console.log(req.body.image);
   const { image, address } = req.body;
 
   try {
@@ -83,6 +91,8 @@ router.post("/img", async (req, res) => {
 
 // 회원정보 수정
 router.post("/edit", async (req, res) => {
+  console.log(req.body);
+
   const { nick, email, address } = req.body;
 
   try {
@@ -124,13 +134,16 @@ router.post("/weeks", async (req, res) => {
 
 // 오너체크
 router.post("/owner", async (req, res, next) => {
+  const { count } = req.body;
   try {
     const newDate = new Date().getTime() + 604800000;
 
+    console.log(newDate);
     const address = req.body.address;
     const owner = await User.findOne({ where: { address: address } });
+    console.log(address);
     if (owner) {
-      res.json({ message: "운영자 맞아요", count: owner.count });
+      res.json({ message: "운영자 맞아요" });
     } else {
       await User.create({
         address: address,
@@ -139,10 +152,7 @@ router.post("/owner", async (req, res, next) => {
         email: "Owner@gmail.com",
         count: newDate.toString(),
       });
-      res.json({
-        message: "첫번째 실행으로 운영자 계정만들어요",
-        count: newDate.toString(),
-      });
+      res.json({ message: "첫번째 실행으로 운영자 계정만들어요" });
     }
   } catch (err) {
     console.error(err);
