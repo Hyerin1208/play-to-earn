@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 import "./contact.css";
 
@@ -8,13 +9,26 @@ import CommonSection from "../../ui/templete/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
 const Contact = () => {
-  // const nameRef = useRef("");
-  // const emailRef = useRef("");
-  // const subjectRef = useRef("");
-  // const messageRef = useRef("");
+  const account = useSelector((state) => state.AppState.account);
   const form = useRef();
+  const [loading, setLoading] = useState(true);
+  const [nick, setNick] = useState();
+  const [email, setEmail] = useState();
 
-  const sendEmail = (e) => {
+  useEffect(async () => {
+    await axios
+      .post(`http://localhost:5000/user/contact`, {
+        address: account,
+      })
+      .then((res) => {
+        const data = res.data;
+        setNick(data.nick);
+        setEmail(data.email);
+      });
+    setLoading(false);
+  }, [account]);
+
+  const sendEmail = async (e) => {
     e.preventDefault();
 
     emailjs
@@ -32,57 +46,67 @@ const Contact = () => {
           console.log(error.text);
         }
       );
+    alert("문의가 접수 완료되었습니다.");
+    window.location.href = "http://localhost:3000/contact";
   };
 
   return (
     <>
       <CommonSection title="Contact" />
-      <div className="contact__box">
-        <Container>
-          <Row>
-            <Col lg="6" md="6" className="drop__box">
-              <h2>Drop a Message</h2>
-              <p>
-                Official Channel : Join to Follow 프로젝트 작명소 Latest News!
-              </p>
-              <div className="contact">
-                <form ref={form} onSubmit={sendEmail}>
-                  <div className="form__input">
-                    <input
-                      type="text"
-                      placeholder="Enter your name"
-                      name="user_name"
-                    />
-                  </div>
-                  <div className="form__input">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      name="user_email"
-                    />
-                  </div>
-                  <div className="form__input">
-                    <input
-                      type="text"
-                      placeholder="Enter subject"
-                      name="user_subject"
-                    />
-                  </div>
-                  <div className="form__input">
-                    <textarea
-                      row="7"
-                      placeholder="Write message"
-                      name="user_message"
-                    ></textarea>
-                  </div>
+      {loading ? (
+        <strong> loading... </strong>
+      ) : (
+        <div className="contact__box">
+          <Container>
+            <Row>
+              <Col lg="6" md="6" className="drop__box">
+                <h2>Drop a Message</h2>
+                <p>
+                  Official Channel : Join to Follow Naming Center Latest News!
+                </p>
+                <div className="contact">
+                  <form ref={form} onSubmit={sendEmail}>
+                    <div className="form__input">
+                      <input
+                        type="text"
+                        placeholder={nick}
+                        value={nick}
+                        name="user_name"
+                        readOnly
+                      />
+                    </div>
+                    <div className="form__input">
+                      <input
+                        type="email"
+                        placeholder={email}
+                        value={email}
+                        name="user_email"
+                        readOnly
+                      />
+                    </div>
+                    <div className="form__input">
+                      <input
+                        type="text"
+                        placeholder="Descript subject"
+                        name="user_subject"
+                      />
+                    </div>
+                    <div className="form__input">
+                      <textarea
+                        row="7"
+                        placeholder="Write message"
+                        name="user_message"
+                      ></textarea>
+                    </div>
 
-                  <button className="send__btn">Send a Message</button>
-                </form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+                    <button className="send__btn">Send a Message</button>
+                  </form>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      )}
     </>
   );
 };
