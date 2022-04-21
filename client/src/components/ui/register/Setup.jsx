@@ -30,23 +30,23 @@ const Setup = () => {
   });
 
   const addSignUp = async () => {
+    // 이메일, 닉네임 유효성
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(form.email)) {
       alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
     } else {
-      await axios
-        .post("http://localhost:5000/user/register", {
-          address: account,
-          nick: form.nick,
-          email: form.email,
-          image: SelectNFT.image,
-        })
-        .then(() => {
-          console.log("success");
-        });
-      await lastBtn();
-      window.location.href = "http://localhost:3000/";
+      const userData = await axios.post("http://localhost:5000/user/register", {
+        address: account,
+        nick: form.nick,
+        email: form.email,
+        image: SelectNFT.image,
+      });
+      if (userData.data.bool) {
+        await lastBtn();
+        window.location.href = "http://localhost:3000/";
+      }
+      alert(userData.data.message);
     }
   };
 
@@ -154,9 +154,6 @@ const Setup = () => {
                 <button
                   onClick={async () => {
                     await addSignUp();
-                    // await lastBtn();
-                    // alert("해당 NFT가 발급 되었습니다");
-                    // window.location.href = "http://localhost:3000/";
                   }}
                   className="welcome__btn"
                 >

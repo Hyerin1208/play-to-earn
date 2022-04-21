@@ -1,5 +1,4 @@
 var express = require("express");
-const path = require("path");
 var router = express.Router();
 const User = require("../models/user");
 
@@ -7,14 +6,23 @@ const User = require("../models/user");
 router.post("/register", async (req, res, next) => {
   const { nick, email, address, image } = req.body;
 
-  const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
+  const alreadyExistsEmail = await User.findOne({ where: { email } }).catch(
     (err) => {
       console.log("Error: ", err);
     }
   );
 
-  if (alreadyExistsUser) {
-    return res.json({ message: "User with email already exists!" });
+  const alreadyExistsNick = await User.findOne({ where: { nick } }).catch(
+    (err) => {
+      console.log("Error: ", err);
+    }
+  );
+
+  if (alreadyExistsNick) {
+    return res.json({ message: "닉네임이 이미 존재합니다!", bool: false });
+  }
+  if (alreadyExistsEmail) {
+    return res.json({ message: "이메일이 이미 존재합니다!", bool: false });
   }
 
   const newUser = new User({ nick, email, address, image });
@@ -25,11 +33,12 @@ router.post("/register", async (req, res, next) => {
 
   const savedUser = await newUser.save().catch((err) => {
     console.log("Error: ", err);
-    res.json({ error: "Cannot register user at the moment!" });
+    res.json({ error: "회원가입을 할 수 없습니다!", bool: true });
   });
 
-  if (savedUser) res.json({ message: "Thanks for registering" });
-  // else res.json({ error: "Cannot register user at the moment!" });
+  if (savedUser)
+    res.json({ message: "회원가입 해주셔서 감사합니다", bool: true });
+  else res.json({ error: "회원가입을 할 수 없습니다!", bool: true });
 });
 
 // 회원정보 불러오기
@@ -63,14 +72,7 @@ router.post("/img", async (req, res) => {
 
   try {
     if (image) {
-      await User.update(
-        {
-          image,
-        },
-        {
-          where: { address: address },
-        }
-      );
+      await User.update({ image }, { where: { address: address } });
       res.json({ message: "ok" });
     } else {
       res.json({ message: "no" });
@@ -87,16 +89,7 @@ router.post("/edit", async (req, res) => {
 
   try {
     if (nick && email) {
-      await User.update(
-        {
-          nick,
-          email,
-        },
-
-        {
-          where: { address: address },
-        }
-      );
+      await User.update({ nick, email }, { where: { address: address } });
       res.json({ message: "ok" });
     } else {
       res.json({ message: "no" });
