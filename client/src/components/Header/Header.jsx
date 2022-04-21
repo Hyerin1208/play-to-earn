@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import bsc from "@binance-chain/bsc-use-wallet";
 
 import {
   updateAccounts,
@@ -67,6 +68,12 @@ const providerOptions = {
     package: true,
   },
 };
+
+// const web3Modal = new Web3Modal({
+//   network: "binance", // replace mainnet to binance
+//   cacheProvider: true, // optional
+//   providerOptions, // required
+// });
 
 const web3Modal = new Web3Modal({
   network: "mainnet",
