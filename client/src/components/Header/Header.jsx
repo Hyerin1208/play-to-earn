@@ -59,6 +59,9 @@ const providerOptions = {
       infuraId: "5bd970f2bf6047318bda7b13eb3c24ce", // Required
     },
   },
+  binancechainwallet: {
+    package: true,
+  },
 };
 
 const web3Modal = new Web3Modal({
