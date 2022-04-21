@@ -83,9 +83,14 @@ button {
   display: block;
 }
 
+.timer {
+  padding: 10px;
+}
+
 .time__limit {
+  position: relative;
   text-align: center;
-  height: 62vh;
+  height: 40vh;
   background-color: #14141f;
   display: flex;
   flex-direction: column;
@@ -94,19 +99,24 @@ button {
   border-radius: 5px;
 }
 
-.clock {
-  position: relative;
-  margin: a;
+.time__limit h4 {
+  margin-bottom: 25%;
+}
+
+.time__limit .clock {
+  position: absolute;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   background: linear-gradient(279deg, #050818, #390e32);
   height: 120px;
-  width: 320px;
+  max-width: 300px;
   color: #d742fc;
   text-shadow: 1px 1px 7px;
   border-radius: 15px;
   border: 2px solid #050818;
   box-shadow: 0 0 4px 7px;
+  margin-bottom: 20%;
 }
 
 .clock div {

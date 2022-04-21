@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
 import { useSelector } from "react-redux";
 
 import "./contact.css";
@@ -7,13 +8,30 @@ import CommonSection from "../../ui/templete/CommonSection";
 import { Container, Row, Col } from "reactstrap";
 
 const Contact = () => {
-  const nameRef = useRef("");
-  const emailRef = useRef("");
-  const subjectRef = useRef("");
-  const messageRef = useRef("");
+  // const nameRef = useRef("");
+  // const emailRef = useRef("");
+  // const subjectRef = useRef("");
+  // const messageRef = useRef("");
+  const form = useRef();
 
-  const handleSubmit = (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_60z2szf",
+        "template_49s2xef",
+        form.current,
+        "xstaV77PgHjXLwiCc"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   return (
@@ -28,33 +46,33 @@ const Contact = () => {
                 Official Channel : Join to Follow 프로젝트 작명소 Latest News!
               </p>
               <div className="contact">
-                <form onSubmit={handleSubmit}>
+                <form ref={form} onSubmit={sendEmail}>
                   <div className="form__input">
                     <input
                       type="text"
                       placeholder="Enter your name"
-                      ref={nameRef}
+                      name="user_name"
                     />
                   </div>
                   <div className="form__input">
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      ref={emailRef}
+                      name="user_email"
                     />
                   </div>
                   <div className="form__input">
                     <input
                       type="text"
                       placeholder="Enter subject"
-                      ref={subjectRef}
+                      name="user_subject"
                     />
                   </div>
                   <div className="form__input">
                     <textarea
                       row="7"
                       placeholder="Write message"
-                      ref={messageRef}
+                      name="user_message"
                     ></textarea>
                   </div>
 

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import bsc from "@binance-chain/bsc-use-wallet";
 
 import {
   updateAccounts,
@@ -65,11 +66,20 @@ const providerOptions = {
   },
   binancechainwallet: {
     package: true,
+    options: {
+      infuraId: "5bd970f2bf6047318bda7b13eb3c24ce", // Required
+    },
   },
 };
 
+// const web3Modal = new Web3Modal({
+//   network: "binance", // replace mainnet to binance
+//   cacheProvider: true, // optional
+//   providerOptions, // required
+// });
+
 const web3Modal = new Web3Modal({
-  network: "mainnet",
+  network: "mainnet" || "binance" || "testnet",
   cacheProvider: true,
   providerOptions: providerOptions,
   theme: {
@@ -420,7 +430,7 @@ const Header = () => {
             {isDisabled === false ? (
               walletButton(isDisabled)
             ) : (
-              <div>
+              <div className="user__logined">
                 {/* <button className="connect_btn" onClick={disconnect}>
                   <span>
                     <i className="ri-wallet-line"></i>
@@ -433,16 +443,17 @@ const Header = () => {
                   </Link>
 
                   {/* </input> */}
+                  <input
+                    className="account__input"
+                    type="button"
+                    value={
+                      account
+                        ? `${account.slice(0, 7)}...${account.slice(35)}`
+                        : false
+                    }
+                    onClick={disconnect}
+                  />
                 </div>
-                <input
-                  type={"button"}
-                  value={
-                    account
-                      ? `${account.slice(0, 7)}...${account.slice(35)}`
-                      : false
-                  }
-                  onClick={disconnect}
-                />
               </div>
             )}
           </div>
