@@ -6,7 +6,7 @@ import "./CreateNFT.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 contract StakingToken is Ownable, ReentrancyGuard {
         using Counters for Counters.Counter;
