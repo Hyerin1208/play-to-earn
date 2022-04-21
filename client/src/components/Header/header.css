@@ -132,7 +132,22 @@
 }
 
 .user__logined .mypage__user__icon {
-  margin-bottom: 50px;
+  margin-bottom: -5px;
+}
+
+.account__input {
+  border: none;
+  margin-left: 30px;
+  /* border-radius: 10px; */
+  background-color: #14141f00;
+  color: white;
+  padding: -20px 0 -20px;
+  margin-bottom: 5px;
+}
+
+.account__input:hover {
+  color: #e250e5;
+  transform: scale(1.1);
 }
 
 @media only screen and (max-width: 1024px) {
