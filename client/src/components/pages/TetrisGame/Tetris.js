@@ -57,6 +57,7 @@ const Tetris = ({ setShowModal }) => {
     (state) => state.AppState.CreateNFTContract
   );
   const [myList, setMyList] = useState([]);
+  const [prevScore, setPrevScore] = useState();
 
   useEffect(() => {
     mynftlists();
@@ -76,6 +77,17 @@ const Tetris = ({ setShowModal }) => {
       });
     setMyList(lists);
   }
+
+  useEffect(async () => {
+    const tetrisData = await axios.post(
+      `http://localhost:5000/game/tetrisScore`,
+      { account: account }
+    );
+    if (tetrisData.data.tetrisPoint !== null) {
+      setPrevScore(tetrisData.data.tetrisPoint);
+    }
+    setLoading(false);
+  }, [account]);
 
   useEffect(() => {
     canvasRef.current.width = CANVAS_WIDTH;
@@ -285,14 +297,18 @@ const Tetris = ({ setShowModal }) => {
         }
         return data * (starD * rareD);
       }
-      await axios
-        .post(`http://localhost:5000/game/tetris`, {
-          data: multiply(data),
-          account: account,
-        })
-        .then((res) => {
-          alert("점수 등록 완료");
-        });
+
+      const tetrisData = await axios.post(`http://localhost:5000/game/tetris`, {
+        data: multiply(data),
+        account: account,
+      });
+
+      if (tetrisData.data.bool === true) {
+        alert(tetrisData.data.message);
+        window.location.reload();
+      } else if (tetrisData.data.bool === false) {
+        alert(tetrisData.data.message);
+      }
     };
 
     if (!gameState.over) return null;
@@ -366,6 +382,13 @@ const Tetris = ({ setShowModal }) => {
               {countdownOverlay}
             </div>
             <div className="ui__group ml-3">
+              <div className="border rounded mb-3 p-3">
+                <h3 className="m-0">
+                  <u>Prev Score</u>
+                  <br />
+                  {prevScore === undefined ? "None" : prevScore}
+                </h3>
+              </div>
               <div className="border rounded mb-3 p-3">
                 <h3 className="m-0">
                   <u>Score</u>

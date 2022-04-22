@@ -25,17 +25,17 @@ const Compensation = ({ setShowModal }) => {
         <div className="reward__content glow">
           <div className="single__rewardBlank">
             <h3>
-              <i className="ri-vip-diamond-fill"></i>1등 &nbsp;&nbsp;&nbsp;1000
+              <i className="ri-vip-diamond-fill"></i>1등 &nbsp;&nbsp;&nbsp;2000
             </h3>
           </div>
           <div className="single__rewardBlank">
             <h3>
-              <i className="ri-vip-diamond-fill"></i>2등 &nbsp;&nbsp;&nbsp;600
+              <i className="ri-vip-diamond-fill"></i>2등 &nbsp;&nbsp;&nbsp;1000
             </h3>
           </div>
           <div className="single__rewardBlank">
             <h3>
-              <i className="ri-vip-diamond-fill"></i>3등 &nbsp;&nbsp;&nbsp;400
+              <i className="ri-vip-diamond-fill"></i>3등 &nbsp;&nbsp;&nbsp;500
             </h3>
           </div>
         </div>

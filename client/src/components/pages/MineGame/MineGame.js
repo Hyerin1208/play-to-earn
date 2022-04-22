@@ -59,7 +59,8 @@ function MineGame({ setShowModal }) {
   }
 
   const sendPoint = async () => {
-    const point = runtime;
+    const point = (1 / runtime) * 1000;
+
     function multiply(point) {
       let rareD;
       if (myList.filter((v) => v.rare === "5").length >= 3) {
@@ -89,14 +90,18 @@ function MineGame({ setShowModal }) {
       }
       return point * (starD * rareD);
     }
-    await axios
-      .post(`http://localhost:5000/game/mine`, {
-        runtime: multiply(point),
-        account: account,
-      })
-      .then((res) => {
-        alert("점수 등록 완료");
-      });
+
+    const mineData = await axios.post(`http://localhost:5000/game/mine`, {
+      runtime: multiply(point),
+      account: account,
+    });
+
+    if (mineData.data.bool === true) {
+      alert(mineData.data.message);
+      window.location.reload();
+    } else if (mineData.data.bool === false) {
+      alert(mineData.data.message);
+    }
   };
 
   const handleRightClick = (e, i, j) => {

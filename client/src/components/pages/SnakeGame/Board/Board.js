@@ -18,11 +18,23 @@ const Board = () => {
   );
   const [Loading, setLoading] = useState(true);
   const [myList, setMyList] = useState([]);
+  const [prevScore, setPrevScore] = useState();
 
   useEffect(() => {
     mynftlists();
     setLoading(false);
   }, [CreateNFTContract]);
+
+  useEffect(async () => {
+    const snakeData = await axios.post(
+      `http://localhost:5000/game/snakeScore`,
+      { account: account }
+    );
+    if (snakeData.data.snakePoint !== null) {
+      setPrevScore(snakeData.data.snakePoint);
+    }
+    setLoading(false);
+  }, [account]);
 
   // 내 nft 리스트
   async function mynftlists() {
@@ -40,6 +52,7 @@ const Board = () => {
 
   const sendPoint = async () => {
     const point = score;
+
     function multiply(point) {
       let rareD;
       if (myList.filter((v) => v.rare === "5").length >= 3) {
@@ -69,14 +82,18 @@ const Board = () => {
       }
       return point * (starD * rareD);
     }
-    await axios
-      .post(`http://localhost:5000/game/snake`, {
-        point: multiply(point),
-        account: account,
-      })
-      .then((res) => {
-        alert("점수 등록 완료");
-      });
+
+    const snakeData = await axios.post(`http://localhost:5000/game/snake`, {
+      point: multiply(point),
+      account: account,
+    });
+
+    if (snakeData.data.bool === true) {
+      alert(snakeData.data.message);
+      window.location.reload();
+    } else if (snakeData.data.bool === false) {
+      alert(snakeData.data.message);
+    }
   };
 
   //React variables
@@ -202,8 +219,10 @@ const Board = () => {
         {sectionCard && (
           <div id="snake_message">
             <div id="snake_card">
-              <h1 className="snake_card-heading">Score</h1>
-              <h2 className="snake_card-value">{score}</h2>
+              <h3 className="snake_card-heading">Prev Score</h3>
+              <h3 className="snake_card-value">{prevScore}</h3>
+              <h3 className="snake_card-heading">Score</h3>
+              <h3 className="snake_card-value">{score}</h3>
               <div onClick={sendPoint}>점수 등록</div>
               <div
                 className="snake_restart button-space"

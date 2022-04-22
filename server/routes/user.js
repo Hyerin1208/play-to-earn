@@ -151,4 +151,15 @@ router.get("/time", async (req, res) => {
   res.send(timer);
 });
 
+router.post("/contact", async (req, res) => {
+  const { address } = req.body;
+
+  const users = await User.findOne({
+    where: { address: address },
+    attributes: ["nick", "email"],
+  });
+
+  res.json(users);
+});
+
 module.exports = router;
