@@ -77,30 +77,23 @@ modifier checkNFT() {
 
     function stake(uint256 _amount) external checkNFT nonReentrant {
         require(_amount>= 500*10**18);
+            require(rewardsToken.balanceOf(msg.sender)>=_amount);
                       _StakerIds.increment();
       uint256 makeStakerId = _StakerIds.current();
         if(StakerId[msg.sender]==0){
 StakerId[msg.sender] = makeStakerId;
         }
         if (stakers[StakerId[msg.sender]].amountStaked > 0) {
-            require(rewardsToken.balanceOf(msg.sender)>=_amount);
-            rewardsToken.transferFrom(msg.sender, address(this), _amount);
-            uint256 newAmount = stakers[StakerId[msg.sender]].amountStaked +_amount;
-            stakers[StakerId[msg.sender]].amountStaked = newAmount;
             uint256 rewards = calculateRewards(msg.sender);
             stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
+        }
+
+            rewardsToken.transferFrom(msg.sender, address(this), _amount);
+             stakers[StakerId[msg.sender]].stakerAddress = msg.sender;
+stakers[StakerId[msg.sender]].amountStaked+=_amount;
             stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
             emit addStaker(StakerId[msg.sender],msg.sender,stakers[StakerId[msg.sender]].amountStaked);
-        } else {
-                        require(rewardsToken.balanceOf(msg.sender)>=_amount);
-            rewardsToken.transferFrom(msg.sender, address(this), _amount);
-            stakers[StakerId[msg.sender]].stakerAddress = msg.sender;
-        stakers[StakerId[msg.sender]].amountStaked += _amount;
-            uint256 rewards = calculateRewards(msg.sender);
-            stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
-                    stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
-        emit addStaker(StakerId[msg.sender],msg.sender,stakers[StakerId[msg.sender]].amountStaked);
-        }
+
     }
 
     // Check if user has any ERC721 Tokens Staked and if he tried to withdraw,
@@ -148,7 +141,7 @@ uint256 unclaimedRewards = 0;
 for(uint256 i=0; i < len; i++){
     Staker memory checkstakers = stakers[_stakerIds[i]];
             require(
-            checkstakers.amountStaked > 0||checkstakers.unclaimedRewards>0,
+            checkstakers.amountStaked > 0,
             "You have no tokens staked or unclaimedRewards");
                     uint256 rewards = calculateRewards(checkstakers.stakerAddress);
         stakers[_stakerIds[i]].unclaimedRewards += rewards;
