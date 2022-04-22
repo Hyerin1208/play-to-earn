@@ -14,7 +14,6 @@ import EvoProfile from "./EvoProfile";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
-import EvoBackGround from "./EvoBackGround";
 import { useDispatch, useSelector } from "react-redux";
 import { utils } from "ethers";
 

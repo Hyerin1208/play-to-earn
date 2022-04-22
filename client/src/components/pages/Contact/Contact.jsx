@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import ReactLoaing from "react-loading";
 
 import "./contact.css";
 
@@ -10,11 +11,11 @@ import { Container, Row, Col } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
+  const [Loading, setLoading] = useState(true);
   const account = useSelector((state) => state.AppState.account);
   const form = useRef();
-  const [loading, setLoading] = useState(true);
-  const [nick, setNick] = useState();
-  const [email, setEmail] = useState();
+  const [nick, setNick] = useState("");
+  const [email, setEmail] = useState("");
   let Navi = useNavigate();
 
   useEffect(async () => {
@@ -60,12 +61,18 @@ const Contact = () => {
     Navi("/contact");
   };
 
-  return (
-    <>
-      <CommonSection title="Contact" />
-      {loading ? (
-        <strong> loading... </strong>
-      ) : (
+  if (Loading) {
+    return (
+      <div>
+        잠시만 기다려 주세요
+        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <CommonSection title="Contact" />
+
         <div className="contact__box">
           <Container>
             <Row>
@@ -116,9 +123,9 @@ const Contact = () => {
             </Row>
           </Container>
         </div>
-      )}
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default Contact;
