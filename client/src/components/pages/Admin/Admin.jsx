@@ -27,6 +27,9 @@ const Admin = () => {
   const TokenClaimContract = useSelector(
     (state) => state.AppState.TokenClaimContract
   );
+  const StakingTokenContract = useSelector(
+    (state) => state.AppState.StakingTokenContract
+  );
 
   const [rankingDB, setRankingDB] = useState(null);
   const dispatch = useDispatch();
@@ -46,6 +49,42 @@ const Admin = () => {
     }
     setLoading(false);
   }, [account]);
+
+  const testfunc = async () => {
+    await axios
+      .post("http://127.0.0.1:5000/staking/rewards")
+      .then(async (res) => {
+        console.log(res.data.checkstaking);
+        const userarry = res.data.checkstaking;
+        const reault = await userarry.map((data) => parseInt(data.stakerId));
+        // const rewards =
+        await StakingTokenContract.methods
+          .resettimer(reault)
+          .send({ from: account, gas: 3000000 })
+          .then(async (res) => {
+            console.log(res);
+            console.log(res.events.totalunclaimedRewards.returnValues.amount);
+            const sendrewards = parseInt(
+              res.events.totalunclaimedRewards.returnValues.amount
+            );
+            const stakingAddress = await StakingTokenContract.options.address;
+            await AmusementArcadeTokenContract.methods
+              .transfer(stakingAddress, sendrewards)
+              .send({ from: account, gas: 3000000 })
+              .then((res) => {
+                console.log(res);
+                console.log("전송완료");
+              })
+              .then(async () => {
+                console.log(
+                  await AmusementArcadeTokenContract.methods
+                    .balanceOf(stakingAddress)
+                    .call()
+                );
+              });
+          });
+      });
+  };
 
   const sendRank = async () => {
     if (chainid === 1337 ? false : networkid === chainid ? false : true)
@@ -81,10 +120,50 @@ const Admin = () => {
           await AmusementArcadeTokenContract.methods
             .transfer(claimAddress, utils.parseUnits(sendamount.toString(), 18))
             .send({ from: account, gas: 3000000 })
-            .then(() => {
-              dispatch(setTimer({ timer: parseInt(timer) }));
-              alert("DB 전송 완료");
-              window.location.reload();
+            .then(async () => {
+              await axios
+                .post("http://127.0.0.1:5000/staking/rewards")
+                .then(async (res) => {
+                  console.log(res.data.checkstaking);
+                  const userarry = res.data.checkstaking;
+                  if (userarry.length !== 0) {
+                    const reault = await userarry.map((data) =>
+                      parseInt(data.stakerId)
+                    );
+                    // const rewards =
+                    await StakingTokenContract.methods
+                      .resettimer(reault)
+                      .send({ from: account, gas: 3000000 })
+                      .then(async (res) => {
+                        console.log(res);
+                        console.log(
+                          res.events.totalunclaimedRewards.returnValues.amount
+                        );
+                        const sendrewards = parseInt(
+                          res.events.totalunclaimedRewards.returnValues.amount
+                        );
+                        const stakingAddress = await StakingTokenContract
+                          .options.address;
+                        await AmusementArcadeTokenContract.methods
+                          .transfer(stakingAddress, sendrewards)
+                          .send({ from: account, gas: 3000000 })
+                          .then(async () => {
+                            console.log(
+                              await AmusementArcadeTokenContract.methods
+                                .balanceOf(stakingAddress)
+                                .call()
+                            );
+                            dispatch(setTimer({ timer: parseInt(timer) }));
+                            alert("DB 전송 완료");
+                            window.location.reload();
+                          });
+                      });
+                  } else {
+                    dispatch(setTimer({ timer: parseInt(timer) }));
+                    alert("DB 전송 완료");
+                    window.location.reload();
+                  }
+                });
             });
         } else {
           alert("아직 미승인된 유저가 있습니다.");
@@ -121,6 +200,7 @@ const Admin = () => {
                     <button
                       className="sendRank__btn"
                       type="button"
+                      // onClick={() => testfunc()}
                       onClick={() => sendRank()}
                     >
                       Send Ranking

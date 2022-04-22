@@ -30,14 +30,30 @@ contract StakingToken is Ownable, ReentrancyGuard {
         uint256 unclaimedRewards;
     }
 
+        event addStaker (
+      uint256 indexed stakerId,
+      address stakerAddress,
+      uint256 amount
+    );
+
+        event withdrawAmount (
+      uint256 indexed stakerId,
+      address stakerAddress,
+      uint256 amount
+    );
+
+        event totalunclaimedRewards (
+      uint256 amount
+    );
+
     // Rewards per hour per token deposited in wei.
     // Rewards are cumulated once every hour.
-    uint256 private rewardsPerHour = 100000;
+    uint256 private rewardsPercent = 1;
 
     // Mapping of User Address to Staker info
-    mapping(uint256 => Staker) private stakers;
+    mapping(uint256 => Staker) public stakers;
         mapping(address => uint256) private StakerId;
-        mapping(address => bool) private approve;
+        mapping(address => bool) public approve;
 
 
     // Constructor function
@@ -60,23 +76,30 @@ modifier checkNFT() {
 
 
     function stake(uint256 _amount) external checkNFT nonReentrant {
-        require(_amount>= 500 ether);
+        require(_amount>= 500*10**18);
                       _StakerIds.increment();
       uint256 makeStakerId = _StakerIds.current();
         if(StakerId[msg.sender]==0){
 StakerId[msg.sender] = makeStakerId;
         }
         if (stakers[StakerId[msg.sender]].amountStaked > 0) {
+            require(rewardsToken.balanceOf(msg.sender)>=_amount);
+            rewardsToken.transferFrom(msg.sender, address(this), _amount);
             uint256 newAmount = stakers[StakerId[msg.sender]].amountStaked +_amount;
             stakers[StakerId[msg.sender]].amountStaked = newAmount;
             uint256 rewards = calculateRewards(msg.sender);
             stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
             stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+            emit addStaker(StakerId[msg.sender],msg.sender,stakers[StakerId[msg.sender]].amountStaked);
         } else {
+                        require(rewardsToken.balanceOf(msg.sender)>=_amount);
+            rewardsToken.transferFrom(msg.sender, address(this), _amount);
             stakers[StakerId[msg.sender]].stakerAddress = msg.sender;
         stakers[StakerId[msg.sender]].amountStaked += _amount;
-        stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
-        stakers[StakerId[msg.sender]].unclaimedRewards = 0;
+            uint256 rewards = calculateRewards(msg.sender);
+            stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
+                    stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+        emit addStaker(StakerId[msg.sender],msg.sender,stakers[StakerId[msg.sender]].amountStaked);
         }
     }
 
@@ -92,8 +115,10 @@ StakerId[msg.sender] = makeStakerId;
         );
         uint256 rewards = calculateRewards(msg.sender);
         stakers[StakerId[msg.sender]].unclaimedRewards += rewards;
+        rewardsToken.transfer(msg.sender , _amount);
         stakers[StakerId[msg.sender]].amountStaked -= _amount;
         stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
+        emit withdrawAmount(StakerId[msg.sender],msg.sender,stakers[StakerId[msg.sender]].amountStaked);
     }
 
     // Calculate rewards for the msg.sender, check if there are any rewards
@@ -109,6 +134,7 @@ StakerId[msg.sender] = makeStakerId;
         stakers[StakerId[msg.sender]].timeOfLastUpdate = block.timestamp;
         stakers[StakerId[msg.sender]].unclaimedRewards = 0;
         rewardsToken.transfer(msg.sender, rewards);
+        approve[msg.sender]=false;
     }
 
 function findStakerId(address _userAddress) public view onlyOwner returns(uint256){
@@ -116,24 +142,28 @@ function findStakerId(address _userAddress) public view onlyOwner returns(uint25
 }
 
     
-function resettimer (uint256[] calldata _stakerIds) public returns(bool){
+function resettimer (uint256[] calldata _stakerIds) public onlyOwner returns(bool){
 uint256 len = _stakerIds.length;
+uint256 unclaimedRewards = 0;
 for(uint256 i=0; i < len; i++){
     Staker memory checkstakers = stakers[_stakerIds[i]];
             require(
-            checkstakers.amountStaked > 0,
-            "You have no tokens staked");
+            checkstakers.amountStaked > 0||checkstakers.unclaimedRewards>0,
+            "You have no tokens staked or unclaimedRewards");
                     uint256 rewards = calculateRewards(checkstakers.stakerAddress);
         stakers[_stakerIds[i]].unclaimedRewards += rewards;
-        stakers[_stakerIds[i]].timeOfLastUpdate = block.timestamp; 
+        stakers[_stakerIds[i]].timeOfLastUpdate = block.timestamp;
+        approve[checkstakers.stakerAddress] = true;
+        unclaimedRewards+=stakers[_stakerIds[i]].unclaimedRewards;
 }
+ emit totalunclaimedRewards(unclaimedRewards);
     return true;
 }
 
 
     // Set the rewardsPerHour variable
-    function setRewardsPerHour(uint256 _newValue) public onlyOwner {
-        rewardsPerHour = _newValue;
+    function setRewardsPercent(uint256 _newValue) public onlyOwner {
+        rewardsPercent = _newValue;
     }
 
     //////////
@@ -150,7 +180,7 @@ for(uint256 i=0; i < len; i++){
 
     function availableRewards(address _user) internal view returns (uint256) {
                 require(StakerId[_user]!=0);
-        require(stakers[StakerId[_user]].amountStaked > 0, "User has no tokens staked");
+        require(stakers[StakerId[_user]].amountStaked > 0||stakers[StakerId[_user]].unclaimedRewards>0, "User has no tokens staked");
         uint256 _rewards = stakers[StakerId[_user]].unclaimedRewards +
             calculateRewards(_user);
         return _rewards;
@@ -168,6 +198,6 @@ for(uint256 i=0; i < len; i++){
         view
         returns (uint256 _rewards)
     {
-        return (((stakers[StakerId[_staker]].amountStaked/100)/86400)*(block.timestamp - stakers[StakerId[_staker]].timeOfLastUpdate));
+        return ((((stakers[StakerId[_staker]].amountStaked*rewardsPercent)/100)/86400)*(block.timestamp - stakers[StakerId[_staker]].timeOfLastUpdate));
     }
 }
