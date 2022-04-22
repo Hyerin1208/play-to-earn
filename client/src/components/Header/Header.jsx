@@ -78,7 +78,7 @@ const providerOptions = {
 // });
 
 const web3Modal = new Web3Modal({
-  network: "mainnet" || "binance" || "testnet",
+  network: "mainnet",
   cacheProvider: true,
   providerOptions: providerOptions,
   theme: {
