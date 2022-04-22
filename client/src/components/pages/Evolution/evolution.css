@@ -209,6 +209,18 @@
   .view__link a {
     font-size: 0.6rem !important;
   }
+
+  .right__arrows {
+    margin-left: 30%;
+  }
+
+  .evolution__nfts {
+    margin-left: 30%;
+  }
+
+  .upload__evo {
+    font-size: 15rem;
+  }
 }
 
 @media only screen and (max-width: 425px) {

@@ -82,6 +82,7 @@
 .my__Badge {
   width: 200px;
   height: 40px;
+  margin-left: 20%;
 }
 
 .my__Badge p {
