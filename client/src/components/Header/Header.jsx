@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
-import bsc from "@binance-chain/bsc-use-wallet";
 
 import {
   updateAccounts,
@@ -45,10 +44,10 @@ const NAV__LINKS = [
     display: "Evolution",
     url: "/upgrade",
   },
-  {
-    display: "TestField",
-    url: "/test",
-  },
+  // {
+  //   display: "TestField",
+  //   url: "/test",
+  // },
 ];
 
 const providerOptions = {

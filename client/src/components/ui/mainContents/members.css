@@ -31,8 +31,8 @@
   }
 
   .member__img img {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
   }
 
   .member__content h6 {
@@ -49,6 +49,22 @@
     display: block;
     width: 150px;
     height: 150px;
+  }
+
+  .member__content h6 {
+    font-size: 0.7rem;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .member__img {
+    margin-left: -50px;
+  }
+
+  .member__img img {
+    display: block;
+    width: 100px;
+    height: 100px;
   }
 
   .member__content h6 {

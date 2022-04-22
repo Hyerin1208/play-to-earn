@@ -8,12 +8,13 @@ import { Text } from "@visx/text";
 
 import "./staking.css";
 import { useSelector } from "react-redux";
+import Cards from "./Cards";
 
 // 아래는 임시데이터
 const coins = [
-  { id: 1, symbol: "STAKE", amount: 200, color: "#ffbeff", inAAT: 1.48 },
+  { id: 1, symbol: "STAKE", amount: 200, color: "#FDC0C7", inAAT: 1.48 },
   { id: 2, symbol: "AAT", amount: 5, color: "#c4dcff", inAAT: 37.6 },
-  { id: 3, symbol: "STAKE", amount: 0.005, color: "#b080fd", inAAT: 37363 },
+  { id: 3, symbol: "STAKE", amount: 0.005, color: "#bc92ff", inAAT: 37363 },
 ];
 
 const Staking = () => {
@@ -54,7 +55,7 @@ const Staking = () => {
   }, [timer]);
 
   const [active, setActive] = useState(null);
-  const width = 280;
+  const width = 240;
   const half = width / 2;
 
   return (
@@ -134,8 +135,8 @@ const Staking = () => {
               </Group>
             </svg>
           </main>
-          <form className="widget__form">
-            <div className="widget__card">
+          <div className="widget__form">
+            {/* <div className="widget__card">
               <CardTitle tag="h5" className="widget__title">
                 <i className="ri-arrow-down-line"></i>
                 Total deposited
@@ -161,8 +162,9 @@ const Staking = () => {
               <CardText className="widget__text" tag="h5">
                 0.0 STAKE
               </CardText>
-            </div>
-          </form>
+            </div> */}
+            <Cards />
+          </div>
         </Col>
         <Col sm="8">
           <form className="stake__form">

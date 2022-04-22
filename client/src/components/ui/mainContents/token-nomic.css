@@ -135,3 +135,16 @@
 .token__content p {
   font-size: 1rem;
 }
+
+@media screen and (max-width: 1024px) {
+  .square__box {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+    margin-left: 10%;
+  }
+}
