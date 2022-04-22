@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ReactLoaing from "react-loading";
 
-import Error404 from "../../../ui/templete/Error404";
-
 export const Overlay = ({ handleReset, score }) => {
   const account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -67,14 +65,16 @@ export const Overlay = ({ handleReset, score }) => {
       return point * (starD * rareD);
     }
 
-    await axios
-      .post(`http://localhost:5000/game/2048`, {
-        score: multiply(point),
-        account: account,
-      })
-      .then((res) => {
-        alert("점수 등록 완료");
-      });
+    const puzzleData = await axios.post(`http://localhost:5000/game/2048`, {
+      score: multiply(point),
+      account: account,
+    });
+
+    if (puzzleData.data.bool) {
+      alert(puzzleData.data.message);
+    } else if (!puzzleData.data.bool) {
+      alert(puzzleData.data.message);
+    }
   };
 
   if (Loading) {
