@@ -15,21 +15,28 @@ router.post("/snake", async (req, res, next) => {
       where: { address: account },
       attributes: ["address", "nick"],
     });
+    const prevScore = await Game.findOne({
+      where: { address: account },
+      attributes: ["snakePoint"],
+    });
 
-    if (!findAddress) {
+    if (!findAddress || prevScore.snakePoint === null) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         snakePoint: point,
       });
-    } else {
+      res.json({ message: "점수 등록 완료", bool: true });
+    }
+    if (point > prevScore.snakePoint) {
       Game.update(
         { snakePoint: point, nick: findUser.nick },
         { where: { address: account } }
       );
+      res.json({ message: "점수 갱신 완료", bool: true });
+    } else {
+      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
     }
-
-    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -46,21 +53,28 @@ router.post("/2048", async (req, res, next) => {
       where: { address: account },
       attributes: ["address", "nick"],
     });
+    const prevScore = await Game.findOne({
+      where: { address: account },
+      attributes: ["puzzlePoint"],
+    });
 
-    if (!findAddress) {
+    if (!findAddress || prevScore.puzzlePoint === null) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         puzzlePoint: score,
       });
-    } else {
+      res.json({ message: "점수 등록 완료", bool: true });
+    }
+    if (score > prevScore.puzzlePoint) {
       Game.update(
         { puzzlePoint: score, nick: findUser.nick },
         { where: { address: account } }
       );
+      res.json({ message: "점수 갱신 완료", bool: true });
+    } else {
+      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
     }
-
-    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -77,21 +91,28 @@ router.post("/mine", async (req, res, next) => {
       where: { address: account },
       attributes: ["address", "nick"],
     });
+    const prevScore = await Game.findOne({
+      where: { address: account },
+      attributes: ["minePoint"],
+    });
 
-    if (!findAddress) {
+    if (!findAddress || prevScore.minePoint === null) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         minePoint: runtime,
       });
-    } else {
+      res.json({ message: "점수 등록 완료", bool: true });
+    }
+    if (runtime > prevScore.minePoint) {
       Game.update(
         { minePoint: runtime, nick: findUser.nick },
         { where: { address: account } }
       );
+      res.json({ message: "점수 갱신 완료", bool: true });
+    } else {
+      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
     }
-
-    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -108,21 +129,28 @@ router.post("/tetris", async (req, res, next) => {
       where: { address: account },
       attributes: ["address", "nick"],
     });
+    const prevScore = await Game.findOne({
+      where: { address: account },
+      attributes: ["tetrisPoint"],
+    });
 
-    if (!findAddress) {
+    if (!findAddress || prevScore.tetrisPoint === null) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         tetrisPoint: data,
       });
-    } else {
+      res.json({ message: "점수 등록 완료", bool: true });
+    }
+    if (data > prevScore.tetrisPoint) {
       Game.update(
         { tetrisPoint: data, nick: findUser.nick },
         { where: { address: account } }
       );
+      res.json({ message: "점수 갱신 완료", bool: true });
+    } else {
+      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
     }
-
-    res.json({ message: "ok" });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -270,6 +298,42 @@ router.post("/setclaim", async (req, res, next) => {
 router.post("/getclaim", async (req, res, next) => {
   const result = await Game.findOne({ where: { address: req.body.address } });
   res.json({ message: result.approve });
+});
+
+router.post("/puzzleScore", async (req, res, next) => {
+  const { account } = req.body;
+  const findPuzzle = await Game.findOne({
+    where: { address: account },
+    attributes: ["puzzlePoint"],
+  });
+  res.json(findPuzzle);
+});
+
+router.post("/snakeScore", async (req, res, next) => {
+  const { account } = req.body;
+  const findSnake = await Game.findOne({
+    where: { address: account },
+    attributes: ["snakePoint"],
+  });
+  res.json(findSnake);
+});
+
+router.post("/mineScore", async (req, res, next) => {
+  const { account } = req.body;
+  const findMine = await Game.findOne({
+    where: { address: account },
+    attributes: ["minePoint"],
+  });
+  res.json(findMine);
+});
+
+router.post("/tetrisSCore", async (req, res, next) => {
+  const { account } = req.body;
+  const findTetris = await Game.findOne({
+    where: { address: account },
+    attributes: ["tetrisPoint"],
+  });
+  res.json(findTetris);
 });
 
 module.exports = router;

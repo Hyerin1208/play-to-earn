@@ -70,9 +70,10 @@ export const Overlay = ({ handleReset, score }) => {
       account: account,
     });
 
-    if (puzzleData.data.bool) {
+    if (puzzleData.data.bool === true) {
       alert(puzzleData.data.message);
-    } else if (!puzzleData.data.bool) {
+      window.location.reload();
+    } else if (puzzleData.data.bool === false) {
       alert(puzzleData.data.message);
     }
   };

@@ -18,11 +18,23 @@ const Board = () => {
   );
   const [Loading, setLoading] = useState(true);
   const [myList, setMyList] = useState([]);
+  const [prevScore, setPrevScore] = useState();
 
   useEffect(() => {
     mynftlists();
     setLoading(false);
   }, [CreateNFTContract]);
+
+  useEffect(async () => {
+    const snakeData = await axios.post(
+      `http://localhost:5000/game/snakeScore`,
+      { account: account }
+    );
+    if (snakeData.data.snakePoint !== null) {
+      setPrevScore(snakeData.data.snakePoint);
+    }
+    setLoading(false);
+  }, [account]);
 
   // 내 nft 리스트
   async function mynftlists() {
@@ -76,9 +88,10 @@ const Board = () => {
       account: account,
     });
 
-    if (snakeData.data.bool) {
+    if (snakeData.data.bool === true) {
       alert(snakeData.data.message);
-    } else if (!snakeData.data.bool) {
+      window.location.reload();
+    } else if (snakeData.data.bool === false) {
       alert(snakeData.data.message);
     }
   };
@@ -206,8 +219,10 @@ const Board = () => {
         {sectionCard && (
           <div id="snake_message">
             <div id="snake_card">
-              <h1 className="snake_card-heading">Score</h1>
-              <h2 className="snake_card-value">{score}</h2>
+              <h3 className="snake_card-heading">Prev Score</h3>
+              <h3 className="snake_card-value">{prevScore}</h3>
+              <h3 className="snake_card-heading">Score</h3>
+              <h3 className="snake_card-value">{score}</h3>
               <div onClick={sendPoint}>점수 등록</div>
               <div
                 className="snake_restart button-space"
