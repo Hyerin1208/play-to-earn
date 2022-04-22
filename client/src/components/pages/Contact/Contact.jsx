@@ -24,17 +24,18 @@ const Contact = () => {
       })
       .then((res) => {
         const data = res.data;
+        setLoading(false);
         if (account === null) {
           alert("로그인 후 이용해주세요");
           Navi("/");
         } else if (data === null) {
           alert("회원가입 후 이용해주세요");
           Navi("/");
-        }
-        setNick(data.nick);
-        setEmail(data.email);
+        } else if (data !== null) {
+          setNick(data.nick);
+          setEmail(data.email);
+        } else return true;
       });
-    setLoading(false);
   }, [account]);
 
   const sendEmail = async (e) => {
@@ -56,7 +57,7 @@ const Contact = () => {
         }
       );
     alert("문의가 접수 완료되었습니다.");
-    window.location.href = "http://localhost:3000/contact";
+    Navi("/contact");
   };
 
   return (
