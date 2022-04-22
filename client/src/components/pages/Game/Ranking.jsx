@@ -290,7 +290,7 @@ const Ranking = () => {
                 </div>
               </div>
             </Col>
-            <Col className="time__limit" lg="4" md="4" sm="4">
+            <Col className="time__limit" lg="4" md="6" sm="6">
               <h4>Time Limit</h4>
               <Clock
                 className="clock__box"

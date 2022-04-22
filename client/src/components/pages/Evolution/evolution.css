@@ -221,6 +221,76 @@
   .upload__evo {
     font-size: 15rem;
   }
+
+  .nft__img {
+    margin-bottom: 20%;
+  }
+
+  .nft__img i {
+    font-size: 12rem;
+    margin-left: 25%;
+    z-index: -1;
+    color: #4b50e6;
+    transition: 0.4s ease-in-out;
+    /* text-shadow: 0 0 0.125em hsl(0, 0%, 100%); */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card__container {
+    width: 80%;
+    height: 80%;
+    padding-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .top__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1.2;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1em 15px;
+  }
+
+  .circle__cir {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: -4.2em;
+    right: -10em;
+    z-index: 5;
+    background-color: #4b50e6;
+    border-radius: 50%;
+  }
+
+  .nft__img {
+    margin-right: 30px;
+  }
+
+  .evolu__text {
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0;
+    z-index: 10;
+    font-size: 57px;
+    font-weight: 880;
+    margin-top: 20%;
+    text-shadow: 0 3px 10px 2px rgba(82, 82, 82, 0.137);
+  }
+
+  .bottom__container {
+    display: flex;
+    flex: 0.8;
+    padding: 0 1em;
+  }
+
+  .last__evobox .single__nft__card {
+    width: 95%;
+    height: 98%;
+  }
 }
 
 @media only screen and (max-width: 425px) {

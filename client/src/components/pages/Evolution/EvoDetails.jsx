@@ -56,6 +56,9 @@ const EvoButton = styled.button`
     color: #fff;
     border: 3px solid #4b50e6;
   }
+  @media only screen and (max-width: 1024px) {
+    width: 80%;
+  }
 `;
 
 const OurLogo = styled.div`
