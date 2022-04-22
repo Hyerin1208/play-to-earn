@@ -7,6 +7,7 @@ import "./contact.css";
 
 import CommonSection from "../../ui/templete/CommonSection";
 import { Container, Row, Col } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
   const account = useSelector((state) => state.AppState.account);
@@ -14,6 +15,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(true);
   const [nick, setNick] = useState();
   const [email, setEmail] = useState();
+  let Navi = useNavigate();
 
   useEffect(async () => {
     await axios
@@ -24,10 +26,10 @@ const Contact = () => {
         const data = res.data;
         if (account === null) {
           alert("로그인 후 이용해주세요");
-          window.location.href = "http://localhost:3000/";
+          Navi("/");
         } else if (data === null) {
           alert("회원가입 후 이용해주세요");
-          window.location.href = "http://localhost:3000/";
+          Navi("/");
         }
         setNick(data.nick);
         setEmail(data.email);
