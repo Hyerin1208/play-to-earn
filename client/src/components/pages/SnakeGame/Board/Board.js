@@ -40,6 +40,7 @@ const Board = () => {
 
   const sendPoint = async () => {
     const point = score;
+
     function multiply(point) {
       let rareD;
       if (myList.filter((v) => v.rare === "5").length >= 3) {
@@ -69,14 +70,17 @@ const Board = () => {
       }
       return point * (starD * rareD);
     }
-    await axios
-      .post(`http://localhost:5000/game/snake`, {
-        point: multiply(point),
-        account: account,
-      })
-      .then((res) => {
-        alert("점수 등록 완료");
-      });
+
+    const snakeData = await axios.post(`http://localhost:5000/game/snake`, {
+      point: multiply(point),
+      account: account,
+    });
+
+    if (snakeData.data.bool) {
+      alert(snakeData.data.message);
+    } else if (!snakeData.data.bool) {
+      alert(snakeData.data.message);
+    }
   };
 
   //React variables
