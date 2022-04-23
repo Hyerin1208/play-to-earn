@@ -30,8 +30,10 @@ const Board = () => {
       `http://localhost:5000/game/snakeScore`,
       { account: account }
     );
-    if (snakeData.data.snakePoint !== null) {
-      setPrevScore(snakeData.data.snakePoint);
+    if (snakeData.data !== null) {
+      if (snakeData.data.snakePoint !== null) {
+        setPrevScore(snakeData.data.snakePoint);
+      }
     }
     setLoading(false);
   }, [account]);

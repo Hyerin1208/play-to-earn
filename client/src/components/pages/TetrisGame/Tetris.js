@@ -83,8 +83,10 @@ const Tetris = ({ setShowModal }) => {
       `http://localhost:5000/game/tetrisScore`,
       { account: account }
     );
-    if (tetrisData.data.tetrisPoint !== null) {
-      setPrevScore(tetrisData.data.tetrisPoint);
+    if (tetrisData.data !== null) {
+      if (tetrisData.data.tetrisPoint !== null) {
+        setPrevScore(tetrisData.data.tetrisPoint);
+      }
     }
     setLoading(false);
   }, [account]);

@@ -15,8 +15,10 @@ export const GameHeader = ({ score, handleReset, highScore, setPopup }) => {
       `http://localhost:5000/game/puzzleScore`,
       { account: account }
     );
-    if (puzzleData.data.puzzlePoint !== null) {
-      setPrevScore(puzzleData.data.puzzlePoint);
+    if (puzzleData.data !== null) {
+      if (puzzleData.data.puzzlePoint !== null) {
+        setPrevScore(puzzleData.data.puzzlePoint);
+      }
     }
     setLoading(false);
   }, [account]);
