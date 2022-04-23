@@ -39,7 +39,7 @@ const SideBar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getClaim();
+    setAATclaim();
   }, []);
 
   async function checkMyBalance(account) {
@@ -68,7 +68,7 @@ const SideBar = () => {
       const result = await TokenClaimContract.methods
         .getClaim()
         .call({ from: account });
-      return alert(utils.formatUnits(await result, 18));
+      return setAATclaim(utils.formatUnits(await result, 18));
     } else {
       alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
     }

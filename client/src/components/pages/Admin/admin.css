@@ -25,6 +25,10 @@
   margin-bottom: 10px;
 }
 
+.section1__one .admin__card {
+  margin-left: 4%;
+}
+
 .section2__two {
   display: flex;
   gap: 2rem;
