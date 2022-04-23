@@ -11,7 +11,7 @@ const AirDrop = () => {
   const [isStop, setIsStop] = useState(false);
   const [defaultTime, setdefaultTime] = useState();
   const timerid = useRef(null);
-  const lastDay = new Date("apr 29, 2022 18:00:00").getTime();
+  const lastDay = new Date("May 02, 2022 18:00:00").getTime();
 
   useEffect(async () => {
     setdefaultTime(lastDay);
