@@ -26,7 +26,7 @@ const NftSellCard = (props) => {
   }, [props]);
 
   return (
-    // 옵션 발동시 > <div class="box__ainmation"> 활설화
+    // 옵션 발동시 > <div className="box__ainmation"> 활설화
     <div class="box__ainmation">
       <div className="single__nft__card">
         <div className="nft__img">

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EditProfile from "../myModal/EditProfile";
-import Badge from "react-bootstrap/Badge";
 import ReactLoaing from "react-loading";
 import axios from "axios";
 import "./slide-bar.css";
@@ -11,14 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateMyBalance } from "../../../redux/actions/index";
 
 const SideBar = () => {
+  const [Loading, setLoading] = useState(true);
   const [nickname, setNicName] = useState([]);
   const [imageURL, setImageURL] = useState([]);
   const [email, setEmail] = useState([]);
-  // const [address, setAddress] = useState("address");
-  const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
   const [AATclaim, setAATclaim] = useState("");
+  const [myList, setMyList] = useState([]);
 
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
@@ -41,6 +40,55 @@ const SideBar = () => {
   useEffect(() => {
     getClaim();
   }, []);
+
+  // 내 nft 리스트
+  async function mynftlists() {
+    const lists = await CreateNFTContract.methods
+      .MyNFTlists()
+      .call({ from: account }, (error) => {
+        if (!error) {
+          console.log("send ok");
+        } else {
+          console.log(error);
+        }
+      });
+    setMyList(lists);
+  }
+
+  useEffect(() => {
+    mynftlists();
+    setLoading(false);
+  }, [CreateNFTContract]);
+
+  function test() {
+    let rareD;
+    if (myList.filter((v) => v.rare === "5").length >= 3) {
+      rareD = 3;
+    } else if (myList.filter((v) => v.rare === "4").length >= 3) {
+      rareD = 2.5;
+    } else if (myList.filter((v) => v.rare === "3").length >= 3) {
+      rareD = 2;
+    } else if (myList.filter((v) => v.rare === "2").length >= 3) {
+      rareD = 1.5;
+    } else {
+      rareD = 1;
+    }
+    let starD;
+    if (myList.filter((v) => v.star === "5").length >= 3) {
+      starD = 3;
+    } else if (myList.filter((v) => v.star === "4").length >= 3) {
+      starD = 2.5;
+    } else if (myList.filter((v) => v.star === "3").length >= 3) {
+      starD = 2;
+    } else if (myList.filter((v) => v.star === "2").length >= 3) {
+      starD = 1.5;
+    } else if (myList.filter((v) => v.star === "1").length >= 3) {
+      starD = 1.2;
+    } else {
+      starD = 1;
+    }
+    return starD * rareD;
+  }
 
   async function checkMyBalance(account) {
     if (TokenClaimContract !== null) {
@@ -255,7 +303,9 @@ const SideBar = () => {
           </button>
           <div className="boost__info">
             Boost
-            <span style={{ color: "#e250e5", fontSize: "1.2rem" }}> x 1.3</span>
+            <span style={{ color: "#e250e5", fontSize: "1.2rem" }}>
+              &nbsp;x {test()}
+            </span>
           </div>
           <div className="myBest__ranking" content="">
             <div className="my__Badge">

@@ -26,8 +26,8 @@ const Routers = () => {
     <Fragment>
       <Routes>
         <Route path="/*" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/market" element={<Market />} />
+        <Route path="/admin/*" element={<Admin />} />
+        <Route path="/market/*" element={<Market />} />
         <Route path="/detailes/:card_id" element={<NftDetails />} />
         <Route path="/create/*" element={<Create />} />
         <Route path="/join/*" element={<JoinUs />} />
