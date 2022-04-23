@@ -85,7 +85,7 @@ router.post("/", async (req, res, next) => {
       if (findUser) {
         User.update(
           { weeks: findUser.weeks + 1 },
-          { where: { address: address } }
+          { where: { address: owner } }
         )
           .then(async () => {
             await Game.update(

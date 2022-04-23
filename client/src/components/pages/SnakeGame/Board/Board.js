@@ -220,7 +220,9 @@ const Board = () => {
           <div id="snake_message">
             <div id="snake_card">
               <h3 className="snake_card-heading">Prev Score</h3>
-              <h3 className="snake_card-value">{prevScore}</h3>
+              <h3 className="snake_card-value">
+                {prevScore === undefined ? "None" : prevScore}
+              </h3>
               <h3 className="snake_card-heading">Score</h3>
               <h3 className="snake_card-value">{score}</h3>
               <div onClick={sendPoint}>점수 등록</div>
