@@ -24,12 +24,14 @@
 
 .param__title {
   text-align: center;
+  margin-bottom: 4px;
 }
 
 .CircularProgressbar {
-  width: 4rem !important;
+  width: 3.8rem !important;
   overflow: visible;
   margin-left: 30px;
+  margin-bottom: 6px;
 }
 
 .CircularProgressbar-path {
