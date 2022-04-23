@@ -18,6 +18,8 @@ const SideBar = () => {
   const [Loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
+  const [AATclaim, setAATclaim] = useState("");
+
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
 
@@ -35,6 +37,10 @@ const SideBar = () => {
 
   const [EditProfileModal, setEditProfileModal] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getClaim();
+  }, []);
 
   async function checkMyBalance(account) {
     if (TokenClaimContract !== null) {
@@ -249,30 +255,15 @@ const SideBar = () => {
           </button>
 
           <div className="myBest__ranking" content="">
-            <Badge pill bg="dark" text="dark" className="my__Badge">
-              <p>Total Claim</p>
-              {/* {balance.length === 0
-                                ? "보상 집계중"
-                                : balance
-                                      .filter((v, i) => {
-                                          return i < 1;
-                                      })
-                                      .map((v, i) => {
-                                          let sum = 0;
-                                          for (let i = 0; i < balance.length; i++) {
-                                              sum += balance[i];
-                                          }
-                                          return <div key={i}>{sum}</div>;
-                                      })} */}
-            </Badge>
-            <button className="get__token" onClick={() => getClaim()}>
-              Claim
-            </button>
+            <div className="my__Badge">
+              <p>Total Claim : {AATclaim} AAT</p>
+            </div>
+
             <button className="get__token" onClick={() => mybalance()}>
               My Balance
             </button>
             <button className="get__token" onClick={() => gettoken()}>
-              get Token
+              Get Token
             </button>
           </div>
         </div>

@@ -269,7 +269,8 @@
 }
 
 .widget__form {
-  /* margin-top: 15%; */
+  margin-top: 10%;
+  margin-left: 10%;
 }
 
 .widget__card {
@@ -300,4 +301,21 @@
 
 .draggable-list {
   list-style-type: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .main__stake .svg {
+    width: 80% !important;
+  }
+
+  .stake__form {
+    max-width: 75%;
+  }
+  .timer__container {
+    margin: 0 !important;
+  }
+
+  .countdown-block {
+    max-width: 70% !important;
+  }
 }

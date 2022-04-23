@@ -57,9 +57,11 @@
   display: flex;
   align-items: center;
   gap: 5;
-  width: 400px;
+  max-width: 440px;
   height: 50px;
-  margin: 10px 10px;
+  margin: 0px 10px 20px 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
 }
 
 .nav__right .connect_btn {
@@ -109,6 +111,10 @@
   display: none;
 }
 
+.mypage__user__icon {
+  padding-bottom: 4px;
+}
+
 .mypage__user__icon a {
   font-style: none;
   text-decoration: none;
@@ -136,8 +142,14 @@
 }
 
 .account__input {
+  max-width: 250px;
+  height: 45px;
   border: none;
-  margin-left: 30px;
+  text-overflow: ellipsis;
+  margin-left: 20px;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  /* margin-left: 30px; */
   /* border-radius: 10px; */
   background-color: #14141f00;
   color: white;
@@ -153,6 +165,40 @@
 @media only screen and (max-width: 1024px) {
   .nav__right {
     margin-right: 50px;
+  }
+}
+
+@media only screen and (max-width: 986px) {
+  .nav__right .mypage__user__icon {
+    width: 500px;
+  }
+
+  .mypage__user__icon a {
+    position: relative;
+  }
+  .mypage__user__icon input {
+    position: absolute;
+  }
+  .account__input {
+    position: absolute;
+    /* margin-bottom: 100px; */
+  }
+}
+
+@media only screen and (max-width: 975px) {
+  .nav__right .mypage__user__icon {
+    width: 500px;
+  }
+
+  .mypage__user__icon a {
+    position: relative;
+  }
+  .mypage__user__icon input {
+    position: absolute;
+  }
+  .account__input {
+    position: absolute;
+    /* margin-bottom: 100px; */
   }
 }
 
