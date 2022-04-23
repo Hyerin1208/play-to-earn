@@ -39,7 +39,7 @@ const SideBar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setAATclaim();
+    getClaim();
   }, []);
 
   async function checkMyBalance(account) {
