@@ -1,3 +1,102 @@
+.box__ainmation {
+  position: relative;
+  width: 279px;
+  height: 445px;
+  background-color: rgb(0, 0, 0, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box__ainmation:before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 145%;
+  background: linear-gradient(#e250e5, #4b50e6);
+  animation: rotateBackwards 4s linear infinite;
+  z-index: -20;
+}
+
+.box__ainmation:after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: #14141f;
+  border-radius: 16px;
+  z-index: -10;
+}
+
+.backwards::before {
+  animation: rotate 4s linear infinite;
+}
+
+.box__ainmation .single__nft__card h4 {
+  font-size: 1rem;
+  color: #fff;
+  position: relative;
+}
+
+.box__ainmation .single__nft__card h4::before {
+  content: attr(data-text);
+  color: #fcdd56;
+  position: absolute;
+  left: 0;
+  z-index: 2;
+  overflow: hidden;
+  width: 100%;
+  animation: boost 2s ease infinite;
+}
+
+.box__ainmation .single__nft__card h4::after {
+  content: "";
+  width: 20%;
+  height: 3px;
+  background: #fcdd56;
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  animation: boost 2s ease infinite;
+}
+
+@keyframes boost {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 35%;
+  }
+}
+
+@keyframes boostLine {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 35%;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateBackwards {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
 .bid__container h6 {
   font-size: 0.8rem;
 }
@@ -13,20 +112,21 @@
 }
 
 .slick-list {
+  padding-top: 5px;
   margin: 0 12px;
 }
 
 .slick-track {
-  height: 430px;
+  height: 445px;
 }
 
 .slick-track .single__nft__card {
   width: 270px;
-  height: 425px;
+  height: 440px;
 }
 
 .slick-track .single__nft__card {
-  height: 425px;
+  height: 440px;
 }
 
 .slick-track .single__nft__card .nft__img img {

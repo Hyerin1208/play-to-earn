@@ -330,6 +330,10 @@ input[type="radio"] {
     line-height: 28px;
   }
 
+  .owner__address__box span {
+    color: #5142fc !important;
+  }
+
   .nft__creator {
     width: 90%;
     margin-left: 35px;
