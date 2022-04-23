@@ -140,14 +140,13 @@ uint256 len = _stakerIds.length;
 uint256 unclaimedRewards = 0;
 for(uint256 i=0; i < len; i++){
     Staker memory checkstakers = stakers[_stakerIds[i]];
-            require(
-            checkstakers.amountStaked > 0,
-            "You have no tokens staked or unclaimedRewards");
+    if( checkstakers.amountStaked > 0||checkstakers.unclaimedRewards>0){
                     uint256 rewards = calculateRewards(checkstakers.stakerAddress);
         stakers[_stakerIds[i]].unclaimedRewards += rewards;
         stakers[_stakerIds[i]].timeOfLastUpdate = block.timestamp;
         approve[checkstakers.stakerAddress] = true;
         unclaimedRewards+=stakers[_stakerIds[i]].unclaimedRewards;
+    }
 }
  emit totalunclaimedRewards(unclaimedRewards);
     return true;

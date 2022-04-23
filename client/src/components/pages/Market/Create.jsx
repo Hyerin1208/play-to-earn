@@ -13,6 +13,7 @@ import { updateLists } from "../../../redux/actions/index";
 
 import defaultImg from "../../../assets/images/defaultImg.gif";
 import { useNavigate } from "react-router-dom";
+import { utils } from "ethers";
 
 /////////////////////////////////////////////////////////////////////
 
@@ -25,7 +26,7 @@ const Create = (props) => {
     let Navi = useNavigate();
     const [fileUrl, setFileUrl] = useState(defaultImg);
     const [formInput, updateFormInput] = useState({
-        price: "00.00",
+        price: 0,
         name: "noname",
         description: "desc",
         rare: "1",
@@ -74,7 +75,8 @@ const Create = (props) => {
         if (chainid === 1337 ? false : networkid === chainid ? false : true) return alert("네트워크 아이디를 확인하세요");
         const url = await uploadToIPFS();
         /* next, create the item */
-        const price = parseInt(formInput.price);
+        const price = formInput.price;
+        console.log(price);
 
         await CreateNFTContract.methods
             .CreateNFTinContract(url, price)
@@ -119,7 +121,7 @@ const Create = (props) => {
                         img: fileUrl,
                         name: formInput.name,
                         description: formInput.description,
-                        price: formInput.price,
+                        price: utils.formatEther(formInput.price),
                         contractAddress: CreateNFTContract.options.address,
                     })
                     .then((res) => {
@@ -187,7 +189,7 @@ const Create = (props) => {
 
                                     <div className="form__input">
                                         <label htmlFor="">Price</label>
-                                        <input type="number" placeholder="Enter price for one item (ETH)" onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })} />
+                                        <input type="number" placeholder="Enter price for one item (ETH)" onChange={(e) => updateFormInput({ ...formInput, price: utils.parseEther(e.target.value) })} />
                                     </div>
 
                                     {/* 경매 기능 추가시 부가정보 input */}

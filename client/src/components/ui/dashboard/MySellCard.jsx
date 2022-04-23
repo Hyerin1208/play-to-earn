@@ -12,9 +12,14 @@ import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
 import { useDispatch, useSelector } from "react-redux";
 import { mymodal } from "../../../redux/actions";
+import { utils } from "ethers";
 
 const NftSellCard = (props) => {
   const MyModal = useSelector((state) => state.AppState.MyModal);
+  const CreateNFTContract = useSelector(
+    (state) => state.AppState.CreateNFTContract
+  );
+  const account = useSelector((state) => state.AppState.account);
   const dispatch = useDispatch();
 
   const stars = Array(5).fill(1);
@@ -54,7 +59,9 @@ const NftSellCard = (props) => {
             <Col>
               <div className="bid__container">
                 <h6>Current Bid</h6>
-                <p>{props.item.formInput.price} AAT</p>
+                <p>
+                  {parseInt(utils.formatEther(props.item.formInput.price))} AAT
+                </p>
               </div>
               <Badge pill bg="light" text="dark" className="rare__badge">
                 rare : {props.item.formInput.rare}
@@ -108,6 +115,20 @@ const NftSellCard = (props) => {
               Sell
             </button>
           </div>
+          <button
+            onClick={async () => {
+              if (CreateNFTContract !== null) {
+                await CreateNFTContract.methods
+                  .changeSellState(Number(props.item.formInput.tokenid))
+                  .send({ from: account, gas: 3000000 })
+                  .then((res) => {
+                    console.log(res);
+                  });
+              }
+            }}
+          >
+            셀취소
+          </button>
           <span className="view__link">
             <Link to={`/detailes/${props.item.formInput.tokenid}`}>
               View More
