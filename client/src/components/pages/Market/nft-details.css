@@ -332,6 +332,7 @@ input[type="radio"] {
 
   .owner__address__box span {
     color: #5142fc !important;
+    cursor: pointer !important;
   }
 
   .nft__creator {

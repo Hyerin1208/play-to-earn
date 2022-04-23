@@ -131,7 +131,9 @@ const NftDetails = (props) => {
                     }}
                   >
                     owner :{" "}
-                    <span style={{ color: "#5142fc" }}>{NFTData.address}</span>
+                    <span style={{ color: "#5142fc", cursor: "pointer" }}>
+                      {NFTData.address}
+                    </span>
                   </div>
 
                   <div className="single__nft__icon">
