@@ -253,7 +253,10 @@ const SideBar = () => {
             {visible ? "Exit" : "Edit"}
             {/* Edit */}
           </button>
-
+          <div className="boost__info">
+            Boost
+            <span style={{ color: "#e250e5", fontSize: "1.2rem" }}> x 1.3</span>
+          </div>
           <div className="myBest__ranking" content="">
             <div className="my__Badge">
               <p>Total Claim : {AATclaim} AAT</p>

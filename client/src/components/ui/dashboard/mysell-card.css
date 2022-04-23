@@ -33,34 +33,6 @@
   animation: rotate 4s linear infinite;
 }
 
-.box__ainmation .single__nft__card h4 {
-  font-size: 1rem;
-  color: #fff;
-  position: relative;
-}
-
-.box__ainmation .single__nft__card h4::before {
-  content: attr(data-text);
-  color: #fcdd56;
-  position: absolute;
-  left: 0;
-  z-index: 2;
-  overflow: hidden;
-  width: 100%;
-  animation: boost 2s ease infinite;
-}
-
-.box__ainmation .single__nft__card h4::after {
-  content: "";
-  width: 20%;
-  height: 3px;
-  background: #fcdd56;
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  animation: boost 2s ease infinite;
-}
-
 @keyframes boost {
   from {
     width: 0%;
