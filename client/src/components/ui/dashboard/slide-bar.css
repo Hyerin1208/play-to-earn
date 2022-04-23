@@ -76,13 +76,14 @@
 }
 
 .myBest__ranking {
-  margin: 2.2rem 0 0 0;
+  margin: 2rem 0 0 0;
 }
 
 .my__Badge {
   width: 200px;
   height: 40px;
-  margin-left: 20%;
+  margin-left: 15%;
+  margin-top: -20px;
 }
 
 .my__Badge p {
@@ -106,6 +107,14 @@
   margin-top: 20px;
   margin-left: 15%;
   box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.445);
+}
+
+.boost__info {
+  font-size: 1rem;
+  color: #fff;
+  position: relative;
+  margin-top: 10px;
+  font-size: 1rem;
 }
 
 .get__token:hover {

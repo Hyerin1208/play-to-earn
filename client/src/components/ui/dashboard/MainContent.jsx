@@ -55,6 +55,10 @@ const MainContent = () => {
               {/* 내가 소유하고 있는 NFTs */}
               <h4>Collected</h4>
               <br />
+              <div>
+                {/* 아래는 옵션 정보 */}
+                <h4 data-text="boost"></h4>
+              </div>
               <div className="section__two">
                 <MyWrapper>
                   <MySlick />

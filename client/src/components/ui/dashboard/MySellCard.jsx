@@ -29,13 +29,6 @@ const NftSellCard = (props) => {
     // 옵션 발동시 > <div class="box__ainmation"> 활설화
     <div class="box__ainmation">
       <div className="single__nft__card">
-        <div>
-          {/* 아래는 옵션 정보 */}
-          <h4 data-text="boost">
-            Boost <span style={{ color: "#fff" }}>x 1.3</span>
-          </h4>
-        </div>
-
         <div className="nft__img">
           <img src={props.item.fileUrl} alt="" />
         </div>

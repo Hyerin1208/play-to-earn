@@ -133,3 +133,25 @@
   border: none;
   border-radius: 100%;
 }
+
+/* .boost__info::before {
+  content: attr(data-text);
+  color: #fcdd56;
+  position: absolute;
+  left: 0;
+  z-index: 2;
+  overflow: hidden;
+  width: 5%;
+  animation: boost 2s ease infinite;
+}
+
+.boost__info::after {
+  content: "";
+  width: 5%;
+  height: 3px;
+  background: #fcdd56;
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  animation: boost 2s ease infinite;
+} */
