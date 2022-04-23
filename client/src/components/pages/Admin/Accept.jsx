@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
 import { useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
+import { utils } from "ethers";
 
 import "./accept.css";
 const Accept = () => {
@@ -39,7 +40,7 @@ const Accept = () => {
       if (chainid === 1337 ? false : networkid === chainid ? false : true)
         return alert("네트워크 아이디를 확인하세요");
       await TokenClaimContract.methods
-        .setClaim(address, amount)
+        .setClaim(address, utils.parseUnits(amount.toString(), 18))
         .send({ from: account, gas: 3000000 })
         .then(() => {
           axios
@@ -61,14 +62,13 @@ const Accept = () => {
   }
 
   function changeCost(index) {
-    const dec = 10 ^ 18;
     switch (index) {
       case 0:
-        return 1000 * dec;
+        return 2000;
       case 1:
-        return 600 * dec;
+        return 1000;
       case 2:
-        return 400 * dec;
+        return 500;
     }
   }
 

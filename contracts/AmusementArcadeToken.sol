@@ -112,7 +112,7 @@ contract AmusementArcadeToken is Context, IBEP20, Ownable {
     _name = "Amusement Arcade Token";
     _symbol = "AAT";
     _decimals = 18;
-    _totalSupply = 1000000000000000000000000;
+    _totalSupply = 100000000*10**_decimals;
     _balances[msg.sender] = _totalSupply;
     emit Transfer(address(0), msg.sender, _totalSupply);
   }

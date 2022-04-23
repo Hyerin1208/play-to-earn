@@ -48,7 +48,7 @@ const SellModal = (props) => {
       ).then(async (res) => {
         if (res[0].sell === false) {
           await CreateNFTContract.methods
-            .sellMyNFTItem(tokenId, price)
+            .sellMyNFTItem(tokenId, (parseInt(price) * 10) ^ 18)
             .send({ from: Account, gas: 3000000 }, (error) => {
               if (!error) {
                 console.log("send ok");

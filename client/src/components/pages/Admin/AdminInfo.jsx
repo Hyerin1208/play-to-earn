@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
 import { useSelector } from "react-redux";
+import { utils } from "ethers";
 
 import "./admin-info.css";
 
@@ -26,7 +27,7 @@ const AdminInfo = () => {
       const contractbalance = await TokenClaimContract.methods
         .contractbalance()
         .call();
-      setAmount(contractbalance);
+      setAmount(utils.formatUnits(contractbalance, 18));
     }
   }, [TokenClaimContract]);
 
@@ -35,7 +36,7 @@ const AdminInfo = () => {
       const totalSupply = await AmusementArcadeTokenContract.methods
         .totalSupply()
         .call();
-      setTotalSupply(totalSupply);
+      setTotalSupply(utils.formatUnits(totalSupply, 18));
     }
   }, [AmusementArcadeTokenContract]);
 

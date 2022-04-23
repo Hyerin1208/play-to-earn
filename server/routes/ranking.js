@@ -4,7 +4,7 @@ const { Ranking, User, Game } = require("../models");
 
 router.post("/", async (req, res, next) => {
   const { rankingDB, address, owner } = req.body;
-  const reward = [1000, 600, 400];
+  const reward = [2000, 1000, 500];
 
   const findUser = await User.findOne({
     where: { address: owner },

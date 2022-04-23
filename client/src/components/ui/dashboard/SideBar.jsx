@@ -5,6 +5,7 @@ import Badge from "react-bootstrap/Badge";
 import ReactLoaing from "react-loading";
 import axios from "axios";
 import "./slide-bar.css";
+import { utils } from "ethers";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateMyBalance } from "../../../redux/actions/index";
@@ -40,8 +41,9 @@ const SideBar = () => {
       const Mybalance = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
+      console.log(Mybalance);
 
-      return await Mybalance;
+      return utils.formatUnits(await Mybalance, 18);
     } else {
       return 0;
     }
@@ -60,7 +62,7 @@ const SideBar = () => {
       const result = await TokenClaimContract.methods
         .getClaim()
         .call({ from: account });
-      return alert(await result);
+      return alert(utils.formatUnits(await result, 18));
     } else {
       alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
     }
@@ -70,7 +72,7 @@ const SideBar = () => {
       const result = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
-      return alert(await result);
+      return alert(utils.formatUnits(await result, 18));
     } else {
       alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
     }
@@ -89,6 +91,7 @@ const SideBar = () => {
             })
             .then(async (res) => {
               if (res.data.message === "ok") {
+                console.log("/////////////////");
                 dispatch(
                   updateMyBalance({ Mybalance: await checkMyBalance(account) })
                 );
