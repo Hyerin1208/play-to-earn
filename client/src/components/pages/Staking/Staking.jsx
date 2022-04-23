@@ -8,24 +8,70 @@ import { Text } from "@visx/text";
 
 import "./staking.css";
 import { useSelector } from "react-redux";
-import Cards from "./Cards";
+import { utils } from "ethers";
+import axios from "axios";
 
 // 아래는 임시데이터
 const coins = [
-  { id: 1, symbol: "STAKE", amount: 200, color: "#FDC0C7", inAAT: 1.48 },
+  { id: 1, symbol: "STAKE", amount: 200, color: "#ffbeff", inAAT: 1.48 },
   { id: 2, symbol: "AAT", amount: 5, color: "#c4dcff", inAAT: 37.6 },
-  { id: 3, symbol: "STAKE", amount: 0.005, color: "#bc92ff", inAAT: 37363 },
+  { id: 3, symbol: "STAKE", amount: 0.005, color: "#b080fd", inAAT: 37363 },
 ];
 
 const Staking = () => {
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
   const timerid = useRef(null);
   const timer = useSelector((state) => state.AppState.timer);
+  const account = useSelector((state) => state.AppState.account);
+  const StakingTokenContract = useSelector(
+    (state) => state.AppState.StakingTokenContract
+  );
+  const AmusementArcadeTokenContract = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
+  );
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
   const [timerSeconds, setTimerSeconds] = useState("00");
+  const [stake, setStake] = useState(null);
+  const [unstake, setUnstake] = useState(null);
   const [isStop, setIsStop] = useState(false);
+  const [reward, setReward] = useState(0);
+  const [unclaimreward, setUnclaimreward] = useState(0);
+  const [stakingAmount, setStakingAmount] = useState(0);
+  const [stakerId, setStakerId] = useState(0);
+  const check = useRef(null);
+
+  useEffect(async () => {
+    await axios
+      .post("http://127.0.0.1:5000/staking/amount", {
+        address: account,
+      })
+      .then(async (res) => {
+        setStakingAmount(res.data.amount);
+        if (res.data.stakerId !== null) {
+          setStakerId(res.data.stakerId);
+          const result = await StakingTokenContract.methods
+            .stakers(res.data.stakerId)
+            .call();
+          setUnclaimreward(utils.formatEther(result.unclaimedRewards));
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    if (StakingTokenContract !== null && account !== null) {
+      check.current = setInterval(async () => {
+        const result = await StakingTokenContract.methods
+          .userStakeInfo(account)
+          .call();
+        setReward(utils.formatEther(result._availableRewards));
+      }, 1000);
+      return () => {
+        clearInterval(check.current);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     timerid.current = setInterval(() => {
@@ -55,7 +101,7 @@ const Staking = () => {
   }, [timer]);
 
   const [active, setActive] = useState(null);
-  const width = 240;
+  const width = 280;
   const half = width / 2;
 
   return (
@@ -136,7 +182,7 @@ const Staking = () => {
             </svg>
           </main>
           <div className="widget__form">
-            {/* <div className="widget__card">
+            <div className="widget__card">
               <CardTitle tag="h5" className="widget__title">
                 <i className="ri-arrow-down-line"></i>
                 Total deposited
@@ -162,12 +208,11 @@ const Staking = () => {
               <CardText className="widget__text" tag="h5">
                 0.0 STAKE
               </CardText>
-            </div> */}
-            <Cards />
+            </div>
           </div>
         </Col>
         <Col sm="8">
-          <form className="stake__form">
+          <div className="stake__form">
             <h5>Time Left</h5>
             <div className="timer__container">
               <div className="timeleft__box">
@@ -231,34 +276,89 @@ const Staking = () => {
             <hr />
             <div className="global__rewards">
               <h5>
-                Global rewards per day <span>10.000</span>
+                Global rewards per day <span>1%</span>
               </h5>
             </div>
             <hr />
             <div className="your__staked">
               <h5>
-                Your staked <span>10.000.000</span>
+                Your staked <span>{stakingAmount}</span>
               </h5>
             </div>
             <hr />
-            <div className="padding_rewards">
+            <div className="total_rewards">
               <h5>
-                Your pending rewards <span>0.000.000</span>
+                Your total rewards <span>{reward}</span>
+              </h5>
+            </div>
+            <hr />
+            <div className="unclaim_rewards">
+              <h5>
+                Your unclaim rewards <span>{unclaimreward}</span>
               </h5>
             </div>
             <hr />
             <ul>
               <li>
-                <span>Available AATtoken balance to stake : </span>
+                <span>Available NFT balance to stake : </span>
                 <br />
                 <input
-                  type="number"
-                  placeholder="Amount"
-                  // value={input}
-                  name="number"
+                  type="text"
+                  placeholder="input your NFT tokenid ex) 1,2,3"
                   className="stake__input"
+                  onChange={(e) => {
+                    setStake(e.currentTarget.value);
+                    console.log(stake);
+                  }}
                 />
-                <button className="stake__btn" type="submit">
+                <button
+                  className="stake__btn"
+                  onClick={async (e) => {
+                    if (StakingTokenContract !== null) {
+                      console.log(parseInt(utils.parseUnits(stake, 18)));
+                      console.log(utils.parseUnits(stake, 18));
+                      await AmusementArcadeTokenContract.methods
+                        .approve(
+                          StakingTokenContract._address,
+                          utils.parseUnits(stake, 18)
+                        )
+                        .send({ from: account, gas: 3000000 })
+                        .then(async () => {
+                          await StakingTokenContract.methods
+                            .stake(utils.parseUnits(stake, 18))
+                            .send({ from: account, gas: 3000000 })
+                            .then(async (res) => {
+                              console.log(res);
+                              const stakerId =
+                                res.events.addStaker.returnValues.stakerId;
+                              const address =
+                                res.events.addStaker.returnValues.stakerAddress;
+                              const amount = parseInt(
+                                utils.formatEther(
+                                  res.events.addStaker.returnValues.amount
+                                )
+                              );
+                              console.log(amount);
+                              await axios
+                                .post("http://127.0.0.1:5000/staking", {
+                                  stakerId: stakerId,
+                                  address: address,
+                                  amount: amount,
+                                })
+                                .then((res) => {
+                                  setStakingAmount(amount);
+                                  console.log(res.data.message);
+                                });
+                            })
+                            .catch(() => {
+                              alert(
+                                "최소금액은 500 AAT 입니다.\n금액을 확인해 주세요"
+                              );
+                            });
+                        });
+                    }
+                  }}
+                >
                   Stake
                 </button>
               </li>
@@ -269,20 +369,78 @@ const Staking = () => {
                 <input
                   type="number"
                   placeholder="Amount"
-                  // value={input}
+                  onChange={(e) => {
+                    setUnstake(e.currentTarget.value);
+                    console.log(unstake);
+                  }}
                   name="number"
                   className="stake__input"
                 />
-                <button className="stake__btn">UnStake</button>
+                <button
+                  className="stake__btn"
+                  onClick={async () => {
+                    if (StakingTokenContract !== null) {
+                      await StakingTokenContract.methods
+                        .withdraw(utils.parseUnits(unstake, 18))
+                        .send({ from: account, gas: 3000000 })
+                        .then(async (res) => {
+                          const stakerId =
+                            res.events.withdrawAmount.returnValues.stakerId;
+                          const address =
+                            res.events.withdrawAmount.returnValues
+                              .stakerAddress;
+                          const amount = parseInt(
+                            utils.formatEther(
+                              res.events.withdrawAmount.returnValues.amount
+                            )
+                          );
+                          await axios
+                            .post("http://127.0.0.1:5000/staking", {
+                              stakerId: stakerId,
+                              address: address,
+                              amount: amount,
+                            })
+                            .then(async (res) => {
+                              const result = await StakingTokenContract.methods
+                                .stakers(stakerId)
+                                .call();
+                              setUnclaimreward(
+                                utils.formatEther(result.unclaimedRewards)
+                              );
+                              setStakingAmount(amount);
+                              console.log(res.data.message);
+                            });
+                        })
+                        .catch(() => {
+                          alert("스테이킹 한 금액과 다릅니다.");
+                        });
+                    }
+                  }}
+                >
+                  UnStake
+                </button>
               </li>
               <li>
                 <br />
                 <span>Pending AAT rewards : </span>
                 <br />
-                <button className="claim__rewards">Claim rewards</button>
+                <button
+                  className="claim__rewards"
+                  onClick={async () => {
+                    if (StakingTokenContract !== null) {
+                      await StakingTokenContract.methods
+                        .claimRewards()
+                        .send({ from: account, gas: 3000000 })
+                        .then((res) => console.log(res))
+                        .catch((err) => console.log(err));
+                    }
+                  }}
+                >
+                  Claim rewards
+                </button>
               </li>
             </ul>
-          </form>
+          </div>
         </Col>
       </Row>
     </Container>

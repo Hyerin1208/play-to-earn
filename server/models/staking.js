@@ -1,10 +1,10 @@
 const Sequelize = require("sequelize");
 
-module.exports = class STAKING extends Sequelize.Model {
+module.exports = class Staking extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        tokenId: {
+        stakerId: {
           type: Sequelize.INTEGER(200),
           allowNull: false,
           unique: true,
@@ -13,7 +13,7 @@ module.exports = class STAKING extends Sequelize.Model {
           type: Sequelize.STRING(200),
           allowNull: false,
         },
-        reward: {
+        amount: {
           type: Sequelize.INTEGER(200),
           allowNull: false,
         },
@@ -22,7 +22,7 @@ module.exports = class STAKING extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "STAKING",
+        modelName: "Staking",
         tableName: "stakings",
         paranoid: false,
         charset: "utf8mb4",

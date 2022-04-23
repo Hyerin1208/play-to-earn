@@ -69,16 +69,32 @@ const providerOptions = {
       infuraId: "5bd970f2bf6047318bda7b13eb3c24ce", // Required
     },
   },
+  // "custom-binancechainwallet": {
+  //     display: {
+  //         logo: "../../assets/img/binance-logo.svg",
+  //         name: "Binance Chain Wallet",
+  //         description: "Connect to your Binance Chain Wallet",
+  //     },
+  //     package: true,
+  //     connector: async () => {
+  //         let provider = null;
+  //         if (typeof window.BinanceChain !== "undefined") {
+  //             provider = window.BinanceChain;
+  //             try {
+  //                 await provider.request({ method: "eth_requestAccounts" });
+  //             } catch (error) {
+  //                 throw new Error("User Rejected");
+  //             }
+  //         } else {
+  //             throw new Error("No Binance Chain Wallet found");
+  //         }
+  //         return provider;
+  //     },
+  // },
 };
 
-// const web3Modal = new Web3Modal({
-//   network: "binance", // replace mainnet to binance
-//   cacheProvider: true, // optional
-//   providerOptions, // required
-// });
-
 const web3Modal = new Web3Modal({
-  network: "mainnet",
+  network: "mainnet" || "binance" || "testnet",
   cacheProvider: true,
   providerOptions: providerOptions,
   theme: {
@@ -120,15 +136,16 @@ const Header = () => {
   const connectWallet = async () => {
     try {
       const provider = await web3Modal.connect();
-      console.log(provider);
+      const library = new ethers.providers.Web3Provider(provider);
+      const accounts = await library.listAccounts();
+      const network = await library.getNetwork();
       dispatch(getWeb3(provider));
-      const accounts = provider["_state"].accounts;
+      console.log(network.chainId);
       const selectAccount = utils.getAddress(accounts[0]);
       if (accounts) setAccount(selectAccount);
-      const network = parseInt(provider["chainId"]);
       setProvider(provider);
+      setLibrary(library);
       setChainId(network);
-
       await axios
         .post("http://127.0.0.1:5000/user/login", {
           address: selectAccount,
@@ -137,7 +154,6 @@ const Header = () => {
         .then(async (res) => {
           dispatch(
             updateAccounts({
-              chainid: network.chainId,
               wallet: true,
               account: selectAccount,
               isUser: res.data.nick === "noname" ? false : true,
@@ -145,7 +161,12 @@ const Header = () => {
               Mybalance: await checkMyBalance(selectAccount),
             })
           );
-          await checkOwner(selectAccount);
+          dispatch(
+            changeChainid({
+              chainid: network.chainId,
+            })
+          );
+          // await checkOwner(selectAccount);
           setDisabled(true);
         });
     } catch (error) {
@@ -170,12 +191,16 @@ const Header = () => {
     refreshState();
     dispatch(
       updateAccounts({
-        chainid: false,
         wallet: false,
         account: null,
         isUser: false,
         MyNFTlists: null,
         Mybalance: 0,
+      })
+    );
+    dispatch(
+      changeChainid({
+        chainid: false,
       })
     );
   };
@@ -186,37 +211,29 @@ const Header = () => {
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
-          const checkUser = await axios
+          await axios
             .post("http://127.0.0.1:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
-            .then((res) => res.data.nick);
-          dispatch(
-            updateAccounts({
-              chainid: parseInt(provider.chainId),
-              wallet: true,
-              account: getAddress,
-              isUser: checkUser === "noname" ? false : true,
-              MyNFTlists: await MyList(getAddress),
-              Mybalance: await checkMyBalance(getAddress),
+            .then(async (res) => {
+              dispatch(
+                updateAccounts({
+                  wallet: true,
+                  account: getAddress,
+                  isUser: res.data.nick === "noname" ? false : true,
+                  MyNFTlists: await MyList(getAddress),
+                  Mybalance: await checkMyBalance(getAddress),
+                })
+              );
             })
-          );
-          await checkOwner(getAddress);
-          setAccount(getAddress);
-          setDisabled(true);
+            .then(async () => {
+              // await checkOwner(getAddress);
+              setAccount(getAddress);
+              setDisabled(true);
+            });
         } else {
           disconnect();
-          dispatch(
-            updateAccounts({
-              chainid: false,
-              wallet: false,
-              account: null,
-              isUser: false,
-              MyNFTlists: null,
-              Mybalance: 0,
-            })
-          );
         }
       };
 
@@ -234,7 +251,6 @@ const Header = () => {
         disconnect();
         dispatch(
           updateAccounts({
-            chainid: false,
             wallet: false,
             account: null,
             isUser: false,
@@ -274,13 +290,23 @@ const Header = () => {
     // };
   }, []);
 
-  async function checkOwner(account) {
+  useEffect(() => {
     if (Owner === account) {
       setIsOwner(true);
     } else {
       setIsOwner(false);
     }
-  }
+  }, [account, Owner]);
+
+  // async function checkOwner(account) {
+  //     console.log(Owner);
+  //     console.log(account);
+  //     if (Owner === account) {
+  //         setIsOwner(true);
+  //     } else {
+  //         setIsOwner(false);
+  //     }
+  // }
 
   async function MyList(account) {
     if (CreateNFTContract !== null && CreateNFTContract !== "dismatch") {
@@ -323,8 +349,7 @@ const Header = () => {
       const Mybalance = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
-
-      return await Mybalance;
+      return utils.formatUnits(await Mybalance, 18);
     } else {
       return 0;
     }
@@ -446,7 +471,9 @@ const Header = () => {
                     type="button"
                     value={
                       account
-                        ? `${account.slice(0, 7)}...${account.slice(35)}`
+                        ? `${account.slice(0, 7)}...${account.slice(
+                            35
+                          )} / Disconnect`
                         : false
                     }
                     onClick={disconnect}

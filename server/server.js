@@ -14,6 +14,7 @@ var gameRouter = require("./routes/game");
 var nftsRouter = require("./routes/nfts");
 var rankingRouter = require("./routes/ranking");
 var historyRouter = require("./routes/history");
+var stakingRouter = require("./routes/staking");
 
 var app = express();
 
@@ -40,5 +41,6 @@ app.use("/game", gameRouter);
 app.use("/nfts", nftsRouter);
 app.use("/history", historyRouter);
 app.use("/ranking", rankingRouter);
+app.use("/staking", stakingRouter);
 
 module.exports = app;
