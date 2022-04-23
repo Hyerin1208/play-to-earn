@@ -298,6 +298,9 @@ button {
   padding-right: 1%;
 }
 
+.sticky__box {
+}
+
 @media only screen and (max-width: 768px) {
   .Ranking__container {
     width: 75%;
