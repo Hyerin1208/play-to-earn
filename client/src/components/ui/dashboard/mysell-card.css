@@ -1,3 +1,56 @@
+.box__ainmation {
+  position: relative;
+  width: 279px;
+  height: 429px;
+  background-color: rgb(0, 0, 0, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box__ainmation:before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 145%;
+  background: linear-gradient(#e250e5, #4b50e6);
+  animation: rotateBackwards 4s linear infinite;
+  z-index: -20;
+}
+
+.box__ainmation:after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: #14141f;
+  border-radius: 16px;
+  z-index: -10;
+}
+
+.backwards::before {
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateBackwards {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
 .bid__container h6 {
   font-size: 0.8rem;
 }
@@ -13,6 +66,7 @@
 }
 
 .slick-list {
+  padding-top: 5px;
   margin: 0 12px;
 }
 

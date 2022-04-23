@@ -26,7 +26,7 @@ const NftSellCard = (props) => {
   }, [props]);
 
   return (
-    <div>
+    <div class="box__ainmation">
       <div className="single__nft__card">
         <div className="nft__img">
           <img src={props.item.fileUrl} alt="" />
