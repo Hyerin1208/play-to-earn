@@ -28,7 +28,7 @@ mapping(address=>bool) private getDefault;
     event NFTItemCreated (
       uint indexed tokenId,
       address owner,
-      uint price,
+      uint price ,
             uint rare,
       uint star,
       bool getDefault,
@@ -78,10 +78,10 @@ function changeOption(uint _tokenId, address _msgsender) external returns(bool){
   uint star = randomOption(1);
   idToNFTItem[_tokenId].rare = rare;
   idToNFTItem[_tokenId].star = star;
-return true;
+return true; 
 }
 
-    function getNFTItem(uint tokenId) public payable{
+    function getNFTItem(uint tokenId ) public payable{
         require(isApprovedForAll(owner(),msg.sender)== true);
         require(getApproved(tokenId)!=msg.sender);
         require(idToNFTItem[tokenId].getDefault!=true);
@@ -128,6 +128,12 @@ return true;
       return items;
     }
 
+function changeSellState (uint _tokenId) public returns(bool){
+ require(idToNFTItem[_tokenId].owner==msg.sender&&idToNFTItem[_tokenId].sell==true);
+idToNFTItem[_tokenId].sell=false;
+return true;
+}
+
     function OwnerSelllists() public view returns (NFTItem[] memory) {
       uint totalItemCount = _tokenIds.current();
       uint itemCount = 0;
@@ -142,29 +148,6 @@ return true;
       NFTItem[] memory items = new NFTItem[](itemCount);
       for (uint i = 0; i < totalItemCount; i++) {
         if (idToNFTItem[i + 1].owner == owner()) {
-          uint currentId = i + 1;
-          NFTItem storage currentItem = idToNFTItem[currentId];
-          items[currentIndex] = currentItem;
-          currentIndex += 1;
-        }
-      }
-      return items;
-    }
-
-    function UserSelllists() public view returns (NFTItem[] memory) {
-      uint totalItemCount = _tokenIds.current();
-      uint itemCount = 0;
-      uint currentIndex = 0;
-
-      for (uint i = 0; i < totalItemCount; i++) {
-        if (idToNFTItem[i + 1].owner != owner() && idToNFTItem[i + 1].sell==true) {
-          itemCount += 1;
-        }
-      }
-
-      NFTItem[] memory items = new NFTItem[](itemCount);
-      for (uint i = 0; i < totalItemCount; i++) {
-        if (idToNFTItem[i + 1].owner != owner()&& idToNFTItem[i + 1].sell==true) {
           uint currentId = i + 1;
           NFTItem storage currentItem = idToNFTItem[currentId];
           items[currentIndex] = currentItem;

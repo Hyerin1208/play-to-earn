@@ -46,11 +46,11 @@ const Admin = () => {
 
     const testfunc = async () => {
         await axios.post("http://127.0.0.1:5000/staking/rewards").then(async (res) => {
-            console.log(res.data.checkstaking);
             const userarry = res.data.checkstaking;
             if (userarry.length > 0) {
                 alert("스테이킹 한사람이 있네요");
                 const reault = await userarry.map((data) => parseInt(data.stakerId));
+                console.log(reault);
                 // const rewards =
                 await StakingTokenContract.methods
                     .resettimer(reault)
@@ -59,9 +59,11 @@ const Admin = () => {
                         console.log(res);
                         console.log(res.events.totalunclaimedRewards.returnValues.amount);
                         const sendrewards = res.events.totalunclaimedRewards.returnValues.amount;
+
                         const stakingAddress = await StakingTokenContract.options.address;
+                        console.log(utils.formatUnits(sendrewards, "wei"));
                         await AmusementArcadeTokenContract.methods
-                            .transfer(stakingAddress, utils.parseUnits(sendrewards.toString(), 18))
+                            .transfer(stakingAddress, utils.formatUnits(sendrewards, "wei"))
                             .send({ from: account, gas: 3000000 })
                             .then((res) => {
                                 console.log(res);
@@ -99,8 +101,7 @@ const Admin = () => {
                         return sum + element.balance;
                     }, 0);
                     const contractbalance = await TokenClaimContract.methods.contractbalance().call();
-                    const sendamount = parseInt(result) - parseInt(contractbalance);
-
+                    const sendamount = parseInt(result) - parseInt(utils.formatEther(contractbalance));
                     const claimAddress = await TokenClaimContract.options.address;
                     await AmusementArcadeTokenContract.methods
                         .transfer(claimAddress, utils.parseUnits(sendamount.toString(), 18))
