@@ -229,11 +229,9 @@ const Ranking = () => {
                   <h2>Weekly Ranking</h2>
                   <hr />
                   <Container className="my__rank">
-                    <div className="ranking__box">
+                    <div className="sticky__box">
                       <Carousel>
-                        <div className="sticky__box">
-                          {weekly !== null ? weeklyRanking(weekly) : false}
-                        </div>
+                        {weekly !== null ? weeklyRanking(weekly) : false}
                       </Carousel>
                     </div>
                   </Container>
