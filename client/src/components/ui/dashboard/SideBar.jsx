@@ -5,6 +5,7 @@ import ReactLoaing from "react-loading";
 import axios from "axios";
 import "./slide-bar.css";
 import { utils } from "ethers";
+import BoostInfo from "./BoostInfo";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateMyBalance } from "../../../redux/actions/index";
@@ -18,6 +19,7 @@ const SideBar = () => {
   const [error, setError] = useState(null);
   const [AATclaim, setAATclaim] = useState("");
   const [myList, setMyList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
@@ -301,15 +303,20 @@ const SideBar = () => {
             {visible ? "Exit" : "Edit"}
             {/* Edit */}
           </button>
-          <div className="boost__info">
-            Boost
-            <span style={{ color: "#e250e5", fontSize: "1.2rem" }}>
-              &nbsp;x {test()}
-            </span>
-          </div>
+
           <div className="myBest__ranking" content="">
             <div className="my__Badge">
               <p>Total Claim : {AATclaim} AAT</p>
+            </div>
+
+            <div className="boost__info">
+              <button className="get__token" onClick={() => setShowModal(true)}>
+                Boost
+                <span style={{ color: "#e250e5", fontSize: "1.2rem" }}>
+                  &nbsp;x {test()}
+                </span>
+              </button>
+              {showModal && <BoostInfo setShowModal={setShowModal} />}
             </div>
 
             <button className="get__token" onClick={() => mybalance()}>
