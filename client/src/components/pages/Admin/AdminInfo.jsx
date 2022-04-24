@@ -80,7 +80,7 @@ const AdminInfo = () => {
                 <i className="ri-bar-chart-2-line"></i>
               </div>
               <div className="earing__text">
-                <div className="token__mybox">{amount}token</div>
+                <div className="token__mybox">{amount} AAT</div>
                 <div className="token__mydesc">미지급된 토큰양</div>
               </div>
             </div>
@@ -91,7 +91,7 @@ const AdminInfo = () => {
                 <i className="ri-line-chart-line"></i>
               </div>
               <div className="earing__text">
-                <div className="token__mybox">{sendamount}token</div>
+                <div className="token__mybox">{sendamount} AAT</div>
                 <div className="token__mydesc">지급된 토큰양</div>
               </div>
             </div>
@@ -101,8 +101,8 @@ const AdminInfo = () => {
               <div className="InfoA__chart">
                 <i className="ri-pie-chart-box-line"></i>
               </div>
-              <div className="token__mybox">nfts</div>
-              <div className="token__mydesc">발행한 nfts 수 : {totalNFT}</div>
+              <div className="token__mybox">{totalNFT}</div>
+              <div className="token__mydesc">발행한 nfts 수 </div>
             </div>
           </div>
         </Carousel>

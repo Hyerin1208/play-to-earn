@@ -17,3 +17,23 @@
   background-color: #5142fc;
   color: #fff;
 }
+
+.retract__btn {
+  display: flex;
+  align-items: center;
+  gap: 1;
+  border: none;
+  outline: none;
+  padding: 5px 22px;
+  background: transparent;
+  border: 1px solid #5142fc;
+  font-size: 0.9rem;
+  color: #fff;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.retract__btn:hover {
+  background-color: #5142fc;
+  color: #fff;
+}
