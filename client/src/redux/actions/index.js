@@ -16,6 +16,7 @@ export const UPDATE_MYBALANCE = "UPDATE_MYBALANCE";
 export const MY_MODAL = "MY_MODAL";
 export const SET_TIMER = "SET_TIMER";
 export const CHANGE_CHAINID = "CHANGE_CHAINID";
+export const REFRESH_SELLLISTS = "REFRESH_SELLLISTS";
 
 export const SET_NFTS = "SET_NFTS";
 export const SELECTED_NFT = "SELECTED_NFT";
@@ -106,6 +107,12 @@ export const changeChainid = (payload) => {
         payload: payload,
     };
 };
+export const refreshSellLists = (payload) => {
+    return {
+        type: REFRESH_SELLLISTS,
+        payload: payload,
+    };
+};
 
 export function connect() {
     return async (dispatch) => {
@@ -122,7 +129,6 @@ export function connect() {
                         const NFT_address = networkData_NFT.address;
                         const CreateNFTContract = new web3.eth.Contract(NFT_abi, NFT_address);
                         const Owner = await CreateNFTContract.methods.owner().call();
-                        console.log(Owner);
                         const lists = await CreateNFTContract.methods.Selllists().call();
                         const listsForm = await Promise.all(
                             lists.map(async (i) => {
@@ -131,10 +137,11 @@ export function connect() {
                                 let item = {
                                     fileUrl: await meta.image,
                                     formInput: {
-                                        tokenId: i.tokenId,
+                                        tokenid: i.tokenId,
                                         price: i.price,
                                         star: i.star,
                                         rare: i.rare,
+                                        sell: i.sell,
                                         name: await meta.name,
                                         description: await meta.description,
                                     },
@@ -173,7 +180,6 @@ export function getWeb3(Provider) {
     return async (dispatch) => {
         try {
             if (Provider !== undefined) {
-                console.log("프로바이더 인?");
                 const web3js = new Web3(Provider);
                 const givenNetworkId = await web3js.eth.net.getId();
                 const networkId = Object.keys(CreateNFT.networks)[0];
@@ -214,7 +220,6 @@ export function getWeb3(Provider) {
                     );
                 }
             } else {
-                console.log("프로바이더 아웃");
                 dispatch(
                     callContract({
                         CreateNFTContract: null,

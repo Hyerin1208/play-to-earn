@@ -11,13 +11,15 @@ import SellModal from "../templete/SellModal";
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
 import { useDispatch, useSelector } from "react-redux";
-import { mymodal } from "../../../redux/actions";
+import { mymodal, refreshSellLists } from "../../../redux/actions";
 import { utils } from "ethers";
+import axios from "axios";
 
 const NftSellCard = (props) => {
     const MyModal = useSelector((state) => state.AppState.MyModal);
     const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     const account = useSelector((state) => state.AppState.account);
+    const Selllists = useSelector((state) => state.AppState.Selllists);
     const dispatch = useDispatch();
 
     const stars = Array(5).fill(1);
@@ -101,12 +103,17 @@ const NftSellCard = (props) => {
                         className="retract__btn"
                         onClick={async () => {
                             if (CreateNFTContract !== null) {
-                                await CreateNFTContract.methods
-                                    .changeSellState(Number(props.item.formInput.tokenid))
-                                    .send({ from: account, gas: 3000000 })
-                                    .then((res) => {
-                                        console.log(res);
-                                    });
+                                if (window.confirm("판매를 취소하시겠습니까?")) {
+                                    await CreateNFTContract.methods
+                                        .changeSellState(Number(props.item.formInput.tokenid))
+                                        .send({ from: account, gas: 3000000 })
+                                        .then(async (res) => {
+                                            console.log(res);
+                                            console.log(Selllists);
+                                            const updateSellLists = Selllists.filter((lists) => Number(lists.formInput.tokenId) !== Number(props.item.formInput.tokenid));
+                                            dispatch(refreshSellLists({ Selllists: updateSellLists }));
+                                        });
+                                }
                             }
                         }}
                     >
