@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ReactLoaing from "react-loading";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import "./BoostInfo.css";
 
 const BoostInfo = ({ setShowModal }) => {
   const [Loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [myList, setMyList] = useState([]);
 
   const account = useSelector((state) => state.AppState.account);
