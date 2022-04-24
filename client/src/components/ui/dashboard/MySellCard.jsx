@@ -98,6 +98,7 @@ const NftSellCard = (props) => {
                         </button>
                     </div>
                     <button
+                        className="retract__btn"
                         onClick={async () => {
                             if (CreateNFTContract !== null) {
                                 await CreateNFTContract.methods
@@ -109,11 +110,14 @@ const NftSellCard = (props) => {
                             }
                         }}
                     >
-                        셀취소
+                        <i className="ri-arrow-go-back-line"></i>
+                        Retract
                     </button>
-                    <span className="view__link">
-                        <Link to={`/detailes/${props.item.formInput.tokenid}`}>View More</Link>
-                    </span>
+                    {/* <span className="view__link">
+            <Link to={`/detailes/${props.item.formInput.tokenid}`}>
+              View More
+            </Link>
+          </span> */}
                 </div>
             </div>
 
