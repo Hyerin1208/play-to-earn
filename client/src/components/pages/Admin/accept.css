@@ -42,7 +42,8 @@
 }
 
 .token__mydesc {
-  margin-top: -14px;
+  margin-top: -10px;
+  /* margin-left: 30px; */
 }
 
 .token__mybox {
