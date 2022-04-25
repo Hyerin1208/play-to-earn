@@ -40,7 +40,7 @@ const Accept = () => {
       if (chainid === 1337 ? false : networkid === chainid ? false : true)
         return alert("네트워크 아이디를 확인하세요");
       await TokenClaimContract.methods
-        .setClaim(address, utils.parseUnits(amount.toString(), 18))
+        .setClaim(address, utils.parseEther(amount.toString()))
         .send({ from: account, gas: 3000000 })
         .then(() => {
           axios

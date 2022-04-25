@@ -4,10 +4,11 @@ import ReactLoaing from "react-loading";
 import { FiHeart } from "react-icons/fi";
 
 import CommonSection from "../../ui/templete/CommonSection";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Table } from "reactstrap";
 import LiveList from "../../ui/mainContents/LiveList";
 import axios from "axios";
+import Modal from "../../ui/templete/Modal";
 
 import { FaStar } from "react-icons/fa";
 
@@ -18,8 +19,12 @@ import { useSelector } from "react-redux";
 
 import Badge from "react-bootstrap/Badge";
 
-const NftDetails = (props) => {
+const NftDetails = () => {
   const account = useSelector((state) => state.AppState.account);
+  const isUser = useSelector((state) => state.AppState.isUser);
+  const Selllists = useSelector((state) => state.AppState.Selllists);
+  const [showModal, setShowModal] = useState(false);
+  const [selectNFTInfo, setSelectNFTInfo] = useState(null);
 
   const [Loading, setLoading] = useState(true);
 
@@ -32,11 +37,20 @@ const NftDetails = (props) => {
 
   const [NFTData, setNFTData] = useState("");
   const [nftHistory, setNftHistory] = useState([]);
-
+  const Navi = useNavigate();
   let params = useParams();
   const card_id = params.card_id;
 
   const sendLike = async () => {
+    if (account === null) return alert("지갑 연결이 필요합니다.");
+    if (isUser === false) {
+      if (
+        window.confirm("회원가입이 필요합니다.\n회원가입페이지로 이동할까요?")
+      ) {
+        return Navi("/join/step1");
+      }
+      return;
+    }
     await axios
       .post(`http://localhost:5000/nfts/like`, {
         tokenId: card_id,
@@ -53,14 +67,13 @@ const NftDetails = (props) => {
       });
   };
   useEffect(async () => {
-    await axios
-      .post(`http://localhost:5000/nfts/views`, {
-        tokenId: card_id,
-      })
-      .then((res) => {
-        setView(res.data.view);
-      });
-  }, []);
+    if (Selllists !== null) {
+      const list = await Selllists.filter(
+        (lists) => parseInt(lists.formInput.tokenid) === parseInt(card_id)
+      );
+      setSelectNFTInfo(list[0]);
+    }
+  }, [Selllists]);
 
   useEffect(async () => {
     await axios
@@ -167,19 +180,10 @@ const NftDetails = (props) => {
                         </Badge>
                       </span>
                     </div>
-
-                    <div className="single__nft-more">
-                      <span>
-                        <i className="ri-send-plane-line"></i>
-                      </span>
-                      <span>
-                        <i className="ri-more-2-line"></i>
-                      </span>
-                    </div>
                   </div>
                   <div className="singleNft_price">
                     <p>
-                      Price : <span>{NFTData.price}</span> ETH
+                      Price : <span>{NFTData.price}</span> AAT
                     </p>
                   </div>
 
@@ -206,10 +210,30 @@ const NftDetails = (props) => {
                   </div>
 
                   <p className="my-3">Description : {NFTData.description}</p>
-                  <button className="singleNft-btn">
+                  <button
+                    className="singleNft-btn"
+                    onClick={() => {
+                      if (account === null)
+                        return alert("지갑 연결이 필요합니다.");
+                      if (isUser === false) {
+                        if (
+                          window.confirm(
+                            "회원가입이 필요합니다.\n회원가입페이지로 이동할까요?"
+                          )
+                        ) {
+                          return Navi("/join/step1");
+                        }
+                        return;
+                      }
+                      setShowModal(true);
+                    }}
+                  >
                     <i className="ri-shopping-bag-line"></i>
-                    <Link to="/wallet">Place a Bid</Link>
+                    Place a Bid
                   </button>
+                  {showModal && (
+                    <Modal item={selectNFTInfo} setShowModal={setShowModal} />
+                  )}
                   <br />
                   <div className="accordian__box">
                     <div className="tab__tab">
@@ -263,7 +287,7 @@ const NftDetails = (props) => {
                                     wordWrap: "break-word",
                                   }}
                                 >
-                                  {item.createdAt}
+                                  {new Date(item.createdAt).toLocaleString()}
                                 </td>
                               </tr>
                             );

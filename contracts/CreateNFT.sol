@@ -18,7 +18,7 @@ mapping(address=>bool) private getDefault;
     struct NFTItem {
       uint tokenId;
       address payable owner;
-      uint price;
+      uint256 price;
       uint rare;
       uint star;
       bool getDefault;
@@ -28,14 +28,14 @@ mapping(address=>bool) private getDefault;
     event NFTItemCreated (
       uint indexed tokenId,
       address owner,
-      uint price ,
+      uint256 price ,
             uint rare,
       uint star,
       bool getDefault,
       bool sell
     );
 
-    function CreateNFTItem(uint _tokenId, string memory _tokenURI, uint _price, bool _getDefault,bool _sell) private {
+    function CreateNFTItem(uint _tokenId, string memory _tokenURI, uint256 _price, bool _getDefault,bool _sell) private {
       _safeMint(msg.sender, _tokenId);
       _setTokenURI(_tokenId, _tokenURI);
       idToNFTItem[_tokenId]=NFTItem(_tokenId,payable(msg.sender),_price,1,1,_getDefault,_sell);
@@ -43,7 +43,7 @@ mapping(address=>bool) private getDefault;
       emit NFTItemCreated(_tokenId,msg.sender,_price,1,1,_getDefault,_sell);
     }
 
-    function CreateNFTinContract(string memory tokenURI, uint price) public{
+    function CreateNFTinContract(string memory tokenURI, uint256 price) public{
               _tokenIds.increment();
       uint tokenId = _tokenIds.current();
       if(owner() == msg.sender||(isApprovedForAll(owner(),msg.sender)==true&& getDefault[msg.sender] == true)){
@@ -85,7 +85,7 @@ return true;
         require(isApprovedForAll(owner(),msg.sender)== true);
         require(getApproved(tokenId)!=msg.sender);
         require(idToNFTItem[tokenId].getDefault!=true);
-      uint price = idToNFTItem[tokenId].price;
+      uint256 price = idToNFTItem[tokenId].price;
       address owner = idToNFTItem[tokenId].owner;
       require(msg.value==price);
       require(idToNFTItem[tokenId].sell==true);
@@ -96,8 +96,8 @@ return true;
       idToNFTItem[tokenId].sell=false;
     }
 
-      function sellMyNFTItem(uint256 tokenId, uint256 price) public {
-          require(isApprovedForAll(owner(),msg.sender)== true);
+      function sellMyNFTItem(uint tokenId, uint256 price) public {
+          require(isApprovedForAll(owner(),msg.sender)== true||msg.sender==owner());
           require(getApproved(tokenId)==msg.sender);
       require(idToNFTItem[tokenId].getDefault!=true);
       if(idToNFTItem[tokenId].sell == false){
