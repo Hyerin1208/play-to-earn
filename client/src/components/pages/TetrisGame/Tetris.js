@@ -306,7 +306,7 @@ const Tetris = ({ setShowModal }) => {
       }
 
       const tetrisData = await axios.post(`http://localhost:5000/game/tetris`, {
-        data: data * test() * jest(),
+        data: data * (test() * jest()),
         account: account,
       });
 
@@ -315,14 +315,14 @@ const Tetris = ({ setShowModal }) => {
           "Score(" +
             data +
             ")점" +
-            " x " +
+            " x (" +
             "Rare(" +
             test() +
             ")" +
             " x " +
             "Star(" +
             jest() +
-            ") = " +
+            ")) = " +
             "Result(" +
             data * test() * jest() +
             ")점" +

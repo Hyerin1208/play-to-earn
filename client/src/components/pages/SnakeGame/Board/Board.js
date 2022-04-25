@@ -90,7 +90,7 @@ const Board = () => {
     }
 
     const snakeData = await axios.post(`http://localhost:5000/game/snake`, {
-      point: point * test() * jest(),
+      point: point * (test() * jest()),
       account: account,
     });
 
@@ -99,14 +99,14 @@ const Board = () => {
         "Score(" +
           point +
           ")점" +
-          " x " +
+          " x (" +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ")) = " +
           "Result(" +
           point * test() * jest() +
           ")점" +
