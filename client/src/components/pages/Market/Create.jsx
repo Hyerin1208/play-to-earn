@@ -97,10 +97,11 @@ const Create = (props) => {
                         let item = {
                             fileUrl: await meta.image,
                             formInput: {
-                                tokenId: i.tokenId,
+                                tokenid: i.tokenId,
                                 price: i.price,
                                 star: i.star,
                                 rare: i.rare,
+                                sell: i.sell,
                                 name: await meta.name,
                                 description: await meta.description,
                             },

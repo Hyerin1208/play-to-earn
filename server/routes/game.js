@@ -20,22 +20,29 @@ router.post("/snake", async (req, res, next) => {
       attributes: ["snakePoint"],
     });
 
-    if (!findAddress || prevScore.snakePoint === null) {
+    if (!findAddress) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         snakePoint: point,
       });
       res.json({ message: "점수 등록 완료", bool: true });
-    }
-    if (point > prevScore.snakePoint) {
-      Game.update(
-        { snakePoint: point, nick: findUser.nick },
-        { where: { address: account } }
-      );
-      res.json({ message: "점수 갱신 완료", bool: true });
     } else {
-      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      if (prevScore.snakePoint === null) {
+        Game.update(
+          { snakePoint: point, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 등록 완료", bool: true });
+      } else if (point > prevScore.snakePoint) {
+        Game.update(
+          { snakePoint: point, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 갱신 완료", bool: true });
+      } else {
+        res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      }
     }
   } catch (error) {
     console.error(error);
@@ -58,22 +65,29 @@ router.post("/2048", async (req, res, next) => {
       attributes: ["puzzlePoint"],
     });
 
-    if (!findAddress || prevScore.puzzlePoint === null) {
+    if (!findAddress) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         puzzlePoint: score,
       });
       res.json({ message: "점수 등록 완료", bool: true });
-    }
-    if (score > prevScore.puzzlePoint) {
-      Game.update(
-        { puzzlePoint: score, nick: findUser.nick },
-        { where: { address: account } }
-      );
-      res.json({ message: "점수 갱신 완료", bool: true });
     } else {
-      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      if (prevScore.puzzlePoint === null) {
+        Game.update(
+          { puzzlePoint: score, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 등록 완료", bool: true });
+      } else if (score > prevScore.puzzlePoint) {
+        Game.update(
+          { puzzlePoint: score, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 갱신 완료", bool: true });
+      } else {
+        res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      }
     }
   } catch (error) {
     console.error(error);
@@ -96,22 +110,29 @@ router.post("/mine", async (req, res, next) => {
       attributes: ["minePoint"],
     });
 
-    if (!findAddress || prevScore.minePoint === null) {
+    if (!findAddress) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         minePoint: runtime,
       });
       res.json({ message: "점수 등록 완료", bool: true });
-    }
-    if (runtime > prevScore.minePoint) {
-      Game.update(
-        { minePoint: runtime, nick: findUser.nick },
-        { where: { address: account } }
-      );
-      res.json({ message: "점수 갱신 완료", bool: true });
     } else {
-      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      if (prevScore.minePoint === null) {
+        Game.update(
+          { minePoint: runtime, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 등록 완료", bool: true });
+      } else if (runtime > prevScore.minePoint) {
+        Game.update(
+          { minePoint: runtime, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 갱신 완료", bool: true });
+      } else {
+        res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      }
     }
   } catch (error) {
     console.error(error);
@@ -134,22 +155,29 @@ router.post("/tetris", async (req, res, next) => {
       attributes: ["tetrisPoint"],
     });
 
-    if (!findAddress || prevScore.tetrisPoint === null) {
+    if (!findAddress) {
       Game.create({
         address: findUser.address,
         nick: findUser.nick,
         tetrisPoint: data,
       });
       res.json({ message: "점수 등록 완료", bool: true });
-    }
-    if (data > prevScore.tetrisPoint) {
-      Game.update(
-        { tetrisPoint: data, nick: findUser.nick },
-        { where: { address: account } }
-      );
-      res.json({ message: "점수 갱신 완료", bool: true });
     } else {
-      res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      if (prevScore.tetrisPoint === null) {
+        Game.update(
+          { tetrisPoint: data, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 등록 완료", bool: true });
+      } else if (data > prevScore.tetrisPoint) {
+        Game.update(
+          { tetrisPoint: data, nick: findUser.nick },
+          { where: { address: account } }
+        );
+        res.json({ message: "점수 갱신 완료", bool: true });
+      } else {
+        res.json({ message: "이전 점수보다 낮거나 같습니다.", bool: false });
+      }
     }
   } catch (error) {
     console.error(error);

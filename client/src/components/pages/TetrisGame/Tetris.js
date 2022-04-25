@@ -83,8 +83,10 @@ const Tetris = ({ setShowModal }) => {
       `http://localhost:5000/game/tetrisScore`,
       { account: account }
     );
-    if (tetrisData.data.tetrisPoint !== null) {
-      setPrevScore(tetrisData.data.tetrisPoint);
+    if (tetrisData.data !== null) {
+      if (tetrisData.data.tetrisPoint !== null) {
+        setPrevScore(tetrisData.data.tetrisPoint);
+      }
     }
     setLoading(false);
   }, [account]);
@@ -268,7 +270,7 @@ const Tetris = ({ setShowModal }) => {
     const sendPoint = async () => {
       const data = gameStats.score;
 
-      function multiply(data) {
+      function test() {
         let rareD;
         if (myList.filter((v) => v.rare === "5").length >= 3) {
           rareD = 3;
@@ -281,6 +283,10 @@ const Tetris = ({ setShowModal }) => {
         } else {
           rareD = 1;
         }
+        return rareD;
+      }
+
+      function jest() {
         let starD;
         if (myList.filter((v) => v.star === "5").length >= 3) {
           starD = 3;
@@ -295,16 +301,33 @@ const Tetris = ({ setShowModal }) => {
         } else {
           starD = 1;
         }
-        return data * (starD * rareD);
+        return starD;
       }
 
       const tetrisData = await axios.post(`http://localhost:5000/game/tetris`, {
-        data: multiply(data),
+        data: data * test() * jest(),
         account: account,
       });
 
       if (tetrisData.data.bool === true) {
-        alert(tetrisData.data.message);
+        alert(
+          "Score(" +
+            data +
+            ")점" +
+            " x " +
+            "Rare(" +
+            test() +
+            ")" +
+            " x " +
+            "Star(" +
+            jest() +
+            ") = " +
+            "Result(" +
+            data * test() * jest() +
+            ")점" +
+            "\n" +
+            tetrisData.data.message
+        );
         window.location.reload();
       } else if (tetrisData.data.bool === false) {
         alert(tetrisData.data.message);
