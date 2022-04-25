@@ -61,7 +61,7 @@ function MineGame({ setShowModal }) {
   const sendPoint = async () => {
     const point = (1 / runtime) * 1000;
 
-    function multiply(point) {
+    function test() {
       let rareD;
       if (myList.filter((v) => v.rare === "5").length >= 3) {
         rareD = 3;
@@ -74,6 +74,10 @@ function MineGame({ setShowModal }) {
       } else {
         rareD = 1;
       }
+      return rareD;
+    }
+
+    function jest() {
       let starD;
       if (myList.filter((v) => v.star === "5").length >= 3) {
         starD = 3;
@@ -88,16 +92,35 @@ function MineGame({ setShowModal }) {
       } else {
         starD = 1;
       }
-      return point * (starD * rareD);
+      return starD;
     }
 
     const mineData = await axios.post(`http://localhost:5000/game/mine`, {
-      runtime: multiply(point),
+      runtime: point * test() * jest(),
       account: account,
     });
 
     if (mineData.data.bool === true) {
-      alert(mineData.data.message);
+      alert(
+        "지뢰점수는 { (1 / 클리어 초) * 1000 } 으로 환산됩니다. " +
+          "\n" +
+          "Score(" +
+          point +
+          ")점" +
+          " x " +
+          "Rare(" +
+          test() +
+          ")" +
+          " x " +
+          "Star(" +
+          jest() +
+          ") = " +
+          "Result(" +
+          point * test() * jest() +
+          ")점" +
+          "\n" +
+          mineData.data.message
+      );
       window.location.reload();
     } else if (mineData.data.bool === false) {
       alert(mineData.data.message);

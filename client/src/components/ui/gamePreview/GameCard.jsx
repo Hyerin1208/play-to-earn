@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Col } from "reactstrap";
 import SnakeGame from "../../pages/SnakeGame/SnakeGame";
 import TetrisGame from "../../pages/TetrisGame/Tetris";
@@ -8,7 +8,6 @@ import MineGame from "../../pages/MineGame/MineGame";
 
 import "./game-card.css";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 const GameCard = (props) => {
   const { id, title, imgUrl, text } = props.item;
@@ -83,8 +82,6 @@ const GameCard = (props) => {
                 }}
               >
                 Go to this game
-                {/* <Link to={id}>Go to this game</Link> */}
-                {/* <Link onClick={() => Navigate("id")}>Go to this game</Link> */}
               </button>
               {showGame(showModal)}
             </div>

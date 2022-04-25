@@ -26,7 +26,6 @@ export const Overlay = ({ handleReset, score }) => {
         if (!error) {
           console.log("send ok");
         } else {
-          window.location.href = "/error";
           console.log(error);
         }
       });
@@ -35,7 +34,8 @@ export const Overlay = ({ handleReset, score }) => {
 
   const sendPoint = async () => {
     const point = score;
-    function multiply(point) {
+
+    function test() {
       let rareD;
       if (myList.filter((v) => v.rare === "5").length >= 3) {
         rareD = 3;
@@ -48,6 +48,10 @@ export const Overlay = ({ handleReset, score }) => {
       } else {
         rareD = 1;
       }
+      return rareD;
+    }
+
+    function jest() {
       let starD;
       if (myList.filter((v) => v.star === "5").length >= 3) {
         starD = 3;
@@ -62,16 +66,33 @@ export const Overlay = ({ handleReset, score }) => {
       } else {
         starD = 1;
       }
-      return point * (starD * rareD);
+      return starD;
     }
 
     const puzzleData = await axios.post(`http://localhost:5000/game/2048`, {
-      score: multiply(point),
+      score: point * test() * jest(),
       account: account,
     });
 
     if (puzzleData.data.bool === true) {
-      alert(puzzleData.data.message);
+      alert(
+        "Score(" +
+          point +
+          ")점" +
+          " x " +
+          "Rare(" +
+          test() +
+          ")" +
+          " x " +
+          "Star(" +
+          jest() +
+          ") = " +
+          "Result(" +
+          point * test() * jest() +
+          ")점" +
+          "\n" +
+          puzzleData.data.message
+      );
       window.location.reload();
     } else if (puzzleData.data.bool === false) {
       alert(puzzleData.data.message);
