@@ -11,7 +11,7 @@ export const CARDS_DATA = [
       boxShadow: "0px 4px 4px 0px #bc92ff",
     },
     barValue: 70,
-    value: "25,970",
+    value: "00.00",
     png: UilUsdSquare,
     series: [
       {
@@ -27,7 +27,7 @@ export const CARDS_DATA = [
       boxShadow: "0px 4px 4px 0px #FDC0C7",
     },
     barValue: 80,
-    value: "14,270",
+    value: "00.00",
     png: UilMoneyWithdrawal,
     series: [
       {
@@ -43,7 +43,7 @@ export const CARDS_DATA = [
       boxShadow: "0px 4px 4px 0px #c4dcff",
     },
     barValue: 60,
-    value: "4,270",
+    value: "00.00",
     png: UilClipboardAlt,
     series: [
       {

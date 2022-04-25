@@ -152,7 +152,7 @@ const Evolution = (props) => {
                 <i className="ri-copper-diamond-line"></i>
               </div>
               <div className="earing__text">
-                <div className="token__mybox"> 2,000,000 Token</div>
+                <div className="token__mybox"> 1,000 AAT</div>
                 <div className="token__mydesc">Balance</div>
               </div>
             </div>
