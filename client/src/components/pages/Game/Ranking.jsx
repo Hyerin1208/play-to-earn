@@ -302,6 +302,7 @@ const Ranking = () => {
               <button className="aat__token" href="/mypage">
                 <Link to={`/mypage`}>Check your AAT Balance</Link>
               </button>
+              <br />
             </Col>
           </Row>
         </div>

@@ -1,4 +1,4 @@
-import { APP_STATE, CONNECTION_FAILED, UPDATE_ACCOUNT, UPDATE_LISTS, UPDATE_MYLISTS, CALL_CONTRACT, UPDATE_MYBALANCE, MY_MODAL, SET_TIMER, CHANGE_CHAINID } from "../actions";
+import { APP_STATE, CONNECTION_FAILED, UPDATE_ACCOUNT, UPDATE_LISTS, UPDATE_MYLISTS, CALL_CONTRACT, UPDATE_MYBALANCE, MY_MODAL, SET_TIMER, CHANGE_CHAINID, REFRESH_SELLLISTS } from "../actions";
 
 const initialState = {
     network: false,
@@ -87,6 +87,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 chainid: action.payload.chainid,
+            };
+        case REFRESH_SELLLISTS:
+            return {
+                ...state,
+                Selllists: action.payload.Selllists,
             };
         default:
             return state;

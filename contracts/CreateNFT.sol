@@ -99,10 +99,14 @@ return true;
       function sellMyNFTItem(uint256 tokenId, uint256 price) public {
           require(isApprovedForAll(owner(),msg.sender)== true);
           require(getApproved(tokenId)==msg.sender);
-      require(idToNFTItem[tokenId].sell == false);
       require(idToNFTItem[tokenId].getDefault!=true);
+      if(idToNFTItem[tokenId].sell == false){
+
       idToNFTItem[tokenId].price = price;
       idToNFTItem[tokenId].sell = true;
+      } else {
+      idToNFTItem[tokenId].price = price;
+      }
     }
 
     function MyNFTlists() public view returns (NFTItem[] memory) {

@@ -162,8 +162,8 @@
 }
 
 .last__evobox .single__nft__card {
-  width: 270px;
-  height: 420px;
+  width: 280px;
+  height: 450px;
 }
 
 .last__evobox .single__nft__card .nft__img img {
@@ -176,7 +176,7 @@
 }
 
 .last__evobox .single__nft__card .bid__box {
-  margin-top: -0.5rem;
+  margin-top: -2.8rem;
 }
 
 .bid__box i {
