@@ -32,13 +32,20 @@ const Modal = (props) => {
         return alert("네트워크 아이디를 확인하세요");
       await CreateNFTContract.methods
         .getNFTItem(parseInt(tokenId))
-        .send({ from: account, gas: 3000000, value: price }, (error) => {
-          if (!error) {
-            console.log("send ok");
-          } else {
-            console.log(error);
+        .send(
+          {
+            from: account,
+            gas: 3000000,
+            value: utils.parseEther(price.toString()),
+          },
+          (error) => {
+            if (!error) {
+              console.log("send ok");
+            } else {
+              console.log(error);
+            }
           }
-        })
+        )
         .then(async (res) => {
           await axios
             .post(`http://localhost:5000/history`, {
@@ -103,8 +110,9 @@ const Modal = (props) => {
           <button
             className="place__bid-btn"
             onClick={async () => {
+              console.log(props);
               await buynft(
-                props.item.formInput.tokenId,
+                props.item.formInput.tokenid,
                 props.item.formInput.price
               );
             }}
