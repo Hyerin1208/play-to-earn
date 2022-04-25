@@ -27,7 +27,8 @@ const AdminInfo = () => {
       const contractbalance = await TokenClaimContract.methods
         .contractbalance()
         .call();
-      setAmount(utils.formatUnits(contractbalance, 18));
+      console.log(contractbalance);
+      setAmount(utils.formatEther(contractbalance));
     }
   }, [TokenClaimContract]);
 
@@ -36,7 +37,8 @@ const AdminInfo = () => {
       const totalSupply = await AmusementArcadeTokenContract.methods
         .totalSupply()
         .call();
-      setTotalSupply(utils.formatUnits(totalSupply, 18));
+      console.log(totalSupply);
+      setTotalSupply(utils.formatEther(totalSupply));
     }
   }, [AmusementArcadeTokenContract]);
 

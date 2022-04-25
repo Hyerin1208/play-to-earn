@@ -6,7 +6,6 @@ import "./evolution.css";
 import temporaryData from "../../../assets/images/free.png";
 import EvoDetails from "./EvoDetails";
 import { Col, Container, Row } from "reactstrap";
-import NftCard from "../../ui/templete/NftCard";
 import { Link, Route, Routes } from "react-router-dom";
 import MyDash from "../Mypage/MyDash";
 import SellModal from "../../ui/templete/SellModal";

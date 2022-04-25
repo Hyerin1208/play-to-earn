@@ -45,7 +45,7 @@ const LiveList = () => {
             {Loading}
             {nftArray.slice(0, 4).map((items, index) => (
               <Col lg="3" md="4" sm="6" key={index} className="mb-4">
-                <NftCard item={items}></NftCard>
+                <NftCard item={items} default={false}></NftCard>
               </Col>
             ))}
           </Row>
