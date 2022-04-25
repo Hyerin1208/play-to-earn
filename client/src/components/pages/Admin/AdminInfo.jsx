@@ -103,8 +103,10 @@ const AdminInfo = () => {
               <div className="InfoA__chart">
                 <i className="ri-pie-chart-box-line"></i>
               </div>
-              <div className="token__mybox">{totalNFT}</div>
-              <div className="token__mydesc">발행한 nfts 수 </div>
+              <div className="earing__text">
+                <div className="token__mybox">{totalNFT}</div>
+                <div className="token__mydesc">발행한 nfts 수 </div>
+              </div>
             </div>
           </div>
         </Carousel>
