@@ -229,6 +229,7 @@ export function getWeb3(Provider) {
             StakingToken_abi,
             StakingToken_address
           );
+          window.StakingTokenContract = StakingTokenContract;
 
           dispatch(
             callContract({

@@ -54,12 +54,28 @@ router.post("/amount", async (req, res, next) => {
     res.json({ amount: 0, stakerId: null });
   }
 });
+
 router.post("/rewards", async (req, res, next) => {
+  const { address } = req.body;
   const checkstaking = await Staking.findAll({
     where: {},
-    attributes: ["stakerId"],
+    attributes: ["stakerId", "address", "amount"],
   });
-  res.json({ checkstaking: checkstaking });
+  const checkuser = await Staking.findOne({
+    where: { address: address },
+  });
+  if (checkuser) {
+    res.json({
+      checkstaking: checkstaking,
+      checkuser: {
+        address: checkuser.address,
+        amount: checkuser.amount,
+        stakerId: checkuser.stakerId,
+      },
+    });
+  } else {
+    res.json({ checkstaking: checkstaking, checkuser: null });
+  }
 });
 
 module.exports = router;

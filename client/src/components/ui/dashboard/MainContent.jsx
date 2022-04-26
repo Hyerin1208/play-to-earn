@@ -34,7 +34,7 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    if (MyNFTlists !== null) {
+    if (MyNFTlists.length !== 0) {
       console.log(MyNFTlists);
       setMylists(MyNFTlists);
       const selllists = MyNFTlists.filter((lists) => {
