@@ -1,0 +1,273 @@
+.my__page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 50px 30px 40px 150px;
+}
+
+.my__nft {
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  margin: 14% 20px 0 10px;
+  cursor: pointer;
+}
+
+.my__nft i {
+  margin-right: 10px;
+}
+
+.my__nft span:hover {
+  color: #5142fc;
+}
+
+/* ////////////  버튼 ui   //////////// */
+
+.mypage__btn {
+  padding: 0;
+}
+
+.mypage__li {
+}
+
+.nft_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  transform: translate(300px, -75px);
+  /* margin: 0px 50px 10px 50px; */
+  padding: 5px;
+}
+
+.mynft__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.ranking_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  transform: translate(300px, -50px);
+  /* margin: 0px 50px 50px 50px; */
+  padding: 5px;
+}
+
+.myRanking__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.edit_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0px 50px 10px 50px;
+  transform: translate(300px, -50px);
+  padding: 5px;
+}
+
+.editProfile__btn {
+  background-color: #14141f85;
+  color: white;
+}
+
+.market_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  /* margin: 0px 50px 10px 50px; */
+  transform: translate(300px, -25px);
+  padding: 5px;
+}
+
+.market_content a {
+  font-style: none;
+  color: white;
+  text-decoration: none;
+}
+
+.gogame_content {
+  width: 140px;
+  border: 1.4px solid #5142fc;
+  border-radius: 5px;
+  text-align: center;
+  transform: translate(300px);
+  /* margin: 0px 50px 50px 50px; */
+  padding: 5px;
+}
+
+.gogame_content a {
+  font-style: none;
+  color: white;
+  text-decoration: none;
+}
+
+/* ///////////////////////////////////////// */
+
+/* .mypage__infobox {
+  width: 1000px;
+  height: 320px;
+  margin-left: 15%;
+  border-radius: 10px;
+  background-color: rgba(80, 33, 124, 0.308);
+} */
+
+/* //////////////유저 프로필///////////// */
+.card__profile {
+  width: 32%;
+  height: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 10px 1px #4938ff;
+  margin-bottom: 59px;
+  position: relative;
+}
+
+.upper__container {
+  height: 120px;
+  background: linear-gradient(to left, #4938ff, #ff0291);
+  position: relative;
+}
+
+.pfp__container img {
+  background: white;
+  max-width: 35%;
+  border-radius: 50%;
+  padding: 5px;
+  transform: translate(140px, 40px);
+  display: flex;
+  position: absolute;
+  object-fit: contain;
+  position: absolute;
+}
+
+.upper__container .pfp__container img {
+  border: 2px solid #4938ff;
+}
+
+.lower__container {
+  margin-top: 80px;
+  height: 100px;
+  background: white;
+  text-align: center;
+}
+
+.lower__container h3,
+h4 {
+  margin: 0;
+  padding: 0;
+  color: #1f1829;
+}
+
+.lower__container h3 {
+  color: #2f2d2e;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.lower__container h4 {
+  color: #4938ff;
+  font-weight: 760;
+  font-size: 1.2rem;
+}
+
+.lower__container p {
+  color: #1f1829;
+  color: #2f2d2e;
+  font-size: 1rem;
+}
+
+.pfp__button {
+  margin: 1rem;
+  color: #4938ff;
+  font: bold;
+  background-color: white;
+  border: 2px solid #4938ff;
+  border-radius: 5px;
+  padding: 0.6rem;
+  border-radius: 6px;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+}
+
+.pfp__button:hover {
+  background-image: linear-gradient(to left, #4938ff, #ff0291);
+  transform: scale(1.2);
+  border: none;
+  color: white;
+}
+
+@media only screen and (max-width: 1440px) {
+  .card__profile {
+    width: 50%;
+    height: 530px;
+  }
+
+  .upper__container {
+    height: 156px;
+    background: linear-gradient(to left, #4938ff, #ff0291);
+    position: relative;
+  }
+
+  .pfp__container img {
+    transform: translate(145px, 50px);
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .card__profile {
+    width: 50%;
+    height: 400px;
+  }
+
+  .upper__container {
+    height: 135px;
+    background: linear-gradient(to left, #4938ff, #ff0291);
+    position: relative;
+  }
+
+  .pfp__container img {
+    transform: translate(79px, 90px);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card__profile {
+    width: 100%;
+    height: 360px;
+  }
+
+  .upper__container {
+    height: 120px;
+    background: linear-gradient(to left, #4938ff, #ff0291);
+    position: relative;
+  }
+
+  .pfp__container img {
+    transform: translate(68px, 80px);
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .card__profile {
+    width: 300%;
+    height: 360px;
+  }
+
+  .upper__container {
+    height: 120px;
+    background: linear-gradient(to left, #4938ff, #ff0291);
+    position: relative;
+  }
+
+  .pfp__container img {
+    transform: translate(68px, 180px);
+  }
+}

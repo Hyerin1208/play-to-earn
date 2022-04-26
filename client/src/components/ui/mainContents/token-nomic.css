@@ -1,0 +1,150 @@
+.chart__container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+
+.chart__heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.square__box {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square__box span:nth-child(1) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #fff;
+  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  transition: 0.5s;
+  animation: animate 6s linear infinite;
+  margin-left: 30px;
+}
+
+.square__box:hover span:nth-child(1) {
+  border: none;
+  background: rgba(255, 122, 233, 0.8);
+  margin-left: 30px;
+}
+
+.square__box span:nth-child(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #4b50e6;
+  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  transition: 0.5s;
+  animation: animate2 4s linear infinite;
+  margin-left: 30px;
+}
+
+.square__box:hover span:nth-child(2) {
+  border: none;
+  background: rgba(200, 157, 255, 0.8);
+  margin-left: 30px;
+}
+
+.square__box span:nth-child(3) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e250e5;
+  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  transition: 0.5s;
+  animation: animate3 10s linear infinite;
+  margin-left: 30px;
+}
+
+.square__box:hover span:nth-child(3) {
+  border: none;
+  background: rgba(139, 139, 248, 0.8);
+  margin-left: 30px;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes animate3 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.token__content {
+  position: relative;
+  padding: 30px 60px;
+  color: #fff;
+  text-align: center;
+  transition: 0.5s;
+  z-index: 1000;
+  margin-top: 25px;
+  margin-left: 40px;
+}
+
+.token__content a {
+  position: relative;
+  display: inline-block;
+  margin-top: 5px;
+  border: 2px solid #fff;
+  padding: 6px 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 400;
+  border-radius: 20px;
+}
+
+.token__content h3 {
+  font-size: 1.4rem;
+}
+
+.token__content p {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .square__box {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+    margin-left: 10%;
+  }
+}

@@ -1,0 +1,300 @@
+/* Just for finding the best one that fits the card style */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pragati+Narrow:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700;900&display=swap");
+
+.card__wrapper {
+  width: 100%;
+  perspective: 2000;
+  display: flex;
+  align-items: center;
+  margin-left: 29%;
+  /* justify-content: center; */
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+.card__container {
+  width: 285px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  box-shadow: 0 2px 7px 1px rgba(192, 192, 192, 0.397);
+  background-color: #1d1f21;
+  color: #fff;
+  position: relative;
+  cursor: grab;
+}
+
+.circle__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  border-top-right-radius: 25px;
+}
+
+.circle__cir {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: -4.2em;
+  right: -10em;
+  z-index: 5;
+  background-color: #4b50e6;
+  border-radius: 50%;
+}
+
+.top__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1.2;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1em 15px;
+}
+
+.bottom__container {
+  display: flex;
+  flex: 0.8;
+  padding: 0 1em;
+}
+
+.evolu__text {
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0;
+  z-index: 10;
+  font-size: 68px;
+  font-weight: 900;
+  text-shadow: 0 3px 10px 2px rgba(82, 82, 82, 0.137);
+}
+
+.evolution__wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.evolution__evo {
+  width: auto;
+  height: 100px;
+  z-index: 99;
+  user-select: none;
+  margin-right: 3em;
+  /* margin-top: 1em; */
+}
+
+.evolution__evo img {
+  width: 200px;
+  height: 170%;
+  user-select: none;
+}
+
+.right__arrows {
+  margin-top: 30%;
+}
+
+.right__arrows i {
+  font-size: 7rem;
+  margin-left: 20%;
+  color: white;
+}
+
+.upload__evo {
+  font-size: 9.8rem;
+  z-index: -1;
+  color: #4b50e6;
+  transition: 0.4s ease-in-out;
+  text-shadow: 0 0 0.125em hsl(0, 0%, 100%);
+}
+
+.nft__img i {
+  font-size: 8rem;
+  margin-left: 20%;
+  z-index: -1;
+  color: #4b50e6;
+  transition: 0.4s ease-in-out;
+  /* text-shadow: 0 0 0.125em hsl(0, 0%, 100%); */
+}
+
+.upload__evo:hover {
+  font-size: 8.7rem;
+  z-index: -1;
+  color: #ffffffaf;
+  text-shadow: 0 0 0.125em hsla(0, 0%, 100%, 0.055);
+}
+
+.evolution__nfts {
+  height: 40%;
+  width: 12rem;
+  border: 2px solid #343444;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: whitesmoke;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+.token__mybox {
+  font-size: 1.5rem;
+}
+
+.row__box {
+  width: 99%;
+}
+
+/* nfts 카드 css */
+
+.last__evobox {
+  margin-top: 10%;
+  margin-left: 17%;
+}
+
+.last__evobox .single__nft__card {
+  width: 280px;
+  height: 450px;
+}
+
+.last__evobox .single__nft__card .nft__img img {
+  width: 190px;
+  height: 200px;
+  margin-left: 10%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.last__evobox .single__nft__card .bid__box {
+  margin-top: -2.8rem;
+}
+
+.bid__box i {
+  padding-right: 15px;
+}
+
+.evo__rules {
+  margin-left: 10%;
+  margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .nft__title {
+    font-size: 0.9rem !important;
+  }
+
+  .creator__info h6 {
+    font-size: 0.6rem !important;
+  }
+
+  .creator__info p {
+    font-size: 0.7rem !important;
+  }
+
+  .bid__btn {
+    padding: 4px 20px !important;
+    font-size: 0.6rem !important;
+  }
+
+  .view__link a {
+    font-size: 0.6rem !important;
+  }
+
+  .right__arrows {
+    margin-left: 30%;
+  }
+
+  .evolution__nfts {
+    margin-left: 30%;
+  }
+
+  .upload__evo {
+    font-size: 15rem;
+  }
+
+  .nft__img {
+    margin-bottom: 20%;
+  }
+
+  .nft__img i {
+    font-size: 12rem;
+    margin-left: 25%;
+    z-index: -1;
+    color: #4b50e6;
+    transition: 0.4s ease-in-out;
+    /* text-shadow: 0 0 0.125em hsl(0, 0%, 100%); */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card__container {
+    width: 80%;
+    height: 80%;
+    padding-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .top__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1.2;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1em 15px;
+  }
+
+  .circle__cir {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: -4.2em;
+    right: -10em;
+    z-index: 5;
+    background-color: #4b50e6;
+    border-radius: 50%;
+  }
+
+  .nft__img {
+    margin-right: 30px;
+  }
+
+  .evolu__text {
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0;
+    z-index: 10;
+    font-size: 57px;
+    font-weight: 880;
+    margin-top: 20%;
+    text-shadow: 0 3px 10px 2px rgba(82, 82, 82, 0.137);
+  }
+
+  .bottom__container {
+    display: flex;
+    flex: 0.8;
+    padding: 0 1em;
+  }
+
+  .last__evobox .single__nft__card {
+    width: 95%;
+    height: 98%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .single__nft__card {
+    margin-left: 10px;
+  }
+}

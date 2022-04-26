@@ -1,0 +1,39 @@
+.InfoA__card {
+  height: 72%;
+  max-width: 22rem;
+  background-color: #343444;
+  padding: 0.7rem 0.2rem;
+  border-radius: 1rem;
+  color: whitesmoke;
+  cursor: pointer;
+  box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
+  transition: 0.4s ease-in-out;
+}
+
+.carousel0__box {
+  /* height: 10px; */
+}
+
+.carousel__box {
+  width: 19.5rem;
+  height: 88%;
+  margin-right: 1rem;
+}
+
+.card__content {
+  margin: 0.2rem;
+  height: 80%;
+}
+
+.InfoA__chart {
+  display: flex;
+  justify-content: center;
+}
+
+.InfoA__chart i {
+  font-size: 2.5rem;
+}
+
+.token__mybox {
+  margin-bottom: 12px;
+}
