@@ -8,6 +8,7 @@ import "./cards.css";
 import { utils } from "ethers";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Loading from "../../ui/templete/Loading";
 
 const Cards = () => {
   const [stakerId, setStakerId] = useState(0);
@@ -40,7 +41,7 @@ const Cards = () => {
       barValue: stakers,
       value: stakers,
       val: "명",
-      png: UilUsdSquare,
+      png: UilClipboardAlt,
       series: [
         {
           name: "Sales",
@@ -74,7 +75,7 @@ const Cards = () => {
       barValue: RewardNum,
       value: RewardNum,
       val: "AAT",
-      png: UilClipboardAlt,
+      png: UilUsdSquare,
       series: [
         {
           name: "Expenses",
