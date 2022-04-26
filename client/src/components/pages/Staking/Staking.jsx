@@ -30,6 +30,9 @@ const Staking = () => {
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
+
+  const Mybalance = useSelector((state) => state.AppState.Mybalance);
+
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
@@ -185,12 +188,13 @@ const Staking = () => {
                       fontSize={40}
                       dy={-20}
                     >
-                      {`${Math.floor(
+                      {/* {`${Math.floor(
                         coins.reduce(
                           (acc, coin) => acc + coin.amount * coin.inAAT,
                           0
                         )
-                      )}`}
+                      )}`} */}
+                      {Mybalance}
                     </Text>
 
                     <Text textAnchor="middle" fill="#aaa" fontSize={20} dy={20}>

@@ -28,7 +28,7 @@ const Cards = () => {
 
   const ITEMS = [
     {
-      title: "Total deposited",
+      title: "Total Staker",
       color: {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #bc92ff",
@@ -44,7 +44,7 @@ const Cards = () => {
       ],
     },
     {
-      title: "STAKE/AAT",
+      title: "My total STAKE",
       color: {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #FDC0C7",
@@ -60,7 +60,7 @@ const Cards = () => {
       ],
     },
     {
-      title: "Total accrued emission",
+      title: "Total Rewards",
       color: {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #c4dcff",
