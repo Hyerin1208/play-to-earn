@@ -25,7 +25,7 @@ const MySellList = () => {
   );
 
   useEffect(() => {
-    if (MyNFTlists !== null) {
+    if (MyNFTlists.length !== 0) {
       console.log("실행");
       setnftArray(MyNFTlists.filter((lists) => lists.formInput.sell === true));
       setLoading(null);

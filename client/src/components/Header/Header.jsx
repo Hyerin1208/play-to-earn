@@ -5,7 +5,7 @@ import logoPng from "../../assets/images/logoPng.png";
 import { ethers } from "ethers";
 import { Container } from "reactstrap";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -110,6 +110,7 @@ const Header = () => {
   const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
+  const Navi = useNavigate();
 
   const connectWallet = async () => {
     try {
@@ -162,21 +163,16 @@ const Header = () => {
   };
 
   const disconnect = async () => {
+    Navi("/");
     await web3Modal.clearCachedProvider();
-    console.log(await web3Modal.clearCachedProvider());
     refreshState();
     dispatch(
       updateAccounts({
         wallet: false,
         account: null,
         isUser: false,
-        MyNFTlists: null,
+        MyNFTlists: [],
         Mybalance: 0,
-      })
-    );
-    dispatch(
-      changeChainid({
-        chainid: false,
       })
     );
   };
@@ -184,22 +180,26 @@ const Header = () => {
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = async (accounts) => {
+        Navi("/");
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
+          console.log(getAddress);
           await axios
             .post("http://127.0.0.1:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
             .then(async (res) => {
+              const loadMyNFTlists = await MyList(getAddress);
+              const loadMybalance = await checkMyBalance(getAddress);
               dispatch(
                 updateAccounts({
                   wallet: true,
                   account: getAddress,
                   isUser: res.data.nick === "noname" ? false : true,
-                  MyNFTlists: await MyList(getAddress),
-                  Mybalance: await checkMyBalance(getAddress),
+                  MyNFTlists: loadMyNFTlists,
+                  Mybalance: loadMybalance,
                 })
               );
             })
@@ -229,7 +229,7 @@ const Header = () => {
             wallet: false,
             account: null,
             isUser: false,
-            MyNFTlists: null,
+            MyNFTlists: [],
             Mybalance: 0,
           })
         );
@@ -260,9 +260,9 @@ const Header = () => {
         headerRef.current.classList.remove("header__shrink");
       }
     });
-    // return () => {
-    //     window.removeEventListener("scroll");
-    // };
+    return () => {
+      window.removeEventListener("scroll");
+    };
   }, []);
 
   useEffect(() => {
@@ -273,16 +273,6 @@ const Header = () => {
     }
   }, [account, Owner]);
 
-  // async function checkOwner(account) {
-  //     console.log(Owner);
-  //     console.log(account);
-  //     if (Owner === account) {
-  //         setIsOwner(true);
-  //     } else {
-  //         setIsOwner(false);
-  //     }
-  // }
-
   async function MyList(account) {
     if (CreateNFTContract !== null && CreateNFTContract !== "dismatch") {
       const MyNFTlists = await CreateNFTContract.methods
@@ -290,7 +280,6 @@ const Header = () => {
         .call({ from: account });
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
-          console.log(i);
           const tokenURI = await CreateNFTContract.methods
             .tokenURI(i.tokenId)
             .call();
@@ -312,7 +301,7 @@ const Header = () => {
       );
       return await listsForm;
     } else {
-      return null;
+      return [];
     }
   }
   useEffect(() => {
@@ -431,12 +420,6 @@ const Header = () => {
               walletButton(isDisabled)
             ) : (
               <div className="user__logined">
-                {/* <button className="connect_btn" onClick={disconnect}>
-                  <span>
-                    <i className="ri-wallet-line"></i>
-                  </span>
-                  Disconnect
-                </button> */}
                 <div className="mypage__user__icon">
                   <Link to="/mypage" hidden={!isUser}>
                     <i className="ri-user-3-line"></i>
