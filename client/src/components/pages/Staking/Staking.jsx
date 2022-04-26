@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 // import { DragDropContext } from "react-beautiful-dnd";
+import { UilClipboardAlt } from "@iconscout/react-unicons";
+import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 import Cards from "./Cards";
 
@@ -43,6 +45,23 @@ const Staking = () => {
   const [stakerId, setStakerId] = useState(0);
   const [stakers, setStakers] = useState(0);
   const check = useRef(null);
+
+  const [items, setItems] = useState({
+    title: "Total deposited",
+    color: {
+      backGround: "#343444de",
+      boxShadow: "0px 4px 4px 0px #bc92ff",
+    },
+    barValue: 70,
+    value: stakers,
+    png: UilUsdSquare,
+    series: [
+      {
+        name: "Sales",
+        data: [31, 40, 28, 51, 42, 109, 100],
+      },
+    ],
+  });
 
   useEffect(async () => {
     await axios

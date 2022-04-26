@@ -12,7 +12,7 @@ const Card = (props) => {
   const [expanded, setExpanded] = useState(false);
   return (
     <AnimateSharedLayout>
-      {expanded ? (
+      {/* {expanded ? (
         <ExpandedCard
           param={props}
           setExpanded={() => setExpanded(false)}
@@ -20,7 +20,9 @@ const Card = (props) => {
         />
       ) : (
         <CompactCard param={props} setExpanded={() => setExpanded(true)} />
-      )}
+      )} */}
+
+      <CompactCard param={props} setExpanded={() => setExpanded(true)} />
     </AnimateSharedLayout>
   );
 };
