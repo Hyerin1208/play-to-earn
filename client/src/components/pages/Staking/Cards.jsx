@@ -5,13 +5,16 @@ import { UilClipboardAlt } from "@iconscout/react-unicons";
 import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 import "./cards.css";
+import { utils } from "ethers";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Cards = () => {
-  const [stakingAmount, setStakingAmount] = useState(0);
   const [stakerId, setStakerId] = useState(0);
+  const [stakingAmount, setStakingAmount] = useState(0);
   const [stakers, setStakers] = useState(0);
+
+  const [reward, setReward] = useState(0);
 
   const account = useSelector((state) => state.AppState.account);
   const StakingTokenContract = useSelector(
@@ -21,7 +24,9 @@ const Cards = () => {
     (state) => state.AppState.AmusementArcadeTokenContract
   );
 
-  const items = [
+  const check = useRef(null);
+
+  const ITEMS = [
     {
       title: "Total deposited",
       color: {
@@ -61,7 +66,7 @@ const Cards = () => {
         boxShadow: "0px 4px 4px 0px #c4dcff",
       },
       barValue: 60,
-      value: "00.00",
+      value: reward,
       png: UilClipboardAlt,
       series: [
         {
@@ -89,15 +94,24 @@ const Cards = () => {
       });
   }, []);
 
-  // console.log(items);
+  useEffect(async () => {
+    if (StakingTokenContract !== null && account !== null && stakerId !== 0) {
+      check.current = setInterval(async () => {
+        const result = await StakingTokenContract.methods
+          .userStakeInfo(account)
+          .call({ from: account });
+        console.log(result);
+        setReward(utils.formatEther(result._availableRewards));
+      }, 5000);
+      return () => {
+        clearInterval(check.current);
+      };
+    }
+  }, [StakingTokenContract, stakerId]);
 
   return (
-    <div className="staking__cardbox">
-      <div>{stakerId}</div>
-      <div>stakingAmount</div>
-      <div>unclaimreward</div>
-      {/* <Card item={items} /> */}
-      {items.map((card, id) => {
+    <div className="parent__box">
+      {ITEMS.map((card, id) => {
         return (
           <div className="parent__container" key={id}>
             <Card
