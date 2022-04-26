@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Card, CardText, CardTitle, Col, Container, Row } from "reactstrap";
-import { DragDropContext } from "react-beautiful-dnd";
+import { Col, Container, Row } from "reactstrap";
+// import { DragDropContext } from "react-beautiful-dnd";
 
 import Cards from "./Cards";
 
@@ -21,7 +21,6 @@ const coins = [
 ];
 
 const Staking = () => {
-  // const [input, setInput] = useState("");
   const timerid = useRef(null);
   const timer = useSelector((state) => state.AppState.timer);
   const account = useSelector((state) => state.AppState.account);
@@ -42,6 +41,7 @@ const Staking = () => {
   const [unclaimreward, setUnclaimreward] = useState(0);
   const [stakingAmount, setStakingAmount] = useState(0);
   const [stakerId, setStakerId] = useState(0);
+  const [stakers, setStakers] = useState(0);
   const check = useRef(null);
 
   useEffect(async () => {
@@ -61,19 +61,37 @@ const Staking = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (StakingTokenContract !== null && account !== null) {
+  useEffect(async () => {
+    await axios
+      .post("http://127.0.0.1:5000/staking/rewards", { address: account })
+      .then((res) => {
+        const checkstaking = res.data.checkstaking;
+        const checkuser = res.data.checkuser;
+        console.log(checkuser);
+        if (checkuser !== null) {
+          setStakerId(checkuser.stakerId);
+          setStakers(checkstaking.length);
+          setStakingAmount(checkuser.amount);
+        } else {
+          setStakers(checkstaking.length);
+        }
+      });
+  }, []);
+
+  useEffect(async () => {
+    if (StakingTokenContract !== null && account !== null && stakerId !== 0) {
       check.current = setInterval(async () => {
         const result = await StakingTokenContract.methods
           .userStakeInfo(account)
-          .call();
+          .call({ from: account });
+        console.log(result);
         setReward(utils.formatEther(result._availableRewards));
-      }, 1000);
+      }, 5000);
       return () => {
         clearInterval(check.current);
       };
     }
-  }, []);
+  }, [StakingTokenContract, stakerId]);
 
   useEffect(() => {
     timerid.current = setInterval(() => {

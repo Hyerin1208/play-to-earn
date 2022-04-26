@@ -164,14 +164,13 @@ const Header = () => {
 
   const disconnect = async () => {
     await web3Modal.clearCachedProvider();
-    console.log(await web3Modal.clearCachedProvider());
     refreshState();
     dispatch(
       updateAccounts({
         wallet: false,
         account: null,
         isUser: false,
-        MyNFTlists: null,
+        MyNFTlists: [],
         Mybalance: 0,
       })
     );
@@ -181,9 +180,9 @@ const Header = () => {
     if (provider?.on) {
       const handleAccountsChanged = async (accounts) => {
         console.log("accountsChanged", accounts);
-        disconnect();
-        Navi("/");
         if (accounts.length !== 0) {
+          disconnect();
+          Navi("/");
           const getAddress = utils.getAddress(accounts[0]);
           await axios
             .post("http://127.0.0.1:5000/user/login", {
@@ -227,7 +226,7 @@ const Header = () => {
             wallet: false,
             account: null,
             isUser: false,
-            MyNFTlists: null,
+            MyNFTlists: [],
             Mybalance: 0,
           })
         );
@@ -283,9 +282,11 @@ const Header = () => {
 
   async function MyList(account) {
     if (CreateNFTContract !== null && CreateNFTContract !== "dismatch") {
+      console.log("마이리스트 진입");
       const MyNFTlists = await CreateNFTContract.methods
         .MyNFTlists()
         .call({ from: account });
+      console.log(MyNFTlists);
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
           console.log(i);
@@ -308,9 +309,10 @@ const Header = () => {
           return item;
         })
       );
+      console.log(await listsForm);
       return await listsForm;
     } else {
-      return null;
+      return [];
     }
   }
   useEffect(() => {

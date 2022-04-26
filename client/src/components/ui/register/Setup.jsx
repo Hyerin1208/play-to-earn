@@ -6,16 +6,19 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import "./setup.css";
 
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SelectCard from "./SelectCard";
 import { utils } from "ethers";
+import { updateMyLists } from "../../../redux/actions";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Setup = () => {
+  const dispatch = useDispatch();
   const SelectNFT = useSelector((state) => state.NftsReducer);
 
   const account = useSelector((state) => state.AppState.account);
+  const MyNFTlists = useSelector((state) => state.AppState.MyNFTlists);
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
@@ -29,28 +32,6 @@ const Setup = () => {
     nick: "Please enter your name using only letters.",
     email: "Enter your E-mail address",
   });
-
-  // const addSignUp = async () => {
-  //   // 이메일, 닉네임 유효성
-  //   const emailRegex =
-  //     /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-  //   if (!emailRegex.test(form.email)) {
-  //     alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
-  //   } else {
-
-  //     const userData = await axios.post("http://localhost:5000/user/register", {
-  //       address: account,
-  //       nick: form.nick,
-  //       email: form.email,
-  //       image: SelectNFT.image,
-  //     });
-  //     if (userData.data.bool) {
-  //       await lastBtn();
-  //       window.location.href = "http://localhost:3000/";
-  //     }
-  //     alert(userData.data.message);
-  //   }
-  // };
 
   const [checkItem, setCheckItem] = useState(null);
 
@@ -89,13 +70,30 @@ const Setup = () => {
           }
         })
         .then(async (res) => {
+          const tokenId = res.events.NFTItemCreated.returnValues.tokenId;
+          const star = res.events.NFTItemCreated.returnValues.star;
+          const rare = res.events.NFTItemCreated.returnValues.rare;
+          const sell = res.events.NFTItemCreated.returnValues.sell;
+          const price = res.events.NFTItemCreated.returnValues.price;
+          let NFTInfo = {
+            fileUrl: SelectNFT.image,
+            formInput: {
+              tokenid: tokenId,
+              price: utils.formatEther(price),
+              star: star,
+              rare: rare,
+              sell: sell,
+              name: SelectNFT.name,
+              description: SelectNFT.description,
+            },
+          };
           await axios
             .post(`http://localhost:5000/user/register`, {
-              tokenId: res.events.NFTItemCreated.returnValues.tokenId,
+              tokenId: tokenId,
               address: account,
               name: SelectNFT.name,
               description: SelectNFT.description,
-              price: price,
+              price: utils.formatEther(price),
               nick: form.nick,
               email: form.email,
               image: SelectNFT.image,
@@ -104,6 +102,8 @@ const Setup = () => {
             .then(async (res) => {
               if (res.data.message === "ok") {
                 alert(`NFT발급 성공\n반갑습니다. ${form.nick}님`);
+                console.log(NFTInfo);
+                dispatch(updateMyLists({ MyNFTlists: [NFTInfo] }));
                 window.location.href = "/";
               } else {
                 alert("이미 발급된 번호입니다.");
