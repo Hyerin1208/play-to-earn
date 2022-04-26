@@ -17,108 +17,73 @@ const SideBar = () => {
     const [email, setEmail] = useState([]);
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState(null);
-    const [AATclaim, setAATclaim] = useState("");
-    const [myList, setMyList] = useState([]);
+    const [AATclaim, setAATclaim] = useState(0.0);
     const [showModal, setShowModal] = useState(false);
+    const [boost, setBoost] = useState(1);
 
     const networkid = useSelector((state) => state.AppState.networkid);
     const chainid = useSelector((state) => state.AppState.chainid);
+    const Mybalance = useSelector((state) => state.AppState.Mybalance);
 
-    const [balance, setBalance] = useState([]);
-
-    const [claim, setClaim] = useState(1);
+    // const [balance, setBalance] = useState([]);
 
     const account = useSelector((state) => state.AppState.account);
-    const CreateNFTContract = useSelector((state) => state.AppState.CreateNFTContract);
     const TokenClaimContract = useSelector((state) => state.AppState.TokenClaimContract);
+    const MyNFTlists = useSelector((state) => state.AppState.MyNFTlists);
 
     const [EditProfileModal, setEditProfileModal] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useEffect(async () => {
         if (TokenClaimContract !== null) {
-            getClaim();
+            setAATclaim("정보수신중..");
+            const result = await TokenClaimContract.methods.getClaim().call({ from: account });
+            setAATclaim(utils.formatUnits(await result, 18));
         }
-    }, [TokenClaimContract]);
-
-    // 내 nft 리스트
-    async function mynftlists() {
-        if (CreateNFTContract != null) {
-            const lists = await CreateNFTContract.methods.MyNFTlists().call({ from: account }, (error) => {
-                if (!error) {
-                    console.log("send ok");
-                } else {
-                    console.log(error);
-                }
-            });
-            setMyList(lists);
-        }
-    }
+    }, [Mybalance, TokenClaimContract]);
 
     useEffect(() => {
-        mynftlists();
-        setLoading(false);
-    }, [CreateNFTContract]);
-
-    function test() {
-        let rareD;
-        if (myList.filter((v) => v.rare === "5").length >= 3) {
-            rareD = 3;
-        } else if (myList.filter((v) => v.rare === "4").length >= 3) {
-            rareD = 2.5;
-        } else if (myList.filter((v) => v.rare === "3").length >= 3) {
-            rareD = 2;
-        } else if (myList.filter((v) => v.rare === "2").length >= 3) {
-            rareD = 1.5;
-        } else {
-            rareD = 1;
+        if (MyNFTlists !== null) {
+            setLoading(false);
+            let rareD;
+            if (MyNFTlists.filter((v) => v.rare === "5").length >= 3) {
+                rareD = 3;
+            } else if (MyNFTlists.filter((v) => v.rare === "4").length >= 3) {
+                rareD = 2.5;
+            } else if (MyNFTlists.filter((v) => v.rare === "3").length >= 3) {
+                rareD = 2;
+            } else if (MyNFTlists.filter((v) => v.rare === "2").length >= 3) {
+                rareD = 1.5;
+            } else {
+                rareD = 1;
+            }
+            let starD;
+            if (MyNFTlists.filter((v) => v.star === "5").length >= 3) {
+                starD = 3;
+            } else if (MyNFTlists.filter((v) => v.star === "4").length >= 3) {
+                starD = 2.5;
+            } else if (MyNFTlists.filter((v) => v.star === "3").length >= 3) {
+                starD = 2;
+            } else if (MyNFTlists.filter((v) => v.star === "2").length >= 3) {
+                starD = 1.5;
+            } else if (MyNFTlists.filter((v) => v.star === "1").length >= 3) {
+                starD = 1.2;
+            } else {
+                starD = 1;
+            }
+            setBoost(starD * rareD);
         }
-        let starD;
-        if (myList.filter((v) => v.star === "5").length >= 3) {
-            starD = 3;
-        } else if (myList.filter((v) => v.star === "4").length >= 3) {
-            starD = 2.5;
-        } else if (myList.filter((v) => v.star === "3").length >= 3) {
-            starD = 2;
-        } else if (myList.filter((v) => v.star === "2").length >= 3) {
-            starD = 1.5;
-        } else if (myList.filter((v) => v.star === "1").length >= 3) {
-            starD = 1.2;
-        } else {
-            starD = 1;
-        }
-        return starD * rareD;
-    }
+    }, [dispatch, MyNFTlists]);
 
     async function checkMyBalance(account) {
         if (TokenClaimContract !== null) {
             const Mybalance = await TokenClaimContract.methods.mybalance().call({ from: account });
-            console.log(Mybalance);
-
             return utils.formatUnits(await Mybalance, 18);
         } else {
             return 0;
         }
     }
 
-    const claimToken = async () => {
-        await axios.post(`http://localhost:5000/ranking`, { claim, account }).then((res) => {
-            alert("토큰 클레임 완료");
-        });
-    };
-
-    const getClaim = async () => {
-        const result = await TokenClaimContract.methods.getClaim().call({ from: account });
-        return setAATclaim(utils.formatUnits(await result, 18));
-    };
-    const mybalance = async () => {
-        if (TokenClaimContract !== null) {
-            const result = await TokenClaimContract.methods.mybalance().call({ from: account });
-            return alert(utils.formatUnits(await result, 18));
-        } else {
-            alert("컨트랙트 로드 실패!!\n네트워크를 확인하세요");
-        }
-    };
     const gettoken = async () => {
         if (TokenClaimContract !== null) {
             if (chainid === 1337 ? false : networkid === chainid ? false : true) return alert("네트워크 아이디를 확인하세요");
@@ -132,8 +97,10 @@ const SideBar = () => {
                         })
                         .then(async (res) => {
                             if (res.data.message === "ok") {
-                                console.log("/////////////////");
                                 dispatch(updateMyBalance({ Mybalance: await checkMyBalance(account) }));
+                                // setAATclaim("정보수신중..");
+                                // const result = await TokenClaimContract.methods.getClaim().call({ from: account });
+                                // setAATclaim(utils.formatUnits(await result, 18));
                             }
                         });
                 });
@@ -152,33 +119,31 @@ const SideBar = () => {
                     setNicName(res.data.nick);
                     setEmail(res.data.email);
                     setImageURL(res.data.image);
+                    setLoading(null);
                 })
                 .catch((err) => {
                     console.log(err);
                     window.location.href = "/error";
                 });
-
-            setLoading(null);
         }
     }, [account]);
 
-    useEffect(async () => {
-        await axios
-            .post(`http://localhost:5000/ranking/balance`, { address: account })
-            .then((response) => {
-                const data = response.data;
-                const balanceData = data.map((v, i) => {
-                    return v.balance;
-                });
-                setBalance(balanceData);
-            })
-            .catch((error) => {
-                setError(error);
-                window.location.href = "/error";
-            });
-
-        setLoading(null);
-    }, []);
+    // useEffect(async () => {
+    //     await axios
+    //         .post(`http://localhost:5000/ranking/balance`, { address: account })
+    //         .then((response) => {
+    //             const data = response.data;
+    //             const balanceData = data.map((v, i) => {
+    //                 return v.balance;
+    //             });
+    //             setBalance(balanceData);
+    //             setLoading(null);
+    //         })
+    //         .catch((error) => {
+    //             setError(error);
+    //             window.location.href = "/error";
+    //         });
+    // }, []);
 
     const onSubmit = async () => {
         const nick = document.getElementById("nick__pfp").innerText;
@@ -287,14 +252,14 @@ const SideBar = () => {
                         <div className="boost__info">
                             <button className="get__token" onClick={() => setShowModal(true)}>
                                 Boost
-                                <span style={{ color: "#e250e5", fontSize: "1.2rem" }}>&nbsp;x {test()}</span>
+                                <span style={{ color: "#e250e5", fontSize: "1.2rem" }}>&nbsp;x {boost}</span>
                             </button>
                             {showModal && <BoostInfo setShowModal={setShowModal} />}
                         </div>
 
-                        <button className="get__token" onClick={() => mybalance()}>
+                        {/* <button className="get__token" onClick={() => mybalance()}>
                             My Balance
-                        </button>
+                        </button> */}
                         <button className="get__token" onClick={() => gettoken()}>
                             Get Token
                         </button>

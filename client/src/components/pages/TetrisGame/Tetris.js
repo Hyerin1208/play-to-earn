@@ -129,6 +129,7 @@ const Tetris = ({ setShowModal }) => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = "";
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      sirtet.endGame();
     };
   }, []);
 
