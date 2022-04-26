@@ -13,9 +13,9 @@ const Cards = () => {
   const [stakerId, setStakerId] = useState(0);
   const [stakingAmount, setStakingAmount] = useState(0);
   const [stakers, setStakers] = useState(0);
-
+  const [unclaimreward, setUnclaimreward] = useState(0);
   const [reward, setReward] = useState(0);
-
+  const Mybalance = useSelector((state) => state.AppState.Mybalance);
   const account = useSelector((state) => state.AppState.account);
   const StakingTokenContract = useSelector(
     (state) => state.AppState.StakingTokenContract
@@ -26,6 +26,10 @@ const Cards = () => {
 
   const check = useRef(null);
 
+  let RewardNum = Math.floor(reward / unclaimreward + "\n");
+
+  console.log(unclaimreward);
+
   const ITEMS = [
     {
       title: "Total Staker",
@@ -33,8 +37,9 @@ const Cards = () => {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #bc92ff",
       },
-      barValue: 70,
+      barValue: stakers,
       value: stakers,
+      val: "명",
       png: UilUsdSquare,
       series: [
         {
@@ -49,8 +54,9 @@ const Cards = () => {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #FDC0C7",
       },
-      barValue: 80,
+      barValue: Math.round((stakingAmount / Mybalance) * 100),
       value: stakingAmount,
+      val: "AAT",
       png: UilMoneyWithdrawal,
       series: [
         {
@@ -65,8 +71,9 @@ const Cards = () => {
         backGround: "#343444de",
         boxShadow: "0px 4px 4px 0px #c4dcff",
       },
-      barValue: 60,
-      value: reward,
+      barValue: RewardNum,
+      value: RewardNum,
+      val: "AAT",
       png: UilClipboardAlt,
       series: [
         {
@@ -90,6 +97,23 @@ const Cards = () => {
           setStakingAmount(checkuser.amount);
         } else {
           setStakers(checkstaking.length);
+        }
+      });
+  }, []);
+
+  useEffect(async () => {
+    await axios
+      .post("http://127.0.0.1:5000/staking/amount", {
+        address: account,
+      })
+      .then(async (res) => {
+        setStakingAmount(res.data.amount);
+        if (res.data.stakerId !== null) {
+          setStakerId(res.data.stakerId);
+          const result = await StakingTokenContract.methods
+            .stakers(res.data.stakerId)
+            .call();
+          setUnclaimreward(utils.formatEther(result.unclaimedRewards));
         }
       });
   }, []);
@@ -119,6 +143,7 @@ const Cards = () => {
               color={card.color}
               barValue={card.barValue}
               value={card.value}
+              val={card.val}
               png={card.png}
               series={card.series}
             />
