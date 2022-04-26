@@ -1,13 +1,103 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import { CARDS_DATA } from "./stake";
+import { UilClipboardAlt } from "@iconscout/react-unicons";
+import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 import "./cards.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Cards = () => {
+  const [stakingAmount, setStakingAmount] = useState(0);
+  const [stakerId, setStakerId] = useState(0);
+  const [stakers, setStakers] = useState(0);
+
+  const account = useSelector((state) => state.AppState.account);
+  const StakingTokenContract = useSelector(
+    (state) => state.AppState.StakingTokenContract
+  );
+  const AmusementArcadeTokenContract = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
+  );
+
+  const items = [
+    {
+      title: "Total deposited",
+      color: {
+        backGround: "#343444de",
+        boxShadow: "0px 4px 4px 0px #bc92ff",
+      },
+      barValue: 70,
+      value: stakers,
+      png: UilUsdSquare,
+      series: [
+        {
+          name: "Sales",
+          data: [31, 40, 28, 51, 42, 109, 100],
+        },
+      ],
+    },
+    {
+      title: "STAKE/AAT",
+      color: {
+        backGround: "#343444de",
+        boxShadow: "0px 4px 4px 0px #FDC0C7",
+      },
+      barValue: 80,
+      value: stakingAmount,
+      png: UilMoneyWithdrawal,
+      series: [
+        {
+          name: "Revenue",
+          data: [10, 100, 50, 70, 80, 30, 40],
+        },
+      ],
+    },
+    {
+      title: "Total accrued emission",
+      color: {
+        backGround: "#343444de",
+        boxShadow: "0px 4px 4px 0px #c4dcff",
+      },
+      barValue: 60,
+      value: "00.00",
+      png: UilClipboardAlt,
+      series: [
+        {
+          name: "Expenses",
+          data: [10, 25, 15, 30, 12, 15, 20],
+        },
+      ],
+    },
+  ];
+
+  useEffect(async () => {
+    await axios
+      .post("http://127.0.0.1:5000/staking/rewards", { address: account })
+      .then((res) => {
+        const checkstaking = res.data.checkstaking;
+        const checkuser = res.data.checkuser;
+        console.log(checkuser);
+        if (checkuser !== null) {
+          setStakerId(checkuser.stakerId);
+          setStakers(checkstaking.length);
+          setStakingAmount(checkuser.amount);
+        } else {
+          setStakers(checkstaking.length);
+        }
+      });
+  }, []);
+
+  // console.log(items);
+
   return (
-    <div className=" ">
-      {CARDS_DATA.map((card, id) => {
+    <div className="staking__cardbox">
+      <div>{stakerId}</div>
+      <div>stakingAmount</div>
+      <div>unclaimreward</div>
+      {/* <Card item={items} /> */}
+      {items.map((card, id) => {
         return (
           <div className="parent__container" key={id}>
             <Card
