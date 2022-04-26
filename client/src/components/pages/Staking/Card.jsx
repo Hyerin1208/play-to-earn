@@ -11,7 +11,6 @@ import "./card.css";
 
 const Card = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const [Loading, setLoading] = useState(true);
 
   return (
     <AnimateSharedLayout>

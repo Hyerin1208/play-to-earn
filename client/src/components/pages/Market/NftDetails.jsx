@@ -229,7 +229,7 @@ const NftDetails = () => {
                     }}
                   >
                     <i className="ri-shopping-bag-line"></i>
-                    Place a Bid
+                    &nbsp;Place a Bid
                   </button>
                   {showModal && (
                     <Modal item={selectNFTInfo} setShowModal={setShowModal} />

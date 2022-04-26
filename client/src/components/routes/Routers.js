@@ -19,6 +19,7 @@ import Admin from "../pages/Admin/Admin";
 import Evolution from "../pages/Evolution/Evolution";
 import Staking from "../pages/Staking/Staking";
 import Error404 from "../ui/templete/Error404";
+import Loading from "../ui/templete/Loading";
 
 const Routers = () => {
   return (
@@ -41,6 +42,7 @@ const Routers = () => {
         <Route path="/test" element={<Test />} />
         <Route path="/error" element={<Error />} />
         <Route exact path="/error" component={<Error404 />} />
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </Fragment>
   );
