@@ -56,14 +56,6 @@ ArcadeToken.approve(user,amount);
       claim[address(this)][msg.sender] = 0;
   }
 
-function ChangOption(uint _tokenId ) public checkNFT{
-    uint cost = 50 ether;
-    require(ArcadeToken.balanceOf(msg.sender)>cost,"amount exceeds balance");
-ArcadeToken.transferFrom(msg.sender,ArcadeToken.getOwner(),cost);
-    NFT.changeOption(_tokenId,msg.sender);
-}
-
-
 function mybalance()public view returns(uint){
     return ArcadeToken.balanceOf(msg.sender);
 }

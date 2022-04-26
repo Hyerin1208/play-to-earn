@@ -30,12 +30,12 @@ const Market = () => {
   const [endPosition, setEndPosition] = useState(4);
 
   useEffect(() => {
+    console.log(Selllists);
     if (Selllists !== null) {
       setnftArray([...Selllists].reverse());
       setLoading(null);
     }
   }, [Selllists]);
-
   // ============ 페이징 =========================================
 
   const handlePagination = (index) => {

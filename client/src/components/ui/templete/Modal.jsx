@@ -5,15 +5,23 @@ import "./modal.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { utils } from "ethers";
+import { updateMyLists, updateSellLists } from "../../../redux/actions";
 
 const Modal = (props) => {
   const [Loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   let params = useParams();
 
   const account = useSelector((state) => state.AppState.account);
 
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
+  );
+  const UtilsContract = useSelector((state) => state.AppState.UtilsContract);
+  const Selllists = useSelector((state) => state.AppState.Selllists);
+  const MyNFTlists = useSelector((state) => state.AppState.MyNFTlists);
+  const AmusementArcadeTokenContract = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
   );
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
@@ -25,47 +33,76 @@ const Modal = (props) => {
   // utils.formatUnits(price, 18)
   //nft 구매
   async function buynft(tokenId, price) {
-    if (CreateNFTContract === null) {
+    if (AmusementArcadeTokenContract === null) {
+      alert("컨트렉트 호출 실패 네트워크를 확인하세요");
       setLoading(true);
     } else {
       if (chainid === 1337 ? false : networkid === chainid ? false : true)
         return alert("네트워크 아이디를 확인하세요");
-      await CreateNFTContract.methods
-        .getNFTItem(parseInt(tokenId))
-        .send(
-          {
-            from: account,
-            gas: 3000000,
-            value: utils.parseEther(price.toString()),
-          },
-          (error) => {
-            if (!error) {
-              console.log("send ok");
-            } else {
-              console.log(error);
-            }
-          }
+      setLoading(true);
+      await AmusementArcadeTokenContract.methods
+        .approve(
+          UtilsContract.options.address,
+          utils.parseEther(price.toString())
         )
-        .then(async (res) => {
-          await axios
-            .post(`http://localhost:5000/history`, {
-              tokenId: res.events.Transfer.returnValues.tokenId,
-              from: res.events.Transfer.returnValues.from,
-              to: res.events.Transfer.returnValues.to,
-              // date: new Date().getTime(),
-            })
-            .then((res) => {
-              console.log(res.data.message);
-              if (res.data.message === "ok") {
-                console.log(res.data.message);
-              } else {
-                console.log(res.data.message);
+        .send({ from: account, gas: 3000000 })
+        .then(async () => {
+          await UtilsContract.methods
+            .GetNFTItem(parseInt(tokenId), utils.parseEther(price.toString()))
+            .send(
+              {
+                from: account,
+                gas: 3000000,
+              },
+              (error) => {
+                if (!error) {
+                  console.log("send ok");
+                } else {
+                  console.log(error);
+                }
               }
+            )
+            .then(async (res) => {
+              await axios
+                .post(`http://15.165.17.43:5000/history`, {
+                  tokenId: res.events.GetNFTResult.returnValues.tokenId,
+                  from: res.events.GetNFTResult.returnValues.from,
+                  to: res.events.GetNFTResult.returnValues.to,
+                })
+                .then(async (res) => {
+                  console.log(res.data.message);
+                  if (res.data.message === "ok") {
+                    console.log(res.data.message);
+                    const findIndex = await Selllists.findIndex((lists) => {
+                      console.log(parseInt(tokenId));
+                      console.log(parseInt(lists.formInput.tokenid));
+                      if (
+                        parseInt(tokenId) === parseInt(lists.formInput.tokenid)
+                      ) {
+                        return true;
+                      }
+                    });
+                    dispatch(
+                      updateSellLists({
+                        Selllists: Selllists,
+                      })
+                    );
+                    dispatch(
+                      updateMyLists({
+                        MyNFTlists: [
+                          ...MyNFTlists,
+                          Selllists.splice(findIndex, 1),
+                        ],
+                      })
+                    );
+                    // window.location.reload();
+                    setLoading(false);
+                  } else {
+                    console.log(res.data.message);
+                  }
+                });
             });
         });
-
-      window.location.reload();
-      setLoading(false);
     }
   }
 

@@ -2,6 +2,7 @@ var AmusementArcadeToken = artifacts.require("./AmusementArcadeToken.sol");
 var CreateNFT = artifacts.require("./CreateNFT.sol");
 var TokenClaim = artifacts.require("./TokenClaim.sol");
 var StakingToken = artifacts.require("./StakingToken.sol");
+var Utils = artifacts.require("./Utils.sol");
 
 module.exports = async function (deployer) {
   await deployer.deploy(AmusementArcadeToken);
@@ -13,7 +14,8 @@ module.exports = async function (deployer) {
   );
   await deployer.deploy(
     StakingToken,
-    CreateNFT.address,
-    AmusementArcadeToken.address
+    AmusementArcadeToken.address,
+    CreateNFT.address
   );
+  await deployer.deploy(Utils, AmusementArcadeToken.address, CreateNFT.address);
 };

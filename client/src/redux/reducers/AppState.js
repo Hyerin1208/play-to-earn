@@ -24,7 +24,8 @@ const initialState = {
   CreateNFTContract: null,
   AmusementArcadeTokenContract: null,
   TokenClaimContract: null,
-  StakingToken: null,
+  StakingTokenContract: null,
+  UtilsContract: null,
   Selllists: [],
   MyNFTlists: [],
   Mybalance: 0,
@@ -57,6 +58,7 @@ export default function (state = initialState, action) {
           action.payload.AmusementArcadeTokenContract,
         TokenClaimContract: action.payload.TokenClaimContract,
         StakingTokenContract: action.payload.StakingTokenContract,
+        UtilsContract: action.payload.UtilsContract,
       };
     case UPDATE_ACCOUNT:
       return {
