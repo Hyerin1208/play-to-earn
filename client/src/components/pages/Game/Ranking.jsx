@@ -59,7 +59,7 @@ const Ranking = () => {
   useEffect(() => {
     if (account !== null) {
       axios
-        .post(`http://localhost:5000/game/ranking`, { address: account })
+        .post(`http://15.165.17.43:5000/game/ranking`, { address: account })
         .then((response) => {
           const data = response.data;
           setRankingDB(data);
@@ -74,7 +74,7 @@ const Ranking = () => {
 
   useEffect(() => {
     axios
-      .post(`http://localhost:5000/game/weekly`)
+      .post(`http://15.165.17.43:5000/game/weekly`)
       .then((response) => {
         const data = response.data;
         const sortData = data.map((v, i) => {

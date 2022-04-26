@@ -19,10 +19,6 @@ const NftCard = (props) => {
   const stars = Array(5).fill(1);
   const [testdata, setTestdata] = useState(null);
 
-  useEffect(() => {
-    setTestdata(props.item);
-  }, [props]);
-
   return (
     <div>
       <div className="single__nft__card">
@@ -33,7 +29,7 @@ const NftCard = (props) => {
         <div className="nft__content">
           <Row>
             <h5 className="nft__title">
-              <Link to={`/detailes/${props.item.formInput.tokenId}`}>
+              <Link to={`/detailes/${props.item.formInput.tokenid}`}>
                 {props.item.formInput.name}
               </Link>
             </h5>

@@ -44,7 +44,7 @@ const AdminInfo = () => {
 
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/ranking/sendbalance")
+      .post("http://15.165.17.43:5000/ranking/sendbalance")
       .then(async (res) => {
         const arry = await res.data.totalclaim;
         const result = arry.reduce((sum, element) => {

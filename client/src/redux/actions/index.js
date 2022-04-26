@@ -2,6 +2,7 @@ import CreateNFT from "../../contracts/CreateNFT.json";
 import AmusementArcadeToken from "../../contracts/AmusementArcadeToken.json";
 import TokenClaim from "../../contracts/TokenClaim.json";
 import StakingToken from "../../contracts/StakingToken.json";
+import UtilsforToken from "../../contracts/Utils.json";
 import Web3 from "web3";
 import axios from "axios";
 import { utils } from "ethers";
@@ -160,7 +161,7 @@ export function connect() {
               })
             );
             await axios
-              .post("http://127.0.0.1:5000/user/owner", { address: Owner })
+              .post("http://15.165.17.43:5000/user/owner", { address: Owner })
               .then((res) => {
                 dispatch(
                   connectSuccess({
@@ -200,6 +201,7 @@ export function getWeb3(Provider) {
           const networkData_Token = AmusementArcadeToken.networks[networkId];
           const networkData_TokenClaim = TokenClaim.networks[networkId];
           const networkData_StakingToken = StakingToken.networks[networkId];
+          const networkData_UtilsforToken = UtilsforToken.networks[networkId];
           const NFT_abi = CreateNFT.abi;
           const NFT_address = networkData_NFT.address;
           const CreateNFTContract = new web3js.eth.Contract(
@@ -224,7 +226,12 @@ export function getWeb3(Provider) {
             StakingToken_abi,
             StakingToken_address
           );
-          window.StakingTokenContract = StakingTokenContract;
+          const Utils_abi = UtilsforToken.abi;
+          const Utils_address = networkData_UtilsforToken.address;
+          const UtilsContract = new web3js.eth.Contract(
+            Utils_abi,
+            Utils_address
+          );
 
           dispatch(
             callContract({
@@ -232,6 +239,7 @@ export function getWeb3(Provider) {
               AmusementArcadeTokenContract: AmusementArcadeTokenContract,
               TokenClaimContract: TokenClaimContract,
               StakingTokenContract: StakingTokenContract,
+              UtilsContract: UtilsContract,
             })
           );
         } else {
@@ -241,6 +249,7 @@ export function getWeb3(Provider) {
               AmusementArcadeTokenContract: "dismatch",
               TokenClaimContract: "dismatch",
               StakingTokenContract: "dismatch",
+              UtilsContract: "dismatch",
             })
           );
         }
@@ -251,6 +260,7 @@ export function getWeb3(Provider) {
             AmusementArcadeTokenContract: null,
             TokenClaimContract: null,
             StakingTokenContract: null,
+            UtilsContract: null,
           })
         );
       }

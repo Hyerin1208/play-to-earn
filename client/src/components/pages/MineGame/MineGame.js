@@ -95,8 +95,8 @@ function MineGame({ setShowModal }) {
       return starD;
     }
 
-    const mineData = await axios.post(`http://localhost:5000/game/mine`, {
-      runtime: point * (test() * jest()),
+    const mineData = await axios.post(`http://15.165.17.43:5000/game/mine`, {
+      runtime: point * test() * jest(),
       account: account,
     });
 
@@ -107,14 +107,14 @@ function MineGame({ setShowModal }) {
           "Score(" +
           point +
           ")점" +
-          " x (" +
+          " x " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ")) = " +
+          ") = " +
           "Result(" +
           point * test() * jest() +
           ")점" +

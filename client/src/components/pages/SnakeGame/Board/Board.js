@@ -27,7 +27,7 @@ const Board = () => {
 
   useEffect(async () => {
     const snakeData = await axios.post(
-      `http://localhost:5000/game/snakeScore`,
+      `http://15.165.17.43:5000/game/snakeScore`,
       { account: account }
     );
     if (snakeData.data !== null) {
@@ -89,8 +89,8 @@ const Board = () => {
       return starD;
     }
 
-    const snakeData = await axios.post(`http://localhost:5000/game/snake`, {
-      point: point * (test() * jest()),
+    const snakeData = await axios.post(`http://15.165.17.43:5000/game/snake`, {
+      point: point * test() * jest(),
       account: account,
     });
 
@@ -99,14 +99,14 @@ const Board = () => {
         "Score(" +
           point +
           ")점" +
-          " x (" +
+          " x " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ")) = " +
+          ") = " +
           "Result(" +
           point * test() * jest() +
           ")점" +

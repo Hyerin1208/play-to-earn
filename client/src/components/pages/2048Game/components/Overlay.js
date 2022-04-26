@@ -69,8 +69,8 @@ export const Overlay = ({ handleReset, score }) => {
       return starD;
     }
 
-    const puzzleData = await axios.post(`http://localhost:5000/game/2048`, {
-      score: point * (test() * jest()),
+    const puzzleData = await axios.post(`http://15.165.17.43:5000/game/2048`, {
+      score: point * test() * jest(),
       account: account,
     });
 
@@ -79,14 +79,14 @@ export const Overlay = ({ handleReset, score }) => {
         "Score(" +
           point +
           ")점" +
-          " x (" +
+          " x " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ")) = " +
+          ") = " +
           "Result(" +
           point * test() * jest() +
           ")점" +

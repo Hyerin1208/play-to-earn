@@ -50,27 +50,41 @@ const SideBar = () => {
     if (MyNFTlists.length !== 0) {
       setLoading(false);
       let rareD;
-      if (MyNFTlists.filter((v) => v.rare === "5").length >= 3) {
+      if (MyNFTlists.filter((v) => v.formInput.rare === "5").length >= 3) {
         rareD = 3;
-      } else if (MyNFTlists.filter((v) => v.rare === "4").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.rare === "4").length >= 3
+      ) {
         rareD = 2.5;
-      } else if (MyNFTlists.filter((v) => v.rare === "3").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.rare === "3").length >= 3
+      ) {
         rareD = 2;
-      } else if (MyNFTlists.filter((v) => v.rare === "2").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.rare === "2").length >= 3
+      ) {
         rareD = 1.5;
       } else {
         rareD = 1;
       }
       let starD;
-      if (MyNFTlists.filter((v) => v.star === "5").length >= 3) {
+      if (MyNFTlists.filter((v) => v.formInput.star === "5").length >= 3) {
         starD = 3;
-      } else if (MyNFTlists.filter((v) => v.star === "4").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.star === "4").length >= 3
+      ) {
         starD = 2.5;
-      } else if (MyNFTlists.filter((v) => v.star === "3").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.star === "3").length >= 3
+      ) {
         starD = 2;
-      } else if (MyNFTlists.filter((v) => v.star === "2").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.star === "2").length >= 3
+      ) {
         starD = 1.5;
-      } else if (MyNFTlists.filter((v) => v.star === "1").length >= 3) {
+      } else if (
+        MyNFTlists.filter((v) => v.formInput.star === "1").length >= 3
+      ) {
         starD = 1.2;
       } else {
         starD = 1;
@@ -99,7 +113,7 @@ const SideBar = () => {
         .send({ from: account, gas: 3000000 })
         .then(async () => {
           await axios
-            .post("http://127.0.0.1:5000/ranking/updateclaim", {
+            .post("http://15.165.17.43:5000/ranking/updateclaim", {
               address: account,
             })
             .then(async (res) => {
@@ -121,7 +135,7 @@ const SideBar = () => {
   useEffect(async () => {
     if (account !== null) {
       await axios
-        .post("http://localhost:5000/user/login", {
+        .post("http://15.165.17.43:5000/user/login", {
           address: account,
         })
         .then((res) => {
@@ -137,28 +151,11 @@ const SideBar = () => {
     }
   }, [account]);
 
-  // useEffect(async () => {
-  //     await axios
-  //         .post(`http://localhost:5000/ranking/balance`, { address: account })
-  //         .then((response) => {
-  //             const data = response.data;
-  //             const balanceData = data.map((v, i) => {
-  //                 return v.balance;
-  //             });
-  //             setBalance(balanceData);
-  //             setLoading(null);
-  //         })
-  //         .catch((error) => {
-  //             setError(error);
-  //             window.location.href = "/error";
-  //         });
-  // }, []);
-
   const onSubmit = async () => {
     const nick = document.getElementById("nick__pfp").innerText;
     const email = document.getElementById("email__pfp").innerText;
     await axios
-      .post("http://localhost:5000/user/edit", {
+      .post("http://15.165.17.43:5000/user/edit", {
         nick: nick,
         email: email,
         address: account,
