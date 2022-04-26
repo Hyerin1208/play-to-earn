@@ -30,20 +30,15 @@ const MainContent = () => {
   }, [MyModal]);
 
   useEffect(() => {
-    setLoading(null);
-  }, []);
-
-  useEffect(() => {
     if (MyNFTlists.length !== 0) {
-      console.log(MyNFTlists);
       setMylists(MyNFTlists);
       const selllists = MyNFTlists.filter((lists) => {
         if (lists.formInput.sell === true) {
           return true;
         }
       });
-      console.log(selllists);
       setSelllists(selllists);
+      setLoading(false);
     }
   }, [MyNFTlists, checkChange]);
 

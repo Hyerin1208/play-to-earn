@@ -89,7 +89,7 @@ const BoostInfo = ({ setShowModal }) => {
             <h3>같은 RARE, STAR 3장 이상 보유시</h3>
           </div>
           <div className="single__rewardBlank">
-            <h3>BOOST = SCORE x RARE x STAR</h3>
+            <h3>BOOST = SCORE x ( RARE x STAR )</h3>
           </div>
           <div className="single__rewardBlank">
             <h3>

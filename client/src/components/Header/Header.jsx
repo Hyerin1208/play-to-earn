@@ -177,6 +177,7 @@ const Header = () => {
   };
 
   const disconnect = async () => {
+    Navi("/");
     await web3Modal.clearCachedProvider();
     refreshState();
     dispatch(
@@ -193,24 +194,26 @@ const Header = () => {
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = async (accounts) => {
+        Navi("/");
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
-          disconnect();
-          Navi("/");
           const getAddress = utils.getAddress(accounts[0]);
+          console.log(getAddress);
           await axios
             .post("http://127.0.0.1:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
             .then(async (res) => {
+              const loadMyNFTlists = await MyList(getAddress);
+              const loadMybalance = await checkMyBalance(getAddress);
               dispatch(
                 updateAccounts({
                   wallet: true,
                   account: getAddress,
                   isUser: res.data.nick === "noname" ? false : true,
-                  MyNFTlists: await MyList(getAddress),
-                  Mybalance: await checkMyBalance(getAddress),
+                  MyNFTlists: loadMyNFTlists,
+                  Mybalance: loadMybalance,
                 })
               );
             })
@@ -284,26 +287,13 @@ const Header = () => {
     }
   }, [account, Owner]);
 
-  // async function checkOwner(account) {
-  //     console.log(Owner);
-  //     console.log(account);
-  //     if (Owner === account) {
-  //         setIsOwner(true);
-  //     } else {
-  //         setIsOwner(false);
-  //     }
-  // }
-
   async function MyList(account) {
     if (CreateNFTContract !== null && CreateNFTContract !== "dismatch") {
-      console.log("마이리스트 진입");
       const MyNFTlists = await CreateNFTContract.methods
         .MyNFTlists()
         .call({ from: account });
-      console.log(MyNFTlists);
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
-          console.log(i);
           const tokenURI = await CreateNFTContract.methods
             .tokenURI(i.tokenId)
             .call();
@@ -323,7 +313,6 @@ const Header = () => {
           return item;
         })
       );
-      console.log(await listsForm);
       return await listsForm;
     } else {
       return [];
@@ -445,12 +434,6 @@ const Header = () => {
               walletButton(isDisabled)
             ) : (
               <div className="user__logined">
-                {/* <button className="connect_btn" onClick={disconnect}>
-                  <span>
-                    <i className="ri-wallet-line"></i>
-                  </span>
-                  Disconnect
-                </button> */}
                 <div className="mypage__user__icon">
                   <Link to="/mypage" hidden={!isUser}>
                     <i className="ri-user-3-line"></i>
