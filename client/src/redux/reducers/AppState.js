@@ -26,7 +26,7 @@ const initialState = {
   TokenClaimContract: null,
   StakingToken: null,
   Selllists: [],
-  MyNFTlists: null,
+  MyNFTlists: [],
   Mybalance: 0,
   MyModal: false,
   errorMsg: null,
