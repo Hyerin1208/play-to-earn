@@ -26,6 +26,9 @@ const Create = (props) => {
     display: block;
     margin: 0 auto;
     border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
   `;
   const [Loading, setLoading] = useState(false);
 
@@ -167,13 +170,17 @@ const Create = (props) => {
 
   if (Loading) {
     return (
-      <div>
-        <FadeLoader
-          size={150}
-          color={"#4512bc"}
-          css={override}
-          loading={Loading}
-        />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {

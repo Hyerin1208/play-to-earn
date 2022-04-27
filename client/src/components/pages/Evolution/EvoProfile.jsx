@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import user__bg from "../../../assets/images/user_bg.png";
 
-import ReactLoaing from "react-loading";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import "./evo-profile.css";
 
@@ -20,6 +21,14 @@ const EvoProfile = (props) => {
   const [profileImage, setprofileImage] = useState("");
 
   const [nftArray, setnftArray] = useState([]);
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
   const [Loading, setLoading] = useState(true);
 
   const Account = useSelector((state) => state.AppState.account);
@@ -32,10 +41,11 @@ const EvoProfile = (props) => {
       mynftlists();
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
       window.location.href = "/error";
     }
-  }, []);
+  }, [CreateNFTContract]);
 
   //내 nft 리스트
   async function mynftlists() {
@@ -48,6 +58,7 @@ const EvoProfile = (props) => {
           if (!error) {
             console.log("send ok");
           } else {
+            setLoading(false);
             console.log(error);
           }
         });
@@ -75,6 +86,7 @@ const EvoProfile = (props) => {
       );
       setnftArray(result);
       setSelectedImg(result[0].fileUrl);
+      setLoading(false);
     }
   }
 
@@ -93,9 +105,17 @@ const EvoProfile = (props) => {
 
   if (Loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {
@@ -119,7 +139,6 @@ const EvoProfile = (props) => {
             <div className="mynft__list">
               <Container className="images__box">
                 <Row>
-                  {/* */}
                   {/* <NftCard item={item} /> */}
 
                   <img src={seletedImg} alt="Selected" className="selected" />
