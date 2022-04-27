@@ -21,7 +21,7 @@ import { utils } from "ethers";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-const Create = (props) => {
+const Create = () => {
   const override = css`
     display: block;
     margin: 0 auto;

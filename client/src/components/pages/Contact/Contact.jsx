@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import ReactLoaing from "react-loading";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import "./contact.css";
 
@@ -11,6 +12,14 @@ import { Container, Row, Col } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
   const [Loading, setLoading] = useState(true);
   const account = useSelector((state) => state.AppState.account);
   const form = useRef();
@@ -63,9 +72,17 @@ const Contact = () => {
 
   if (Loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {

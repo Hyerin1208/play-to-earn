@@ -19,21 +19,19 @@ import { updateLists } from "../../../redux/actions/index";
 import { css } from "@emotion/react";
 import FadeLoader from "react-spinners/FadeLoader";
 
-const Evolution = (props) => {
+const Evolution = () => {
   const dispatch = useDispatch();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [30, -30]);
   const rotateY = useTransform(x, [-100, 100], [-30, 30]);
 
-  const [Loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const [EvoProfileModal, setEvoProfileModal] = useState(false);
   const [imageURL, setImageURL] = useState([]);
   const [beforeEvo, setBeforeEvo] = useState(null);
-  //   const [afterEvo, setAfterEvo] = useState("noname");
 
   const [afterEvo, setAfterEvo] = useState({
     fileUrl: null,
@@ -54,10 +52,6 @@ const Evolution = (props) => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-
-  useEffect(() => {
-    setLoading(null);
-  }, []);
 
   const override = css`
     display: block;

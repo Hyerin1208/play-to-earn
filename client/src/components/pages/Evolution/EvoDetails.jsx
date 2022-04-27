@@ -94,7 +94,6 @@ const EvoDetails = (props) => {
   useEffect(() => {
     return async () => {
       if (isEvo) {
-        setLoading(true);
         const lists = await CreateNFTContract.methods.Selllists().call();
 
         const listsForm = await Promise.all(
@@ -125,7 +124,6 @@ const EvoDetails = (props) => {
           })
         );
       }
-      setLoading(false);
     };
   }, [isEvo]);
 

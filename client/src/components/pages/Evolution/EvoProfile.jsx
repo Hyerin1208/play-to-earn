@@ -29,7 +29,7 @@ const EvoProfile = (props) => {
     height: 100%;
     background: #34343465;
   `;
-  const [Loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(false);
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -39,9 +39,7 @@ const EvoProfile = (props) => {
   useEffect(() => {
     try {
       mynftlists();
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.log(error);
       window.location.href = "/error";
     }
@@ -50,7 +48,6 @@ const EvoProfile = (props) => {
   //내 nft 리스트
   async function mynftlists() {
     if ((await CreateNFTContract) === null) {
-      setLoading(true);
     } else {
       const lists = await CreateNFTContract.methods
         .MyNFTlists()
@@ -58,7 +55,7 @@ const EvoProfile = (props) => {
           if (!error) {
             console.log("send ok");
           } else {
-            setLoading(false);
+            props.setLoading(false);
             console.log(error);
           }
         });
@@ -86,7 +83,6 @@ const EvoProfile = (props) => {
       );
       setnftArray(result);
       setSelectedImg(result[0].fileUrl);
-      setLoading(false);
     }
   }
 
