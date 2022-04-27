@@ -6,6 +6,7 @@ import UtilsforToken from "../../contracts/Utils.json";
 import Web3 from "web3";
 import axios from "axios";
 import { utils } from "ethers";
+import OwnerImage from "../../assets/images/naminglogo.png";
 
 export const APP_STATE = "APP_STATE";
 export const CONNECTION_FAILED = "CONNECTION_FAILED";
@@ -161,7 +162,10 @@ export function connect() {
               })
             );
             await axios
-              .post("http://15.165.17.43:5000/user/owner", { address: Owner })
+              .post("http://15.165.17.43:5000/user/owner", {
+                address: Owner,
+                OwnerImage: OwnerImage,
+              })
               .then((res) => {
                 dispatch(
                   connectSuccess({
