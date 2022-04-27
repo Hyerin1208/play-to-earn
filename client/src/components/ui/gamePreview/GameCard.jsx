@@ -5,12 +5,18 @@ import SnakeGame from "../../pages/SnakeGame/SnakeGame";
 import TetrisGame from "../../pages/TetrisGame/Tetris";
 import PuzzleGame from "../../pages/2048Game/2048Game";
 import MineGame from "../../pages/MineGame/MineGame";
-import ReactLoaing from "react-loading";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import "./game-card.css";
 import { useSelector } from "react-redux";
 
 const GameCard = (props) => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+  `;
   const [Loading, setLoading] = useState(false);
   const { id, title, imgUrl, text } = props.item;
   const [showModal, setShowModal] = useState(false);
@@ -72,8 +78,12 @@ const GameCard = (props) => {
   if (Loading) {
     return (
       <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+        <FadeLoader
+          size={150}
+          color={"#4512bc"}
+          css={override}
+          loading={Loading}
+        />
       </div>
     );
   } else {
