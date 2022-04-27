@@ -84,6 +84,20 @@ const web3Modal = new Web3Modal({
   },
 });
 
+// connectToWeb3 = async () => {
+//   const provider = await this.state.web3Modal.connect();
+//   const web3 = new Web3(provider);
+
+//   localStorage.setItem('WEB3_CONNECTED', 'true');
+
+//   this.setState({
+//     web3,
+//     provider,
+//   });
+//   await this.loadBlockchainData();
+//   await this.getLiquidityOwner(this.state.tokenAData, this.state.tokenBData);
+// };
+
 const Header = () => {
   const dispatch = useDispatch();
   const headerRef = useRef(null);

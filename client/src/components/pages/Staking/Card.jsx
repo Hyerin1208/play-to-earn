@@ -4,12 +4,14 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { UilTimes } from "@iconscout/react-unicons";
+import ReactLoaing from "react-loading";
 import Chart from "react-apexcharts";
 
 import "./card.css";
 
 const Card = (props) => {
   const [expanded, setExpanded] = useState(false);
+
   return (
     <AnimateSharedLayout>
       {/* {expanded ? (
@@ -49,7 +51,10 @@ function CompactCard({ param, setExpanded }) {
       </div>
       <div className="detail">
         <Png />
-        <span>${param.value}</span>
+        <p>
+          {param.value} {param.val}
+        </p>
+
         <span>Last 24 hours</span>
       </div>
     </motion.div>
@@ -109,6 +114,9 @@ function ExpandedCard({ param, setExpanded }) {
       },
     },
   };
+
+  const [Loading, setLoading] = useState(true);
+
   return (
     <motion.div
       className="ExpandedCard"

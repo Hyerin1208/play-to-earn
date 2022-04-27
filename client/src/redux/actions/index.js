@@ -126,6 +126,8 @@ export function connect() {
         .then(async (res) => {
           const givenNetworkId = await web3.eth.net.getId();
           const networkId = Object.keys(CreateNFT.networks)[0];
+          console.log(givenNetworkId);
+          console.log(networkId);
           if (
             parseInt(givenNetworkId) === parseInt(networkId) &&
             res === true
@@ -196,7 +198,10 @@ export function getWeb3(Provider) {
         const web3js = new Web3(Provider);
         const givenNetworkId = await web3js.eth.net.getId();
         const networkId = Object.keys(CreateNFT.networks)[0];
-        if (parseInt(givenNetworkId) === parseInt(networkId)) {
+        if (
+          parseInt(givenNetworkId) === parseInt(networkId) ||
+          parseInt(givenNetworkId) === 1337
+        ) {
           const networkData_NFT = CreateNFT.networks[networkId];
           const networkData_Token = AmusementArcadeToken.networks[networkId];
           const networkData_TokenClaim = TokenClaim.networks[networkId];
