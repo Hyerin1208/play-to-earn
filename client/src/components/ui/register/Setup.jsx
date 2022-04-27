@@ -43,20 +43,23 @@ const Setup = () => {
   `;
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 8000);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 5000);
+  // }, []);
 
   async function addSignUp() {
     if (chainid === 1337 ? false : networkid === chainid ? false : true)
       return alert("네트워크 아이디를 확인하세요");
+
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(form.email))
       return alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
+
+    setLoading(true);
     const checkuser = await axios
       .post("http://15.165.17.43:5000/user/checkuser", {
         address: account,
@@ -80,6 +83,7 @@ const Setup = () => {
         .send({ from: account, gas: 3000000 }, (error) => {
           if (!error) {
             console.log("send ok");
+            setLoading(true);
           } else {
             console.log(error);
           }
@@ -116,16 +120,19 @@ const Setup = () => {
             })
             .then(async (res) => {
               if (res.data.message === "ok") {
+                setLoading(false);
                 alert(`NFT발급 성공\n반갑습니다. ${form.nick}님`);
                 console.log(NFTInfo);
                 dispatch(updateMyLists({ MyNFTlists: [NFTInfo] }));
                 window.location.href = "/";
               } else {
+                setLoading(false);
                 alert("이미 발급된 번호입니다.");
               }
             });
         });
     } else {
+      setLoading(false);
       alert("이미 가입되어있는 이메일 또는 닉네임 입니다.");
     }
   }

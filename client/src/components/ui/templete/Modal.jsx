@@ -7,8 +7,11 @@ import { useParams } from "react-router-dom";
 import { utils } from "ethers";
 import { updateMyLists, updateSellLists } from "../../../redux/actions";
 
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
+
 const Modal = (props) => {
-  const [Loading, setLoading] = useState(true);
+  // const [Loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   let params = useParams();
 
@@ -26,6 +29,17 @@ const Modal = (props) => {
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
 
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
+
+  const [loading, setLoading] = useState(false);
+
   useEffect(async () => {
     console.log(props);
     setLoading(null);
@@ -35,7 +49,7 @@ const Modal = (props) => {
   async function buynft(tokenId, price) {
     if (AmusementArcadeTokenContract === null) {
       alert("컨트렉트 호출 실패 네트워크를 확인하세요");
-      setLoading(true);
+      setLoading(false);
     } else {
       if (chainid === 1337 ? false : networkid === chainid ? false : true)
         return alert("네트워크 아이디를 확인하세요");
@@ -58,6 +72,7 @@ const Modal = (props) => {
                 if (!error) {
                   console.log("send ok");
                 } else {
+                  setLoading(false);
                   console.log(error);
                 }
               }
@@ -72,6 +87,7 @@ const Modal = (props) => {
                 .then(async (res) => {
                   console.log(res.data.message);
                   if (res.data.message === "ok") {
+                    setLoading(true);
                     console.log(res.data.message);
                     const findIndex = await Selllists.findIndex((lists) => {
                       console.log(parseInt(tokenId));
@@ -98,6 +114,7 @@ const Modal = (props) => {
                     // window.location.reload();
                     setLoading(false);
                   } else {
+                    setLoading(false);
                     console.log(res.data.message);
                   }
                 });
@@ -106,11 +123,19 @@ const Modal = (props) => {
     }
   }
 
-  if (Loading) {
+  if (loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
+      <div className={loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {
