@@ -15,14 +15,11 @@ import { MyWrapper } from "./MyWrapper"; // slick css
 import { useSelector } from "react-redux";
 import SellModal from "../templete/SellModal";
 
-import { css } from "@emotion/react";
-import FadeLoader from "react-spinners/FadeLoader";
-
 const MainContent = () => {
   const [showModal, setShowModal] = useState(false);
   const [checkChange, setCheckChange] = useState(false);
 
-  const [loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(true);
   const [mylists, setMylists] = useState([]);
   const [selllists, setSelllists] = useState([]);
   const MyModal = useSelector((state) => state.AppState.MyModal);
@@ -57,30 +54,11 @@ const MainContent = () => {
     infinite: false,
   };
 
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #5900ff;
-    width: 100%;
-    height: 100%;
-    background: #34343465;
-  `;
-
-  if (loading) {
+  if (Loading) {
     return (
       <div>
-        <div className={loading ? "parentDisable" : ""} width="100%">
-          <div className="overlay-box">
-            <FadeLoader
-              size={150}
-              color={"#ffffff"}
-              css={override}
-              loading={loading}
-              z-index={"1"}
-              text="Loading your content..."
-            />
-          </div>
-        </div>
+        잠시만 기다려 주세요
+        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
       </div>
     );
   } else {
