@@ -11,13 +11,21 @@ import { Container, Row, Col } from "reactstrap";
 import "./market.css";
 import { useSelector } from "react-redux";
 
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
+
 import axios from "axios";
 
 const pageSize = 10;
 
 const Market = () => {
   const Selllists = useSelector((state) => state.AppState.Selllists);
-  const [Loading, setLoading] = useState(true);
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+  `;
+  const [loading, setLoading] = useState(false);
 
   const [nftArray, setnftArray] = useState([]);
 
@@ -174,19 +182,19 @@ const Market = () => {
     }
   };
 
-  if (Loading) {
-    return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={375} width={375} />
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <CommonSection title={"Market Place"} />
+  return (
+    <>
+      <CommonSection title={"Market Place"} />
 
-        <div className="market__box">
+      <div className="market__box">
+        {loading ? (
+          <FadeLoader
+            size={150}
+            color={"#4512bc"}
+            css={override}
+            loading={loading}
+          />
+        ) : (
           <Container>
             <Row>
               <Col lg="12" className="mb-5">
@@ -253,10 +261,10 @@ const Market = () => {
               Next
             </button>
           </Container>
-        </div>
-      </>
-    );
-  }
+        )}
+      </div>
+    </>
+  );
 };
 
 export default Market;
