@@ -105,6 +105,5 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.0"
-  },
-  "proxy": "http://15.165.17.43:5000/"
+  }
 }
