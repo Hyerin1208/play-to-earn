@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 // import { DragDropContext } from "react-beautiful-dnd";
-import { UilClipboardAlt } from "@iconscout/react-unicons";
-import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 import Cards from "./Cards";
 
@@ -49,26 +47,9 @@ const Staking = () => {
   const [stakers, setStakers] = useState(0);
   const check = useRef(null);
 
-  const [items, setItems] = useState({
-    title: "Total deposited",
-    color: {
-      backGround: "#343444de",
-      boxShadow: "0px 4px 4px 0px #bc92ff",
-    },
-    barValue: 70,
-    value: stakers,
-    png: UilUsdSquare,
-    series: [
-      {
-        name: "Sales",
-        data: [31, 40, 28, 51, 42, 109, 100],
-      },
-    ],
-  });
-
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/staking/amount", {
+      .post("http://15.165.17.43:5000/staking/amount", {
         address: account,
       })
       .then(async (res) => {
@@ -79,6 +60,23 @@ const Staking = () => {
             .stakers(res.data.stakerId)
             .call();
           setUnclaimreward(utils.formatEther(result.unclaimedRewards));
+        }
+      });
+  }, []);
+
+  useEffect(async () => {
+    await axios
+      .post("http://15.165.17.43:5000/staking/rewards", { address: account })
+      .then((res) => {
+        const checkstaking = res.data.checkstaking;
+        const checkuser = res.data.checkuser;
+        console.log(checkuser);
+        if (checkuser !== null) {
+          setStakerId(checkuser.stakerId);
+          setStakers(checkstaking.length);
+          setStakingAmount(checkuser.amount);
+        } else {
+          setStakers(checkstaking.length);
         }
       });
   }, []);
@@ -340,7 +338,7 @@ const Staking = () => {
                               );
                               console.log(amount);
                               await axios
-                                .post("http://127.0.0.1:5000/staking", {
+                                .post("http://15.165.17.43:5000/staking", {
                                   stakerId: stakerId,
                                   address: address,
                                   amount: amount,
@@ -396,7 +394,7 @@ const Staking = () => {
                             )
                           );
                           await axios
-                            .post("http://127.0.0.1:5000/staking", {
+                            .post("http://15.165.17.43:5000/staking", {
                               stakerId: stakerId,
                               address: address,
                               amount: amount,

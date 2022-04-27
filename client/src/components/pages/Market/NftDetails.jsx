@@ -52,7 +52,7 @@ const NftDetails = () => {
       return;
     }
     await axios
-      .post(`http://localhost:5000/nfts/like`, {
+      .post(`http://15.165.17.43:5000/nfts/like`, {
         tokenId: card_id,
         account: account,
       })
@@ -77,7 +77,7 @@ const NftDetails = () => {
 
   useEffect(async () => {
     await axios
-      .post(`http://localhost:5000/nfts`, {
+      .post(`http://15.165.17.43:5000/nfts`, {
         tokenId: card_id,
       })
       .then((res) => {
@@ -90,7 +90,7 @@ const NftDetails = () => {
 
   useEffect(async () => {
     await axios
-      .post(`http://localhost:5000/history/info`, {
+      .post(`http://15.165.17.43:5000/history/info`, {
         tokenId: card_id,
       })
       .then((res) => {

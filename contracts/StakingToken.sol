@@ -57,7 +57,7 @@ contract StakingToken is Ownable, ReentrancyGuard {
 
 
     // Constructor function
-    constructor(CreateNFT _nftCollection, AmusementArcadeToken _rewardsToken) {
+    constructor(AmusementArcadeToken _rewardsToken,CreateNFT _nftCollection ) {
         nftCollection = _nftCollection;
         rewardsToken = _rewardsToken;
     }

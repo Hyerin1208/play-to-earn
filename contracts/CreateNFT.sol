@@ -12,13 +12,13 @@ contract CreateNFT is ERC721URIStorage,Ownable  {
     constructor() ERC721("CreateNFT", "CNT") {
     }
 
-mapping(uint => NFTItem) public idToNFTItem;
+mapping(uint => NFTItem) private idToNFTItem;
 mapping(address=>bool) private getDefault;
 
     struct NFTItem {
       uint tokenId;
-      address payable owner;
-      uint256 price;
+      address owner;
+      uint price;
       uint rare;
       uint star;
       bool getDefault;
@@ -28,14 +28,19 @@ mapping(address=>bool) private getDefault;
     event NFTItemCreated (
       uint indexed tokenId,
       address owner,
-      uint256 price ,
+      uint price ,
             uint rare,
       uint star,
       bool getDefault,
       bool sell
     );
 
-    function CreateNFTItem(uint _tokenId, string memory _tokenURI, uint256 _price, bool _getDefault,bool _sell) private {
+
+    function WhoIsOwner(uint _tokenId) public view returns(address){
+      return idToNFTItem[_tokenId].owner;
+    }
+
+    function CreateNFTItem(uint _tokenId, string memory _tokenURI, uint _price, bool _getDefault,bool _sell) private {
       _safeMint(msg.sender, _tokenId);
       _setTokenURI(_tokenId, _tokenURI);
       idToNFTItem[_tokenId]=NFTItem(_tokenId,payable(msg.sender),_price,1,1,_getDefault,_sell);
@@ -43,7 +48,7 @@ mapping(address=>bool) private getDefault;
       emit NFTItemCreated(_tokenId,msg.sender,_price,1,1,_getDefault,_sell);
     }
 
-    function CreateNFTinContract(string memory tokenURI, uint256 price) public{
+    function CreateNFTinContract(string memory tokenURI, uint price) public{
               _tokenIds.increment();
       uint tokenId = _tokenIds.current();
       if(owner() == msg.sender||(isApprovedForAll(owner(),msg.sender)==true&& getDefault[msg.sender] == true)){
@@ -72,31 +77,32 @@ if(result>0&&result<50){
   return option;
 }
 
-function changeOption(uint _tokenId, address _msgsender) external returns(bool){
+function changeOption(uint _tokenId, address _msgsender) external returns(uint[] memory){
+
+  uint[]    memory EvoResult = new uint[](2);
   require(idToNFTItem[_tokenId].owner== _msgsender);
   uint rare = randomOption(99);
   uint star = randomOption(1);
   idToNFTItem[_tokenId].rare = rare;
   idToNFTItem[_tokenId].star = star;
-return true; 
+  EvoResult[0]=rare;
+  EvoResult[1]=star;
+return EvoResult; 
 }
 
-    function getNFTItem(uint tokenId ) public payable{
-        require(isApprovedForAll(owner(),msg.sender)== true);
-        require(getApproved(tokenId)!=msg.sender);
+    function getNFTItem(uint tokenId, address _buyer) external {
+        require(isApprovedForAll(owner(),_buyer)== true);
+        require(getApproved(tokenId)!=_buyer);
         require(idToNFTItem[tokenId].getDefault!=true);
-      uint256 price = idToNFTItem[tokenId].price;
       address owner = idToNFTItem[tokenId].owner;
-      require(msg.value==price);
       require(idToNFTItem[tokenId].sell==true);
-      _transfer(owner, msg.sender, tokenId);
-      payable(owner).transfer(msg.value);
-      _approve(msg.sender, tokenId);
-      idToNFTItem[tokenId].owner = payable(msg.sender);
+      _transfer(owner, _buyer, tokenId);
+      _approve(_buyer, tokenId);
+      idToNFTItem[tokenId].owner = _buyer;
       idToNFTItem[tokenId].sell=false;
     }
 
-      function sellMyNFTItem(uint tokenId, uint256 price) public {
+      function sellMyNFTItem(uint tokenId, uint price) public {
           require(isApprovedForAll(owner(),msg.sender)== true||msg.sender==owner());
           require(getApproved(tokenId)==msg.sender);
       require(idToNFTItem[tokenId].getDefault!=true);

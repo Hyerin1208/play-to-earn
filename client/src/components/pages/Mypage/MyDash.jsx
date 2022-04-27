@@ -16,7 +16,8 @@ const MyDash = () => {
   const account = useSelector((state) => state.AppState.account);
 
   useEffect(async () => {
-    if (CreateNFTContract !== null && MyNFTlists.length !== 0) {
+    console.log("여기실행?");
+    if (CreateNFTContract !== null) {
       const loadMyNFTlists = await CreateNFTContract.methods
         .MyNFTlists()
         .call({ from: account });

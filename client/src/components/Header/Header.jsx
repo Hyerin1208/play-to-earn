@@ -139,7 +139,7 @@ const Header = () => {
       setLibrary(library);
       setChainId(network);
       await axios
-        .post("http://127.0.0.1:5000/user/login", {
+        .post("http://15.165.17.43:5000/user/login", {
           address: selectAccount,
           owner: Owner,
         })
@@ -198,15 +198,16 @@ const Header = () => {
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
-          console.log(getAddress);
           await axios
-            .post("http://127.0.0.1:5000/user/login", {
+            .post("http://15.165.17.43:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
             .then(async (res) => {
               const loadMyNFTlists = await MyList(getAddress);
               const loadMybalance = await checkMyBalance(getAddress);
+              console.log(loadMyNFTlists);
+              console.log(loadMybalance);
               dispatch(
                 updateAccounts({
                   wallet: true,
@@ -261,7 +262,7 @@ const Header = () => {
         }
       };
     }
-  }, [provider]);
+  }, [provider, isUser]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -329,7 +330,7 @@ const Header = () => {
       const Mybalance = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
-      return utils.formatUnits(await Mybalance, 18);
+      return utils.formatEther(await Mybalance);
     } else {
       return 0;
     }
