@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import ReactLoaing from "react-loading";
+
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { utils } from "ethers";
@@ -10,12 +10,13 @@ import Accept from "./Accept";
 import OwnerSellList from "./OwnerSellList";
 
 import "./admin.css";
-import { Link } from "react-router-dom";
-import Error404 from "../../ui/templete/Error404";
 import { setTimer } from "../../../redux/actions/index";
 
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
+
 const Admin = () => {
-  const [Loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(false);
   const [error, setError] = useState("/404-not-found");
 
   const account = useSelector((state) => state.AppState.account);
@@ -33,6 +34,14 @@ const Admin = () => {
 
   const [rankingDB, setRankingDB] = useState(null);
   const dispatch = useDispatch();
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
 
   useEffect(() => {
     if (account !== null) {
@@ -47,7 +56,6 @@ const Admin = () => {
           window.location.href = "/error";
         });
     }
-    setLoading(false);
   }, [account]);
 
   const testfunc = async () => {
@@ -59,7 +67,6 @@ const Admin = () => {
           alert("스테이킹 한사람이 있네요");
           const reault = await userarry.map((data) => parseInt(data.stakerId));
           console.log(reault);
-          // const rewards =
           await StakingTokenContract.methods
             .resettimer(reault)
             .send({ from: account, gas: 3000000 })
@@ -116,15 +123,19 @@ const Admin = () => {
           const sendamount =
             parseFloat(result) - parseFloat(utils.formatEther(contractbalance));
           const claimAddress = await TokenClaimContract.options.address;
+
+          setLoading(true);
           await AmusementArcadeTokenContract.methods
             .transfer(claimAddress, utils.parseEther(sendamount.toString()))
             .send({ from: account, gas: 3000000 })
             .then(() => {
               dispatch(setTimer({ timer: parseInt(timer) }));
               alert("DB 전송 완료");
+              setLoading(false);
               window.location.reload();
             });
         } else {
+          setLoading(false);
           alert("아직 미승인된 유저가 있습니다.");
         }
       });
@@ -132,9 +143,17 @@ const Admin = () => {
 
   if (Loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {
@@ -172,7 +191,7 @@ const Admin = () => {
                   </div>
                 </Col>
                 <Col xs="8">
-                  <Accept />
+                  <Accept setLoading={setLoading} />
                 </Col>
               </div>
               <Row>

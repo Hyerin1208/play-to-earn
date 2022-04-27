@@ -8,10 +8,6 @@ import { updateMyLists, updateSellLists } from "../../../redux/actions/index";
 import axios from "axios";
 import { utils } from "ethers";
 
-import "./evo-details.css";
-import { css } from "@emotion/react";
-import FadeLoader from "react-spinners/FadeLoader";
-
 const DetailsContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -93,14 +89,6 @@ const EvoDetails = (props) => {
   const dispatch = useDispatch();
   const [isEvo, setIsEvo] = useState(false);
 
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #5900ff;
-    width: 100%;
-    height: 100%;
-    background: #34343465;
-  `;
   const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -141,22 +129,6 @@ const EvoDetails = (props) => {
     };
   }, [isEvo]);
 
-  // if (Loading) {
-  //   return (
-  //     <div className={Loading ? "parentDisable" : ""} width="100%">
-  //       <div className="overlay-box">
-  //         <FadeLoader
-  //           size={150}
-  //           color={"#ffffff"}
-  //           css={override}
-  //           loading={Loading}
-  //           z-index={"1"}
-  //           text="Loading your content..."
-  //         />
-  //       </div>
-  //     </div>
-  //   );
-  // } else {
   return (
     <DetailsContainer>
       <SmallText>Evolution ?</SmallText>
@@ -199,7 +171,7 @@ const EvoDetails = (props) => {
                         if (!error) {
                           console.log("send ok");
                         } else {
-                          setLoading(false);
+                          props.setLoading(false);
                           console.log(error);
                         }
                       }
@@ -215,7 +187,7 @@ const EvoDetails = (props) => {
                           star: star,
                         })
                         .then((res) => {
-                          setLoading(false);
+                          props.setLoading(false);
                           console.log(res.data.message);
                         });
                     });
@@ -274,7 +246,6 @@ const EvoDetails = (props) => {
       </SpaceHorizontalContainer>
     </DetailsContainer>
   );
-  // }
 };
 
 export default EvoDetails;

@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import ReactLoaing from "react-loading";
-import { Card, Col, Row } from "reactstrap";
-
+import { Col } from "reactstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import MySellCard from "../../ui/dashboard/MySellCard";
-
 import "./owner-sellList.css";
-
 import axios from "axios";
-
 import { useSelector } from "react-redux";
-import { FaMeteor } from "react-icons/fa";
 import { utils } from "ethers";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const OwnerSellList = () => {
   const [nftArray, setnftArray] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
 
   const Account = useSelector((state) => state.AppState.account);
   const CreateNFTContract = useSelector(
@@ -27,7 +30,7 @@ const OwnerSellList = () => {
 
   useEffect(() => {
     ownerselllists([...nftArray].reverse());
-    setLoading(null);
+    setLoading(false);
   }, [CreateNFTContract]);
 
   //오너 nft 판매 리스트
@@ -81,9 +84,17 @@ const OwnerSellList = () => {
 
   if (Loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {

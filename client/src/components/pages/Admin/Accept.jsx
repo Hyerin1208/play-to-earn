@@ -4,11 +4,9 @@ import Carousel from "react-elastic-carousel";
 import { useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 import { utils } from "ethers";
-import { css } from "@emotion/react";
-import FadeLoader from "react-spinners/FadeLoader";
 
 import "./accept.css";
-const Accept = () => {
+const Accept = (props) => {
   const [rankingDB, setRankingDB] = useState(null);
   const account = useSelector((state) => state.AppState.account);
   const networkid = useSelector((state) => state.AppState.networkid);
@@ -19,6 +17,8 @@ const Accept = () => {
   const TokenClaimContract = useSelector(
     (state) => state.AppState.TokenClaimContract
   );
+  // const [Loading, setLoading] = useState(false);
+
   useEffect(async () => {
     if (account !== null) {
       await axios
@@ -41,6 +41,8 @@ const Accept = () => {
     if (TokenClaimContract !== null) {
       if (chainid === 1337 ? false : networkid === chainid ? false : true)
         return alert("네트워크 아이디를 확인하세요");
+      console.log("위");
+      props.setLoading(true);
       await TokenClaimContract.methods
         .setClaim(address, utils.parseEther(amount.toString()))
         .send({ from: account, gas: 3000000 })
@@ -52,14 +54,18 @@ const Accept = () => {
             })
             .then((res) => {
               if (res.data.message === "ok") {
+                console.log("들어옴??");
                 alert("승인 완료");
+                props.setLoading(false);
               } else {
                 alert("에러확인");
+                props.setLoading(false);
               }
             });
         });
     } else {
       alert("컨트랙트 로드 실패");
+      props.setLoading(false);
     }
   }
 
