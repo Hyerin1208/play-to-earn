@@ -96,7 +96,7 @@ function MineGame({ setShowModal }) {
     }
 
     const mineData = await axios.post(`http://15.165.17.43:5000/game/mine`, {
-      runtime: point * test() * jest(),
+      runtime: point * (test() * jest()),
       account: account,
     });
 
@@ -107,21 +107,21 @@ function MineGame({ setShowModal }) {
           "Score(" +
           point +
           ")점" +
-          " x " +
+          " x ( " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ") ) = " +
           "Result(" +
-          point * test() * jest() +
+          point * (test() * jest()) +
           ")점" +
           "\n" +
           mineData.data.message
       );
-      window.location.reload();
+      window.location.href = "/game";
     } else if (mineData.data.bool === false) {
       alert(mineData.data.message);
     }

@@ -308,7 +308,7 @@ const Tetris = ({ setShowModal }) => {
       const tetrisData = await axios.post(
         `http://15.165.17.43:5000/game/tetris`,
         {
-          data: data * test() * jest(),
+          data: data * (test() * jest()),
           account: account,
         }
       );
@@ -318,21 +318,21 @@ const Tetris = ({ setShowModal }) => {
           "Score(" +
             data +
             ")점" +
-            " x " +
+            " x ( " +
             "Rare(" +
             test() +
             ")" +
             " x " +
             "Star(" +
             jest() +
-            ") = " +
+            ") ) = " +
             "Result(" +
-            data * test() * jest() +
+            data * (test() * jest()) +
             ")점" +
             "\n" +
             tetrisData.data.message
         );
-        window.location.reload();
+        window.location.href = "/game";
       } else if (tetrisData.data.bool === false) {
         alert(tetrisData.data.message);
       }

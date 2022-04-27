@@ -70,7 +70,7 @@ export const Overlay = ({ handleReset, score }) => {
     }
 
     const puzzleData = await axios.post(`http://15.165.17.43:5000/game/2048`, {
-      score: point * test() * jest(),
+      score: point * (test() * jest()),
       account: account,
     });
 
@@ -79,21 +79,21 @@ export const Overlay = ({ handleReset, score }) => {
         "Score(" +
           point +
           ")점" +
-          " x " +
+          " x ( " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ") ) = " +
           "Result(" +
-          point * test() * jest() +
+          point * (test() * jest()) +
           ")점" +
           "\n" +
           puzzleData.data.message
       );
-      window.location.reload();
+      window.location.href = "/game";
     } else if (puzzleData.data.bool === false) {
       alert(puzzleData.data.message);
     }

@@ -90,7 +90,7 @@ const Board = () => {
     }
 
     const snakeData = await axios.post(`http://15.165.17.43:5000/game/snake`, {
-      point: point * test() * jest(),
+      point: point * (test() * jest()),
       account: account,
     });
 
@@ -99,21 +99,21 @@ const Board = () => {
         "Score(" +
           point +
           ")점" +
-          " x " +
+          " x ( " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ") ) = " +
           "Result(" +
-          point * test() * jest() +
+          point * (test() * jest()) +
           ")점" +
           "\n" +
           snakeData.data.message
       );
-      window.location.reload();
+      window.location.href = "/game";
     } else if (snakeData.data.bool === false) {
       alert(snakeData.data.message);
     }
