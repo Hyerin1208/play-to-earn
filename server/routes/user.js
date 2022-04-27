@@ -152,6 +152,7 @@ router.post("/owner", async (req, res, next) => {
     const newDate = new Date().getTime() + 604800000;
 
     const address = req.body.address;
+    const OwnerImage = req.body.OwnerImage;
     const owner = await User.findOne({ where: { address: address } });
     if (owner) {
       res.json({ message: "운영자 맞아요", count: owner.count });
@@ -159,7 +160,7 @@ router.post("/owner", async (req, res, next) => {
       await User.create({
         address: address,
         nick: "운영자",
-        image: "/images/naminglogo.png",
+        image: OwnerImage,
         email: "Owner@gmail.com",
         count: newDate.toString(),
       });
