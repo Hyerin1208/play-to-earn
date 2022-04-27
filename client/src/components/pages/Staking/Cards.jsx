@@ -104,7 +104,7 @@ const Cards = () => {
 
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/staking/amount", {
+      .post("http://15.165.17.43:5000/staking/amount", {
         address: account,
       })
       .then(async (res) => {

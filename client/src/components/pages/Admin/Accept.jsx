@@ -4,6 +4,8 @@ import Carousel from "react-elastic-carousel";
 import { useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 import { utils } from "ethers";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import "./accept.css";
 const Accept = () => {

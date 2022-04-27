@@ -120,7 +120,7 @@ export const refreshSellLists = (payload) => {
 export function connect() {
   return async (dispatch) => {
     try {
-      const web3 = new Web3(rpcurl || "http://127.0.0.1:7545");
+      const web3 = new Web3(rpcurl || "http://15.165.17.43:7545");
       await web3.eth.net
         .isListening()
         .then(async (res) => {
