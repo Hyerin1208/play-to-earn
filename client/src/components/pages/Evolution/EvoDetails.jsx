@@ -199,6 +199,7 @@ const EvoDetails = (props) => {
                           props.data.setAfterEvo(
                             MyNFTlists[props.data.NFTIndex]
                           );
+                          alert("NFT 진화완료");
                           props.setLoading(false);
                           console.log(res.data.message);
                         });
