@@ -13,7 +13,10 @@ const TokenNomic = () => {
   const CreateNFTContract = useSelector(
     (state) => state.AppState.CreateNFTContract
   );
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   async function getTokenAmount() {
     if (CreateNFTContract !== null) {
       const lists = await CreateNFTContract.methods.totalNFTs().call();

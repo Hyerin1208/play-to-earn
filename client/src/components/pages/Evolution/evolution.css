@@ -16,6 +16,17 @@
   margin-bottom: 10%;
 }
 
+.overlay-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: #14141f;
+  opacity: 0.8;
+  z-index: 1000;
+}
+
 .card__container {
   width: 285px;
   height: 480px;
@@ -136,7 +147,7 @@
 }
 
 .evolution__nfts {
-  height: 40%;
+  height: 34%;
   width: 12rem;
   border: 2px solid #343444;
   padding: 1rem;

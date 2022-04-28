@@ -1,3 +1,14 @@
 .my-items .bid__btn {
   margin-top: -0.7rem !important;
 }
+
+.overlay-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: #14141f;
+  opacity: 0.8;
+  z-index: 1000;
+}

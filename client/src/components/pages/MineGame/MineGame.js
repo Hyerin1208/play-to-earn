@@ -43,7 +43,10 @@ function MineGame({ setShowModal }) {
     mynftlists();
     setLoading(false);
   }, [CreateNFTContract]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   // 내 nft 리스트
   async function mynftlists() {
     const lists = await CreateNFTContract.methods
@@ -96,7 +99,7 @@ function MineGame({ setShowModal }) {
     }
 
     const mineData = await axios.post(`http://localhost:5000/game/mine`, {
-      runtime: point * test() * jest(),
+      runtime: point * (test() * jest()),
       account: account,
     });
 
@@ -107,21 +110,21 @@ function MineGame({ setShowModal }) {
           "Score(" +
           point +
           ")점" +
-          " x " +
+          " x ( " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ") ) = " +
           "Result(" +
-          point * test() * jest() +
+          point * (test() * jest()) +
           ")점" +
           "\n" +
           mineData.data.message
       );
-      window.location.reload();
+      window.location.href = "/game";
     } else if (mineData.data.bool === false) {
       alert(mineData.data.message);
     }

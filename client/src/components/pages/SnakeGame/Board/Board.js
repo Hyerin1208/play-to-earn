@@ -37,7 +37,10 @@ const Board = () => {
     }
     setLoading(false);
   }, [account]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   // 내 nft 리스트
   async function mynftlists() {
     const lists = await CreateNFTContract.methods
@@ -90,7 +93,7 @@ const Board = () => {
     }
 
     const snakeData = await axios.post(`http://localhost:5000/game/snake`, {
-      point: point * test() * jest(),
+      point: point * (test() * jest()),
       account: account,
     });
 
@@ -99,21 +102,21 @@ const Board = () => {
         "Score(" +
           point +
           ")점" +
-          " x " +
+          " x ( " +
           "Rare(" +
           test() +
           ")" +
           " x " +
           "Star(" +
           jest() +
-          ") = " +
+          ") ) = " +
           "Result(" +
-          point * test() * jest() +
+          point * (test() * jest()) +
           ")점" +
           "\n" +
           snakeData.data.message
       );
-      window.location.reload();
+      window.location.href = "/game";
     } else if (snakeData.data.bool === false) {
       alert(snakeData.data.message);
     }

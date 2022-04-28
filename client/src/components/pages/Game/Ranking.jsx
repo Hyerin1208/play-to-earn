@@ -7,8 +7,15 @@ import { useSelector } from "react-redux";
 import Clock from "./Clock";
 import Carousel from "react-elastic-carousel";
 import { Link } from "react-router-dom";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const Ranking = () => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+  `;
   const [loading, setLoading] = useState(true);
   const [toggleState, setToggleState] = useState(1);
   const account = useSelector((state) => state.AppState.account);
@@ -156,7 +163,12 @@ const Ranking = () => {
     <>
       <CommonSection title="Ranking" />
       {loading ? (
-        <strong> loading... </strong>
+        <FadeLoader
+          size={150}
+          color={"#4512bc"}
+          css={override}
+          loading={loading}
+        />
       ) : (
         <div className="Ranking__container">
           <Row>

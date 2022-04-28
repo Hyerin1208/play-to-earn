@@ -13,7 +13,10 @@ const SideBar = () => {
           Github
           <i className="ri-github-fill" />
         </a>
-        <a href="#" className="discord">
+        <a
+          href="https://discord.com/channels/968044352901365790/968044352901365792"
+          className="discord"
+        >
           Discord
           <i className="ri-discord-fill" />
         </a>

@@ -7,7 +7,7 @@
   color: whitesmoke;
   cursor: pointer;
   box-shadow: 0 0 20px 10px rgba(25, 25, 25, 0.1);
-  transition: 0ms.4s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .earning__card:hover {
@@ -21,6 +21,7 @@
 .earning__chart {
   display: flex;
   justify-content: center;
+  margin-bottom: -18px;
 }
 
 .earning__chart i {
@@ -41,7 +42,8 @@
   margin-bottom: 4px;
 }
 
-.token__mydesc {
+.earing__text .token__mydesc {
+  margin-top: 10px;
   text-align: center;
 }
 

@@ -84,6 +84,20 @@ const web3Modal = new Web3Modal({
   },
 });
 
+// connectToWeb3 = async () => {
+//   const provider = await this.state.web3Modal.connect();
+//   const web3 = new Web3(provider);
+
+//   localStorage.setItem('WEB3_CONNECTED', 'true');
+
+//   this.setState({
+//     web3,
+//     provider,
+//   });
+//   await this.loadBlockchainData();
+//   await this.getLiquidityOwner(this.state.tokenAData, this.state.tokenBData);
+// };
+
 const Header = () => {
   const dispatch = useDispatch();
   const headerRef = useRef(null);
@@ -112,6 +126,11 @@ const Header = () => {
   const [verified, setVerified] = useState();
   const Navi = useNavigate();
 
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
+
   const connectWallet = async () => {
     try {
       const provider = await web3Modal.connect();
@@ -125,7 +144,7 @@ const Header = () => {
       setLibrary(library);
       setChainId(network);
       await axios
-        .post("http://127.0.0.1:5000/user/login", {
+        .post("http://localhost:5000/user/login", {
           address: selectAccount,
           owner: Owner,
         })
@@ -184,15 +203,16 @@ const Header = () => {
         console.log("accountsChanged", accounts);
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
-          console.log(getAddress);
           await axios
-            .post("http://127.0.0.1:5000/user/login", {
+            .post("http://localhost:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
             .then(async (res) => {
               const loadMyNFTlists = await MyList(getAddress);
               const loadMybalance = await checkMyBalance(getAddress);
+              console.log(loadMyNFTlists);
+              console.log(loadMybalance);
               dispatch(
                 updateAccounts({
                   wallet: true,
@@ -247,7 +267,7 @@ const Header = () => {
         }
       };
     }
-  }, [provider]);
+  }, [provider, isUser]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -278,6 +298,7 @@ const Header = () => {
       const MyNFTlists = await CreateNFTContract.methods
         .MyNFTlists()
         .call({ from: account });
+      sleep(2000);
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
           const tokenURI = await CreateNFTContract.methods
@@ -315,7 +336,8 @@ const Header = () => {
       const Mybalance = await TokenClaimContract.methods
         .mybalance()
         .call({ from: account });
-      return utils.formatUnits(await Mybalance, 18);
+      sleep();
+      return utils.formatEther(await Mybalance);
     } else {
       return 0;
     }

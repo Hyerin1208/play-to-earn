@@ -32,7 +32,10 @@ const NftSellCard = (props) => {
   const stars = Array(5).fill(1);
 
   const [testdata, setTestdata] = useState(null);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(() => {
     return () => {
       dispatch(

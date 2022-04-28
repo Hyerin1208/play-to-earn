@@ -82,9 +82,18 @@ const EvoDetails = (props) => {
   const account = useSelector((state) => state.AppState.account);
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
+  const AmusementArcadeTokenContract = useSelector(
+    (state) => state.AppState.AmusementArcadeTokenContract
+  );
+  const UtilsContract = useSelector((state) => state.AppState.UtilsContract);
   const dispatch = useDispatch();
   const [isEvo, setIsEvo] = useState(false);
 
+  const [Loading, setLoading] = useState(false);
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(() => {
     return async () => {
       if (isEvo) {
@@ -140,51 +149,96 @@ const EvoDetails = (props) => {
                 chainid === 1337 ? false : networkid === chainid ? false : true
               )
                 return alert("네트워크 아이디를 확인하세요");
-              await CreateNFTContract.methods
-                .changeOption(parseInt(props.data.NFTId), account)
+              const cost = 50;
+              props.setLoading(true);
+              await AmusementArcadeTokenContract.methods
+                .approve(
+                  UtilsContract.options.address,
+                  utils.parseEther(cost.toString())
+                )
                 .send({ from: account, gas: 3000000 })
-                .then(async () => {
-                  const MyNFTlists = await CreateNFTContract.methods
-                    .MyNFTlists()
-                    .call({ from: account });
-
-                  const listsForm = await Promise.all(
-                    MyNFTlists.map(async (i) => {
-                      const tokenURI = await CreateNFTContract.methods
-                        .tokenURI(i.tokenId)
-                        .call();
-                      const meta = await axios
-                        .get(tokenURI)
-                        .then((res) => res.data);
-                      let item = {
-                        fileUrl: await meta.image,
-                        formInput: {
-                          tokenid: i.tokenId,
-                          price: utils.formatEther(i.price),
-                          rare: i.rare,
-                          star: i.star,
-                          sell: i.sell,
-                          name: await meta.name,
-                          description: await meta.description,
-                        },
-                      };
-                      return item;
-                    })
-                  );
-                  props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
-
-                  axios
-                    .post(`http://localhost:5000/nfts/upgrade`, {
-                      tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
-                      rare: listsForm[props.data.NFTIndex].formInput.rare,
-                      star: listsForm[props.data.NFTIndex].formInput.star,
-                    })
-                    .then((res) => {
-                      console.log(res.data.message);
+                .then(async (res) => {
+                  await UtilsContract.methods
+                    .ChangOption(
+                      parseInt(props.data.NFTId),
+                      utils.parseEther(cost.toString())
+                    )
+                    .send(
+                      {
+                        from: account,
+                        gas: 3000000,
+                      },
+                      (error) => {
+                        if (!error) {
+                          console.log("send ok");
+                        } else {
+                          props.setLoading(false);
+                          console.log(error);
+                        }
+                      }
+                    )
+                    .then(async (res) => {
+                      const tokenId = props.data.NFTId;
+                      const rare = res.events.EvoResult.returnValues.rare;
+                      const star = res.events.EvoResult.returnValues.star;
+                      await axios
+                        .post(`http://localhost:5000/nfts/upgrade`, {
+                          tokenId: tokenId,
+                          rare: rare,
+                          star: star,
+                        })
+                        .then((res) => {
+                          props.setLoading(false);
+                          console.log(res.data.message);
+                        });
                     });
-                  dispatch(updateMyLists({ MyNFTlists: await listsForm }));
-                  setIsEvo(true);
                 });
+
+              // await CreateNFTContract.methods
+              //   .changeOption(parseInt(props.data.NFTId), account)
+              //   .send({ from: account, gas: 3000000 })
+              //   .then(async () => {
+              //     const MyNFTlists = await CreateNFTContract.methods
+              //       .MyNFTlists()
+              //       .call({ from: account });
+
+              //     const listsForm = await Promise.all(
+              //       MyNFTlists.map(async (i) => {
+              //         const tokenURI = await CreateNFTContract.methods
+              //           .tokenURI(i.tokenId)
+              //           .call();
+              //         const meta = await axios
+              //           .get(tokenURI)
+              //           .then((res) => res.data);
+              //         let item = {
+              //           fileUrl: await meta.image,
+              //           formInput: {
+              //             tokenid: i.tokenId,
+              //             price: utils.formatEther(i.price),
+              //             rare: i.rare,
+              //             star: i.star,
+              //             sell: i.sell,
+              //             name: await meta.name,
+              //             description: await meta.description,
+              //           },
+              //         };
+              //         return item;
+              //       })
+              //     );
+              //     props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
+
+              // axios
+              //   .post(`http://localhost:5000/nfts/upgrade`, {
+              //     tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
+              //     rare: listsForm[props.data.NFTIndex].formInput.rare,
+              //     star: listsForm[props.data.NFTIndex].formInput.star,
+              //   })
+              //   .then((res) => {
+              //     console.log(res.data.message);
+              //   });
+              //     dispatch(updateMyLists({ MyNFTlists: await listsForm }));
+              //     setIsEvo(true);
+              //   });
             }
           }}
         >

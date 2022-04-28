@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
 import Earnings from "./Earnings";
-import ReactLoaing from "react-loading";
 
 import "./main-container.css";
 import MyLikes from "./MyLikes";
@@ -14,8 +13,18 @@ import MySellCard from "./MySellCard";
 import { MyWrapper } from "./MyWrapper"; // slick css
 import { useSelector } from "react-redux";
 import SellModal from "../templete/SellModal";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const MainContent = () => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
   const [showModal, setShowModal] = useState(false);
   const [checkChange, setCheckChange] = useState(false);
 
@@ -56,9 +65,17 @@ const MainContent = () => {
 
   if (Loading) {
     return (
-      <div>
-        잠시만 기다려 주세요
-        <ReactLoaing type={"bars"} color={"purple"} height={600} width={375} />
+      <div className={Loading ? "parentDisable" : ""} width="100%">
+        <div className="overlay-box">
+          <FadeLoader
+            size={150}
+            color={"#ffffff"}
+            css={override}
+            loading={Loading}
+            z-index={"1"}
+            text="Loading your content..."
+          />
+        </div>
       </div>
     );
   } else {

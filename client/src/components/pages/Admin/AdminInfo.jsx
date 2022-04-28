@@ -7,6 +7,7 @@ import { utils } from "ethers";
 import "./admin-info.css";
 
 const AdminInfo = () => {
+  // const [Loading, setLoading] = useState(true);
   const Mybalance = useSelector((state) => state.AppState.Mybalance);
   const TokenClaimContract = useSelector(
     (state) => state.AppState.TokenClaimContract
@@ -22,6 +23,10 @@ const AdminInfo = () => {
   const [sendamount, setSendamount] = useState(null);
   const [totalSupply, setTotalSupply] = useState(null);
 
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(async () => {
     if (TokenClaimContract !== null) {
       const contractbalance = await TokenClaimContract.methods
@@ -30,6 +35,7 @@ const AdminInfo = () => {
       console.log(contractbalance);
       setAmount(utils.formatEther(contractbalance));
     }
+    // setLoading(false);
   }, [TokenClaimContract]);
 
   useEffect(async () => {
@@ -40,11 +46,12 @@ const AdminInfo = () => {
       console.log(totalSupply);
       setTotalSupply(utils.formatEther(totalSupply));
     }
+    // setLoading(false);
   }, [AmusementArcadeTokenContract]);
 
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/ranking/sendbalance")
+      .post("http://localhost:5000/ranking/sendbalance")
       .then(async (res) => {
         const arry = await res.data.totalclaim;
         const result = arry.reduce((sum, element) => {
@@ -52,6 +59,7 @@ const AdminInfo = () => {
         }, 0);
         setSendamount(result);
       });
+    // setLoading(false);
   }, []);
 
   useEffect(async () => {
@@ -59,6 +67,7 @@ const AdminInfo = () => {
       const lists = await CreateNFTContract.methods.totalNFTs().call();
       setTotalNFT(lists);
     }
+    // setLoading(false);
   }, [totalNFT, CreateNFTContract]);
 
   return (

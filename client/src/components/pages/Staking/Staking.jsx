@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 // import { DragDropContext } from "react-beautiful-dnd";
-import { UilClipboardAlt } from "@iconscout/react-unicons";
-import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 
 import Cards from "./Cards";
 
@@ -32,6 +30,9 @@ const Staking = () => {
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
+
+  const Mybalance = useSelector((state) => state.AppState.Mybalance);
+
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
@@ -45,27 +46,13 @@ const Staking = () => {
   const [stakerId, setStakerId] = useState(0);
   const [stakers, setStakers] = useState(0);
   const check = useRef(null);
-
-  const [items, setItems] = useState({
-    title: "Total deposited",
-    color: {
-      backGround: "#343444de",
-      boxShadow: "0px 4px 4px 0px #bc92ff",
-    },
-    barValue: 70,
-    value: stakers,
-    png: UilUsdSquare,
-    series: [
-      {
-        name: "Sales",
-        data: [31, 40, 28, 51, 42, 109, 100],
-      },
-    ],
-  });
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/staking/amount", {
+      .post("http://localhost:5000/staking/amount", {
         address: account,
       })
       .then(async (res) => {
@@ -82,7 +69,7 @@ const Staking = () => {
 
   useEffect(async () => {
     await axios
-      .post("http://127.0.0.1:5000/staking/rewards", { address: account })
+      .post("http://localhost:5000/staking/rewards", { address: account })
       .then((res) => {
         const checkstaking = res.data.checkstaking;
         const checkuser = res.data.checkuser;
@@ -204,12 +191,13 @@ const Staking = () => {
                       fontSize={40}
                       dy={-20}
                     >
-                      {`${Math.floor(
+                      {/* {`${Math.floor(
                         coins.reduce(
                           (acc, coin) => acc + coin.amount * coin.inAAT,
                           0
                         )
-                      )}`}
+                      )}`} */}
+                      {Mybalance}
                     </Text>
 
                     <Text textAnchor="middle" fill="#aaa" fontSize={20} dy={20}>
@@ -313,7 +301,7 @@ const Staking = () => {
             <hr />
             <ul>
               <li>
-                <span>Available NFT balance to stake : </span>
+                <span>Available AAT balance to stake : {Mybalance}</span>
                 <br />
                 <input
                   type="text"
@@ -353,7 +341,7 @@ const Staking = () => {
                               );
                               console.log(amount);
                               await axios
-                                .post("http://127.0.0.1:5000/staking", {
+                                .post("http://localhost:5000/staking", {
                                   stakerId: stakerId,
                                   address: address,
                                   amount: amount,
@@ -377,7 +365,7 @@ const Staking = () => {
               </li>
               <br />
               <li>
-                <span>AATtoken staked : </span>
+                <span>AAT token staked : {stakingAmount}</span>
                 <br />
                 <input
                   type="number"
@@ -409,7 +397,7 @@ const Staking = () => {
                             )
                           );
                           await axios
-                            .post("http://127.0.0.1:5000/staking", {
+                            .post("http://localhost:5000/staking", {
                               stakerId: stakerId,
                               address: address,
                               amount: amount,
@@ -436,7 +424,7 @@ const Staking = () => {
               </li>
               <li>
                 <br />
-                <span>Pending AAT rewards : </span>
+                <span>Pending AAT rewards : {stake}</span>
                 <br />
                 <button
                   className="claim__rewards"
@@ -453,7 +441,7 @@ const Staking = () => {
                   Claim rewards
                 </button>
               </li>
-              <li>
+              {/* <li>
                 <button
                   onClick={async () => {
                     if (StakingTokenContract !== null) {
@@ -467,7 +455,7 @@ const Staking = () => {
                 >
                   TESTBUTTON
                 </button>
-              </li>
+              </li> */}
             </ul>
           </div>
         </Col>
