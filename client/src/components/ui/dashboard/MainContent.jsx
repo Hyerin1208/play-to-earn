@@ -48,6 +48,8 @@ const MainContent = () => {
       });
       setSelllists(selllists);
       setLoading(false);
+    } else {
+      setLoading(false);
     }
   }, [MyNFTlists, checkChange]);
 

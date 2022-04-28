@@ -113,7 +113,11 @@ const NftCard = (props) => {
               </button>
 
               {showModal && (
-                <Modal item={props.item} setShowModal={setShowModal} />
+                <Modal
+                  item={props.item}
+                  setShowModal={setShowModal}
+                  setLoading={props.setLoading}
+                />
               )}
 
               <span className="view__link">

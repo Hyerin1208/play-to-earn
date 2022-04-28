@@ -337,7 +337,7 @@ const Staking = () => {
                 <br />
                 <input
                   type="text"
-                  placeholder="input your NFT tokenid ex) 1,2,3"
+                  placeholder="AAT Price ex) MIN 500 AAT"
                   className="stake__input"
                   onChange={(e) => {
                     setStake(e.currentTarget.value);
