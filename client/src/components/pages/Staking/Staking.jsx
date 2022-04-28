@@ -8,12 +8,13 @@ import { Group } from "@visx/group";
 import { Text } from "@visx/text";
 
 import "./staking.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { utils } from "ethers";
 import axios from "axios";
 
 import { css } from "@emotion/react";
 import FadeLoader from "react-spinners/FadeLoader";
+import { updateMyBalance } from "../../../redux/actions";
 
 // 아래는 임시데이터
 const coins = [
@@ -43,6 +44,7 @@ const Staking = () => {
 
   const Mybalance = useSelector((state) => state.AppState.Mybalance);
 
+  const [checkMyBalance, setCheckMyBalance] = useState(0);
   const [Loading, setLoading] = useState(false);
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
@@ -56,7 +58,16 @@ const Staking = () => {
   const [stakingAmount, setStakingAmount] = useState(0);
   const [stakerId, setStakerId] = useState(0);
   const [stakers, setStakers] = useState(0);
+  const [totalStakers, setTotalStakers] = useState(0);
   const check = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (Mybalance !== null) {
+      setCheckMyBalance(Mybalance);
+    }
+  }, [Mybalance]);
+
   function sleep(ms) {
     const wakeUpTime = Date.now() + ms;
     while (Date.now() < wakeUpTime) {}
@@ -70,10 +81,10 @@ const Staking = () => {
         setStakingAmount(res.data.amount);
         if (res.data.stakerId !== null) {
           setStakerId(res.data.stakerId);
-          const result = await StakingTokenContract.methods
-            .stakers(res.data.stakerId)
-            .call();
-          setUnclaimreward(utils.formatEther(result.unclaimedRewards));
+          // const result = await StakingTokenContract.methods
+          //   .stakers(res.data.stakerId)
+          //   .call();
+          // setUnclaimreward(utils.formatEther(result.unclaimedRewards));
         }
       });
   }, []);
@@ -87,13 +98,15 @@ const Staking = () => {
         console.log(checkuser);
         if (checkuser !== null) {
           setStakerId(checkuser.stakerId);
-          setStakers(checkstaking.length);
+          setStakers(checkstaking.filter((data) => data.amount !== 0).length);
+          setTotalStakers(checkstaking.length);
           setStakingAmount(checkuser.amount);
         } else {
-          setStakers(checkstaking.length);
+          setStakers(checkstaking.filter((data) => data.amount !== 0).length);
+          setTotalStakers(checkstaking.length);
         }
       });
-  }, []);
+  }, [checkMyBalance]);
 
   useEffect(async () => {
     if (StakingTokenContract !== null && account !== null && stakerId !== 0) {
@@ -103,6 +116,7 @@ const Staking = () => {
           .userStakeInfo(account)
           .call({ from: account });
         setReward(utils.formatEther(result._availableRewards));
+        setUnclaimreward(utils.formatEther(result._unclaimedRewards));
         setLoading(false);
       }, 5000);
       return () => {
@@ -223,13 +237,7 @@ const Staking = () => {
                       fontSize={40}
                       dy={-20}
                     >
-                      {/* {`${Math.floor(
-                        coins.reduce(
-                          (acc, coin) => acc + coin.amount * coin.inAAT,
-                          0
-                        )
-                      )}`} */}
-                      {Mybalance}
+                      {checkMyBalance}
                     </Text>
 
                     <Text textAnchor="middle" fill="#aaa" fontSize={20} dy={20}>
@@ -241,7 +249,15 @@ const Staking = () => {
             </svg>
           </main>
           <div className="widget__form">
-            <Cards setLoading={setLoading} />
+            <Cards
+              setLoading={setLoading}
+              checkMyBalance={checkMyBalance}
+              unclaimreward={unclaimreward}
+              totalreward={reward}
+              stakers={stakers}
+              totalStakers={totalStakers}
+              stakingAmount={stakingAmount}
+            />
           </div>
         </Col>
         <Col sm="8">
@@ -336,7 +352,7 @@ const Staking = () => {
                 <span>Available AAT balance to stake : {Mybalance}</span>
                 <br />
                 <input
-                  type="text"
+                  type="number"
                   placeholder="AAT Price ex) MIN 500 AAT"
                   className="stake__input"
                   onChange={(e) => {
@@ -381,6 +397,13 @@ const Staking = () => {
                                 })
                                 .then((res) => {
                                   setStakingAmount(amount);
+                                  dispatch(
+                                    updateMyBalance({
+                                      Mybalance: (
+                                        parseInt(Mybalance) - stake
+                                      ).toString(),
+                                    })
+                                  );
                                   sleep(2000);
                                   setLoading(false);
                                   alert("AAT Staking Success!");
@@ -448,6 +471,13 @@ const Staking = () => {
                                 utils.formatEther(result.unclaimedRewards)
                               );
                               setStakingAmount(amount);
+                              dispatch(
+                                updateMyBalance({
+                                  Mybalance: (
+                                    parseInt(Mybalance) + parseInt(unstake)
+                                  ).toString(),
+                                })
+                              );
                               sleep(2000);
                               setLoading(false);
                               alert("AAT Unstaking Success!");

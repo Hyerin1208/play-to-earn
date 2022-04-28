@@ -63,7 +63,7 @@ const Admin = () => {
 
   const testfunc = async () => {
     await axios
-      .post("http://localhost:5000/staking/rewards")
+      .post("http://localhost:5000/staking/rewards", { address: account })
       .then(async (res) => {
         const userarry = res.data.checkstaking;
         if (userarry.length > 0) {

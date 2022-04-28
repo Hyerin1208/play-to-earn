@@ -144,15 +144,12 @@ export function connect() {
               NFT_address
             );
             const Owner = await CreateNFTContract.methods.owner().call();
-            sleep(2000);
             const lists = await CreateNFTContract.methods.Selllists().call();
-            sleep(2000);
             const listsForm = await Promise.all(
               lists.map(async (i) => {
                 const tokenURI = await CreateNFTContract.methods
                   .tokenURI(i.tokenId)
                   .call();
-                sleep(2000);
                 const meta = await axios.get(tokenURI).then((res) => res.data);
                 let item = {
                   fileUrl: await meta.image,
