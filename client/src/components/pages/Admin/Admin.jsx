@@ -144,73 +144,76 @@ const Admin = () => {
       });
   };
 
-  if (Loading) {
-    return (
-      <div className={Loading ? "parentDisable" : ""} width="100%">
-        <div className="overlay-box">
-          <FadeLoader
-            size={150}
-            color={"#ffffff"}
-            css={override}
-            loading={Loading}
-            z-index={"1"}
-            text="Loading your content..."
-          />
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <Container
-          style={{
-            display: "flex",
-            height: " 120vh",
-            background:
-              "linear-gradient(to bottom right, white 0%, # e6e4ff 70%)",
-            borderRadius: "2rem",
-            marginBottom: "10px",
-          }}
+  return (
+    <React.Fragment>
+      {Loading ? (
+        <div
+          className={Loading ? "parentDisable" : ""}
+          width="100%"
+          height="100%"
         >
-          <div className="admin__dash">
-            <div className="sub__container2">
-              <div className="section1__one">
-                <Col xs="4">
-                  <AdminInfo />
-                  <div className="btn__admin">
-                    <button
-                      className="sendRank__btn"
-                      type="button"
-                      // onClick={() => testfunc()}
-                      onClick={() => sendRank()}
-                    >
-                      Send Ranking
-                    </button>
-                    <button className="staking__btn" onClick={() => testfunc()}>
-                      <i className="ri-shield-keyhole-line"></i>
-                      AAT Staking
-                      {/* <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link> */}
-                    </button>
-                  </div>
-                </Col>
-                <Col xs="8">
-                  <Accept setLoading={setLoading} />
+          <div className="overlay-box">
+            <FadeLoader
+              size={150}
+              color={"#ffffff"}
+              css={override}
+              loading={Loading}
+              z-index={"1"}
+              text="Loading your content..."
+            />
+          </div>
+        </div>
+      ) : (
+        false
+      )}
+      <Container
+        style={{
+          display: "flex",
+          height: " 120vh",
+          background:
+            "linear-gradient(to bottom right, white 0%, # e6e4ff 70%)",
+          borderRadius: "2rem",
+          marginBottom: "10px",
+        }}
+      >
+        <div className="admin__dash">
+          <div className="sub__container2">
+            <div className="section1__one">
+              <Col xs="4">
+                <AdminInfo />
+                <div className="btn__admin">
+                  <button
+                    className="sendRank__btn"
+                    type="button"
+                    // onClick={() => testfunc()}
+                    onClick={() => sendRank()}
+                  >
+                    Send Ranking
+                  </button>
+                  <button className="staking__btn" onClick={() => testfunc()}>
+                    <i className="ri-shield-keyhole-line"></i>
+                    AAT Staking
+                    {/* <Link to={"/aatadmin"}>&nbsp;AAT Staking</Link> */}
+                  </button>
+                </div>
+              </Col>
+              <Col xs="8">
+                <Accept setLoading={setLoading} />
+              </Col>
+            </div>
+            <Row>
+              <div className="section2__two">
+                <Col>
+                  <h5>Naming Center's All Nfts</h5>
+                  <OwnerSellList setLoading={setLoading} />
                 </Col>
               </div>
-              <Row>
-                <div className="section2__two">
-                  <Col>
-                    <h5>Naming Center's All Nfts</h5>
-                    <OwnerSellList />
-                  </Col>
-                </div>
-              </Row>
-            </div>
+            </Row>
           </div>
-        </Container>
-      </React.Fragment>
-    );
-  }
+        </div>
+      </Container>
+    </React.Fragment>
+  );
 };
 
 export default Admin;

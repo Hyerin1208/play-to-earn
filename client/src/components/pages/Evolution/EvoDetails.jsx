@@ -82,6 +82,7 @@ const EvoDetails = (props) => {
   const account = useSelector((state) => state.AppState.account);
   const networkid = useSelector((state) => state.AppState.networkid);
   const chainid = useSelector((state) => state.AppState.chainid);
+  const MyNFTlists = useSelector((state) => state.AppState.MyNFTlists);
   const AmusementArcadeTokenContract = useSelector(
     (state) => state.AppState.AmusementArcadeTokenContract
   );
@@ -172,6 +173,7 @@ const EvoDetails = (props) => {
                         if (!error) {
                           console.log("send ok");
                         } else {
+                          sleep(2000);
                           props.setLoading(false);
                           console.log(error);
                         }
@@ -188,6 +190,16 @@ const EvoDetails = (props) => {
                           star: star,
                         })
                         .then((res) => {
+                          sleep(2000);
+                          MyNFTlists[props.data.NFTIndex].formInput.rare = rare;
+                          MyNFTlists[props.data.NFTIndex].formInput.star = star;
+                          dispatch(
+                            updateMyLists({ MyNFTlists: [...MyNFTlists] })
+                          );
+                          props.data.setAfterEvo(
+                            MyNFTlists[props.data.NFTIndex]
+                          );
+                          alert("NFT 진화완료");
                           props.setLoading(false);
                           console.log(res.data.message);
                         });

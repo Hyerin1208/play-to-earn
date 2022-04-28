@@ -48,6 +48,8 @@ const MainContent = () => {
       });
       setSelllists(selllists);
       setLoading(false);
+    } else {
+      setLoading(false);
     }
   }, [MyNFTlists, checkChange]);
 
@@ -63,107 +65,112 @@ const MainContent = () => {
     infinite: false,
   };
 
-  if (Loading) {
-    return (
-      <div className={Loading ? "parentDisable" : ""} width="100%">
-        <div className="overlay-box">
-          <FadeLoader
-            size={150}
-            color={"#ffffff"}
-            css={override}
-            loading={Loading}
-            z-index={"1"}
-            text="Loading your content..."
-          />
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <div className="main__dash">
-          {/* <Navbar /> */}
-          <div className="sub__container">
-            <div className="section__one">
-              <Col className="col__one1">
-                <Earnings />
-              </Col>
-              <Col className="col__one2">
-                <MyRanking />
-              </Col>
-              <Col className="col__one3">
-                <MyLikes />
-              </Col>
-            </div>
-            <Row>
-              {/* 내가 소유하고 있는 NFTs */}
-              <h4>Collected</h4>
-              <br />
-              <div>
-                {/* 아래는 옵션 정보 */}
-                <h4 data-text="boost"></h4>
-              </div>
-              <div className="section__two">
-                <MyWrapper>
-                  <div className="slick-arrow">
-                    <Slider {...settings} style={{ width: 900 }}>
-                      {mylists.map((items, index) => {
-                        return (
-                          <Fragment key={index}>
-                            <Col key={index} className="my-items">
-                              <MySellCard
-                                item={items}
-                                setCheckChange={setCheckChange}
-                                checkChange={checkChange}
-                              />
-                            </Col>
-                          </Fragment>
-                        );
-                      })}
-                    </Slider>
-                  </div>
-                </MyWrapper>
-              </div>
-              <br />
-
-              {/* 내가 만든 NFTs */}
-              <h4>SellList</h4>
-              <br />
-              <div className="section__two">
-                <MyWrapper>
-                  <div className="slick-arrow">
-                    <Slider {...settings} style={{ width: 900 }}>
-                      {selllists.map((items, index) => {
-                        return (
-                          <Fragment key={index}>
-                            <Col key={index} className="my-items">
-                              <MySellCard
-                                item={items}
-                                setCheckChange={setCheckChange}
-                                checkChange={checkChange}
-                              />
-                            </Col>
-                          </Fragment>
-                        );
-                      })}
-                    </Slider>
-                  </div>
-                </MyWrapper>
-              </div>
-            </Row>
+  return (
+    <React.Fragment>
+      {Loading ? (
+        <div
+          className={Loading ? "parentDisable" : ""}
+          width="100%"
+          height="100%"
+        >
+          <div className="overlay-box">
+            <FadeLoader
+              size={150}
+              color={"#ffffff"}
+              css={override}
+              loading={Loading}
+              z-index={"1"}
+              text="Loading your content..."
+            />
           </div>
         </div>
-        {showModal && (
-          <SellModal
-            item={MyModal}
-            setShowModal={setShowModal}
-            setCheckChange={setCheckChange}
-            checkChange={checkChange}
-          />
-        )}
-      </React.Fragment>
-    );
-  }
+      ) : (
+        false
+      )}
+      <div className="main__dash">
+        {/* <Navbar /> */}
+        <div className="sub__container">
+          <div className="section__one">
+            <Col className="col__one1">
+              <Earnings />
+            </Col>
+            <Col className="col__one2">
+              <MyRanking />
+            </Col>
+            <Col className="col__one3">
+              <MyLikes />
+            </Col>
+          </div>
+          <Row>
+            {/* 내가 소유하고 있는 NFTs */}
+            <h4>Collected</h4>
+            <br />
+            <div>
+              {/* 아래는 옵션 정보 */}
+              <h4 data-text="boost"></h4>
+            </div>
+            <div className="section__two">
+              <MyWrapper>
+                <div className="slick-arrow">
+                  <Slider {...settings} style={{ width: 900 }}>
+                    {mylists.map((items, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <Col key={index} className="my-items">
+                            <MySellCard
+                              item={items}
+                              setCheckChange={setCheckChange}
+                              checkChange={checkChange}
+                            />
+                          </Col>
+                        </Fragment>
+                      );
+                    })}
+                  </Slider>
+                </div>
+              </MyWrapper>
+            </div>
+            <br />
+
+            {/* 내가 만든 NFTs */}
+            <h4>SellList</h4>
+            <br />
+            <div className="section__two">
+              <MyWrapper>
+                <div className="slick-arrow">
+                  <Slider {...settings} style={{ width: 900 }}>
+                    {selllists.map((items, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <Col key={index} className="my-items">
+                            <MySellCard
+                              item={items}
+                              setCheckChange={setCheckChange}
+                              checkChange={checkChange}
+                              setLoading={setLoading}
+                            />
+                          </Col>
+                        </Fragment>
+                      );
+                    })}
+                  </Slider>
+                </div>
+              </MyWrapper>
+            </div>
+          </Row>
+        </div>
+      </div>
+      {showModal && (
+        <SellModal
+          item={MyModal}
+          setShowModal={setShowModal}
+          setCheckChange={setCheckChange}
+          checkChange={checkChange}
+          setLoading={setLoading}
+        />
+      )}
+    </React.Fragment>
+  );
 };
 
 export default MainContent;

@@ -58,11 +58,12 @@ const Accept = (props) => {
             })
             .then((res) => {
               if (res.data.message === "ok") {
-                console.log("들어옴??");
+                sleep(2000);
                 alert("승인 완료");
                 props.setLoading(false);
               } else {
                 alert("에러확인");
+                sleep(2000);
                 props.setLoading(false);
               }
             });
@@ -103,7 +104,25 @@ const Accept = (props) => {
               onClick={async (e) => {
                 if (rankingDB !== null && ranker[i] !== undefined) {
                   if ((await checkApprove(ranker[i].address)) === false) {
-                    setClaim(ranker[i].address, changeCost(i)).then(() => {
+                    const snakeranker = rankingDB.snakeranker.findIndex(
+                      (data) => data.address === ranker[i].address
+                    );
+                    const tetrisranker = rankingDB.tetrisranker.findIndex(
+                      (data) => data.address === ranker[i].address
+                    );
+                    const puzzleranker = rankingDB.puzzleranker.findIndex(
+                      (data) => data.address === ranker[i].address
+                    );
+                    const mineranker = rankingDB.mineranker.findIndex(
+                      (data) => data.address === ranker[i].address
+                    );
+                    const result =
+                      (snakeranker !== -1 ? changeCost(snakeranker) : 0) +
+                      (tetrisranker !== -1 ? changeCost(tetrisranker) : 0) +
+                      (puzzleranker !== -1 ? changeCost(puzzleranker) : 0) +
+                      (mineranker !== -1 ? changeCost(mineranker) : 0);
+
+                    setClaim(ranker[i].address, result).then(() => {
                       e.target.setAttribute("hidden", "true");
                     });
                   } else {

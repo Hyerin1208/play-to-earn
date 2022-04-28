@@ -13,7 +13,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 
 const OwnerSellList = () => {
   const [nftArray, setnftArray] = useState([]);
-  const [Loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(false);
   const override = css`
     display: block;
     margin: 0 auto;
@@ -39,6 +39,7 @@ const OwnerSellList = () => {
   //오너 nft 판매 리스트
   async function ownerselllists() {
     if (CreateNFTContract !== null) {
+      setLoading(true);
       const lists = await CreateNFTContract.methods
         .OwnerSelllists()
         .call({ from: Account }, (error) => {
@@ -71,6 +72,7 @@ const OwnerSellList = () => {
       );
       setnftArray(result);
     }
+    setLoading(false);
   }
 
   const settings = {
@@ -85,40 +87,43 @@ const OwnerSellList = () => {
     infinite: false,
   };
 
-  if (Loading) {
-    return (
-      <div className={Loading ? "parentDisable" : ""} width="100%">
-        <div className="overlay-box">
-          <FadeLoader
-            size={150}
-            color={"#ffffff"}
-            css={override}
-            loading={Loading}
-            z-index={"1"}
-            text="Loading your content..."
-          />
+  return (
+    <div>
+      {Loading ? (
+        <div
+          className={Loading ? "parentDisable" : ""}
+          width="100%"
+          height="100%"
+        >
+          <div className="overlay-box">
+            <FadeLoader
+              size={150}
+              color={"#ffffff"}
+              css={override}
+              loading={Loading}
+              z-index={"1"}
+              text="Loading your content..."
+            />
+          </div>
         </div>
+      ) : (
+        false
+      )}
+      {/* <button onClick={() => mynftlists()}>마이리스트</button> */}
+      <div className="slick-arrow">
+        <Slider {...settings} style={{ width: 1200 }}>
+          {nftArray.map((items, index) => {
+            return (
+              // <motion.div key={index} className="my-items">
+              <Col key={index} className="my-items">
+                <MySellCard item={items}></MySellCard>
+              </Col>
+            );
+          })}
+        </Slider>
       </div>
-    );
-  } else {
-    return (
-      <div>
-        {/* <button onClick={() => mynftlists()}>마이리스트</button> */}
-        <div className="slick-arrow">
-          <Slider {...settings} style={{ width: 1200 }}>
-            {nftArray.map((items, index) => {
-              return (
-                // <motion.div key={index} className="my-items">
-                <Col key={index} className="my-items">
-                  <MySellCard item={items}></MySellCard>
-                </Col>
-              );
-            })}
-          </Slider>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default OwnerSellList;

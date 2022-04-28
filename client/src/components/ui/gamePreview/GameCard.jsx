@@ -16,6 +16,9 @@ const GameCard = (props) => {
     display: block;
     margin: 0 auto;
     border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
   `;
   const [Loading, setLoading] = useState(false);
   const { id, title, imgUrl, text } = props.item;
@@ -38,6 +41,7 @@ const GameCard = (props) => {
           .balanceOf(account)
           .call();
         if (mybalance !== 0) {
+          sleep(2000);
           setLoading(false);
           setShowModal(true);
         } else {
@@ -78,51 +82,54 @@ const GameCard = (props) => {
     }
   }
 
-  if (Loading) {
-    return (
-      <div className={Loading ? "parentDisable" : ""} width="100%">
-        <div className="overlay-box">
-          <FadeLoader
-            size={150}
-            color={"#ffffff"}
-            css={override}
-            loading={Loading}
-            z-index={"1"}
-            text="Loading your content..."
-          />
+  return (
+    <>
+      <div className="gameCard__wrapper">
+        {Loading ? (
+          <div
+            className={Loading ? "parentDisable" : ""}
+            width="100%"
+            height="100%"
+          >
+            <div className="overlay-box">
+              <FadeLoader
+                size={150}
+                color={"#ffffff"}
+                css={override}
+                loading={Loading}
+                z-index={"1"}
+                text="Loading your content..."
+              />
+            </div>
+          </div>
+        ) : (
+          false
+        )}
+        <div className="gamecard__img">
+          <img src={imgUrl} alt="" />
+        </div>
+
+        <div className="card__body">
+          <Col>
+            <div className="single__game__card">
+              <h3 className="gameCard__title">{title}</h3>
+              <p className="gameCard__text">{text}</p>
+
+              <button
+                className="gamecard__btn"
+                onClick={() => {
+                  readytoplay();
+                }}
+              >
+                Go to this game
+              </button>
+              {showGame(showModal)}
+            </div>
+          </Col>
         </div>
       </div>
-    );
-  } else {
-    return (
-      <>
-        <div className="gameCard__wrapper">
-          <div className="gamecard__img">
-            <img src={imgUrl} alt="" />
-          </div>
-
-          <div className="card__body">
-            <Col>
-              <div className="single__game__card">
-                <h3 className="gameCard__title">{title}</h3>
-                <p className="gameCard__text">{text}</p>
-
-                <button
-                  className="gamecard__btn"
-                  onClick={() => {
-                    readytoplay();
-                  }}
-                >
-                  Go to this game
-                </button>
-                {showGame(showModal)}
-              </div>
-            </Col>
-          </div>
-        </div>
-      </>
-    );
-  }
+    </>
+  );
 };
 
 export default GameCard;

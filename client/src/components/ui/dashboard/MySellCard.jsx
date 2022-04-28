@@ -16,8 +16,6 @@ import {
   updateMyLists,
   updateSellLists,
 } from "../../../redux/actions";
-import { utils } from "ethers";
-import axios from "axios";
 
 const NftSellCard = (props) => {
   const MyModal = useSelector((state) => state.AppState.MyModal);
@@ -31,11 +29,11 @@ const NftSellCard = (props) => {
 
   const stars = Array(5).fill(1);
 
-  const [testdata, setTestdata] = useState(null);
   function sleep(ms) {
     const wakeUpTime = Date.now() + ms;
     while (Date.now() < wakeUpTime) {}
   }
+
   useEffect(() => {
     return () => {
       dispatch(
@@ -122,6 +120,7 @@ const NftSellCard = (props) => {
             onClick={async () => {
               if (CreateNFTContract !== null) {
                 if (window.confirm("판매를 취소하시겠습니까?")) {
+                  props.setLoading(true);
                   await CreateNFTContract.methods
                     .changeSellState(Number(props.item.formInput.tokenid))
                     .send({ from: account, gas: 3000000 })
@@ -153,6 +152,8 @@ const NftSellCard = (props) => {
                           })
                         );
                       }
+                      sleep(2000);
+                      props.setLoading(false);
                       props.setCheckChange(!props.checkChange);
                     });
                 }
