@@ -147,6 +147,7 @@ const MainContent = () => {
                               item={items}
                               setCheckChange={setCheckChange}
                               checkChange={checkChange}
+                              setLoading={setLoading}
                             />
                           </Col>
                         </Fragment>
@@ -165,6 +166,7 @@ const MainContent = () => {
           setShowModal={setShowModal}
           setCheckChange={setCheckChange}
           checkChange={checkChange}
+          setLoading={setLoading}
         />
       )}
     </React.Fragment>

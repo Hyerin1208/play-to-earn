@@ -14,28 +14,30 @@ import { css } from "@emotion/react";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const NftCard = (props) => {
+  const [Loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const account = useSelector((state) => state.AppState.account);
   const isUser = useSelector((state) => state.AppState.isUser);
-  const Navi = useNavigate();
   const stars = Array(5).fill(1);
-  const [testdata, setTestdata] = useState(null);
+  const Navi = useNavigate();
 
   const override = css`
     display: block;
     margin: 0 auto;
     border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
   `;
-  const [loading, setLoading] = useState(false);
 
   return (
     <div>
-      {loading ? (
+      {Loading ? (
         <FadeLoader
           size={150}
           color={"#4512bc"}
           css={override}
-          loading={loading}
+          loading={Loading}
         />
       ) : (
         <div className="single__nft__card">
