@@ -26,7 +26,7 @@ const Accept = (props) => {
   useEffect(async () => {
     if (account !== null) {
       await axios
-        .post(`http://localhost:5000/game/ranking`, { address: account })
+        .post(`http://15.165.17.43:5000/game/ranking`, { address: account })
         .then(async (response) => {
           const data = await response.data;
           setRankingDB(data);
@@ -36,7 +36,7 @@ const Accept = (props) => {
 
   async function checkApprove(address) {
     const result = await axios
-      .post(`http://localhost:5000/game/getclaim`, { address: address })
+      .post(`http://15.165.17.43:5000/game/getclaim`, { address: address })
       .then((res) => res.data.message);
     return await result;
   }
@@ -52,18 +52,18 @@ const Accept = (props) => {
         .send({ from: account, gas: 3000000 })
         .then(() => {
           axios
-            .post(`http://localhost:5000/game/setclaim`, {
+            .post(`http://15.165.17.43:5000/game/setclaim`, {
               address: address,
               claim: true,
             })
             .then((res) => {
               if (res.data.message === "ok") {
-                sleep(2000);
+                //sleep(2000);
                 alert("승인 완료");
                 props.setLoading(false);
               } else {
                 alert("에러확인");
-                sleep(2000);
+                //sleep(2000);
                 props.setLoading(false);
               }
             });

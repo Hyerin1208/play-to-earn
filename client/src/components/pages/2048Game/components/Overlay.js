@@ -29,7 +29,7 @@ export const Overlay = ({ handleReset, score }) => {
       .MyNFTlists()
       .call({ from: account }, (error) => {
         if (!error) {
-          sleep(2000);
+          //sleep(2000);
           console.log("send ok");
         } else {
           console.log(error);
@@ -75,7 +75,7 @@ export const Overlay = ({ handleReset, score }) => {
       return starD;
     }
 
-    const puzzleData = await axios.post(`http://localhost:5000/game/2048`, {
+    const puzzleData = await axios.post(`http://15.165.17.43:5000/game/2048`, {
       score: point * (test() * jest()),
       account: account,
     });

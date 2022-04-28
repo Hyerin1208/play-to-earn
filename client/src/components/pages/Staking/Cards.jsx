@@ -104,7 +104,7 @@ const Cards = (props) => {
 
   // useEffect(async () => {
   //   await axios
-  //     .post("http://localhost:5000/staking/rewards", { address: account })
+  //     .post("http://15.165.17.43:5000/staking/rewards", { address: account })
   //     .then((res) => {
   //       const checkstaking = res.data.checkstaking;
   //       const checkuser = res.data.checkuser;
@@ -127,7 +127,7 @@ const Cards = (props) => {
   }
   // useEffect(async () => {
   //   await axios
-  //     .post("http://localhost:5000/staking/amount", {
+  //     .post("http://15.165.17.43:5000/staking/amount", {
   //       address: account,
   //     })
   //     .then(async (res) => {

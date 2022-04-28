@@ -74,7 +74,7 @@ const Staking = () => {
   }
   useEffect(async () => {
     await axios
-      .post("http://localhost:5000/staking/amount", {
+      .post("http://15.165.17.43:5000/staking/amount", {
         address: account,
       })
       .then(async (res) => {
@@ -91,7 +91,7 @@ const Staking = () => {
 
   useEffect(async () => {
     await axios
-      .post("http://localhost:5000/staking/rewards", { address: account })
+      .post("http://15.165.17.43:5000/staking/rewards", { address: account })
       .then((res) => {
         const checkstaking = res.data.checkstaking;
         const checkuser = res.data.checkuser;
@@ -390,7 +390,7 @@ const Staking = () => {
                               );
                               console.log(amount);
                               await axios
-                                .post("http://localhost:5000/staking", {
+                                .post("http://15.165.17.43:5000/staking", {
                                   stakerId: stakerId,
                                   address: address,
                                   amount: amount,
@@ -404,7 +404,7 @@ const Staking = () => {
                                       ).toString(),
                                     })
                                   );
-                                  sleep(2000);
+                                  //sleep(2000);
                                   setLoading(false);
                                   alert("AAT Staking Success!");
                                   console.log(res.data.message);
@@ -458,7 +458,7 @@ const Staking = () => {
                             )
                           );
                           await axios
-                            .post("http://localhost:5000/staking", {
+                            .post("http://15.165.17.43:5000/staking", {
                               stakerId: stakerId,
                               address: address,
                               amount: amount,
@@ -478,7 +478,7 @@ const Staking = () => {
                                   ).toString(),
                                 })
                               );
-                              sleep(2000);
+                              //sleep(2000);
                               setLoading(false);
                               alert("AAT Unstaking Success!");
                               console.log(res.data.message);
@@ -508,7 +508,7 @@ const Staking = () => {
                         .send({ from: account, gas: 3000000 })
                         .then((res) => {
                           console.log(res);
-                          sleep(2000);
+                          //sleep(2000);
                           setLoading(false);
                           alert("Calim Rewards Success!");
                         })

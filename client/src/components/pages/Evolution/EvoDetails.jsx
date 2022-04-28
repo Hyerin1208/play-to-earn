@@ -173,7 +173,7 @@ const EvoDetails = (props) => {
                         if (!error) {
                           console.log("send ok");
                         } else {
-                          sleep(2000);
+                          //sleep(2000);
                           props.setLoading(false);
                           console.log(error);
                         }
@@ -184,13 +184,13 @@ const EvoDetails = (props) => {
                       const rare = res.events.EvoResult.returnValues.rare;
                       const star = res.events.EvoResult.returnValues.star;
                       await axios
-                        .post(`http://localhost:5000/nfts/upgrade`, {
+                        .post(`http://15.165.17.43:5000/nfts/upgrade`, {
                           tokenId: tokenId,
                           rare: rare,
                           star: star,
                         })
                         .then((res) => {
-                          sleep(2000);
+                          //sleep(2000);
                           MyNFTlists[props.data.NFTIndex].formInput.rare = rare;
                           MyNFTlists[props.data.NFTIndex].formInput.star = star;
                           dispatch(
@@ -240,7 +240,7 @@ const EvoDetails = (props) => {
               //     props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
 
               // axios
-              //   .post(`http://localhost:5000/nfts/upgrade`, {
+              //   .post(`http://15.165.17.43:5000/nfts/upgrade`, {
               //     tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
               //     rare: listsForm[props.data.NFTIndex].formInput.rare,
               //     star: listsForm[props.data.NFTIndex].formInput.star,

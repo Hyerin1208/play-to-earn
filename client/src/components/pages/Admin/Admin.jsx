@@ -49,7 +49,7 @@ const Admin = () => {
   useEffect(() => {
     if (account !== null) {
       axios
-        .post(`http://localhost:5000/game/ranking`, { address: account })
+        .post(`http://15.165.17.43:5000/game/ranking`, { address: account })
         .then((response) => {
           const data = response.data;
           setRankingDB(data);
@@ -63,7 +63,7 @@ const Admin = () => {
 
   const testfunc = async () => {
     await axios
-      .post("http://localhost:5000/staking/rewards", { address: account })
+      .post("http://15.165.17.43:5000/staking/rewards", { address: account })
       .then(async (res) => {
         const userarry = res.data.checkstaking;
         if (userarry.length > 0) {
@@ -108,7 +108,7 @@ const Admin = () => {
       }
     }
     await axios
-      .post(`http://localhost:5000/ranking`, {
+      .post(`http://15.165.17.43:5000/ranking`, {
         rankingDB: rankingDB,
         address: temp,
         owner: account,
