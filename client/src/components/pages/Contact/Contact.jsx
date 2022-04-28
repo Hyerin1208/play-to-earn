@@ -29,7 +29,7 @@ const Contact = () => {
 
   useEffect(async () => {
     await axios
-      .post(`http://15.165.17.43:5000/user/contact`, {
+      .post(`http://localhost:5000/user/contact`, {
         address: account,
       })
       .then((res) => {

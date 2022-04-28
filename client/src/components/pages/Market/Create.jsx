@@ -59,6 +59,11 @@ const Create = () => {
   const MyNFTlists = useSelector((state) => state.AppState.MyNFTlists);
   const dispatch = useDispatch();
 
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
+
   async function onChange(e) {
     const file = e.target.files[0];
     try {
@@ -106,6 +111,7 @@ const Create = () => {
       .CreateNFTinContract(url, utils.parseEther(price.toString()))
       .send({ from: Account, gas: 3000000 }, (error, data) => {
         if (!error) {
+          sleep(2000);
           console.log("send ok");
         } else {
           setLoading(false);
@@ -122,6 +128,7 @@ const Create = () => {
         const tokenURI = await CreateNFTContract.methods
           .tokenURI(parseInt(tokenId))
           .call();
+        sleep(2000);
         const meta = await axios.get(tokenURI).then((res) => res.data);
         let NFTInfo = {
           fileUrl: await meta.image,
@@ -136,7 +143,7 @@ const Create = () => {
           },
         };
         await axios
-          .post(`http://15.165.17.43:5000/nfts`, {
+          .post(`http://localhost:5000/nfts`, {
             tokenId: tokenId,
             address: Account,
             img: await meta.image,
@@ -168,114 +175,116 @@ const Create = () => {
       });
   }
 
-  if (Loading) {
-    return (
-      <div className={Loading ? "parentDisable" : ""} width="100%">
-        <div className="overlay-box">
-          <FadeLoader
-            size={150}
-            color={"#ffffff"}
-            css={override}
-            loading={Loading}
-            z-index={"1"}
-            text="Loading your content..."
-          />
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <CommonSection title="Create Item" />
+  return (
+    <>
+      <CommonSection title="Create Item" />
+      <div className="create__box">
+        {Loading ? (
+          <div
+            className={Loading ? "parentDisable" : ""}
+            width="100%"
+            height="100%"
+          >
+            <div className="overlay-box">
+              <FadeLoader
+                size={150}
+                color={"#ffffff"}
+                css={override}
+                loading={Loading}
+                z-index={"1"}
+                text="Loading your content..."
+              />
+            </div>
+          </div>
+        ) : (
+          false
+        )}
+        <Container>
+          <Row>
+            <Col lg="3" md="4" sm="6">
+              <h5 className="preview__item">Preview Item</h5>
+              {/* 아래 이미지 preview 변경이 아직 안됨 */}
+              <NftCard item={NFTform} default={true} />
+              {/* {fileUrl && <NftCard item={item} src={fileUrl} />} */}
+            </Col>
 
-        <div className="create__box">
-          <Container>
-            <Row>
-              <Col lg="3" md="4" sm="6">
-                <h5 className="preview__item">Preview Item</h5>
-                {/* 아래 이미지 preview 변경이 아직 안됨 */}
-                <NftCard item={NFTform} default={true} />
-                {/* {fileUrl && <NftCard item={item} src={fileUrl} />} */}
-              </Col>
-
-              <Col lg="9" md="8" sm="6">
-                <div className="create__input">
-                  <form>
-                    <div className="form__input">
-                      <label htmlFor="">Upload File</label>
-                      <input
-                        type="file"
-                        name="Asset"
-                        className="upload__input"
-                        width="350"
-                        src={NFTform.fileUrl}
-                        onChange={onChange}
-                      />
-                      {/* {fileUrl && (
+            <Col lg="9" md="8" sm="6">
+              <div className="create__input">
+                <form>
+                  <div className="form__input">
+                    <label htmlFor="">Upload File</label>
+                    <input
+                      type="file"
+                      name="Asset"
+                      className="upload__input"
+                      width="350"
+                      src={NFTform.fileUrl}
+                      onChange={onChange}
+                    />
+                    {/* {fileUrl && (
                       <img className="rounded mt-4" width="350" src={fileUrl} />
                     )} */}
-                    </div>
+                  </div>
 
-                    <div className="form__input">
-                      <label htmlFor="">Title</label>
-                      <input
-                        type="text"
-                        placeholder="Enter title"
-                        onChange={(e) => {
-                          NFTform.formInput.name = e.target.value;
-                          setNFTform({ ...NFTform });
-                        }}
-                      />
-                    </div>
+                  <div className="form__input">
+                    <label htmlFor="">Title</label>
+                    <input
+                      type="text"
+                      placeholder="Enter title"
+                      onChange={(e) => {
+                        NFTform.formInput.name = e.target.value;
+                        setNFTform({ ...NFTform });
+                      }}
+                    />
+                  </div>
 
-                    <div className="form__input">
-                      <label htmlFor="">Price</label>
-                      <input
-                        type="number"
-                        placeholder="Enter price for one item (AAT)"
-                        onChange={(e) => {
-                          NFTform.formInput.price = e.target.value;
-                          setNFTform({ ...NFTform });
-                        }}
-                      />
-                    </div>
+                  <div className="form__input">
+                    <label htmlFor="">Price</label>
+                    <input
+                      type="number"
+                      placeholder="Enter price for one item (AAT)"
+                      onChange={(e) => {
+                        NFTform.formInput.price = e.target.value;
+                        setNFTform({ ...NFTform });
+                      }}
+                    />
+                  </div>
 
-                    <div className="form__input">
-                      <label htmlFor="">Description</label>
-                      <textarea
-                        name=""
-                        id=""
-                        rows="8"
-                        placeholder="Enter Description"
-                        className="w-100"
-                        onChange={(e) => {
-                          NFTform.formInput.description = e.target.value;
-                          setNFTform({ ...NFTform });
-                        }}
-                      ></textarea>
-                    </div>
-                  </form>
-                </div>
-              </Col>
+                  <div className="form__input">
+                    <label htmlFor="">Description</label>
+                    <textarea
+                      name=""
+                      id=""
+                      rows="8"
+                      placeholder="Enter Description"
+                      className="w-100"
+                      onChange={(e) => {
+                        NFTform.formInput.description = e.target.value;
+                        setNFTform({ ...NFTform });
+                      }}
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+            </Col>
 
-              <button
-                className="create__btn"
-                onClick={async () => {
-                  await CreateNFT();
-                }}
-                style={{ marginTop: "20px" }}
-              >
-                <span>
-                  <i className="ri-edit-line"></i>
-                  Create
-                </span>
-              </button>
-            </Row>
-          </Container>
-        </div>
-      </>
-    );
-  }
+            <button
+              className="create__btn"
+              onClick={async () => {
+                await CreateNFT();
+              }}
+              style={{ marginTop: "20px" }}
+            >
+              <span>
+                <i className="ri-edit-line"></i>
+                Create
+              </span>
+            </button>
+          </Row>
+        </Container>
+      </div>
+    </>
+  );
 };
 
 export default Create;

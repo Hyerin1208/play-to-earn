@@ -44,7 +44,10 @@ const EvoProfile = (props) => {
       window.location.href = "/error";
     }
   }, [CreateNFTContract]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   //내 nft 리스트
   async function mynftlists() {
     if ((await CreateNFTContract) === null) {

@@ -117,7 +117,10 @@ export const refreshSellLists = (payload) => {
     payload: payload,
   };
 };
-
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms;
+  while (Date.now() < wakeUpTime) {}
+}
 export function connect() {
   return async (dispatch) => {
     try {
@@ -141,12 +144,15 @@ export function connect() {
               NFT_address
             );
             const Owner = await CreateNFTContract.methods.owner().call();
+            sleep(2000);
             const lists = await CreateNFTContract.methods.Selllists().call();
+            sleep(2000);
             const listsForm = await Promise.all(
               lists.map(async (i) => {
                 const tokenURI = await CreateNFTContract.methods
                   .tokenURI(i.tokenId)
                   .call();
+                sleep(2000);
                 const meta = await axios.get(tokenURI).then((res) => res.data);
                 let item = {
                   fileUrl: await meta.image,
@@ -164,7 +170,7 @@ export function connect() {
               })
             );
             await axios
-              .post("http://15.165.17.43:5000/user/owner", {
+              .post("http://localhost:5000/user/owner", {
                 address: Owner,
                 OwnerImage: OwnerImage,
               })

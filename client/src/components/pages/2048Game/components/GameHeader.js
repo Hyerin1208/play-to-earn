@@ -12,7 +12,7 @@ export const GameHeader = ({ score, handleReset, highScore, setPopup }) => {
 
   useEffect(async () => {
     const puzzleData = await axios.post(
-      `http://15.165.17.43:5000/game/puzzleScore`,
+      `http://localhost:5000/game/puzzleScore`,
       { account: account }
     );
     if (puzzleData.data !== null) {

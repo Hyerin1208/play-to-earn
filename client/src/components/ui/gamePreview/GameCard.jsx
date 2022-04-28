@@ -26,7 +26,10 @@ const GameCard = (props) => {
   );
   const account = useSelector((state) => state.AppState.account);
   const Navigate = useNavigate();
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   async function readytoplay() {
     if (CreateNFTContract !== null) {
       if (isUser) {

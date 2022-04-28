@@ -61,7 +61,7 @@ const Setup = () => {
 
     setLoading(true);
     const checkuser = await axios
-      .post("http://15.165.17.43:5000/user/checkuser", {
+      .post("http://localhost:5000/user/checkuser", {
         address: account,
         nick: form.nick,
         email: form.email,
@@ -76,7 +76,10 @@ const Setup = () => {
       });
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-
+      function sleep(ms) {
+        const wakeUpTime = Date.now() + ms;
+        while (Date.now() < wakeUpTime) {}
+      }
       let price = 1000;
       await CreateNFTContract.methods
         .CreateNFTinContract(url, utils.parseEther(price.toString()))
@@ -107,7 +110,7 @@ const Setup = () => {
             },
           };
           await axios
-            .post(`http://15.165.17.43:5000/user/register`, {
+            .post(`http://localhost:5000/user/register`, {
               tokenId: tokenId,
               address: account,
               name: SelectNFT.name,

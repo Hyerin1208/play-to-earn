@@ -26,7 +26,10 @@ const SellModal = (props) => {
   useEffect(async () => {
     setLoading(null);
   }, [CreateNFTContract, Account]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   //nft 판매
   async function sellnft(tokenId, price) {
     if (CreateNFTContract === null) {

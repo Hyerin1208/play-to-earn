@@ -63,7 +63,10 @@ const Tetris = ({ setShowModal }) => {
     mynftlists();
     setLoading(false);
   }, [CreateNFTContract]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   // 내 nft 리스트
   async function mynftlists() {
     const lists = await CreateNFTContract.methods
@@ -80,7 +83,7 @@ const Tetris = ({ setShowModal }) => {
 
   useEffect(async () => {
     const tetrisData = await axios.post(
-      `http://15.165.17.43:5000/game/tetrisScore`,
+      `http://localhost:5000/game/tetrisScore`,
       { account: account }
     );
     if (tetrisData.data !== null) {
@@ -305,13 +308,10 @@ const Tetris = ({ setShowModal }) => {
         return starD;
       }
 
-      const tetrisData = await axios.post(
-        `http://15.165.17.43:5000/game/tetris`,
-        {
-          data: data * (test() * jest()),
-          account: account,
-        }
-      );
+      const tetrisData = await axios.post(`http://localhost:5000/game/tetris`, {
+        data: data * (test() * jest()),
+        account: account,
+      });
 
       if (tetrisData.data.bool === true) {
         alert(

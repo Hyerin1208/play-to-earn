@@ -14,7 +14,10 @@ const MyDash = () => {
     (state) => state.AppState.CreateNFTContract
   );
   const account = useSelector((state) => state.AppState.account);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(async () => {
     console.log("여기실행?");
     if (CreateNFTContract !== null) {

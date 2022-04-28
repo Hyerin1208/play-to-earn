@@ -23,7 +23,10 @@ const BoostInfo = ({ setShowModal }) => {
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   // 내 nft 리스트
   async function mynftlists() {
     const lists = await CreateNFTContract.methods

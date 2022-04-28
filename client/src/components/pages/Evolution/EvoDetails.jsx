@@ -90,7 +90,10 @@ const EvoDetails = (props) => {
   const [isEvo, setIsEvo] = useState(false);
 
   const [Loading, setLoading] = useState(false);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(() => {
     return async () => {
       if (isEvo) {
@@ -179,7 +182,7 @@ const EvoDetails = (props) => {
                       const rare = res.events.EvoResult.returnValues.rare;
                       const star = res.events.EvoResult.returnValues.star;
                       await axios
-                        .post(`http://15.165.17.43:5000/nfts/upgrade`, {
+                        .post(`http://localhost:5000/nfts/upgrade`, {
                           tokenId: tokenId,
                           rare: rare,
                           star: star,
@@ -225,7 +228,7 @@ const EvoDetails = (props) => {
               //     props.data.setAfterEvo(listsForm[props.data.NFTIndex]);
 
               // axios
-              //   .post(`http://15.165.17.43:5000/nfts/upgrade`, {
+              //   .post(`http://localhost:5000/nfts/upgrade`, {
               //     tokenId: listsForm[props.data.NFTIndex].formInput.tokenid,
               //     rare: listsForm[props.data.NFTIndex].formInput.rare,
               //     star: listsForm[props.data.NFTIndex].formInput.star,

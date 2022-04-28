@@ -38,7 +38,10 @@ const EditProfile = (props) => {
       window.location.href = "/error";
     }
   }, []);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   //내 nft 리스트
   async function mynftlists() {
     if ((await CreateNFTContract) === null) {
@@ -84,7 +87,7 @@ const EditProfile = (props) => {
     if (seletedImg !== null) {
       props.setImageURL(seletedImg);
       await axios
-        .post("http://15.165.17.43:5000/user/img", {
+        .post("http://localhost:5000/user/img", {
           address: Account,
           image: seletedImg,
         })

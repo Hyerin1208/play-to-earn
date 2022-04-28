@@ -43,7 +43,10 @@ function MineGame({ setShowModal }) {
     mynftlists();
     setLoading(false);
   }, [CreateNFTContract]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   // 내 nft 리스트
   async function mynftlists() {
     const lists = await CreateNFTContract.methods
@@ -95,7 +98,7 @@ function MineGame({ setShowModal }) {
       return starD;
     }
 
-    const mineData = await axios.post(`http://15.165.17.43:5000/game/mine`, {
+    const mineData = await axios.post(`http://localhost:5000/game/mine`, {
       runtime: point * (test() * jest()),
       account: account,
     });

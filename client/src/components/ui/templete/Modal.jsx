@@ -39,7 +39,10 @@ const Modal = (props) => {
   `;
 
   const [loading, setLoading] = useState(false);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   useEffect(async () => {
     console.log(props);
     setLoading(null);
@@ -79,7 +82,7 @@ const Modal = (props) => {
             )
             .then(async (res) => {
               await axios
-                .post(`http://15.165.17.43:5000/history`, {
+                .post(`http://localhost:5000/history`, {
                   tokenId: res.events.GetNFTResult.returnValues.tokenId,
                   from: res.events.GetNFTResult.returnValues.from,
                   to: res.events.GetNFTResult.returnValues.to,

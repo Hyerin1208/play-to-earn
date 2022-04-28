@@ -32,7 +32,10 @@ const OwnerSellList = () => {
     ownerselllists([...nftArray].reverse());
     setLoading(false);
   }, [CreateNFTContract]);
-
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
   //오너 nft 판매 리스트
   async function ownerselllists() {
     if (CreateNFTContract !== null) {
