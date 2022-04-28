@@ -165,9 +165,9 @@ for(uint256 i=0; i < len; i++){
     function userStakeInfo(address _user)
         public
         view
-        returns (uint256 _tokensStaked, uint256 _availableRewards)
+        returns (uint256 _tokensStaked, uint256 _availableRewards, uint256 _unclaimedRewards)
     {
-        return (stakers[StakerId[_user]].amountStaked, availableRewards(_user));
+        return (stakers[StakerId[_user]].amountStaked, availableRewards(_user),stakers[StakerId[_user]].unclaimedRewards);
     }
 
     function availableRewards(address _user) internal view returns (uint256) {
