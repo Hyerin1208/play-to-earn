@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-// import { DragDropContext } from "react-beautiful-dnd";
 
 import Cards from "./Cards";
 
@@ -13,6 +12,9 @@ import { useSelector } from "react-redux";
 import { utils } from "ethers";
 import axios from "axios";
 
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
+
 // 아래는 임시데이터
 const coins = [
   { id: 1, symbol: "STAKE", amount: 200, color: "#FDC0C7", inAAT: 1.48 },
@@ -21,6 +23,14 @@ const coins = [
 ];
 
 const Staking = () => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
   const timerid = useRef(null);
   const timer = useSelector((state) => state.AppState.timer);
   const account = useSelector((state) => state.AppState.account);
@@ -33,6 +43,7 @@ const Staking = () => {
 
   const Mybalance = useSelector((state) => state.AppState.Mybalance);
 
+  const [Loading, setLoading] = useState(false);
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, setTimerHours] = useState("00");
   const [timerMinutes, setTimerMinutes] = useState("00");
@@ -86,12 +97,13 @@ const Staking = () => {
 
   useEffect(async () => {
     if (StakingTokenContract !== null && account !== null && stakerId !== 0) {
+      setLoading(true);
       check.current = setInterval(async () => {
         const result = await StakingTokenContract.methods
           .userStakeInfo(account)
           .call({ from: account });
-        console.log(result);
         setReward(utils.formatEther(result._availableRewards));
+        setLoading(false);
       }, 5000);
       return () => {
         clearInterval(check.current);
@@ -132,6 +144,26 @@ const Staking = () => {
 
   return (
     <Container>
+      {Loading ? (
+        <div
+          className={Loading ? "parentDisable" : ""}
+          width="100%"
+          height="100%"
+        >
+          <div className="overlay-box">
+            <FadeLoader
+              size={150}
+              color={"#ffffff"}
+              css={override}
+              loading={Loading}
+              z-index={"1"}
+              text="Loading your content..."
+            />
+          </div>
+        </div>
+      ) : (
+        false
+      )}
       <Row>
         <Col sm="3">
           <main className="main__stake">
@@ -209,7 +241,7 @@ const Staking = () => {
             </svg>
           </main>
           <div className="widget__form">
-            <Cards />
+            <Cards setLoading={setLoading} />
           </div>
         </Col>
         <Col sm="8">
@@ -316,6 +348,7 @@ const Staking = () => {
                   className="stake__btn"
                   onClick={async (e) => {
                     if (StakingTokenContract !== null) {
+                      setLoading(true);
                       console.log(parseInt(utils.parseUnits(stake, 18)));
                       console.log(utils.parseUnits(stake, 18));
                       await AmusementArcadeTokenContract.methods
@@ -348,10 +381,14 @@ const Staking = () => {
                                 })
                                 .then((res) => {
                                   setStakingAmount(amount);
+                                  sleep(2000);
+                                  setLoading(false);
+                                  alert("AAT Staking Success!");
                                   console.log(res.data.message);
                                 });
                             })
                             .catch(() => {
+                              setLoading(false);
                               alert(
                                 "최소금액은 500 AAT 입니다.\n금액을 확인해 주세요"
                               );
@@ -382,6 +419,7 @@ const Staking = () => {
                   onClick={async () => {
                     console.log(utils.parseUnits(unstake, 18));
                     if (StakingTokenContract !== null) {
+                      setLoading(true);
                       await StakingTokenContract.methods
                         .withdraw(utils.parseUnits(unstake, 18))
                         .send({ from: account, gas: 3000000 })
@@ -410,10 +448,14 @@ const Staking = () => {
                                 utils.formatEther(result.unclaimedRewards)
                               );
                               setStakingAmount(amount);
+                              sleep(2000);
+                              setLoading(false);
+                              alert("AAT Unstaking Success!");
                               console.log(res.data.message);
                             });
                         })
                         .catch(() => {
+                          setLoading(false);
                           alert("스테이킹 한 금액과 다릅니다.");
                         });
                     }
@@ -430,11 +472,20 @@ const Staking = () => {
                   className="claim__rewards"
                   onClick={async () => {
                     if (StakingTokenContract !== null) {
+                      setLoading(true);
                       await StakingTokenContract.methods
                         .claimRewards()
                         .send({ from: account, gas: 3000000 })
-                        .then((res) => console.log(res))
-                        .catch((err) => console.log(err));
+                        .then((res) => {
+                          console.log(res);
+                          sleep(2000);
+                          setLoading(false);
+                          alert("Calim Rewards Success!");
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          setLoading(false);
+                        });
                     }
                   }}
                 >

@@ -8,9 +8,9 @@ import "./cards.css";
 import { utils } from "ethers";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Loading from "../../ui/templete/Loading";
 
-const Cards = () => {
+const Cards = (props) => {
+  const [Loading, setLoading] = useState(false);
   const [stakerId, setStakerId] = useState(0);
   const [stakingAmount, setStakingAmount] = useState(0);
   const [stakers, setStakers] = useState(0);
@@ -28,8 +28,6 @@ const Cards = () => {
   const check = useRef(null);
 
   let RewardNum = Math.floor(reward / unclaimreward + "\n");
-
-  console.log(unclaimreward);
 
   const ITEMS = [
     {
@@ -113,23 +111,26 @@ const Cards = () => {
       .then(async (res) => {
         setStakingAmount(res.data.amount);
         if (res.data.stakerId !== null) {
+          setLoading(true);
           setStakerId(res.data.stakerId);
           const result = await StakingTokenContract.methods
             .stakers(res.data.stakerId)
             .call();
           setUnclaimreward(utils.formatEther(result.unclaimedRewards));
+          setLoading(false);
         }
       });
   }, []);
 
   useEffect(async () => {
     if (StakingTokenContract !== null && account !== null && stakerId !== 0) {
+      setLoading(true);
       check.current = setInterval(async () => {
         const result = await StakingTokenContract.methods
           .userStakeInfo(account)
           .call({ from: account });
-        console.log(result);
         setReward(utils.formatEther(result._availableRewards));
+        setLoading(false);
       }, 5000);
       return () => {
         clearInterval(check.current);

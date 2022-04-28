@@ -4,12 +4,12 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { UilTimes } from "@iconscout/react-unicons";
-import ReactLoaing from "react-loading";
 import Chart from "react-apexcharts";
 
 import "./card.css";
 
 const Card = (props) => {
+  const [Loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -114,8 +114,6 @@ function ExpandedCard({ param, setExpanded }) {
       },
     },
   };
-
-  const [Loading, setLoading] = useState(true);
 
   return (
     <motion.div
