@@ -58,11 +58,12 @@ const Accept = (props) => {
             })
             .then((res) => {
               if (res.data.message === "ok") {
-                console.log("들어옴??");
+                sleep(2000);
                 alert("승인 완료");
                 props.setLoading(false);
               } else {
                 alert("에러확인");
+                sleep(2000);
                 props.setLoading(false);
               }
             });
