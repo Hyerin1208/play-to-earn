@@ -43,9 +43,33 @@
   margin: 20px 0 20px 45%;
 }
 
+.news__checkbox {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.checked__box {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  background: #fff;
+  border: 2px #ddd solid;
+  margin-right: 4px;
+}
+
 .subscribe__btn:hover {
   background: white;
   color: #343444;
+}
+
+.checked__box--active {
+  border-color: purple;
+  background: purple;
 }
 
 @media only screen and (max-width: 425px) {

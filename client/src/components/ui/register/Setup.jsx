@@ -4,18 +4,26 @@ import Card from "react-bootstrap/Card";
 import { Col, Container, Row } from "reactstrap";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import "./setup.css";
+import { css } from "@emotion/react";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import SelectCard from "./SelectCard";
 import { utils } from "ethers";
 import { updateMyLists } from "../../../redux/actions";
-import { css } from "@emotion/react";
-import FadeLoader from "react-spinners/FadeLoader";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 const Setup = () => {
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: #5900ff;
+    width: 100%;
+    height: 100%;
+    background: #34343465;
+  `;
   const dispatch = useDispatch();
   const SelectNFT = useSelector((state) => state.NftsReducer);
 
@@ -36,19 +44,12 @@ const Setup = () => {
   });
 
   const [checkItem, setCheckItem] = useState(null);
-  const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: #5900ff;
-  `;
-  const [loading, setLoading] = useState(false);
+  const [Loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 5000);
-  // }, []);
+  function sleep(ms) {
+    const wakeUpTime = Date.now() + ms;
+    while (Date.now() < wakeUpTime) {}
+  }
 
   async function addSignUp() {
     if (chainid === 1337 ? false : networkid === chainid ? false : true)
@@ -59,7 +60,6 @@ const Setup = () => {
     if (!emailRegex.test(form.email))
       return alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
 
-    setLoading(true);
     const checkuser = await axios
       .post("http://15.165.17.43:5000/user/checkuser", {
         address: account,
@@ -76,18 +76,16 @@ const Setup = () => {
       });
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      function sleep(ms) {
-        const wakeUpTime = Date.now() + ms;
-        while (Date.now() < wakeUpTime) {}
-      }
       let price = 1000;
+      setLoading(true);
       await CreateNFTContract.methods
         .CreateNFTinContract(url, utils.parseEther(price.toString()))
         .send({ from: account, gas: 3000000 }, (error) => {
           if (!error) {
             console.log("send ok");
-            setLoading(true);
           } else {
+            sleep(2000);
+            setLoading(false);
             console.log(error);
           }
         })
@@ -123,104 +121,116 @@ const Setup = () => {
             })
             .then(async (res) => {
               if (res.data.message === "ok") {
+                sleep(2000);
                 setLoading(false);
                 alert(`NFT발급 성공\n반갑습니다. ${form.nick}님`);
                 console.log(NFTInfo);
                 dispatch(updateMyLists({ MyNFTlists: [NFTInfo] }));
                 window.location.href = "/";
               } else {
+                sleep(2000);
                 setLoading(false);
                 alert("이미 발급된 번호입니다.");
               }
             });
         });
     } else {
+      sleep(2000);
       setLoading(false);
       alert("이미 가입되어있는 이메일 또는 닉네임 입니다.");
     }
   }
   return (
     <Fragment>
-      {loading ? (
-        <FadeLoader
-          size={150}
-          color={"#4512bc"}
-          css={override}
-          loading={loading}
-        />
+      {Loading ? (
+        <div
+          className={Loading ? "parentDisable" : ""}
+          width="100%"
+          height="100%"
+        >
+          <div className="overlay-box">
+            <FadeLoader
+              size={150}
+              color={"#ffffff"}
+              css={override}
+              loading={Loading}
+              z-index={"1"}
+              text="Loading your content..."
+            />
+          </div>
+        </div>
       ) : (
-        <Container className="setup__container">
-          <Row>
-            <Col lg="8" className="mb-3">
-              <div className="free__list__top">
-                <h3>User Registeration</h3>
+        false
+      )}
+      <Container className="setup__container">
+        <Row>
+          <Col lg="8" className="mb-3">
+            <div className="free__list__top">
+              <h3>User Registeration</h3>
+            </div>
+          </Col>
+          <div
+            border="light"
+            style={{
+              width: "30rem",
+              height: "27rem",
+            }}
+          >
+            <Card.Body>
+              <Card.Text>It's your CHOICS</Card.Text>
+              <Card.Img variant="top" src="" className="select_char" />
+              <div className="show__box">
+                <SelectCard
+                  check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
+                  item={{ form }}
+                />
               </div>
-            </Col>
+            </Card.Body>
+          </div>
+          <Col>
             <div
               border="light"
               style={{
-                width: "30rem",
-                height: "27rem",
+                maxwidth: "40rem",
+                height: "22rem",
+                marginBottom: "20px",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <Card.Body>
-                <Card.Text>It's your CHOICS</Card.Text>
-                <Card.Img variant="top" src="" className="select_char" />
-                <div className="show__box">
-                  <SelectCard
-                    check={{ checkItem: checkItem, setCheckItem: setCheckItem }}
-                    item={{ form }}
+                <Card.Text>Welcome !</Card.Text>
+                <div className="welcome__form">
+                  <label>Create Cool Nickname : </label>
+                  <input
+                    type="text"
+                    onChange={(e) => setForm({ ...form, nick: e.target.value })}
+                    placeholder="Please enter your name using only letters."
+                  />
+                  <br />
+                  <label>E-mail : </label>
+                  <input
+                    type="email"
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                    placeholder="Enter your E-mail address"
                   />
                 </div>
+                <br />
+                <button
+                  onClick={async () => {
+                    await addSignUp();
+                  }}
+                  className="welcome__btn"
+                >
+                  Let's Get Started
+                </button>
               </Card.Body>
             </div>
-            <Col>
-              <div
-                border="light"
-                style={{
-                  maxwidth: "40rem",
-                  height: "22rem",
-                  marginBottom: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Card.Body>
-                  <Card.Text>Welcome !</Card.Text>
-                  <div className="welcome__form">
-                    <label>Create Cool Nickname : </label>
-                    <input
-                      type="text"
-                      onChange={(e) =>
-                        setForm({ ...form, nick: e.target.value })
-                      }
-                      placeholder="Please enter your name using only letters."
-                    />
-                    <br />
-                    <label>E-mail : </label>
-                    <input
-                      type="email"
-                      onChange={(e) =>
-                        setForm({ ...form, email: e.target.value })
-                      }
-                      placeholder="Enter your E-mail address"
-                    />
-                  </div>
-                  <br />
-                  <button
-                    onClick={async () => {
-                      await addSignUp();
-                    }}
-                    className="welcome__btn"
-                  >
-                    Let's Get Started
-                  </button>
-                </Card.Body>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      )}
+          </Col>
+        </Row>
+      </Container>
       <div className="btn__container">
         <Link to="/join/step3">Back</Link>
       </div>

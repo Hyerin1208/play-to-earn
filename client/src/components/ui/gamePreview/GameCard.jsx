@@ -35,6 +35,7 @@ const GameCard = (props) => {
   }
   async function readytoplay() {
     if (CreateNFTContract !== null) {
+      if (account === null) return alert("지갑 연결이 필요합니다.");
       if (isUser) {
         setLoading(true);
         const mybalance = await CreateNFTContract.methods

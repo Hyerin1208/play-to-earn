@@ -8,7 +8,6 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import { FaStar } from "react-icons/fa";
 import Badge from "react-bootstrap/Badge";
-import { utils } from "ethers";
 import { useSelector } from "react-redux";
 import { css } from "@emotion/react";
 import FadeLoader from "react-spinners/FadeLoader";

@@ -75,6 +75,7 @@ const SellModal = (props) => {
             if (!error) {
               console.log("send ok");
             } else {
+              setLoading(false);
               console.log(error);
             }
           })
