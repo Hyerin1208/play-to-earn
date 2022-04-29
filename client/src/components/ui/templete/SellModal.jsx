@@ -88,7 +88,7 @@ const SellModal = (props) => {
                 Selllists: [...Selllists, MyNFTlists[selectIndex]],
               })
             );
-            sleep(2000);
+            //sleep(2000);
             props.setLoading(false);
             props.setCheckChange(!props.checkChange);
           });
@@ -102,7 +102,7 @@ const SellModal = (props) => {
               if (!error) {
                 console.log("send ok");
               } else {
-                sleep(2000);
+                //sleep(2000);
                 props.setLoading(false);
                 console.log(error);
               }
@@ -123,11 +123,11 @@ const SellModal = (props) => {
                   })
                 );
               }
-              sleep(2000);
+              //sleep(2000);
               props.setLoading(false);
             });
         } else {
-          sleep(2000);
+          //sleep(2000);
           props.setLoading(false);
           alert("현재가격을 유지합니다.");
         }

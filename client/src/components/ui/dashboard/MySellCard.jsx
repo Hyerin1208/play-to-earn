@@ -152,7 +152,7 @@ const NftSellCard = (props) => {
                           })
                         );
                       }
-                      sleep(2000);
+                      //sleep(2000);
                       props.setLoading(false);
                       props.setCheckChange(!props.checkChange);
                     });

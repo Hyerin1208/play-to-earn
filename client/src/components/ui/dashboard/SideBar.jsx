@@ -128,7 +128,7 @@ const SideBar = () => {
         .send({ from: account, gas: 3000000 })
         .then(async () => {
           await axios
-            .post("http://localhost:5000/ranking/updateclaim", {
+            .post("http://15.165.17.43:5000/ranking/updateclaim", {
               address: account,
             })
             .then(async (res) => {
@@ -136,7 +136,7 @@ const SideBar = () => {
                 dispatch(
                   updateMyBalance({ Mybalance: await checkMyBalance(account) })
                 );
-                sleep(2000);
+                //sleep(2000);
                 alert("Get Token 완료");
                 setLoading(false);
                 // setAATclaim("정보수신중..");
@@ -153,7 +153,7 @@ const SideBar = () => {
   useEffect(async () => {
     if (account !== null) {
       await axios
-        .post("http://localhost:5000/user/login", {
+        .post("http://15.165.17.43:5000/user/login", {
           address: account,
         })
         .then((res) => {
@@ -174,7 +174,7 @@ const SideBar = () => {
     const nick = document.getElementById("nick__pfp").innerText;
     const email = document.getElementById("email__pfp").innerText;
     await axios
-      .post("http://localhost:5000/user/edit", {
+      .post("http://15.165.17.43:5000/user/edit", {
         nick: nick,
         email: email,
         address: account,

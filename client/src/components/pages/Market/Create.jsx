@@ -111,7 +111,7 @@ const Create = () => {
       .CreateNFTinContract(url, utils.parseEther(price.toString()))
       .send({ from: Account, gas: 3000000 }, (error, data) => {
         if (!error) {
-          sleep(2000);
+          //sleep(2000);
           console.log("send ok");
         } else {
           setLoading(false);
@@ -128,7 +128,7 @@ const Create = () => {
         const tokenURI = await CreateNFTContract.methods
           .tokenURI(parseInt(tokenId))
           .call();
-        sleep(2000);
+        //sleep(2000);
         const meta = await axios.get(tokenURI).then((res) => res.data);
         let NFTInfo = {
           fileUrl: await meta.image,
@@ -143,7 +143,7 @@ const Create = () => {
           },
         };
         await axios
-          .post(`http://localhost:5000/nfts`, {
+          .post(`http://15.165.17.43:5000/nfts`, {
             tokenId: tokenId,
             address: Account,
             img: await meta.image,

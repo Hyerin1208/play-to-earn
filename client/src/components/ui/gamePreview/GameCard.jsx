@@ -34,15 +34,15 @@ const GameCard = (props) => {
     while (Date.now() < wakeUpTime) {}
   }
   async function readytoplay() {
+    if (account === null) return alert("지갑 연결이 필요합니다.");
     if (CreateNFTContract !== null) {
-      if (account === null) return alert("지갑 연결이 필요합니다.");
       if (isUser) {
         setLoading(true);
         const mybalance = await CreateNFTContract.methods
           .balanceOf(account)
           .call();
         if (mybalance !== 0) {
-          sleep(2000);
+          //sleep(2000);
           setLoading(false);
           setShowModal(true);
         } else {

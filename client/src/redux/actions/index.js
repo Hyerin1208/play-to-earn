@@ -167,7 +167,7 @@ export function connect() {
               })
             );
             await axios
-              .post("http://localhost:5000/user/owner", {
+              .post("http://15.165.17.43:5000/user/owner", {
                 address: Owner,
                 OwnerImage: OwnerImage,
               })

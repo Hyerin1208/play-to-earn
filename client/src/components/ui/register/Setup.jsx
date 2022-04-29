@@ -61,7 +61,7 @@ const Setup = () => {
       return alert("이메일 형식이 틀렸어요. 다시 확인해주세요.");
 
     const checkuser = await axios
-      .post("http://localhost:5000/user/checkuser", {
+      .post("http://15.165.17.43:5000/user/checkuser", {
         address: account,
         nick: form.nick,
         email: form.email,
@@ -108,7 +108,7 @@ const Setup = () => {
             },
           };
           await axios
-            .post(`http://localhost:5000/user/register`, {
+            .post(`http://15.165.17.43:5000/user/register`, {
               tokenId: tokenId,
               address: account,
               name: SelectNFT.name,

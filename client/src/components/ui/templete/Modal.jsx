@@ -87,7 +87,7 @@ const Modal = (props) => {
                 if (!error) {
                   console.log("send ok");
                 } else {
-                  sleep(2000);
+                  //sleep(2000);
                   props.setLoading(false);
                   console.log(error);
                 }
@@ -95,7 +95,7 @@ const Modal = (props) => {
             )
             .then(async (res) => {
               await axios
-                .post(`http://localhost:5000/history`, {
+                .post(`http://15.165.17.43:5000/history`, {
                   tokenId: res.events.GetNFTResult.returnValues.tokenId,
                   from: res.events.GetNFTResult.returnValues.from,
                   to: res.events.GetNFTResult.returnValues.to,
@@ -126,10 +126,10 @@ const Modal = (props) => {
                         ],
                       })
                     );
-                    sleep(2000);
+                    //sleep(2000);
                     props.setLoading(false);
                   } else {
-                    sleep(2000);
+                    //sleep(2000);
                     props.setLoading(false);
                     console.log(res.data.message);
                   }
@@ -137,7 +137,7 @@ const Modal = (props) => {
             });
         })
         .catch(() => {
-          sleep(2000);
+          //sleep(2000);
           props.setLoading(false);
         });
     }

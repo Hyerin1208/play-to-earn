@@ -144,7 +144,7 @@ const Header = () => {
       setLibrary(library);
       setChainId(network);
       await axios
-        .post("http://localhost:5000/user/login", {
+        .post("http://15.165.17.43:5000/user/login", {
           address: selectAccount,
           owner: Owner,
         })
@@ -204,7 +204,7 @@ const Header = () => {
         if (accounts.length !== 0) {
           const getAddress = utils.getAddress(accounts[0]);
           await axios
-            .post("http://localhost:5000/user/login", {
+            .post("http://15.165.17.43:5000/user/login", {
               address: getAddress,
               owner: Owner,
             })
@@ -298,7 +298,7 @@ const Header = () => {
       const MyNFTlists = await CreateNFTContract.methods
         .MyNFTlists()
         .call({ from: account });
-      sleep(2000);
+      //sleep(2000);
       const listsForm = await Promise.all(
         MyNFTlists.map(async (i) => {
           const tokenURI = await CreateNFTContract.methods
