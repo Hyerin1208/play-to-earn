@@ -54,6 +54,7 @@ const NewsLetter = () => {
 
       <label>
         <input
+          className="news__checkbox"
           type="checkbox"
           onChange={() => {
             setIsChecked(!isChecked);
@@ -61,7 +62,7 @@ const NewsLetter = () => {
         />
         <animated.svg
           style={checkboxAnimationStyle}
-          className={`checkbox ${isChecked ? "checkbox--active" : ""}`}
+          className={`checked__box ${isChecked ? "checked__box--active" : ""}`}
           // This element is purely decorative so
           // we hide it for screen readers
           aria-hidden="true"
