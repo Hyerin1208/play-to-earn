@@ -157,6 +157,7 @@ const SideBar = () => {
           address: account,
         })
         .then((res) => {
+          sleep(5000);
           setNicName(res.data.nick);
           setEmail(res.data.email);
           setImageURL(res.data.image);
@@ -199,6 +200,7 @@ const SideBar = () => {
           className={Loading ? "parentDisable" : ""}
           width="100%"
           height="100%"
+          style={{ zIndex: "1" }}
         >
           <div className="overlay-box">
             <FadeLoader
