@@ -70,6 +70,7 @@ const Admin = () => {
           alert("스테이킹 한사람이 있네요");
           const reault = await userarry.map((data) => parseInt(data.stakerId));
           console.log(reault);
+          setLoading(true);
           await StakingTokenContract.methods
             .resettimer(reault)
             .send({ from: account, gas: 3000000 })
@@ -85,11 +86,14 @@ const Admin = () => {
                 .transfer(stakingAddress, utils.formatUnits(sendrewards, "wei"))
                 .send({ from: account, gas: 3000000 })
                 .then((res) => {
+                  sleep(2000);
+                  setLoading(false);
                   console.log(res);
                   console.log("전송완료");
                 });
             });
         } else {
+          setLoading(false);
           alert("스테이킹 한사람이 없어요~~~~");
         }
       });

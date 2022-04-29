@@ -61,7 +61,7 @@ const Market = () => {
   };
 
   const handleNext = () => {
-    if (endPosition < data.length) {
+    if (endPosition > data.length) {
       setCurrentIndex(currentIndex + quantityPageRef.current);
       setEndPosition(endPosition + quantityPageRef.current);
     }
