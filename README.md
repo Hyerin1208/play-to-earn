@@ -23,9 +23,7 @@ Run the application:
 ```
 /client
 npm start
-```
 
-```
 /server
 npm run dev
 ```
@@ -54,9 +52,7 @@ Run the application:
 ```
 /client
 npm start
-```
 
-```
 /server
 npm start
 ```
