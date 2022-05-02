@@ -7,15 +7,13 @@
 ### 실행 방법
 Install the dependencies:
 ```
+/main directory
 truffle migrate --reset
-```
 
-```
+
 cd client
 npm install
-```
 
-```
 cd server
 npm install
 npx sequelize db:create
