@@ -27,6 +27,13 @@ NFT 참여 GAME 플랫폼 제작
 #### 추가기능
 - Token Staking (AAT 토큰 스테이킹)
 - NFT 카드 옵션변경 (게임 점수 추가 획득)
+- 
+### 개발환경
+React, Redux
+Node.js, MySQL,
+Solidity,
+IPFS, Ganache Truffle
+aws RDS, EC2, S3
 
 
 ### 페이지 별 프로젝트 내 사용 기술
@@ -46,3 +53,48 @@ CMS페이지 | 주차별 ranking 관리 및 스테이킹 관리 - claim 권한�
 http://play-to-earn.s3-website.ap-northeast-2.amazonaws.com/
 ---------------------------------------
 
+### 프로젝트 팀 구성 및 역할
+#### 박성근 (팀장)
+Contract : NFT, AAT, Claim, Staking
+Front : Client base 작성, Contract 기능 연결
+Back : Server base 작성, DB base 작성
+
+#### 김혜린
+Contract : 상세 기능에 관한 설계
+Front :  설계, 각 컴포넌트 및 디자인 작성
+Back : Server 및 DB 구조 설계,  DB 작성
+
+#### 이성현
+Contract : 상세 기능에 관한 설계
+Front :  게임 관련 컴포넌트 작성 / 기능 테스트
+Back : Server 개발, 게임 DB 작성, AWS 배포
+
+> **사용 모듈 (server)**
+
+"body-parser": "^1.19.2", "cookie-parser": "~1.4.4", "cors": "^2.8.5", "cross-env": "^7.0.3", "debug": "~2.6.9", "dotenv": "^16.0.0", "express": "~4.16.1", "http-errors": "~1.6.3", "http-proxy-middleware": "^2.0.4", "morgan": "~1.9.1", "multer": "^1.4.4", "mysql2": "^2.3.3", "sequelize": "^6.17.0", "sequelize-cli": "^6.4.1", "uuid": "^8.3.2"
+
+> **사용 모듈 (client)**
+
+"@binance-chain/javascript-sdk": "^4.2.0", "@binance-chain/wallet": "^0.11.2", "@coinbase/wallet-sdk": "^3.0.8", "@emailjs/browser": "^3.6.2", "@emotion/react": "^11.8.2", "@iconscout/react-unicons": "^1.1.6", "@metamask/onboarding": "^1.0.1", "@testing-library/jest-dom": "^5.16.2", "@testing-library/react": "^12.1.3", "@testing-library/user-event": "^13.5.0", "@visx/visx": "^2.9.0", "@walletconnect/web3-provider": "^1.7.7", "animate.css": "^4.1.1", "apexcharts": "^3.35.0", "axios": "^0.26.1", "bootstrap": "^5.1.3", "chart.js": "^3.7.1", "core-js": "^3.11.1", "dat.gui": "^0.7.9", "drei": "^2.2.21", "ethers": "^5.6.2", "framer-motion": "^4.1.17", "html-loader": "^1.3.2", "http-proxy-middleware": "^2.0.4", "ipfs-http-client": "^56.0.1", "js-cookie": "^3.0.1", "lodash": "^4.17.21", "mainloop.js": "^1.0.4", "path": "^0.12.7", "react": "^17.0.2", "react-apexcharts": "^1.4.0", "react-beautiful-dnd": "^13.1.0", "react-bootstrap": "^2.2.2", "react-chartjs-2": "^4.0.1", "react-circular-progressbar": "^2.0.4", "react-cookie": "^4.1.1", "react-dom": "^17.0.2", "react-draggable": "^4.4.4", "react-elastic-carousel": "^0.11.5", "react-fade-in": "^2.0.1", "react-helmet": "^6.1.0", "react-icons": "^4.3.1", "react-is": "^18.1.0", "react-loading": "^2.0.3", "react-redux": "^7.2.6", "react-responsive-carousel": "^3.2.23", "react-router-dom": "^6.2.2", "react-scripts": "5.0.0", "react-scroll-to-top": "^1.0.8", "react-simple-animate": "^3.3.12", "react-slick": "^0.28.1", "react-spinners": "^0.11.0", "react-spring": "^9.4.4", "react-three-fiber": "^6.0.13", "reactstrap": "^9.0.1", "recharts": "^2.1.9", "redux": "^4.1.2", "redux-devtools-extension": "^2.13.9", "redux-promise": "^0.6.0", "redux-thunk": "^2.4.1", "regenerator-runtime": "^0.13.7", "remixicon": "^2.5.0", "slick-carousel": "^1.8.1", "styled-components": "^5.3.5", "three": "^0.139.2", "web-vitals": "^2.1.4", "web3": "^1.7.1", "web3modal": "^1.9.7"
+
+## **발생한 이슈와 해결방법**
+
+1.  DB 스키마 이슈
+
+-   TABLE별 미흡한 관계설정
+-   경험을 통해 중요성을 깨달음
+
+1.  기능추가 이슈
+
+-   스테이킹, NFT 옵션변경 > NFT 구매, 판매 기능 추가 이슈
+-   기업과의 화상 회의에서 피드백을 참고해 문제해결
+
+1.  코로나로 인한 비대면 이슈
+
+-   협업툴 활용 정해진 시간에 리뷰
+-   진행상황 공유하여 내용 숙지
+
+1.  AWS 배포 이슈
+
+-   배포과정의 어려움으로 관련 내용 숙지에 긴 시간이 소요
+-   이번 경험을 토대로 정리 및 숙지 필요
