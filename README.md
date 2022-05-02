@@ -18,10 +18,18 @@ NFT 참여 GAME 플랫폼 제작
 3. 대상자 지갑이 Claim해서 직접 Token을 얻어갈 수 있도록 설정
 
 ### 미션가이드  <a href="https://docs.google.com/document/d/108cG27YZFRMUc1oHWL6x_Ov6VffYk6qH/edit?usp=sharing&ouid=106272728987475253657&rtpof=true&sd=true"><img src="https://img.shields.io/badge/Google Drive-4285F4?style=flat-square&logo=Google Drive&logoColor=white"/></a>
+
+### 사용기술 요약
+- ERC-721 (NFT) Mint, BEP-20 Token
+- NFT 보유여부 확인 : 지갑연결, Web3 통신 (BalanceOf 함수 활용)
+- 게임 개발 오픈소스 활용 & 게임 승리에 따른 보상 지급
+
 #### 추가기능
 - Token Staking (AAT 토큰 스테이킹)
 - NFT 카드 옵션변경 (게임 점수 추가 획득)
-### 프로젝트 내 사용 기술
+
+
+### 페이지 별 프로젝트 내 사용 기술
 
 |      페이지      | 사용 기술 |
 --------|------------
@@ -34,3 +42,7 @@ CMS페이지 | 주차별 ranking 관리 및 스테이킹 관리 - claim 권한�
 스테이킹 | staking 및 500AAT이상 예치시 1%보상, 토큰 컨트랙트, 스테이킹 컨트랙트 보상토큰 전송, 보상관련 info chart 
 
 ---------------------------------------
+## Naming Center site
+http://play-to-earn.s3-website.ap-northeast-2.amazonaws.com/
+---------------------------------------
+
