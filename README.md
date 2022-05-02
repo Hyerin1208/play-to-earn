@@ -4,6 +4,35 @@
 ### 팀장 : 박성근 <a href="https://github.com/Mr-butter"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a>
 ### 팀원 : 김혜린 <a href="https://github.com/Hyerin1208"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a> <a href="https://plastic-yuzu-23a.notion.site/P2E-f7e3bc28fe3d4a919c706bdeecc407fe"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/></a> , 이성현 <a href="https://github.com/coolmarvel"><img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/></a> <a href="https://saranghaeo.tistory.com/"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/></a>
 ---------------------------------------
+### 실행 방법
+Install the dependencies:
+```
+truffle migrate --reset
+```
+
+```
+cd client
+npm install
+```
+
+```
+cd server
+npm install
+npx sequelize db:create
+```
+
+Run the application:
+```
+/client
+npm start
+```
+
+```
+/server
+npm run dev
+```
+
+[http://localhost:3000](http://localhost:3000) 로컬에서 실행된 어플리케이션을 확인할 수 있습니다.
 
 ### 프로젝트 기간 : 2022-03-07 ~ 2022-05-01 (총 55일)
 
